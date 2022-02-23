@@ -169,8 +169,6 @@ no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
   out.cor <- data.frame("ar1" = KtAR, "SD" = KtSD,"skew" = KtSK, "kurt" = KtKU,
                         "cv" = KtCV, "rr" = KtRETURNRATE,  "dr" = KtDENSITYRATIO, "acf" = KtACF)
 
-  out.type <- match.arg(output,choices = c("cor","raw"))
-
     out.raw <- data.frame(timeindex[mw:length(nsmY)], nARR, nSD,
                           nSK, nKURT, nCV, nRETURNRATE, nDENSITYRATIO, nACF)
     colnames(out.raw) <- c("timeindex", "ar1", "SD", "skew", "kurt",

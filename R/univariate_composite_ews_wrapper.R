@@ -18,12 +18,12 @@
 #' @returns If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object
 
 #' @export
-comp_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F, tail.direction = "one.tailed", burn_in = 5, ggplotIt = T,
+univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F, tail.direction = "one.tailed", burn_in = 5, ggplotIt = T,
                              y_lab = "Generic Indicator Name", trait_lab = "Generic Trait Name",
-                             trait_scale = 100000, interpolate = F,data_source = NULL,method = c("w_comp","dakos"),
+                             trait_scale = 100000, interpolate = F,method = c("expanding","rolling"),
                              winsize = 50){
 
-  method <- match.arg(method,choices = c("w_comp","dakos"))
+  method <- match.arg(method,choices = c("expanding","rolling"))
 
   if(method == "expanding"){
     to.test.l<-list()
@@ -48,8 +48,7 @@ comp_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F
 
     bind.res<-data.table::rbindlist(res)
     bind.res$str<-(bind.res$metric.score-bind.res$rolling.mean)/bind.res$rolling.sd
-    bind.res$data_source <- data_source
-    bind.res<-as.data.table(bind.res)
+    bind.res<-as.data.frame(bind.res)
 
     if(isTRUE(ggplotIt)){
 
@@ -80,7 +79,7 @@ comp_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F
           aes(group=NA)+
           geom_line(aes(y=value),linetype=1) +
           geom_line(aes(y=(trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
-          geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)]],
+          geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
                      aes(x=time, y = max(count.used)*-0.1,col=metric.code,alpha = as.factor(threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
@@ -107,7 +106,7 @@ comp_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F
         p4 <-ggplot(data = plot.dat, aes(x=time, y=count.used)) +
           aes(group=NA)+
           geom_line(col = "black")+
-          geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)]],
+          geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
                      aes(x=time, y = max(count.used)*-0.1,col=metric.code,alpha = as.factor(threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
@@ -133,11 +132,11 @@ comp_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F
 
   if(method == "rolling"){
 
-    bind.res <- no.plot.ews(timeseries = data, winsize = winsize,output = dakos.output,interpolate = interpolate)
+    bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = interpolate)
 
       bind.res$raw <- bind.res$raw[,c("timeindex",metrics)]
       bind.res$raw$data_source <- data_source
-      bind.res$raw<-as.data.table(bind.res$raw)
+      bind.res$raw<-as.data.frame(bind.res$raw)
       bind.res$cor <- bind.res$cor[,metrics]
 
       if(isTRUE(ggplotIt)){
