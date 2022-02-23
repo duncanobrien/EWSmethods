@@ -18,7 +18,7 @@
 #' @returns If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object
 
 #' @export
-comp_EWS_wrapper_multi <- function(data,metrics,threshold = 2,tail.direction = "one.tailed", burn_in = 5,
+multivariate_EWS_wrapper <- function(data,metrics,threshold = 2,tail.direction = "one.tailed", burn_in = 5,
                                    ggplotIt = T,y_lab = "Generic Indicator Name",
                              interpolate = F,method = c("expanding","rolling"),
                              winsize = 50){
