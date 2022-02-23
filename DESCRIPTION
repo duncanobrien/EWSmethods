@@ -1,0 +1,22 @@
+Type: Package
+Package: EWSmethods
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Duncan O'Brien
+Maintainer: Duncan O'Brien <duncan.a.obrien@gmail.com>
+Description: More about what it does (maybe more than one line) Use four
+    spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    data.table,
+    dplyr,
+    egg,
+    ggplot2,
+    ggthemes,
+    gtools,
+    moments,
+    scales,
+    tidyr
+RoxygenNote: 7.1.2
