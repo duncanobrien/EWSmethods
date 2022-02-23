@@ -13,8 +13,7 @@ W_composite_ews(
   burn_in = 5,
   tail.direction = "one.tailed",
   plotIt,
-  interpolate = F,
-  ...
+  interpolate = F
 )
 }
 \arguments{

@@ -1,49 +1,15 @@
 #' Multivariate Early Warning Signals
-
-#' @param dat A n x m dataframe with the first column time indices and remainder of columns species abundances.
+#' @param data A n x m dataframe with the first column time indices and remainder of columns species abundances.
 #' @param method c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.
-#' @param winsize Numeric. If \code{"method" = "rolling"},defines the window size of the rolling window.
-#' @param burn_in Numeric. If \code{"method" = "expanding}, defines the number of data points to 'train' signals prior to EWS assessment.
-#' @param threshold Numeric. If \code{"method" = "expanding}, defines the threshold*sigma warning threshold.
-#' @param tail.direction A string. If \code{"method" = "expanding}, should both postive and negative thresholds be considered.
+#' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
+#' @param burn_in Numeric. If "method" = "expanding, defines the number of data points to 'train' signals prior to EWS assessment.
+#' @param threshold Numeric. If "method" = "expanding, defines the threshold*sigma warning threshold.
+#' @param tail.direction A string. If "method" = "expanding, should both positive and negative thresholds be considered.
 
-#' @returns A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
+#' @returns A list containing "raw" (the early warning signals through time) and "dimred.ts" (the dimension reduction time series)
 #' @export
+#'
 wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
-
-  maf <- function(x){
-    if (class(x)=="data.frame" || (class(x)=="matrix" && dim(x)[2]>1)){
-      p = dim(x)[2]
-      n = dim(x)[1]
-      x = scale(x)
-      svd = svd(cov(x)) #If you want to sum of the timesteps/n to be 1
-      #svd = svd(cov(x)*(n-1)) #If you want to sum of the timesteps to be 1
-
-      a = svd$u%*%diag(svd$d^(-0.5))%*%t(svd$u)
-
-      y = x%*%a
-      cov.zd = cov(apply(y,2,diff))*(n-2)
-
-      svd.zd = svd(cov.zd/(n-1))
-      u = svd.zd$u[,p:1]
-      aa = a%*%u
-      aa = apply(aa,2,function(x) {x/sqrt(sum(x^2))})
-
-      maf = x%*%aa
-      neg.time.cor = diag(cov(maf,matrix(rep(1:n,p),n,p)))<0
-      mafs = t(apply(maf,1,function(x) {(-neg.time.cor+!neg.time.cor)*x}))
-      aa = t(apply(aa, 1,function(x) {(-neg.time.cor+!neg.time.cor)*x}))
-
-      d = svd.zd$d[p:1]
-    } else {
-      print("x is not a matrix or a data.frame, no MAF transform performed.")
-      mafs = as.matrix(x)
-      aa = as.matrix(1); a.i = as.matrix(1); d = as.matrix(1)
-    }
-    out = list(x=x, mafs=maf, rotation=aa, autocor=1 - d/2, eigen.values = d )
-    class(out) = c("Maf")
-    out
-  }
 
   meth <- match.arg(method,choices = c("rolling","expanding"))
 
@@ -166,9 +132,9 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     results<-do.call("rbind", RES)
 
     output<-data.frame(results) %>%
-      pivot_longer(-time, names_to = "metric.code",values_to = "metric.score") %>%
-      group_by(metric.code) %>% arrange(time,.by_group = TRUE) %>%
-      mutate(rolling.mean = rolling_mean(metric.score),
+      tidyr::pivot_longer(-time, names_to = "metric.code",values_to = "metric.score") %>%
+      dplyr::group_by(metric.code) %>% dplyr::arrange(time,.by_group = TRUE) %>%
+      dplyr::mutate(rolling.mean = rolling_mean(metric.score),
              rolling.sd = rolling_sd(metric.score))
     output$threshold.crossed<-NA
 
@@ -190,19 +156,42 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
   }
 }
 
-# tt <- maf(as.data.frame(data[,-1]))
-# tt.sd <-sd(tt$mafs[,1])
-# tt.K <-min(tt$eigen.values/sum(tt$eigen.values))
-#
-# kk<-wMAF(data = as.data.frame(data[,-c(4,6)]),winsize=dim(data)[1]/2,method = "rolling")%>%
-#   summarise(across(-time,~cor.test(as.numeric(time), .x, alternative = c("two.sided"),
-#                                          method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate))
-#
-# kk<-wMAF(data = as.data.frame(data[,-c(4,6)]),method = "expanding",burn_in = 24)
-# dat.to.use <- plank_env.data.mth[,4:79]
-# kk<-wMAF(data = as.data.frame(cbind("Date" =plank_env.data.mth$Date[1:283],dat.to.use[1:283,colMeans(dat.to.use == 0) <= 0.05])),window=dim(data)[1]/2,)
-#
-# plot(tt$mafs[,1])
-# lines(tt$x[,1],col = "red")
-#
-# plot(kk$mafAR)
+
+#' Maximum/Minimum Autocorrelation Factors
+
+#' @param x dataframe A n x m dataframe species (columns) abundances through time (rows)
+#' @return out A list containing the input data, the dimension reduction time series, rotations, autocorrelation and eigenvalues
+
+maf <- function(x){
+  if (class(x)=="data.frame" || (class(x)=="matrix" && dim(x)[2]>1)){
+    p = dim(x)[2]
+    n = dim(x)[1]
+    x = scale(x)
+    svd = svd(cov(x)) #If you want to sum of the timesteps/n to be 1
+    #svd = svd(cov(x)*(n-1)) #If you want to sum of the timesteps to be 1
+
+    a = svd$u%*%diag(svd$d^(-0.5))%*%t(svd$u)
+
+    y = x%*%a
+    cov.zd = cov(apply(y,2,diff))*(n-2)
+
+    svd.zd = svd(cov.zd/(n-1))
+    u = svd.zd$u[,p:1]
+    aa = a%*%u
+    aa = apply(aa,2,function(x) {x/sqrt(sum(x^2))})
+
+    maf = x%*%aa
+    neg.time.cor = diag(cov(maf,matrix(rep(1:n,p),n,p)))<0
+    mafs = t(apply(maf,1,function(x) {(-neg.time.cor+!neg.time.cor)*x}))
+    aa = t(apply(aa, 1,function(x) {(-neg.time.cor+!neg.time.cor)*x}))
+
+    d = svd.zd$d[p:1]
+  } else {
+    print("x is not a matrix or a data.frame, no MAF transform performed.")
+    mafs = as.matrix(x)
+    aa = as.matrix(1); a.i = as.matrix(1); d = as.matrix(1)
+  }
+  out = list(x=x, mafs=maf, rotation=aa, autocor=1 - d/2, eigen.values = d )
+  class(out) = c("Maf")
+  out
+}

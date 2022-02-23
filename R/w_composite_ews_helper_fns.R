@@ -1,19 +1,27 @@
 
-#coefficient of variation
+#' Coefficient of Variation
+#'
+#' @param x A numeric vector.
+#' @param na.rm Boolean. If TRUE, missing values are removed.
 CV <- function(x, na.rm){
   ave<-mean(x, na.rm=na.rm)
   dev<-sd(x, na.rm=na.rm)
   return((dev/ave))
 }
 
-#interpolate function edited so not constrained to year
+#' Linear Interpolation
+#'
+#' @param days A numeric vector.
+#' @param obs A numeric vector.
 interp<-function(days, obs){
   int.dat<-as.data.frame(approx(days, obs, n = length(obs), method = "linear"))
   names(int.dat)<-c("time", "counts")
   return(int.dat)
 }
 
-##function for rolling mean
+#' Rolling Mean
+#'
+#' @param x A numeric vector.
 rolling_mean <- function(x){
   k = length(x);
   result = rep(0, k);
@@ -23,7 +31,9 @@ rolling_mean <- function(x){
   return(result);
 }
 
-##function for rolling sd
+#' Rolling Standard Deviation
+#'
+#' @param x A numeric vector.
 rolling_sd <- function(x){
   k = length(x);
   result = rep(0, k);

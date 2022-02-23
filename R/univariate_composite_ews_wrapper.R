@@ -8,11 +8,11 @@
 #' @param ggplotIt = ggplot plot of EWS strength trends AND input abundance.
 #' @param tail.direction = "one.tailed" or "two.tailed"."one.tailed" only indicates a warning if positive threshold sigma exceeded, "two.tailed"  indicates a warning if positive OR negative threshold*sigma exceeded.
 #' @param burn_in = number of data points to 'train' signals prior to EWS assessment.
+#' @param interpolate = TRUE interpolates missing values found within the abundance time series.
+#' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
 #' @param y_lab = if ggplotIt = TRUE, labels abundance y axis.
 #' @param trait_lab = if ggplotIt = TRUE, & trait populated, & "trait" supplied in metrics, labels abundance second abundance y axis (represents trait values through time).
 #' @param trait_scale = scales trait y axis relative to abundance y axis.
-#' @param interpolate = TRUE interpolates missing values found within the abundance time series.
-#' @param data_source = NULL. A string to categorise result. Useful if performing multiple assessments iteratively.
 #' @param method = c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.
 
 #' @returns If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object

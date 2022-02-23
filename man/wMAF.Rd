@@ -14,20 +14,20 @@ wMAF(
 )
 }
 \arguments{
+\item{data}{A n x m dataframe with the first column time indices and remainder of columns species abundances.}
+
 \item{method}{c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.}
 
-\item{winsize}{Numeric. If \code{"method" = "rolling"},defines the window size of the rolling window.}
+\item{winsize}{Numeric. If "method" = "rolling",defines the window size of the rolling window.}
 
-\item{burn_in}{Numeric. If \code{"method" = "expanding}, defines the number of data points to 'train' signals prior to EWS assessment.}
+\item{burn_in}{Numeric. If "method" = "expanding, defines the number of data points to 'train' signals prior to EWS assessment.}
 
-\item{tail.direction}{A string. If \code{"method" = "expanding}, should both postive and negative thresholds be considered.}
+\item{tail.direction}{A string. If "method" = "expanding, should both positive and negative thresholds be considered.}
 
-\item{threshold}{Numeric. If \code{"method" = "expanding}, defines the threshold*sigma warning threshold.}
-
-\item{dat}{A n x m dataframe with the first column time indices and remainder of columns species abundances.}
+\item{threshold}{Numeric. If "method" = "expanding, defines the threshold*sigma warning threshold.}
 }
 \value{
-A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
+A list containing "raw" (the early warning signals through time) and "dimred.ts" (the dimension reduction time series)
 }
 \description{
 Multivariate Early Warning Signals

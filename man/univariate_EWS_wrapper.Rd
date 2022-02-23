@@ -48,7 +48,7 @@ univariate_EWS_wrapper(
 
 \item{method}{= c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.}
 
-\item{data_source}{= NULL. A string to categorise result. Useful if performing multiple assessments iteratively.}
+\item{winsize}{Numeric. If "method" = "rolling",defines the window size of the rolling window.}
 }
 \value{
 If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object

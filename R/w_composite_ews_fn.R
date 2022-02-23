@@ -17,7 +17,7 @@
 #' @return output A matrix of early warning signal indicators through time.
 
 #' @export
-W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed", plotIt, interpolate = F, ...){
+W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed", plotIt, interpolate = F){
 
   ############################################################
   ##print some warnings

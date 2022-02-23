@@ -1,8 +1,23 @@
 #' Rolling Window Early Warning Signals
 
+#' An adaptation of the 'generic_ews' function in the R package 'earlywarnings'
+#'
+#' @param timeseries A dataframe where first column is time (equally spaced) and second column is abundance.
+#' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
+#' @param detrending A string. Should detrending be performed on the time series.
+#' @param bandwidth Numeric. Bandwidth used for the Gaussian kernel when gaussian filtering is applied. It is expressed as percentage of the time series length.
+#' @param span  Numeric. Parameter that controls the degree of smoothing (numeric between 0 and 100, Default 25).
+#' @param degree Numeric. The degree of polynomial when loess detrending is applied.
+#' @param logtransform Boolean. If TRUE, data is log transformed as log(x+1).
+#' @param interpolate Boolean. If TRUE, interpolates missing values found within the abundance time series.
+#' @param AR_n  Boolean. If TRUE, the best fitted AR(n) model is fitted to the data.
+#' @param powerspectrum Boolean. If TRUE the power spectrum within each rolling window.
+
+
 #' @export
 no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
-                                                                "loess", "linear", "first-diff"), bandwidth = NULL, span = NULL,
+                                                                "loess", "linear", "first-diff"),
+                      bandwidth = NULL, span = NULL,
                        degree = NULL, logtransform = FALSE, interpolate = FALSE,
                        AR_n = FALSE, powerspectrum = FALSE)
 {
