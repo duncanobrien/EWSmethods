@@ -4,8 +4,7 @@ Title: Simple Early Warning Signals for Univariate and Multivariate Time Series
 Version: 0.1.0
 Author: Duncan O'Brien
 Maintainer: Duncan O'Brien <duncan.a.obrien@gmail.com>
-Description:  Rolling and expanding window approaches to assessing abundance based early warning signals. 
-ggplot based presentation of the outputs are also provided for clear and publishable figures.
+Description:  Rolling and expanding window approaches to assessing abundance based early warning signals. ggplot based presentation of the outputs are also provided for clear and publishable figures.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

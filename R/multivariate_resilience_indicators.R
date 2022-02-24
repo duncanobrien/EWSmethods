@@ -1,4 +1,5 @@
 #' Multivariate Early Warning Signals
+#'
 #' @param data A n x m dataframe with the first column time indices and remainder of columns species abundances.
 #' @param method c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.
 #' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
