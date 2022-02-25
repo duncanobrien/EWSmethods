@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-*EWSmethods* is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window or expanding window EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. *EWSmethods* also provides an R interface to __EWSNET__ ([link](https://ewsnet.github.io)), a deep learning modelling framework for predicting critical transitions.
+*EWSmethods* is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window or expanding window EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. *EWSmethods* also provides an R interface to [__EWSNET__](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions.
 
 ## Installation
 
@@ -33,7 +33,7 @@ You can install the development version of EWSmethods from [GitHub](https://gith
 
 Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) as well as mean body mass data. We could calculate either rolling or expanding window EWSs for the abundance data as would do so using EWSmethods as below:
 
-```{r example}
+```{r example, fig.show='hide'}
 library(EWSmethods)
 
 skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset
@@ -43,8 +43,9 @@ ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to
 roll_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "rolling",winsize = 50, ggplotIt =TRUE) #lets using a rolling window approach
 
 print(roll_ews$EWS$cor) #return the Kendall Tau correlations for each EWS metric
-
 ```
+
+We can then use the resulting figures to identify oncoming transitions. In this case, we would expect no transition as the data originates from a normal distribution. This is evident with no consistent increasing correlation with time: 
 
 ```{r rolling_plot, echo = FALSE}
 roll_ews$plot

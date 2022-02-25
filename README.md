@@ -12,7 +12,7 @@ the user to input univariate or multivariate data and perform either
 traditional rolling window or expanding window EWS approaches.
 Publication standard and ggplot inspired figures can also be generated
 during this process. *EWSmethods* also provides an R interface to
-**EWSNET** ([link](https://ewsnet.github.io)), a deep learning modelling
+[**EWSNET**](https://ewsnet.github.io), a deep learning modelling
 framework for predicting critical transitions.
 
 ## Installation
@@ -40,15 +40,16 @@ skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), tr
 ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to compute
 
 roll_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "rolling",winsize = 50, ggplotIt =TRUE) #lets using a rolling window approach
-```
 
-<img src="man/figures/README-example-1.png" width="100%" /><img src="man/figures/README-example-2.png" width="100%" />
-
-``` r
 print(roll_ews$EWS$cor) #return the Kendall Tau correlations for each EWS metric
-#>            SD       ar1 skew
-#> tau 0.6307692 0.3784615  0.6
+#>            SD       ar1       skew
+#> tau 0.6615385 0.6615385 -0.1076923
 ```
+
+We can then use the resulting figures to identify oncoming transitions.
+In this case, we would expect no transition as the data originates from
+a normal distribution. This is evident with no consistent increasing
+correlation with time:
 
 <img src="man/figures/README-rolling_plot-1.png" width="100%" />
 
