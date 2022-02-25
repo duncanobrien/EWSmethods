@@ -36,7 +36,7 @@ multivariate_EWS_wrapper(
 A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measureed Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe and/or with a standardised ggplot-based figure.
 }
 \examples{
-#Generate random five species non-transitioning ecosystem with 50 years of monitoring data.
+#Generate a random five species, non-transitioning ecosystem with 50 years of monitoring data.
 spp_data <- matrix(nrow = 50, ncol = 5)
 spp_data <- sapply(1:dim(spp_data)[2], function(x){spp_data[,x] <- rnorm(50,mean=20,sd=5)})
 multi_spp_data <- as.data.frame(cbind("time" = seq(1:50),spp_data))

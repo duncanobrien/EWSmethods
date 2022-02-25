@@ -12,7 +12,7 @@
 #' @param burn_in Numeric value. The number of data points to 'train' signals prior to EWS assessment.
 #'
 #' @examples
-#' #Generate random five species non-transitioning ecosystem with 50 years of monitoring data.
+#' #Generate a random five species, non-transitioning ecosystem with 50 years of monitoring data.
 #' spp_data <- matrix(nrow = 50, ncol = 5)
 #' spp_data <- sapply(1:dim(spp_data)[2], function(x){spp_data[,x] <- rnorm(50,mean=20,sd=5)})
 #' multi_spp_data <- as.data.frame(cbind("time" = seq(1:50),spp_data))
