@@ -7,13 +7,15 @@
 #' @returns Does not return an object as is simply preparing your R session.
 #'
 #' @examples
-#' \dontrun{EWSNET_init(envname = "EWSNET_env")}
+#' \dontrun{ewsnet_init(envname = "EWSNET_env")}
+#'
 #' \dontrun{reticulate::py_config()}
-#' #If successful, 'EWSNET_env forced by use_python function' will be printed.
+#' #If successful, 'EWSNET_env forced by use_python
+#' #function' will be printed.
 #'
 #' @export
 
-EWSNET_init <- function(envname){
+ewsnet_init <- function(envname){
 
   conda <- try(reticulate::conda_list()) #extract list of conda Python environments
   if(class(conda) == "try-error"){

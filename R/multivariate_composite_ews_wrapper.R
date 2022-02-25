@@ -1,4 +1,4 @@
-#' Perform Multivariate Early Warning Signal Assessment
+#' Multivariate Early Warning Signal Assessment
 #'
 #' A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with and/or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 #'
@@ -18,16 +18,32 @@
 #' \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 #'
 #' @examples
-#' #Generate a random five species, non-transitioning ecosystem with 50 years of monitoring data.
+#' #Generate a random five species, non-transitioning
+#' #ecosystem with 50 years of monitoring data.
+#'
 #' spp_data <- matrix(nrow = 50, ncol = 5)
-#' spp_data <- sapply(1:dim(spp_data)[2], function(x){spp_data[,x] <- rnorm(50,mean=20,sd=5)})
-#' multi_spp_data <- as.data.frame(cbind("time" = seq(1:50),spp_data))
+#' spp_data <- sapply(1:dim(spp_data)[2], function(x){
+#'  spp_data[,x] <- rnorm(50,mean=20,sd=5)})
+#'  multi_spp_data <- as.data.frame(cbind("time" =
+#'  seq(1:50), spp_data))
 #'
-#' #Rolling window early warning signal assessment of the ecosystem, without plotting.
-#' multivariate_EWS_wrapper(data = multi_spp_data, method = "rolling", winsize = 50, ggplotIt =FALSE)
+#' #Rolling window early warning signal assessment of
+#' #the ecosystem, without plotting.
 #'
-#' #Expanding window early warning signal assessment of the ecosystem, with plotting.
-#' \dontrun{multivariate_EWS_wrapper(data = multi_spp_data, method = "expanding", burn_in = 10, ggplotIt =TRUE)}
+#' roll_ews <- multivariate_EWS_wrapper(
+#'  data = multi_spp_data,
+#'  method = "rolling",
+#'  winsize = 50,
+#'  ggplotIt =FALSE)
+#'
+#' #Expanding window early warning signal assessment of
+#' #the ecosystem, with plotting.
+#'
+#' \dontrun{exp_ews <- multivariate_EWS_wrapper(
+#'  data = multi_spp_data,
+#'  method = "expanding",
+#'  burn_in = 10,
+#'  ggplotIt =TRUE)}
 
 #' @importFrom dplyr .data
 #'

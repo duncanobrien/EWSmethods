@@ -9,16 +9,21 @@
 #' @returns A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
 #'
 #' @examples
-#' abundance_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20))
-#' \dontrun{pred<- ewsNETpredict(abundance_data$abundance, noise_type = "W", ensemble = 15)}
+#' abundance_data <- data.frame(time = seq(1:50),
+#'  abundance = rnorm(50,mean = 20))
+#'
+#' \dontrun{pred<- ewsnet_predict(
+#'  abundance_data$abundance,
+#'  noise_type = "W",
+#'  ensemble = 15)}
 #'
 #' @export
 #'
 #ewsNETw_25 <- function(x, noise_type = "W", ensemble = "25"){
-ewsNETpredict <- function(x, noise_type = "W", ensemble = 25){
+ewsnet_predict <- function(x, noise_type = "W", ensemble = 25){
 
   if(length(reticulate::conda_list())<2){
-    warning("Call 'EWSNET_init()' before attempting to use ewsNETpredict()")
+    warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict()")
   }else{
 
   noise_type <- match.arg(noise_type, choices = c("W","C"))

@@ -1,4 +1,4 @@
-#' Perform Univariate Early Warning Signal Assessment
+#' Univariate Early Warning Signal Assessment
 #'
 #' A function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding window) with the assessments returned as a dataframe with and/or without a standardised ggplot-based figure.
 #'
@@ -22,22 +22,52 @@
 #' \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 #'
 #' @examples
-#' #A dummy dataset of a hedgerow bird over 50 years where both the abundance and the average bill length has been measured
-#' abundance_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), trait = rnorm(50,mean=1,sd=0.5))
-#' #The early warning signal metrics to compute
+#' #A dummy dataset of a hedgerow bird population over
+#' #50 years where both the number of individuals and
+#' #the average bill length has been measured.
+#'
+#' abundance_data <- data.frame(time = seq(1:50),
+#'  abundance = rnorm(50,mean = 20),
+#'  trait = rnorm(50,mean=1,sd=0.5))
+#'
+#' #The early warning signal metrics to compute.
+#'
 #' ews_metrics <- c("SD","ar1","skew")
 #'
-#' #Rolling window early warning signal assessment of the bird abundance (no plotting)
-#' roll_ews <- univariate_EWS_wrapper(data = abundance_data[,1:2],metrics =  ews_metrics, method = "rolling", winsize = 50)
+#' #Rolling window early warning signal assessment of
+#' #the bird abundance (no plotting).
 #'
-#' #Expanding window early warning signal assessment of the bird abundance (with plotting)
-#' \dontrun{exp_ews <- univariate_EWS_wrapper(data = abundance_data,metrics =  ews_metrics, method = "expanding",
-#' burn_in = 10, ggplotIt =T, ylab = "Bird abundance")}
+#' roll_ews <- univariate_EWS_wrapper(
+#'  data = abundance_data[,1:2],
+#'  metrics =  ews_metrics,
+#'  method = "rolling",
+#'  winsize = 50)
 #'
-#' #Expanding window early warning signal assessment of the bird abundance incorporating the trait information (with plotting)
+#' #Expanding window early warning signal assessment of
+#' #the bird abundance (with plotting).
+#'
+#' \dontrun{exp_ews <- univariate_EWS_wrapper(
+#'  data = abundance_data,
+#'  metrics = ews_metrics,
+#'  method = "expanding",
+#'  burn_in = 10,
+#'  ggplotIt =T,
+#'  ylab = "Bird abundance")}
+#'
+#' #Expanding window early warning signal assessment of
+#' #the bird abundance incorporating the trait
+#' #information (with plotting).
+#'
 #' ews_metrics_trait <- c("SD","ar1","trait")
-#' \dontrun{trait_exp_ews <- univariate_EWS_wrapper(data = abundance_data,metrics = ews_metrics_trait, method = "expanding",
-#' burn_in = 10, ggplotIt =T, trait = abundance_data$trait, trait_lab = "Bill length (mm)", trait_scale = 10)}
+#' \dontrun{trait_exp_ews <- univariate_EWS_wrapper(
+#'  data = abundance_data,
+#'  metrics = ews_metrics_trait,
+#'  method = "expanding",
+#'  burn_in = 10,
+#'  ggplotIt =T,
+#'  trait = abundance_data$trait,
+#'  trait_lab = "Bill length (mm)",
+#'  trait_scale = 10)}
 #'
 #' @importFrom stats quantile
 #' @importFrom ggplot2 ggplot
