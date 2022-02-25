@@ -100,7 +100,7 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 #> Warning: Removed 7 rows containing missing values (geom_point).
 ```
 
-<img src="man/figures/README-expand_trait_example-1.png" width="100%" /><img src="man/figures/README-expand_trait_example-2.png" width="100%" />
+<img src="man/figures/README-expanding_plot_trait-1.png" width="100%" />
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this. You could also
