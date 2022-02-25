@@ -1,6 +1,6 @@
 #' EWSNET Predict
 #'
-#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
+#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 #'
 #' @param x A numeric vector of values to be tested.
 #' @param noise_type A string stating the form of noise to use. Options are "W" or "C".
