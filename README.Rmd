@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+require(rmarkdown)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -33,22 +34,39 @@ You can install the development version of EWSmethods from [GitHub](https://gith
 
 Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) as well as mean body mass data. We could calculate either rolling or expanding window EWSs for the abundance data as would do so using EWSmethods as below:
 
-```{r example, fig.show='hide'}
+```{r roll_example, fig.show='hide'}
 library(EWSmethods)
 
-skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset
+skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 100,sd=20), trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset
 
 ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to compute
 
-roll_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "rolling",winsize = 50, ggplotIt =TRUE) #lets using a rolling window approach
+roll_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "rolling",winsize = 50, ggplotIt =TRUE, y_lab = "Skylark abundance") #lets using a rolling window approach
 
 print(roll_ews$EWS$cor) #return the Kendall Tau correlations for each EWS metric
 ```
 
-We can then use the resulting figures to identify oncoming transitions. In this case, we would expect no transition as the data originates from a normal distribution. This is evident with no consistent increasing correlation with time: 
+We can then use the resulting figures to identify oncoming transitions. In this case, we  expect no transition as the data is randomly sampled from a normal distribution and this is evident in the Kendall Tau values, with no strong positive correlation with time: 
 
 ```{r rolling_plot, echo = FALSE}
 roll_ews$plot
+```
+Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:
+
+```{r _expand_example, fig.show='hide'}
+#skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), #trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset
+
+#ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to compute
+
+exp_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "expanding",burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance") #lets using a rolling window approach
+
+head(exp_ews$EWS) #return the head of the EWS dataframe
+```
+
+And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2$\sigma threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
+
+```{r expanding_plot, echo = FALSE}
+exp_ews$plot
 ```
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
