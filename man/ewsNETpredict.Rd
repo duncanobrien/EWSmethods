@@ -4,10 +4,14 @@
 \alias{ewsNETpredict}
 \title{EWSNET Predict}
 \usage{
-ewsNETpredict(x, noise_type = "W", ensemble = "25")
+ewsNETpredict(x, noise_type = "W", ensemble = 25)
 }
 \arguments{
-\item{x}{A string stating the number of models to average over. Options range from 1 to 25.}
+\item{x}{A numeric vector of values to be tested.}
+
+\item{noise_type}{A string stating the form of noise to use. Options are "W" or "C".}
+
+\item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 }
 \value{
 A data.frame of EWSNET predictions.

@@ -1,8 +1,8 @@
 #' EWSNET Predict
 #'
 #' @param x A numeric vector of values to be tested.
-#' @param x A string stating the form of noise to use. Options are "W" or "C".
-#' @param x A string stating the number of models to average over. Options range from 1 to 25.
+#' @param noise_type A string stating the form of noise to use. Options are "W" or "C".
+#' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
 #'
 #' @return A data.frame of EWSNET predictions.
 #' @export
