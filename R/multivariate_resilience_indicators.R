@@ -1,13 +1,13 @@
 #' Multivariate Early Warning Signals
 #'
-#' @param data A n x m dataframe with the first column time indices and remainder of columns species abundances.
-#' @param method c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.
-#' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
-#' @param burn_in Numeric. If "method" = "expanding, defines the number of data points to 'train' signals prior to EWS assessment.
-#' @param threshold Numeric. If "method" = "expanding, defines the threshold*sigma warning threshold.
-#' @param tail.direction A string. If "method" = "expanding, should both positive and negative thresholds be considered.
+#' @param data A n x m dataframe with the first column time indices with the remainder of the columns species abundances.
+#' @param method A single string stating either \code{"expanding"} or \code{"rolling"}.\code{"expanding"} calls the composite, expanding window EWS assessment. \code{"rolling"} calls the typical, rolling window EWS assessment.
+#' @param winsize Numeric. If "method" = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.
+#' @param burn_in Numeric. If "method" = \code{"expanding}, defines the number of data points to 'train' signals prior to EWS assessment.
+#' @param threshold Numeric. If "method" = \code{"expanding}, defines the threshold*sigma warning threshold.
+#' @param tail.direction A string. If "method" = \code{"expanding}, should both positive and negative thresholds be considered.
 
-#' @returns A list containing "raw" (the early warning signals through time) and "dimred.ts" (the dimension reduction time series)
+#' @returns A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
 #'
 #' @importFrom stats ar.ols
 #' @importFrom stats cor.test
@@ -17,7 +17,6 @@
 #' @importFrom dplyr %>%
 #' @importFrom dplyr .data
 #'
-#'
 wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
 
   meth <- match.arg(method,choices = c("rolling","expanding"))
@@ -25,25 +24,25 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
   RES<-list()
 
   if(meth == "rolling"){
+    winsize_true <- round(dim(data)[1] * winsize/100)
+  for(i in 1:(dim(data)[1]-winsize_true+1)){
 
-  for(i in 1:(dim(data)[1]-winsize+1)){
+    tmp.maf <- maf(x=data[i:(i+winsize_true-1),-1])
+    tmp.pca <- summary(prcomp(scale(data[i:(i+winsize_true-1),-1]))) #summary required to extract explained variance
 
-    tmp.maf <- maf(x=data[i:(i+winsize-1),-1])
-    tmp.pca <- summary(prcomp(scale(data[i:(i+winsize-1),-1]))) #summary required to extract explained variance
-
-    mean.ar <- mean(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
-    max.ar <- max(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
-    mean.sd <- mean(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize-1),x])}))
-    max.sd <- max(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize-1),x])}))
+    mean.ar <- mean(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
+    max.ar <- max(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
+    mean.sd <- mean(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize_true-1),x])}))
+    max.sd <- max(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize_true-1),x])}))
     eigen <- min(tmp.maf$eigen.values/sum(tmp.maf$eigen.values))
     ar <- ar.ols(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
     sd <- sd(tmp.maf$mafs[,1])
     pca.ar <- ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
     pca.sd <- sd(tmp.pca$x[,1])
-    max.cov <- max(cov(scale(data[i:(i+winsize-1),-1]))[lower.tri(cov(data[i:(i+winsize-1),-1]),diag = F)])
+    max.cov <- max(cov(scale(data[i:(i+winsize_true-1),-1]))[lower.tri(cov(data[i:(i+winsize_true-1),-1]),diag = F)])
     expl.sd <- tmp.pca$importance[2,1]
 
-    RES[[i]] <- data.frame("time" = data[i+winsize-1,1],
+    RES[[i]] <- data.frame("time" = data[i+winsize_true-1,1],
                            "meanAR" = mean.ar,
                            "maxAR" = max.ar,
                            "meanSD" = mean.sd,

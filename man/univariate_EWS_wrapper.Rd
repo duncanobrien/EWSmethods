@@ -51,7 +51,7 @@ univariate_EWS_wrapper(
 bind.res. If ggplotIt = \code{FALSE}, bind.res$EWS returns just the EWS output. If ggplotIt = \code{TRUE}, bind.res$EWS returns the EWS output and bind.res$plot the ggplot object.
 }
 \description{
-Perform Univariate Early Warning Signal Assessment
+A single function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe and/or with a standardised ggplot-based figure.
 }
 \examples{
 #A dummy dataset of a hedgerow bird over 50 years where both the abundance and the average bill length has been measured

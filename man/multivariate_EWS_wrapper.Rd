@@ -6,41 +6,44 @@
 \usage{
 multivariate_EWS_wrapper(
   data,
-  metrics,
+  method = c("expanding", "rolling"),
+  interpolate = F,
+  ggplotIt = T,
+  winsize = 50,
   threshold = 2,
   tail.direction = "one.tailed",
-  burn_in = 5,
-  ggplotIt = T,
-  y_lab = "Generic Indicator Name",
-  interpolate = F,
-  method = c("expanding", "rolling"),
-  winsize = 50
+  burn_in = 5
 )
 }
 \arguments{
-\item{data}{A dataframe where first column is time (equally spaced) and second column is abundance.}
+\item{data}{A dataframe where first column is time (equally spaced) and all other columns are individual time series. These could be different species, populations or measurements.}
 
-\item{metrics}{String vector of early warning signal metrics. Options = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","mean.size","sd.size", "size.95","SD","trait").}
+\item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
 
-\item{threshold}{= "1" or "2". Threshold*sigma is the value which if EWS strength exceeds constitutes a "signal".}
+\item{interpolate}{Boolean. If \code{TRUE}, linearly interpolates missing values found within the time series.}
 
-\item{tail.direction}{= "one.tailed" or "two.tailed"."one.tailed" only indicates a warning if positive threshold sigma exceeded, "two.tailed"  indicates a warning if positive OR negative threshold*sigma exceeded.}
+\item{ggplotIt}{Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND the estimated dimension reduction.}
 
-\item{burn_in}{= number of data points to 'train' signals prior to EWS assessment.}
+\item{winsize}{Numeric value. If method = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series' length.}
 
-\item{ggplotIt}{= ggplot plot of EWS strength trends AND input abundance.}
+\item{threshold}{Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".}
 
-\item{y_lab}{= if ggplotIt = TRUE, labels abundance y axis.}
+\item{tail.direction}{String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.}
 
-\item{interpolate}{= TRUE interpolates missing values found within the abundance time series.}
-
-\item{method}{= c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.}
-
-\item{winsize}{Numeric. If "method" = "rolling",defines the window size of the rolling window.}
-}
-\value{
-If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object
+\item{burn_in}{Numeric value. The number of data points to 'train' signals prior to EWS assessment.}
 }
 \description{
-Perform Multivariate Early Warning Signal Assessment
+A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measureed Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe and/or with a standardised ggplot-based figure.
+}
+\examples{
+#Generate random five species non-transitioning ecosystem with 50 years of monitoring data.
+spp_data <- matrix(nrow = 50, ncol = 5)
+spp_data <- sapply(1:dim(spp_data)[2], function(x){spp_data[,x] <- rnorm(50,mean=20,sd=5)})
+multi_spp_data <- as.data.frame(cbind("time" = seq(1:50),spp_data))
+
+#Rolling window early warning signal assessment of the ecosystem, without plotting.
+multivariate_EWS_wrapper(data = multi_spp_data, method = "rolling", burn_in = 10, ggplotIt =FALSE)
+
+#Expanding window early warning signal assessment of the ecosystem, with plotting.
+\dontrun{multivariate_EWS_wrapper(data = multi_spp_data, method = "expanding", burn_in = 10, ggplotIt =TRUE)}
 }
