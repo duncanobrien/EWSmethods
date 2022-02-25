@@ -8,10 +8,10 @@
 #' @export
 #'
 #ewsNETw_25 <- function(x, noise_type = "W", ensemble = "25"){
-ewsNETpredict <- function(x, noise_type = "W", ensemble = "25"){
+ewsNETpredict <- function(x, noise_type = "W", ensemble = 25){
 
   noise_type <- match.arg(noise_type, choices = c("W","C"))
-  ensemble <- match.arg(ensemble, choices = paste(1:25))
+  ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
 
   noise_string = paste(c("noise_type = '", paste(noise_type),"'"),collapse = "")
   ensemble_string = paste(c("ensemble = ", paste(ensemble)),collapse = "")
