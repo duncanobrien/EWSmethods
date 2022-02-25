@@ -5,7 +5,8 @@
 #' @param x A string stating the number of models to average over. Options range from 1 to 25.
 #'
 #' @return A data.frame of EWSNET predictions.
-
+#' @export
+#'
 #ewsNETw_25 <- function(x, noise_type = "W", ensemble = "25"){
 ewsNETpredict <- function(x, noise_type = "W", ensemble = "25"){
 
