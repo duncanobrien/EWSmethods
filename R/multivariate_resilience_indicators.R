@@ -17,7 +17,6 @@
 #' @importFrom dplyr %>%
 #' @importFrom dplyr .data
 #'
-#' @export
 #'
 wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
 

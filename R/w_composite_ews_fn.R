@@ -17,7 +17,6 @@
 #'
 #' @importFrom stats spec.ar
 #'
-#' @export
 W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed",interpolate = F){
 
   ############################################################

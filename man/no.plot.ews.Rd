@@ -21,7 +21,7 @@ no.plot.ews(
 \arguments{
 \item{timeseries}{A dataframe where first column is time (equally spaced) and second column is abundance.}
 
-\item{winsize}{Numeric. If "method" = "rolling",defines the window size of the rolling window.}
+\item{winsize}{Numeric. Defines the window size of the rolling window as a percentage of the timeseries.}
 
 \item{detrending}{A string. Should detrending be performed on the time series.}
 

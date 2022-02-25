@@ -7,49 +7,68 @@
 univariate_EWS_wrapper(
   data,
   metrics,
-  trait = NULL,
+  method = c("expanding", "rolling"),
+  interpolate = F,
+  ggplotIt = T,
+  y_lab = "Generic Indicator Name",
+  winsize = 50,
   threshold = 2,
   tail.direction = "one.tailed",
   burn_in = 5,
-  ggplotIt = T,
-  y_lab = "Generic Indicator Name",
+  trait = NULL,
   trait_lab = "Generic Trait Name",
-  trait_scale = 1e+05,
-  interpolate = F,
-  method = c("expanding", "rolling"),
-  winsize = 50
+  trait_scale = 1e+05
 )
 }
 \arguments{
 \item{data}{A dataframe where first column is time (equally spaced) and second column is abundance.}
 
-\item{metrics}{String vector of early warning signal metrics. Options = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","mean.size","sd.size", "size.95","SD","trait").}
+\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"},\code{"rr"},\code{"dr"},\code{"skew"},\code{"kurt"},\code{"mean.size"},\code{"sd.size"},\code{"sd.95"} and \code{"trait"}.}
 
-\item{trait}{A vector of trait values if desired.}
+\item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
 
-\item{threshold}{= "1" or "2". Threshold*sigma is the value which if EWS strength exceeds constitutes a "signal".}
+\item{interpolate}{Boolean. If \code{TRUE}, linearly interpolates missing values found within the abundance time series.}
 
-\item{tail.direction}{= "one.tailed" or "two.tailed"."one.tailed" only indicates a warning if positive threshold sigma exceeded, "two.tailed"  indicates a warning if positive OR negative threshold*sigma exceeded.}
+\item{ggplotIt}{Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND input abundance.}
 
-\item{burn_in}{= number of data points to 'train' signals prior to EWS assessment.}
+\item{y_lab}{String label. If ggplotIt = \code{TRUE}, labels the abundance y axis.}
 
-\item{ggplotIt}{= ggplot plot of EWS strength trends AND input abundance.}
+\item{winsize}{Numeric value. If method = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.}
 
-\item{y_lab}{= if ggplotIt = TRUE, labels abundance y axis.}
+\item{threshold}{Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".}
 
-\item{trait_lab}{= if ggplotIt = TRUE, & trait populated, & "trait" supplied in metrics, labels abundance second abundance y axis (represents trait values through time).}
+\item{tail.direction}{String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.}
 
-\item{trait_scale}{= scales trait y axis relative to abundance y axis.}
+\item{burn_in}{Numeric value. The number of data points to 'train' signals prior to EWS assessment.}
 
-\item{interpolate}{= TRUE interpolates missing values found within the abundance time series.}
+\item{trait}{A vector of numeric trait values if desired. Can be \code{NULL}}
 
-\item{method}{= c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.}
+\item{trait_lab}{String label.If ggplotIt = \code{TRUE}, & trait populated, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.}
 
-\item{winsize}{Numeric. If "method" = "rolling",defines the window size of the rolling window.}
+\item{trait_scale}{Numeric value. Scales trait y axis relative to abundance y axis.}
 }
 \value{
-If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object
+bind.res. If ggplotIt = \code{FALSE}, bind.res$EWS returns just the EWS output. If ggplotIt = \code{TRUE}, bind.res$EWS returns the EWS output and bind.res$plot the ggplot object.
 }
 \description{
 Perform Univariate Early Warning Signal Assessment
+}
+\examples{
+#A dummy dataset of a hedgerow bird over 50 years where both the abundance and the average bill length has been measured
+abundance_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20), trait = rnorm(50,mean=1,sd=0.5))
+#The early warning signal metrics to compute
+ews_metrics <- c("SD","ar1","skew")
+
+#Rolling window early warning signal assessment of the bird abundance (no plotting)
+roll_ews <- univariate_EWS_wrapper(data = abundance_data[,1:2],metrics =  ews_metrics, method = "rolling", winsize = 50)
+
+#Expanding window early warning signal assessment of the bird abundance (with plotting)
+\dontrun{exp_ews <- univariate_EWS_wrapper(data = abundance_data,metrics =  ews_metrics, method = "expanding",
+burn_in = 10, ggplotIt =T, ylab = "Bird abundance")}
+
+#Expanding window early warning signal assessment of the bird abundance incorporating the trait information (with plotting)
+ews_metrics_trait <- c("SD","ar1","trait")
+\dontrun{trait_exp_ews <- univariate_EWS_wrapper(data = abundance_data,metrics = ews_metrics_trait, method = "expanding",
+burn_in = 10, ggplotIt =T, trait = abundance_data$trait, trait_lab = "Bill length (mm)", trait_scale = 10)}
+
 }

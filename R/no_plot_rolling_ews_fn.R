@@ -3,7 +3,7 @@
 #' An adaptation of the 'generic_ews' function in the R package 'earlywarnings'
 #'
 #' @param timeseries A dataframe where first column is time (equally spaced) and second column is abundance.
-#' @param winsize Numeric. If "method" = "rolling",defines the window size of the rolling window.
+#' @param winsize Numeric. Defines the window size of the rolling window as a percentage of the timeseries.
 #' @param detrending A string. Should detrending be performed on the time series.
 #' @param bandwidth Numeric. Bandwidth used for the Gaussian kernel when gaussian filtering is applied. It is expressed as percentage of the time series length.
 #' @param span  Numeric. Parameter that controls the degree of smoothing (numeric between 0 and 100, Default 25).
@@ -22,7 +22,6 @@
 #' @importFrom stats predict
 #' @importFrom stats acf
 #'
-#' @export
 no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
                                                                 "loess", "linear", "first-diff"),
                       bandwidth = NULL, span = NULL,
