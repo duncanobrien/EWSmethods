@@ -3,9 +3,9 @@
 #' @param data A n x m dataframe with the first column time indices with the remainder of the columns species abundances.
 #' @param method A single string stating either \code{"expanding"} or \code{"rolling"}.\code{"expanding"} calls the composite, expanding window EWS assessment. \code{"rolling"} calls the typical, rolling window EWS assessment.
 #' @param winsize Numeric. If "method" = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.
-#' @param burn_in Numeric. If "method" = \code{"expanding}, defines the number of data points to 'train' signals prior to EWS assessment.
-#' @param threshold Numeric. If "method" = \code{"expanding}, defines the threshold*sigma warning threshold.
-#' @param tail.direction A string. If "method" = \code{"expanding}, should both positive and negative thresholds be considered.
+#' @param burn_in Numeric. If "method" = \code{"expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
+#' @param threshold Numeric. If "method" = \code{"expanding"}, defines the threshold*sigma warning threshold.
+#' @param tail.direction A string. If "method" = \code{"expanding"}, should both positive and negative thresholds be considered.
 
 #' @returns A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
 #'

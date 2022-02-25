@@ -20,11 +20,11 @@ wMAF(
 
 \item{winsize}{Numeric. If "method" = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.}
 
-\item{burn_in}{Numeric. If "method" = \code{"expanding}, defines the number of data points to 'train' signals prior to EWS assessment.}
+\item{burn_in}{Numeric. If "method" = \code{"expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.}
 
-\item{tail.direction}{A string. If "method" = \code{"expanding}, should both positive and negative thresholds be considered.}
+\item{tail.direction}{A string. If "method" = \code{"expanding"}, should both positive and negative thresholds be considered.}
 
-\item{threshold}{Numeric. If "method" = \code{"expanding}, defines the threshold*sigma warning threshold.}
+\item{threshold}{Numeric. If "method" = \code{"expanding"}, defines the threshold*sigma warning threshold.}
 }
 \value{
 A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)

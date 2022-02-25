@@ -18,7 +18,7 @@
 #' multi_spp_data <- as.data.frame(cbind("time" = seq(1:50),spp_data))
 #'
 #' #Rolling window early warning signal assessment of the ecosystem, without plotting.
-#' multivariate_EWS_wrapper(data = multi_spp_data, method = "rolling", burn_in = 10, ggplotIt =FALSE)
+#' multivariate_EWS_wrapper(data = multi_spp_data, method = "rolling", winsize = 50, ggplotIt =FALSE)
 #'
 #' #Expanding window early warning signal assessment of the ecosystem, with plotting.
 #' \dontrun{multivariate_EWS_wrapper(data = multi_spp_data, method = "expanding", burn_in = 10, ggplotIt =TRUE)}
