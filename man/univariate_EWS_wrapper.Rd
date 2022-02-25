@@ -9,7 +9,6 @@ univariate_EWS_wrapper(
   metrics,
   trait = NULL,
   threshold = 2,
-  plotIt = F,
   tail.direction = "one.tailed",
   burn_in = 5,
   ggplotIt = T,
@@ -29,8 +28,6 @@ univariate_EWS_wrapper(
 \item{trait}{A vector of trait values if desired.}
 
 \item{threshold}{= "1" or "2". Threshold*sigma is the value which if EWS strength exceeds constitutes a "signal".}
-
-\item{plotIt}{= base R plot of EWS strength trends.}
 
 \item{tail.direction}{= "one.tailed" or "two.tailed"."one.tailed" only indicates a warning if positive threshold sigma exceeded, "two.tailed"  indicates a warning if positive OR negative threshold*sigma exceeded.}
 

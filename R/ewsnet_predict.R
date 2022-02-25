@@ -10,6 +10,10 @@
 #ewsNETw_25 <- function(x, noise_type = "W", ensemble = "25"){
 ewsNETpredict <- function(x, noise_type = "W", ensemble = 25){
 
+  if(length(reticulate::conda_list())<2){
+    warning("Call 'EWSNET_init()' before attempting to use ewsNETpredict()")
+  }else{
+
   noise_type <- match.arg(noise_type, choices = c("W","C"))
   ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
 
@@ -33,4 +37,6 @@ ewsNETpredict <- function(x, noise_type = "W", ensemble = 25){
                     "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)
   return(out)
+  }
+
 }

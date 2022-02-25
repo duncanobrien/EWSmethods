@@ -8,6 +8,15 @@
 #' @param tail.direction A string. If "method" = "expanding, should both positive and negative thresholds be considered.
 
 #' @returns A list containing "raw" (the early warning signals through time) and "dimred.ts" (the dimension reduction time series)
+#'
+#' @importFrom stats ar.ols
+#' @importFrom stats cor.test
+#' @importFrom stats cov
+#' @importFrom stats na.omit
+#' @importFrom stats prcomp
+#' @importFrom dplyr %>%
+#' @importFrom dplyr .data
+#'
 #' @export
 #'
 wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
@@ -35,7 +44,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     max.cov <- max(cov(scale(data[i:(i+winsize-1),-1]))[lower.tri(cov(data[i:(i+winsize-1),-1]),diag = F)])
     expl.sd <- tmp.pca$importance[2,1]
 
-    RES[[i]] <- data.frame(time = data[i+winsize-1,1],
+    RES[[i]] <- data.frame("time" = data[i+winsize-1,1],
                            "meanAR" = mean.ar,
                            "maxAR" = max.ar,
                            "meanSD" = mean.sd,
@@ -133,10 +142,10 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     results<-do.call("rbind", RES)
 
     output<-data.frame(results) %>%
-      tidyr::pivot_longer(-time, names_to = "metric.code",values_to = "metric.score") %>%
-      dplyr::group_by(metric.code) %>% dplyr::arrange(time,.by_group = TRUE) %>%
-      dplyr::mutate(rolling.mean = rolling_mean(metric.score),
-             rolling.sd = rolling_sd(metric.score))
+      tidyr::pivot_longer(-.data$time, names_to = "metric.code",values_to = "metric.score") %>%
+      dplyr::group_by(.data$metric.code) %>% dplyr::arrange(.data$time,.by_group = TRUE) %>%
+      dplyr::mutate(rolling.mean = rolling_mean(.data$metric.score),
+             rolling.sd = rolling_sd(.data$metric.score))
     output$threshold.crossed<-NA
 
     if(tail.direction == "two.tailed"){

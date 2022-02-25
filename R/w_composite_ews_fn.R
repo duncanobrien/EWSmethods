@@ -11,13 +11,14 @@
 #' @param threshold Numeric. The threshold*sigma cutoff past which a warning is identified.
 #' @param burn_in Numeric. Number of data points used to train signals before early warning signal assessment is performed.
 #' @param tail.direction A string match to \code{"one.tailed"} or \code{"two.tailed"}.
-#' @param plotIt Boolean. If true, base R plots are returned
 #' @param interpolate Boolean. Should missing values in dat be interpolated.
 #'
 #' @return output A matrix of early warning signal indicators through time.
-
+#'
+#' @importFrom stats spec.ar
+#'
 #' @export
-W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed", plotIt, interpolate = F){
+W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed",interpolate = F){
 
   ############################################################
   ##print some warnings
@@ -90,7 +91,7 @@ W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2,
       for(i in (burn_in):length(dat[,1])){
         #i=7
         ##subset the population of interest up until dat i
-        dat.t<-subset(dat, time<=unique(sort(dat$time))[i])
+        dat.t<- base::subset(dat, dat$time<=base::unique(sort(dat$time))[i])
 
         ##calculate the CV at time t in the focal pop, relative to mean CV through time of that pop
         if(length(which(inds=="cv"))==1){
@@ -221,17 +222,17 @@ W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2,
     names(output)[1]<-c("time")
     output$count.used <- dat.t$counts[dat.t$time %in% output$time] ### added variable to identify interp differences droppng values
 
-    if(plotIt==T){
-      dev.new()
-      par(mar = (c(1, 2, 0, 1) + 0.2), oma = c(4, 2, 3, 1))
-      plot(output$time, output$rolling.mean, type="l", lwd=1, xlab="Time", ylab="metric score",
-           ylim=c(min(output[,c(2,4,5)], na.rm=T), max(output[,c(2,4,5)], na.rm=T)), lty="solid")
-      lines(output$time, output$metric.score, type="l", lwd=2, col="skyblue")
-      lines(output$time, output$rolling.mean+(output$rolling.sd*threshold), type="l", lwd=1, lty="dashed")
-      lines(output$time, output$rolling.mean-(output$rolling.sd*threshold), type="l", lwd=1, lty="dashed")
-      legend("topright", legend=c("Rolling mean", "Metric score","Confidence interval"),
-            col=c("black","skyblue", "black"), lty=c(1,1,2), cex=0.8)
-         }
+    # if(plotIt==T){
+    #   dev.new()
+    #   par(mar = (c(1, 2, 0, 1) + 0.2), oma = c(4, 2, 3, 1))
+    #   plot(output$time, output$rolling.mean, type="l", lwd=1, xlab="Time", ylab="metric score",
+    #        ylim=c(min(output[,c(2,4,5)], na.rm=T), max(output[,c(2,4,5)], na.rm=T)), lty="solid")
+    #   lines(output$time, output$metric.score, type="l", lwd=2, col="skyblue")
+    #   lines(output$time, output$rolling.mean+(output$rolling.sd*threshold), type="l", lwd=1, lty="dashed")
+    #   lines(output$time, output$rolling.mean-(output$rolling.sd*threshold), type="l", lwd=1, lty="dashed")
+    #   legend("topright", legend=c("Rolling mean", "Metric score","Confidence interval"),
+    #         col=c("black","skyblue", "black"), lty=c(1,1,2), cex=0.8)
+    #      }
 
     return(output)
   }

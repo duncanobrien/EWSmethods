@@ -4,7 +4,6 @@
 #' @param metrics String vector of early warning signal metrics. Options = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","mean.size","sd.size", "size.95","SD","trait").
 #' @param trait A vector of trait values if desired.
 #' @param threshold = "1" or "2". Threshold*sigma is the value which if EWS strength exceeds constitutes a "signal".
-#' @param plotIt = base R plot of EWS strength trends.
 #' @param ggplotIt = ggplot plot of EWS strength trends AND input abundance.
 #' @param tail.direction = "one.tailed" or "two.tailed"."one.tailed" only indicates a warning if positive threshold sigma exceeded, "two.tailed"  indicates a warning if positive OR negative threshold*sigma exceeded.
 #' @param burn_in = number of data points to 'train' signals prior to EWS assessment.
@@ -14,11 +13,38 @@
 #' @param trait_lab = if ggplotIt = TRUE, & trait populated, & "trait" supplied in metrics, labels abundance second abundance y axis (represents trait values through time).
 #' @param trait_scale = scales trait y axis relative to abundance y axis.
 #' @param method = c("expanding","rolling")."expanding" calls composite, expanding window EWS assessment. "rolling" calls typical, rolling window EWS assessment.
-
+#'
 #' @returns If ggplotIt = F, returns just EWS output.If ggplotIt = T, returns EWS output and plot object
-
+#'
+#' @importFrom stats quantile
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 geom_hline
+#' @importFrom ggplot2 geom_line
+#' @importFrom ggplot2 geom_point
+#' @importFrom ggplot2 scale_alpha_manual
+#' @importFrom ggplot2 guide_legend
+#' @importFrom ggplot2 scale_colour_manual
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 margin
+#' @importFrom ggplot2 unit
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 sec_axis
+#' @importFrom ggplot2 annotate
+#' @importFrom ggplot2 facet_wrap
+#' @importFrom ggplot2 guides
+#' @importFrom ggplot2 geom_text
+#' @importFrom dplyr across
+#' @importFrom dplyr everything
+#' @importFrom dplyr .data
+#'
 #' @export
-univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plotIt = F, tail.direction = "one.tailed", burn_in = 5, ggplotIt = T,
+univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,tail.direction = "one.tailed", burn_in = 5, ggplotIt = T,
                              y_lab = "Generic Indicator Name", trait_lab = "Generic Trait Name",
                              trait_scale = 100000, interpolate = F,method = c("expanding","rolling"),
                              winsize = 50){
@@ -43,7 +69,7 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
       ##set the weighing to 1 - just required to make the code run, doesnt do anythnig
       W<-data.frame(inds=sort(unlist(to.test[i])), "wei"=1)
       ##run the EWS from clements & ozgul nat comms and save out:
-      res[[i]]<-W_composite_ews(dat=data, indicators=sort(unlist(to.test[i])), weights=W, trait = trait, threshold=threshold, burn_in = burn_in, tail.direction = tail.direction, plotIt=plotIt, interpolate = interpolate)
+      res[[i]]<-W_composite_ews(dat=data, indicators=sort(unlist(to.test[i])), weights=W, trait = trait, threshold=threshold, burn_in = burn_in, tail.direction = tail.direction,interpolate = interpolate)
     }
 
     bind.res<-data.table::rbindlist(res)
@@ -52,10 +78,10 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
 
     if(isTRUE(ggplotIt)){
 
-      p<- ggplot(data = bind.res, aes(x=time,y=str,col=metric.code)) +
+      p<- ggplot(data = bind.res, aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = threshold, linetype="solid", color = "grey", size=1)+
         geom_line()+
-        geom_point(aes(x=time, y = str,alpha = as.factor(threshold.crossed))) +
+        geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
         scale_alpha_manual(values = c(0,1),
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                            guide = guide_legend(order = 1, override.aes =
@@ -75,12 +101,12 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
       if(is.null(trait)==F){
         plot.dat<-data.frame("timeseries"=bind.res$time, "value"=bind.res$count.used,"trait"=trait[burn_in:(nrow(data)-1)])
 
-        p2 <-ggplot(data = plot.dat, aes(x=timeseries, y=count.used)) +
+        p2 <-ggplot(data = plot.dat, aes(x=.data$timeseries, y=.data$count.used)) +
           aes(group=NA)+
-          geom_line(aes(y=value),linetype=1) +
-          geom_line(aes(y=(trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
+          geom_line(aes(y=.data$value),linetype=1) +
+          geom_line(aes(y=(.data$trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=time, y = max(count.used)*-0.1,col=metric.code,alpha = as.factor(threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = max(.data$count.used)*-0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -103,11 +129,11 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
       }else if(is.null(trait)==T){
         plot.dat<-data.frame("time"=as.numeric(bind.res$time), "count.used"=bind.res$count.used)
 
-        p4 <-ggplot(data = plot.dat, aes(x=time, y=count.used)) +
+        p4 <-ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
           aes(group=NA)+
           geom_line(col = "black")+
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=time, y = max(count.used)*-0.1,col=metric.code,alpha = as.factor(threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = max(.data$count.used)*-0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -135,31 +161,30 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
     bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = interpolate)
 
       bind.res$raw <- bind.res$raw[,c("timeindex",metrics)]
-      bind.res$raw$data_source <- data_source
       bind.res$raw<-as.data.frame(bind.res$raw)
       bind.res$cor <- bind.res$cor[,metrics]
 
       if(isTRUE(ggplotIt)){
 
         plot.dat <- bind.res$raw %>%
-          dplyr:: mutate(across(-c(timeindex),~scale(.x)))%>%
+          dplyr:: mutate(across(-c(.data$timeindex),~scale(.x)))%>%
           dplyr::left_join(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex")%>%
-          tidyr::pivot_longer(-c(timeindex,count.used), names_to = "metric.code", values_to = "str")
+          tidyr::pivot_longer(-c(.data$timeindex,.data$count.used), names_to = "metric.code", values_to = "str")
 
         cor.dat <- bind.res$cor %>%
           tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
           dplyr::rowwise()%>%
-          dplyr::mutate(cor = paste(c("Tau:", round(cor, digits = 3)),collapse = " ")) %>%
+          dplyr::mutate(cor = paste(c("Tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
           dplyr::mutate(timeindex = quantile(plot.dat$timeindex,0.8), str =  max(plot.dat$str)*0.8)
 
-        p<- ggplot(data = plot.dat, aes(x=timeindex,y=str,group=metric.code)) +
-          geom_line(aes(col= metric.code))+
-          geom_text(data = cor.dat,aes(label = cor),size = 3)+
+        p<- ggplot(data = plot.dat, aes(x=.data$timeindex,y=.data$str,group=.data$metric.code)) +
+          geom_line(aes(col= .data$metric.code))+
+          geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
           scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
           ggthemes::theme_clean() + xlab("Date") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='EWS Indicator\nTrend') +
-          facet_wrap(~metric.code,nrow=4)+
+          facet_wrap(~.data$metric.code,nrow=4)+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm"),
                 legend.key.width = unit(0.5,"cm"),
@@ -168,7 +193,7 @@ univariate_EWS_wrapper <- function(data,metrics,trait = NULL, threshold = 2,plot
           guides(alpha = guide_legend(order = 1),
                  col = guide_legend(order = 2))
 
-        p2 <-ggplot(data = plot.dat, aes(x=timeindex, y=count.used)) +
+        p2 <-ggplot(data = plot.dat, aes(x=.data$timeindex, y=.data$count.used)) +
           aes(group=NA)+
           geom_line(col = "black")+
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +

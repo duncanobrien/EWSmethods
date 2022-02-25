@@ -12,7 +12,6 @@ W_composite_ews(
   threshold = 2,
   burn_in = 5,
   tail.direction = "one.tailed",
-  plotIt,
   interpolate = F
 )
 }
@@ -30,8 +29,6 @@ W_composite_ews(
 \item{burn_in}{Numeric. Number of data points used to train signals before early warning signal assessment is performed.}
 
 \item{tail.direction}{A string match to \code{"one.tailed"} or \code{"two.tailed"}.}
-
-\item{plotIt}{Boolean. If true, base R plots are returned}
 
 \item{interpolate}{Boolean. Should missing values in dat be interpolated.}
 }

@@ -10,10 +10,18 @@
 #' @param degree Numeric. The degree of polynomial when loess detrending is applied.
 #' @param logtransform Boolean. If TRUE, data is log transformed as log(x+1).
 #' @param interpolate Boolean. If TRUE, interpolates missing values found within the abundance time series.
-#' @param AR_n  Boolean. If TRUE, the best fitted AR(n) model is fitted to the data.
+#' @param AR_n Boolean. If TRUE, the best fitted AR(n) model is fitted to the data.
 #' @param powerspectrum Boolean. If TRUE the power spectrum within each rolling window.
-
-
+#'
+#' @importFrom stats bw.nrd0
+#' @importFrom stats ksmooth
+#' @importFrom stats resid
+#' @importFrom stats lm
+#' @importFrom stats fitted
+#' @importFrom stats loess
+#' @importFrom stats predict
+#' @importFrom stats acf
+#'
 #' @export
 no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
                                                                 "loess", "linear", "first-diff"),
