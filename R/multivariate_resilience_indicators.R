@@ -7,7 +7,7 @@
 #' @param threshold Numeric. If "method" = \code{"expanding"}, defines the threshold*sigma warning threshold.
 #' @param tail.direction A string. If "method" = \code{"expanding"}, should both positive and negative thresholds be considered.
 
-#' @returns A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
+#' @return A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
 #'
 #' @importFrom stats ar.ols
 #' @importFrom stats cor.test

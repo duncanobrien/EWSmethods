@@ -7,11 +7,17 @@
 EWSNET_init(envname)
 }
 \arguments{
-\item{envname}{A string naming the desired Python environment to create/activate. If no python or environment found, the functions prompts to install Anaconda and the required python packages}
+\item{envname}{A string naming the desired Python environment to create/activate. If no python or environment found, the functions prompts to install Anaconda and the required python packages.}
+}
+\value{
+Does not return an object as is simply preparing your R session.
 }
 \description{
 Prepares your R session for communicating with Python. This function first searches your computer for an appropriate Python environment and activates it, importing the vital Python packages required. If no appropriate Python install or environment is found, after asking permission, Anaconda is downloaded and an environment created.
 }
 \examples{
 \dontrun{EWSNET_init(envname = "EWSNET_env")}
+\dontrun{reticulate::py_config()}
+#If successful, 'EWSNET_env forced by use_python function' will be printed.
+
 }

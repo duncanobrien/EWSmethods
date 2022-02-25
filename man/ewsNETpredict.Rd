@@ -14,10 +14,10 @@ ewsNETpredict(x, noise_type = "W", ensemble = 25)
 \item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 }
 \value{
-A dataframe of EWSNET predictions.
+A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
 }
 \description{
-Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for your univariate time series.
+Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 }
 \examples{
 abundance_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20))

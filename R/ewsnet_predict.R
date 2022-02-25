@@ -1,12 +1,12 @@
 #' EWSNET Predict
 #'
-#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for your univariate time series.
+#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 #'
 #' @param x A numeric vector of values to be tested.
 #' @param noise_type A string stating the form of noise to use. Options are "W" or "C".
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
 #'
-#' @return A dataframe of EWSNET predictions.
+#' @returns A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
 #'
 #' @examples
 #' abundance_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 20))

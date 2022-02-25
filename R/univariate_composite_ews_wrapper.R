@@ -1,22 +1,25 @@
 #' Perform Univariate Early Warning Signal Assessment
 #'
-#' A single function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe and/or with a standardised ggplot-based figure.
+#' A function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding window) with the assessments returned as a dataframe with and/or without a standardised ggplot-based figure.
 #'
-#' @param data A dataframe where first column is time (equally spaced) and second column is abundance.
-#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"},\code{"rr"},\code{"dr"},\code{"skew"},\code{"kurt"},\code{"mean.size"},\code{"sd.size"},\code{"sd.95"} and \code{"trait"}.
+#' @param data A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.
+#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, \code{"mean.size"}, \code{"sd.size"}, \code{"sd.95"} and \code{"trait"}.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
 #' @param interpolate Boolean. If \code{TRUE}, linearly interpolates missing values found within the abundance time series.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND input abundance.
-#' @param y_lab String label. If ggplotIt = \code{TRUE}, labels the abundance y axis.
-#' @param winsize Numeric value. If method = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.
+#' @param y_lab String label. If \code{ggplotIt = TRUE}, labels the abundance y axis.
+#' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series length.
 #' @param threshold Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".
 #' @param tail.direction String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.
 #' @param burn_in Numeric value. The number of data points to 'train' signals prior to EWS assessment.
 #' @param trait A vector of numeric trait values if desired. Can be \code{NULL}
-#' @param trait_lab String label.If ggplotIt = \code{TRUE}, & trait populated, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
+#' @param trait_lab String label. If \code{ggplotIt = TRUE}, & trait populated, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
 #' @param trait_scale Numeric value. Scales trait y axis relative to abundance y axis.
 #'
-#' @returns bind.res. If ggplotIt = \code{FALSE}, bind.res$EWS returns just the EWS output. If ggplotIt = \code{TRUE}, bind.res$EWS returns the EWS output and bind.res$plot the ggplot object.
+#' @returns A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
+#' \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
+#' \item{EWS$cor}{Dataframe of Kendall Tau correlations. Only returned if \code{method = "rolling"}.}
+#' \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 #'
 #' @examples
 #' #A dummy dataset of a hedgerow bird over 50 years where both the abundance and the average bill length has been measured
@@ -65,7 +68,7 @@
 #'
 #' @export
 univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"),
-                                   interpolate = F, ggplotIt = T, y_lab = "Generic Indicator Name",
+                                   interpolate = FALSE, ggplotIt = TRUE, y_lab = "Generic Indicator Name",
                                    winsize = 50, threshold = 2,tail.direction = "one.tailed",
                                    burn_in = 5, trait = NULL,
                                    trait_lab = "Generic Trait Name",
