@@ -17,7 +17,7 @@ univariate_EWS_wrapper(
   burn_in = 5,
   trait = NULL,
   trait_lab = "Generic Trait Name",
-  trait_scale = 1e+05
+  trait_scale = 1000
 )
 }
 \arguments{

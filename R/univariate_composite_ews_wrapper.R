@@ -67,7 +67,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                                    winsize = 50, threshold = 2,tail.direction = "one.tailed",
                                    burn_in = 5, trait = NULL,
                                    trait_lab = "Generic Trait Name",
-                                  trait_scale = 100000){
+                                  trait_scale = 1000){
 
   method <- match.arg(method,choices = c("expanding","rolling"))
 

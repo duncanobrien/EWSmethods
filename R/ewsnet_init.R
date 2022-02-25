@@ -1,6 +1,11 @@
 #' EWSNET Initialisation
 #'
+#' Prepares your R session for communicating with Python. This function first searches your computer for an appropriate Python environment and activates it, importing the vital Python packages required. If no appropriate Python install or environment is found, after asking permission, Anaconda is downloaded and an environment created.
+#'
 #' @param envname A string naming the desired Python environment to create/activate. If no python or environment found, the functions prompts to install Anaconda and the required python packages
+#'
+#' @examples
+#' \dontrun{EWSNET_init(envname = "EWSNET_env")}
 
 EWSNET_init <- function(envname){
 
