@@ -104,17 +104,16 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 
 # EWSNet
 
-The other half of *EWSmethods* allows you to use the Python-based EWSNet
-via an easy to use R workflow. Here is a simple example that details how
-to first prepare your R session to communicate with Python (using the
-excellent *reticulate* [R
-package](https://rstudio.github.io/reticulate/)) and then call
-**EWSNet** to assess the probability of a transition occurring in the
-skylark time series.
+The other half of *EWSmethods* allows you to use the
+[Python-based](https://www.python.org) **EWSNet** via an easy to use R
+workflow. Here is a simple example that details how to first prepare
+your R session to communicate with Python (using the excellent
+*reticulate* [R package](https://rstudio.github.io/reticulate/)) and
+then call **EWSNet** to assess the probability of a transition occurring
+in the skylark time series.
 
 ``` r
 library(reticulate)
-#> Warning: package 'reticulate' was built under R version 4.0.5
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 #> conda env EWSNET_env found. Would you like to activate it and install necessary
@@ -125,7 +124,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.3201272          0.327014           0.3528588
+#> 1 No Transition     0.4159259         0.2643273           0.3197468
 ```
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`

@@ -10,7 +10,7 @@ univariate_EWS_wrapper(
   method = c("expanding", "rolling"),
   interpolate = FALSE,
   ggplotIt = TRUE,
-  y_lab = "Generic Indicator Name",
+  y_lab = "Generic indicator name",
   winsize = 50,
   threshold = 2,
   tail.direction = "one.tailed",
@@ -75,6 +75,7 @@ ews_metrics <- c("SD","ar1","skew")
 roll_ews <- univariate_EWS_wrapper(
  data = abundance_data[,1:2],
  metrics =  ews_metrics,
+ ggplotIt = FALSE,
  method = "rolling",
  winsize = 50)
 
@@ -86,7 +87,7 @@ roll_ews <- univariate_EWS_wrapper(
  metrics = ews_metrics,
  method = "expanding",
  burn_in = 10,
- ggplotIt =T,
+ ggplotIt =TRUE,
  ylab = "Bird abundance")}
 
 #Expanding window early warning signal assessment of
@@ -99,7 +100,7 @@ ews_metrics_trait <- c("SD","ar1","trait")
  metrics = ews_metrics_trait,
  method = "expanding",
  burn_in = 10,
- ggplotIt =T,
+ ggplotIt =TRUE,
  trait = abundance_data$trait,
  trait_lab = "Bill length (mm)",
  trait_scale = 10)}

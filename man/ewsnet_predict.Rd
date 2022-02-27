@@ -19,7 +19,7 @@ ewsnet_predict(x, noise_type = "W", ensemble = 25, envname)
 A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
 }
 \description{
-Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modeling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
+Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 }
 \examples{
 #A dummy dataset of a hedgerow bird population

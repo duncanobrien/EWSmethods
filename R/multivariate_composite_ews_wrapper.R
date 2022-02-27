@@ -77,7 +77,7 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
         scale_colour_manual(values = scales::hue_pal()(11),
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,11),shape= NA))) +
-        ggthemes::theme_clean() + xlab("Date") + ylab("Strength of EWS") +
+        ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nIndicator Strength') +
         theme(plot.margin = margin(c(10, 8, 0, 10)),
@@ -95,7 +95,7 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
           geom_line(aes(col = .data$dimred))+
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab("Scaled component value") +
-          xlab("Date")+
+          xlab("Time point")+
           ggthemes::theme_clean()+
           scale_colour_manual(values = c("#A1B4FE","#FFE7A1"),name = "Dimension\nreduction")+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
@@ -134,7 +134,7 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
           scale_colour_manual(values = scales::hue_pal()(11),
                               guide = guide_legend(override.aes = list(linetype = rep(1,11),shape=NA))) +
-          ggthemes::theme_clean() + xlab("Date") + ylab("Scaled metric value") +
+          ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='Multivariate EWS\nIndicator Trend') +
           facet_wrap(~metric.code,nrow=4)+
@@ -152,7 +152,7 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
           geom_line(aes(col = .data$dimred))+
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab("Scaled component value") +
-          xlab("Date")+
+          xlab("Time point")+
           ggthemes::theme_clean()+
           scale_colour_manual(values = c("#A1B4FE","#FFE7A1"),name = "Dimension\nreduction")+
           theme(plot.margin = margin(c(10, 8, 0, 10)),

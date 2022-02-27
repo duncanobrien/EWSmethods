@@ -93,13 +93,14 @@
 #' @importFrom ggplot2 facet_wrap
 #' @importFrom ggplot2 guides
 #' @importFrom ggplot2 geom_text
+#' @importFrom ggplot2 scale_linetype_manual
 #' @importFrom dplyr across
 #' @importFrom dplyr everything
 #' @importFrom dplyr .data
 #'
 #' @export
 univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"),
-                                   interpolate = FALSE, ggplotIt = TRUE, y_lab = "Generic Indicator Name",
+                                   interpolate = FALSE, ggplotIt = TRUE, y_lab = "Generic indicator name",
                                    winsize = 50, threshold = 2,tail.direction = "one.tailed",
                                    burn_in = 5, trait = NULL,
                                    trait_lab = "Generic Trait Name",
@@ -145,7 +146,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
         scale_colour_manual(values = scales::hue_pal()(length(to.test)),
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,length(to.test)),shape= NA))) +
-        ggthemes::theme_clean() + xlab("Date") + ylab("Strength of EWS") +
+        ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='EWS Indicator\nStrength') +
         theme(plot.margin = margin(c(10, 8, 0, 10)),
@@ -160,20 +161,26 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
 
         p2 <-ggplot(data = plot.dat, aes(x=.data$timeseries, y=.data$count.used)) +
           aes(group=NA)+
-          geom_line(aes(y=.data$count.used),linetype=1) +
-          geom_line(aes(y=(.data$trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
+          geom_line(aes(y=.data$count.used, linetype = "Count")) +
+          geom_line(aes(y=(.data$trait*trait_scale), linetype = "Trait"), size = 0.4, alpha = 0.4,col = "blue") +
+          # geom_line(aes(y=.data$count.used),linetype=1) +
+          # geom_line(aes(y=(.data$trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
                      aes(x=.data$time, y = max(.data$count.used)*-0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
                                                     list(size = c(4),shape = c("|")))) +
+          scale_linetype_manual(values = c(1,2),breaks = c("Count","Trait"), name = "Time series",
+                               guide = guide_legend(override.aes =
+                                                      list(col = c("black","blue"),alpha = c(1,0.4))))+
           scale_y_continuous(y_lab,sec.axis = sec_axis(~./trait_scale, name = trait_lab))+
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-          xlab("Date")+
+          xlab("Time point")+
           ylab(y_lab)+
           ggthemes::theme_clean()+
-          annotate("label", x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.8 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
+          annotate("label", size = 2, x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
+          guides(alpha = guide_legend(order = 1))+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
@@ -197,9 +204,9 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                                                     list(size = c(4),shape = c("|")))) +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab(y_lab) +
-          xlab("Date")+
+          xlab("Time point")+
           ggthemes::theme_clean()+
-          annotate("label", x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.8 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
+          annotate("label", size = 2, x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
@@ -238,7 +245,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           geom_line(aes(col= .data$metric.code))+
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
           scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
-          ggthemes::theme_clean() + xlab("Date") + ylab("Scaled metric value") +
+          ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='EWS Indicator\nTrend') +
           facet_wrap(~.data$metric.code,nrow=4)+
@@ -255,7 +262,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           geom_line(col = "black")+
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab(y_lab) +
-          xlab("Date")+
+          xlab("Time point")+
           ggthemes::theme_clean()+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
