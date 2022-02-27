@@ -29,9 +29,11 @@ You can install the development version of `EWSmethods` from
 ## Examples
 
 Imagine we have 50 years of monitoring data for a local population of
-skylarks (*Alauda arvensis*) as well as mean body mass data. We could
-calculate either rolling or expanding window EWSs for the abundance data
-and would do so using `EWSmethods` as below:
+skylarks (*Alauda arvensis*) and have measured mean body mass data
+throughout this period as well. We could calculate either rolling or
+expanding window EWSs using the abundance data via
+`univariate_EWS_wrapper()` but decide to initially focus on rolling
+windows. We would therefore parameterise the function to do so as below:
 
 ``` r
 library(EWSmethods)
@@ -122,7 +124,7 @@ dataset representing five related populations of Caribbean reef octopus
 (*Octopus briareus*) in Bahamian salt water lakes (O’Brien *et al.*
 2020) and are interested in assessing the resilience of this
 metapopulation. The following code shows how we would achieve this using
-`EWSmethods`.
+the `EWSmethods` function `multivariate_EWS_wrapper()`.
 
 ``` r
 set.seed(123)
@@ -136,12 +138,12 @@ oct_exp_ews <- multivariate_EWS_wrapper(data = octopus_spp_data,method = "expand
 ```
 
 The figure again shows that one multivariate EWS indicator has expressed
-a warning, but that overall, no transition is anticipated…
+a warning, but that overall, no transition is anticipated.
 <img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
 
 ## EWSNet
 
-The other half of `EWSmethods` allows you to use the
+The other half of `EWSmethods` allows you to query the
 [Python-based](https://www.python.org) **EWSNet** via an easy to use R
 workflow. Here is a simple example that details how to first prepare
 your R session to communicate with Python (using the excellent
@@ -174,7 +176,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.3194584         0.4010319           0.2795096
+#> 1 No Transition      0.288445         0.4696982           0.2418568
 ```
 
 ## References

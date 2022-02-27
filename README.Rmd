@@ -32,7 +32,7 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 
 ## Examples
 
-Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) as well as mean body mass data. We could calculate either rolling or expanding window EWSs for the abundance data and would do so using `EWSmethods` as below:
+Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via `univariate_EWS_wrapper()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
 
 ```{r roll_example, fig.show='hide'}
 library(EWSmethods)
@@ -82,7 +82,7 @@ exp_ews_trait$plot
 
 ### Multivariate Early Warning Signals
 
-If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using `EWSmethods`. 
+If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the `EWSmethods` function `multivariate_EWS_wrapper()`. 
 
 ```{r multivariate_example, fig.show='hide'}
 set.seed(123)
@@ -93,14 +93,14 @@ octopus_spp_data <- as.data.frame(cbind("time"=seq(1:50),sapply(1:dim(octopus_sp
 oct_exp_ews <- multivariate_EWS_wrapper(data = octopus_spp_data,method = "expanding",threshold = 2, tail.direction = "one.tailed",ggplotIt = TRUE) #lets use an expanding window approach
 ```
 
-The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated...
+The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.
 ```{r expanding_oct_plot, dpi=300, echo = FALSE}
 oct_exp_ews$plot
 ```
 
 ## EWSNet
 
-The other half of `EWSmethods` allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent `reticulate` [R package](https://rstudio.github.io/reticulate/)) and then calls __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
+The other half of `EWSmethods` allows you to query the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent `reticulate` [R package](https://rstudio.github.io/reticulate/)) and then calls __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
 ```{r ewsnet, warning = FALSE}
 library(reticulate)
