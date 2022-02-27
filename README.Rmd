@@ -67,7 +67,7 @@ And again, we can then use the resulting figures to identify oncoming transition
 exp_ews$plot
 ```
 
-A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to `EWSmethods` using the `trait` argument.
+A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
 
 ```{r expand_trait_example, fig.show='hide'}
 

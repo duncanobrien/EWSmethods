@@ -97,7 +97,8 @@ both false positive and false negative signals (Clements and Ozgul,
 2016; Baruah *et al.* 2019) and therefore should be considered if
 possible. For example, in our hypothetical skylark dataset, we have
 measured average population body mass. This data can then be delivered
-to `EWSmethods` using the `trait` argument.
+to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the
+`trait` argument.
 
 ``` r
 trait_metrics <- c("SD", "ar1", "trait")
@@ -173,7 +174,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.3599662          0.240019           0.4000148
+#> 1 No Transition     0.3194584         0.4010319           0.2795096
 ```
 
 ## References
