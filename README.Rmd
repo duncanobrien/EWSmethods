@@ -52,6 +52,7 @@ We can then use the resulting figures to identify oncoming transitions. In this 
 ```{r rolling_plot, dpi=300, echo = FALSE}
 roll_ews$plot
 ```
+  
 Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:
 
 ```{r _expand_example, fig.show='hide'}
@@ -65,6 +66,7 @@ And again, we can then use the resulting figures to identify oncoming transition
 ```{r expanding_plot, dpi=300, echo = FALSE}
 exp_ews$plot
 ```
+
 A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to *EWSmethods* using the `trait` argument.
 
 ```{r expand_trait_example, fig.show='hide'}
@@ -80,9 +82,9 @@ exp_ews_trait$plot
 
 # EWSNet
 
-The other half of *EWSmethods* allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent *reticulate* [R package](https://rstudio.github.io/reticulate/)) and then call __EWSNet__ to assess the probability of a transition occurring in the skylark time series.
+The other half of *EWSmethods* allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent *reticulate* [R package](https://rstudio.github.io/reticulate/)) and then call __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where you must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
-```{r ewsnet, warning = FALSE}
+```{r ewsnet, echo = FALSE, warning = FALSE}
 library(reticulate)
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
@@ -92,5 +94,4 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 print(skylark_ewsnet)
 ```
 
-rr
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+`devtools::build_readme()` 

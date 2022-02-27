@@ -53,6 +53,7 @@ from a normal distribution and this is evident in the Kendall Tau
 values, with no strong positive correlation with time:
 
 <img src="man/figures/README-rolling_plot-1.png" width="100%" />
+
 Alternatively, we may be more interested in expanding windows as that
 approach standardises the changing EWS metrics over time and therefore
 allows the strength of multiple signals to be combined. We could achieve
@@ -85,8 +86,9 @@ transitions. Whilst we have some trangressions of the 2$threshold, we
 only consider these signals “warnings” if two or more consecutive
 signals are identified (Clements *et al.* 2019).
 
-<img src="man/figures/README-expanding_plot-1.png" width="100%" /> A
-second benefit of the expanding window approach is that additional
+<img src="man/figures/README-expanding_plot-1.png" width="100%" />
+
+A second benefit of the expanding window approach is that additional
 information can be used to improve the reliability of the assessment.
 For example, in our hypothetical skylark dataset, we have measured
 average population body mass. This data can then be delivered to
@@ -110,25 +112,13 @@ workflow. Here is a simple example that details how to first prepare
 your R session to communicate with Python (using the excellent
 *reticulate* [R package](https://rstudio.github.io/reticulate/)) and
 then call **EWSNet** to assess the probability of a transition occurring
-in the skylark time series.
+in the skylark time series. This is a two step process where you must a)
+call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
-``` r
-library(reticulate)
+    #> conda env EWSNET_env found. Would you like to activate it and install necessary
+    #> packages? (y/n)
+    #> Aborting
+    #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
+    #> 1 No Transition     0.2808847         0.3587619           0.3603534
 
-ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
-#> conda env EWSNET_env found. Would you like to activate it and install necessary
-#> packages? (y/n)
-#> Aborting
-
-skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
-
-print(skylark_ewsnet)
-#>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.3987734         0.2644778           0.3367488
-```
-
-rr You’ll still need to render `README.Rmd` regularly, to keep
-`README.md` up-to-date. `devtools::build_readme()` is handy for this.
-You could also use GitHub Actions to re-render `README.Rmd` every time
-you push. An example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+`devtools::build_readme()`
