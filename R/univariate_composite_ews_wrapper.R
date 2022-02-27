@@ -179,7 +179,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           xlab("Time point")+
           ylab(y_lab)+
           ggthemes::theme_clean()+
-          annotate("label", size = 2, x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
+          annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
           guides(alpha = guide_legend(order = 1))+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
@@ -206,7 +206,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           ylab(y_lab) +
           xlab("Time point")+
           ggthemes::theme_clean()+
-          annotate("label", size = 2, x = quantile(plot.dat$time,0.75), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
+          annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",bind.res$metric.code[length(bind.res$metric.code)]),collapse = " "))+
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
