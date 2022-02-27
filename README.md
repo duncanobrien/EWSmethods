@@ -124,6 +124,8 @@ metapopulation. The following code shows how we would achieve these
 using *EWSmethods*.
 
 ``` r
+set.seed(123)
+
 octopus_spp_data <- matrix(nrow = 50, ncol = 5)
 octopus_spp_data <- as.data.frame(cbind("time"=seq(1:50),sapply(1:dim(octopus_spp_data)[2], function(x){octopus_spp_data[,x] <- rnorm(50,mean=500,sd=200)}))) #create our hypothetical, uncollapsing ecosystem
 
@@ -159,7 +161,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.4779795         0.2414682           0.2805523
+#> 1 No Transition     0.3322308         0.4519279           0.2158413
 ```
 
 ## References
