@@ -5,7 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
-require(rmarkdown)
+library(rmarkdown)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -76,6 +76,20 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 ```
 ```{r expanding_plot_trait, dpi=300, echo = FALSE}
 exp_ews_trait$plot
+```
+
+# EWSNet
+
+The other half of *EWSmethods* allows you to use the Python-based EWSNet via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent *reticulate* [R package](https://rstudio.github.io/reticulate/)) and then call __EWSNet__ to assess the probability of a transition occurring in the skylark time series.
+
+```{r ewsnet}
+library(reticulate)
+
+ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+
+skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
+
+print(skylark_ewsnet)
 ```
 
 

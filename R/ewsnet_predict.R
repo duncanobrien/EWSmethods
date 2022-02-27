@@ -49,7 +49,8 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   reticulate::py_run_string(noise_string)
   reticulate::py_run_string(ensemble_string)
 
-  reticulate::source_python(system.file("inst/python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
+  #reticulate::source_python(system.file("inst/python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
+  reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
 
 
   #pred <- ewsnetW_25$predict(x)
