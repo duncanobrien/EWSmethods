@@ -84,7 +84,7 @@ exp_ews_trait$plot
 
 The other half of *EWSmethods* allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent *reticulate* [R package](https://rstudio.github.io/reticulate/)) and then call __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where you must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
-```{r ewsnet, echo = FALSE, warning = FALSE}
+```{r ewsnet, warning = FALSE}
 library(reticulate)
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages

@@ -115,10 +115,19 @@ then call **EWSNet** to assess the probability of a transition occurring
 in the skylark time series. This is a two step process where you must a)
 call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
-    #> conda env EWSNET_env found. Would you like to activate it and install necessary
-    #> packages? (y/n)
-    #> Aborting
-    #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-    #> 1 No Transition     0.2808847         0.3587619           0.3603534
+``` r
+library(reticulate)
+
+ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+#> conda env EWSNET_env found. Would you like to activate it and install necessary
+#> packages? (y/n)
+#> Aborting
+
+skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
+
+print(skylark_ewsnet)
+#>            pred no_trans_prob smooth_trans_prob critical_trans_prob
+#> 1 No Transition     0.4005513         0.2793268           0.3201219
+```
 
 `devtools::build_readme()`
