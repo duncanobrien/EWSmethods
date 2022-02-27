@@ -19,11 +19,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-*EWSmethods* is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. *EWSmethods* also provides an R interface to [__EWSNET__](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
+`EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [__EWSNET__](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
 
 ## Installation
 
-You can install the development version of EWSmethods from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
+You can install the development version of `EWSmethods` from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` {r}
 # install.packages("devtools")
@@ -32,7 +32,7 @@ You can install the development version of EWSmethods from [GitHub](https://gith
 
 ## Examples
 
-Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) as well as mean body mass data. We could calculate either rolling or expanding window EWSs for the abundance data and would do so using EWSmethods as below:
+Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) as well as mean body mass data. We could calculate either rolling or expanding window EWSs for the abundance data and would do so using `EWSmethods` as below:
 
 ```{r roll_example, fig.show='hide'}
 library(EWSmethods)
@@ -67,7 +67,7 @@ And again, we can then use the resulting figures to identify oncoming transition
 exp_ews$plot
 ```
 
-A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to *EWSmethods* using the `trait` argument.
+A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to `EWSmethods` using the `trait` argument.
 
 ```{r expand_trait_example, fig.show='hide'}
 
@@ -82,7 +82,7 @@ exp_ews_trait$plot
 
 ### Multivariate Early Warning Signals
 
-If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve these using *EWSmethods*. 
+If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using `EWSmethods`. 
 
 ```{r multivariate_example, fig.show='hide'}
 set.seed(123)
@@ -100,12 +100,14 @@ oct_exp_ews$plot
 
 ## EWSNet
 
-The other half of *EWSmethods* allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent *reticulate* [R package](https://rstudio.github.io/reticulate/)) and then calls __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
+The other half of `EWSmethods` allows you to use the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent `reticulate` [R package](https://rstudio.github.io/reticulate/)) and then calls __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
 ```{r ewsnet, warning = FALSE}
 library(reticulate)
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+
+print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 

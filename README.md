@@ -6,19 +6,19 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-*EWSmethods* is a user friendly interface to various methods of
+`EWSmethods` is a user friendly interface to various methods of
 performing Early Warning Signal (EWS) assessments. This R package allows
 the user to input univariate or multivariate data and perform either
 traditional rolling window (e.g. Dakos *et al.* 2012) or expanding
 window (Drake and Griffin, 2010) EWS approaches. Publication standard
 and ggplot inspired figures can also be generated during this process.
-*EWSmethods* also provides an R interface to
+`EWSmethods` also provides an R interface to
 [**EWSNET**](https://ewsnet.github.io), a deep learning modelling
 framework for predicting critical transitions (Deb *et al.* 2022).
 
 ## Installation
 
-You can install the development version of EWSmethods from
+You can install the development version of `EWSmethods` from
 [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` r
@@ -31,7 +31,7 @@ You can install the development version of EWSmethods from
 Imagine we have 50 years of monitoring data for a local population of
 skylarks (*Alauda arvensis*) as well as mean body mass data. We could
 calculate either rolling or expanding window EWSs for the abundance data
-and would do so using EWSmethods as below:
+and would do so using `EWSmethods` as below:
 
 ``` r
 library(EWSmethods)
@@ -97,7 +97,7 @@ both false positive and false negative signals (Clements and Ozgul,
 2016; Baruah *et al.* 2019) and therefore should be considered if
 possible. For example, in our hypothetical skylark dataset, we have
 measured average population body mass. This data can then be delivered
-to *EWSmethods* using the `trait` argument.
+to `EWSmethods` using the `trait` argument.
 
 ``` r
 trait_metrics <- c("SD", "ar1", "trait")
@@ -120,8 +120,8 @@ overview of each indicator). Here we’ve constructed another hypothetical
 dataset representing five related populations of Caribbean reef octopus
 (*Octopus briareus*) in Bahamian salt water lakes (O’Brien *et al.*
 2020) and are interested in assessing the resilience of this
-metapopulation. The following code shows how we would achieve these
-using *EWSmethods*.
+metapopulation. The following code shows how we would achieve this using
+`EWSmethods`.
 
 ``` r
 set.seed(123)
@@ -140,11 +140,11 @@ a warning, but that overall, no transition is anticipated…
 
 ## EWSNet
 
-The other half of *EWSmethods* allows you to use the
+The other half of `EWSmethods` allows you to use the
 [Python-based](https://www.python.org) **EWSNet** via an easy to use R
 workflow. Here is a simple example that details how to first prepare
 your R session to communicate with Python (using the excellent
-*reticulate* [R package](https://rstudio.github.io/reticulate/)) and
+`reticulate` [R package](https://rstudio.github.io/reticulate/)) and
 then calls **EWSNet** to assess the probability of a transition
 occurring in the skylark time series. This is a two step process where
 we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
@@ -157,11 +157,23 @@ ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' 
 #> packages? (y/n)
 #> Aborting
 
+print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
+#> python:         /opt/miniconda3/envs/EWSNET_env/bin/python3
+#> libpython:      /opt/miniconda3/envs/EWSNET_env/lib/libpython3.8.dylib
+#> pythonhome:     /opt/miniconda3/envs/EWSNET_env:/opt/miniconda3/envs/EWSNET_env
+#> version:        3.8.12 | packaged by conda-forge | (default, Jan 30 2022, 23:33:09)  [Clang 11.1.0 ]
+#> numpy:          /opt/miniconda3/envs/EWSNET_env/lib/python3.8/site-packages/numpy
+#> numpy_version:  1.22.2
+#> 
+#> python versions found: 
+#>  /opt/miniconda3/envs/EWSNET_env/bin/python3
+#>  /opt/miniconda3/bin/python
+
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.3322308         0.4519279           0.2158413
+#> 1 No Transition     0.3599662          0.240019           0.4000148
 ```
 
 ## References
