@@ -42,12 +42,16 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
 
   noise_string = paste(c("noise_type = '", paste(noise_type),"'"),collapse = "")
   ensemble_string = paste(c("ensemble = ", paste(ensemble)),collapse = "")
+  directory_string = paste(c("directory_string = '",system.file(package = "EWSmethods"),"'"),collapse = "")
 
   #reticulate::source_python("src/inference/ewsNET_w_script_25.py")
   #reticulate::source_python(system.file("inst/python/src/inference/ewsNET_w_script_25.py", package = "EWSmethods"))
 
   reticulate::py_run_string(noise_string)
   reticulate::py_run_string(ensemble_string)
+  reticulate::py_run_string(directory_string)
+  reticulate::py_run_string("import os")
+  reticulate::py_run_string("os.chdir(directory_string)")
 
   #reticulate::source_python(system.file("inst/python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
   reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
