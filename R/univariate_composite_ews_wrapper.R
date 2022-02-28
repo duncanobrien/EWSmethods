@@ -108,6 +108,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
 
   method <- match.arg(method,choices = c("expanding","rolling"))
 
+  if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
+    data <- as.data.frame(data)
+  } #allows tibbles to be used
+
   if(method == "expanding"){
     to.test.l<-list()
     for(jj in 1:length(metrics)){

@@ -21,6 +21,10 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
 
   meth <- match.arg(method,choices = c("rolling","expanding"))
 
+  if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
+  data <- as.data.frame(data)
+  } #allows tibbles to be used
+
   RES<-list()
 
   if(meth == "rolling"){
@@ -171,11 +175,11 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
 #' @return out A list containing the input data, the dimension reduction time series, rotations, autocorrelation and eigenvalues
 
 maf <- function(x){
-  if (class(x)=="data.frame" || (class(x)=="matrix" && dim(x)[2]>1)){
+  if (isTRUE(is.data.frame(x)) || (class(x)=="matrix" && dim(x)[2]>1)){
     p = dim(x)[2]
     n = dim(x)[1]
     x = scale(x)
-    svd = svd(cov(x)) #If you want to sum of the timesteps/n to be 1
+    svd = svd(cov(x))
     #svd = svd(cov(x)*(n-1)) #If you want to sum of the timesteps to be 1
 
     a = svd$u%*%diag(svd$d^(-0.5))%*%t(svd$u)
