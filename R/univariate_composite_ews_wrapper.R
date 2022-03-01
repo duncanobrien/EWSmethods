@@ -107,6 +107,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                                   trait_scale = 1000){
 
   method <- match.arg(method,choices = c("expanding","rolling"))
+  tail.direction <- match.arg(tail.direction,choices = c("one.tailed","two.tailed"))
 
   if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
     data <- as.data.frame(data)
@@ -159,6 +160,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
               legend.title = element_text(size = 10),
               legend.text = element_text(size=10))
 
+      if(tail.direction == "two.tailed"){
+        p <- p + geom_hline(yintercept = -threshold, linetype="solid", color = "grey", size=1)
+      }
+
       if(is.null(trait)==F){
         plot.dat<-data.frame("timeseries"=bind.res$time, "count.used"=bind.res$count.used) %>%
           dplyr::left_join(data.frame("timeseries" = c(burn_in:dim(data)[1]), "trait" =trait[burn_in:dim(data)[1]]),by= "timeseries")
@@ -170,7 +175,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           # geom_line(aes(y=.data$count.used),linetype=1) +
           # geom_line(aes(y=(.data$trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=.data$time, y = max(.data$count.used)*-0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -201,7 +206,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           aes(group=NA)+
           geom_line(col = "black")+
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=.data$time, y = max(.data$count.used)*-0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
