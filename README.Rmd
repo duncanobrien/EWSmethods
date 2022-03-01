@@ -34,7 +34,7 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 
 Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via `univariate_EWS_wrapper()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
 
-```{r roll_example, fig.show='hide'}
+```{r roll_example, fig.keep = "none"}
 library(EWSmethods)
 set.seed(125) #seed to ensure reproducible results
 
@@ -55,7 +55,7 @@ roll_ews$plot
   
 Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:
 
-```{r _expand_example, fig.show='hide'}
+```{r _expand_example, fig.keep = "none"}
 exp_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metrics,method = "expanding",burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance") #lets use a rolling window approach
 
 head(exp_ews$EWS) #return the head of the EWS dataframe
@@ -69,7 +69,7 @@ exp_ews$plot
 
 A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
 
-```{r expand_trait_example, fig.show='hide'}
+```{r expand_trait_example, fig.keep = "none"}
 
 trait_metrics <- c("SD", "ar1", "trait")
 exp_ews_trait <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  trait_metrics,method = "expanding",burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance",
@@ -84,7 +84,7 @@ exp_ews_trait$plot
 
 If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the `EWSmethods` function `multivariate_EWS_wrapper()`. 
 
-```{r multivariate_example, fig.show='hide'}
+```{r multivariate_example, fig.keep = "none"}
 set.seed(123)
 
 octopus_spp_data <- matrix(nrow = 50, ncol = 5)

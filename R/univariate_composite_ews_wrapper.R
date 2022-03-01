@@ -154,7 +154,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='EWS Indicator\nStrength') +
-        theme(plot.margin = margin(c(10, 8, 0, 10)),
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)),
               legend.key.height = unit(0.3,"cm"),
               legend.key.width = unit(0.5,"cm"),
               legend.title = element_text(size = 10),
@@ -258,7 +258,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='EWS Indicator\nTrend') +
           facet_wrap(~.data$metric.code,nrow=4)+
-          theme(plot.margin = margin(c(10, 8, 0, 10)),
+          theme(plot.margin = margin(c(10, 8, 5.5, 10)),
                 legend.key.height = unit(0.3,"cm"),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),

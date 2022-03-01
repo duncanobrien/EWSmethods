@@ -176,7 +176,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition      0.288445         0.4696982           0.2418568
+#> 1 No Transition     0.2402099         0.4784558           0.2813343
 ```
 
 ## References
