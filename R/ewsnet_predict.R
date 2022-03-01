@@ -20,7 +20,7 @@
 #'
 #' \dontrun{ewsnet_init(envname = "EWSNET_env")}
 #'
-#' #Generate EWSNET predictions.
+#' #Generate EWSNet predictions.
 #'
 #' \dontrun{pred <- ewsnet_predict(
 #'  abundance_data$abundance,

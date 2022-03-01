@@ -33,7 +33,7 @@ abundance_data <- data.frame(time = seq(1:50),
 
 \dontrun{ewsnet_init(envname = "EWSNET_env")}
 
-#Generate EWSNET predictions.
+#Generate EWSNet predictions.
 
 \dontrun{pred <- ewsnet_predict(
  abundance_data$abundance,
