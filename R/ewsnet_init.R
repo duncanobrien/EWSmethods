@@ -16,7 +16,7 @@
 #'
 #' @export
 
-ewsnet_init <- function(envname,  pip_ignore_installed = FALSE){
+ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
 
   conda <- try(reticulate::conda_list()) #extract list of conda Python environments
   if(class(conda) == "try-error"){
