@@ -4,10 +4,12 @@
 \alias{ewsnet_init}
 \title{EWSNet Initialisation}
 \usage{
-ewsnet_init(envname)
+ewsnet_init(envname, pip_ignore_installed = FALSE)
 }
 \arguments{
 \item{envname}{A string naming the desired Python environment to create/activate. If no python or environment found, the functions prompts to install Anaconda and the required python packages.}
+
+\item{pip_ignore_installed}{Boolean. If \code{FALSE}, any packages already installed are loaded and not re-downloaded. However, if \code{TRUE}, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).}
 }
 \value{
 Does not return an object as is simply preparing your R session.
