@@ -3,6 +3,7 @@
 export(ewsnet_init)
 export(ewsnet_predict)
 export(multivariate_EWS_wrapper)
+export(reset_ewsnet)
 export(univariate_EWS_wrapper)
 importFrom(dplyr,"%>%")
 importFrom(dplyr,.data)

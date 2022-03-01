@@ -2,7 +2,7 @@
 % Please edit documentation in R/ewsnet_init.R
 \name{ewsnet_init}
 \alias{ewsnet_init}
-\title{EWSNET Initialisation}
+\title{EWSNet Initialisation}
 \usage{
 ewsnet_init(envname)
 }

@@ -1,4 +1,4 @@
-#' EWSNET Predict
+#' EWSNet Predict
 #'
 #' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 #'

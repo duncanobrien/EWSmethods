@@ -2,7 +2,7 @@
 % Please edit documentation in R/ewsnet_predict.R
 \name{ewsnet_predict}
 \alias{ewsnet_predict}
-\title{EWSNET Predict}
+\title{EWSNet Predict}
 \usage{
 ewsnet_predict(x, noise_type = "W", ensemble = 25, envname)
 }
