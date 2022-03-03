@@ -86,7 +86,9 @@ head(exp_ews$EWS) #return the head of the EWS dataframe
 
 And again, we can then use the resulting figures to identify oncoming
 transitions. Whilst we have some trangressions of the 2
-*σ*
+
+![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma")
+
 threshold, we only consider these signals “warnings” if two or more
 consecutive signals are identified (Clements *et al.* 2019).
 
@@ -153,6 +155,9 @@ occurring in the skylark time series. This is a two step process where
 we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
 ``` r
+bypass_reticulate_autoinit() #edits your global R environment with the line: RETICULATE_AUTOCONFIGURE = "FALSE". This ensures 'reticulate' does not load a python environment until 'ewsnet_init()' has been called
+#> RETICULATE_AUTOCONFIGURE already set to FALSE
+
 library(reticulate)
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
@@ -160,23 +165,33 @@ ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' 
 #> packages? (y/n)
 #> Aborting
 
+reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+
 print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
-#> python:         /opt/miniconda3/envs/EWSNET_env/bin/python3
-#> libpython:      /opt/miniconda3/envs/EWSNET_env/lib/libpython3.8.dylib
-#> pythonhome:     /opt/miniconda3/envs/EWSNET_env:/opt/miniconda3/envs/EWSNET_env
-#> version:        3.8.12 | packaged by conda-forge | (default, Jan 30 2022, 23:33:09)  [Clang 11.1.0 ]
-#> numpy:          /opt/miniconda3/envs/EWSNET_env/lib/python3.8/site-packages/numpy
+#> python:         /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/bin/python
+#> libpython:      /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/libpython3.8.dylib
+#> pythonhome:     /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env:/Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env
+#> version:        3.8.12 (default, Oct 12 2021, 06:23:56)  [Clang 10.0.0 ]
+#> numpy:          /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy
 #> numpy_version:  1.22.2
 #> 
-#> python versions found: 
-#>  /opt/miniconda3/envs/EWSNET_env/bin/python3
-#>  /opt/miniconda3/bin/python
+#> NOTE: Python version was forced by use_python function
+
+py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
+head(py_packages)
+#>           package  version              requirement   channel
+#> 1         absl-py    1.0.0            absl-py=1.0.0      pypi
+#> 2       alabaster   0.7.12         alabaster=0.7.12      pypi
+#> 3      astunparse    1.6.3         astunparse=1.6.3      pypi
+#> 4           babel    2.9.1              babel=2.9.1      pypi
+#> 5 ca-certificates 2022.2.1 ca-certificates=2022.2.1 pkgs/main
+#> 6      cachetools    5.0.0         cachetools=5.0.0      pypi
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 print(skylark_ewsnet)
 #>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition     0.2402099         0.4784558           0.2813343
+#> 1 No Transition  0.0001411153         0.2852249           0.7146339
 ```
 
 ## References

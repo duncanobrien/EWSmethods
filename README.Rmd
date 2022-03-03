@@ -103,15 +103,23 @@ oct_exp_ews$plot
 The other half of `EWSmethods` allows you to query the [Python-based](https://www.python.org) __EWSNet__ via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent `reticulate` [R package](https://rstudio.github.io/reticulate/)) and then calls __EWSNet__ to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
 ```{r ewsnet, warning = FALSE}
+bypass_reticulate_autoinit() #edits your global R environment with the line: RETICULATE_AUTOCONFIGURE = "FALSE". This ensures 'reticulate' does not load a python environment until 'ewsnet_init()' has been called
+
 library(reticulate)
 
 ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 
+reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+
 print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
+
+py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
+head(py_packages)
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 print(skylark_ewsnet)
+
 ```
 
 ## References 
