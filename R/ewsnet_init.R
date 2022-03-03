@@ -8,6 +8,12 @@
 #' @returns Does not return an object as is simply preparing your R session.
 #'
 #' @examples
+#' \dontrun{bypass_autoinit()}
+#' #this function prevents `reticulate` automatically
+#' #reloading the python environment from the
+#' #previous session. Only needs to be run once
+#' #on first install of `EWSmethods`
+#'
 #' \dontrun{ewsnet_init(envname = "EWSNET_env")}
 #'
 #' \dontrun{reticulate::py_config()}
