@@ -37,13 +37,14 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
         forge = FALSE,environment = NULL,
         conda = "auto")
 
-      reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
-
       reticulate::conda_install(envname = paste0(envname),
                                 packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                              "sphinxcontrib-matlabdomain","seaborn"),
                                 pip = T, pip_ignore_installed = pip_ignore_installed)
+
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
+
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
@@ -59,13 +60,13 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
     }else{
       message("Attention: may take up to 10 minutes to complete")
 
-      reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
-
       reticulate::conda_install(envname = paste0(envname),
                                 packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                              "sphinxcontrib-matlabdomain","seaborn"),
                                 pip = T, pip_ignore_installed	= pip_ignore_installed)
+
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
 
       message(paste(envname,"successfully found and activated. Necessary python packages installed"),
               collapse = " ")
@@ -82,13 +83,13 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
         forge = FALSE,environment = NULL,
         conda = "auto")
 
-      reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
-
       reticulate::conda_install(envname = paste0(envname),
                                 packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                              "sphinxcontrib-matlabdomain","seaborn"),
                                 pip = T, pip_ignore_installed	= pip_ignore_installed)
+
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
