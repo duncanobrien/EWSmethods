@@ -55,12 +55,12 @@ class EWSNet():
         x = np.reshape(x,(1,1,x.shape[0]))
         predictions = np.array([self.model[i](x)[0] for i in range(self.ensemble)])
         predictions = np.mean(predictions,axis=0)
-        predictions = {
+        prediction_probability = {
             "No Transition"      :predictions[0],
             "Smooth Transition"  :predictions[1],
             "Critical Transition":predictions[2],
         }
-        return self.labels[np.argmax(predictions)],predictions
+        return self.labels[np.argmax(predictions)],prediction_probability
 
     def finetune(self,X,y, freeze_feature_extractor=True, learning_rate = 5e-5, batch_size = 512, tune_epochs = 5):
         """
@@ -136,5 +136,16 @@ class EWSNet():
         for i in range(self.ensemble):
             if(os.path.exists("{}/{}{}{}".format(weight_dir,prefix,i,suffix))):
                 self.model[i] = tf.keras.models.load_model("{}/{}{}{}".format(weight_dir,prefix,i,suffix))
-   
-   
+    
+    
+if __name__ == '__main__':
+    
+    weight_dir = "./weights/Pretrained"
+    dataset    = "W"
+    prefix     = ""
+    suffix     = ".h5"
+    ensemble   = 25
+
+    ewsnet     = EWSNet(ensemble=ensemble, weight_dir=os.path.join(weight_dir,"Dataset-{}".format(dataset)), prefix=prefix,suffix=suffix)
+    x = np.random.randint(1,2,(20,))
+    print(ewsnet.predict(x))
