@@ -30,11 +30,11 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
     }else{
       message("Attention: may take up to 10 minutes to complete")
 
-      reticulate::install_miniconda()
+      reticulate::install_miniconda(force = T)
 
       reticulate::conda_create(
         envname = paste0(envname),
-        forge = TRUE,environment = NULL,
+        forge = FALSE,environment = NULL,
         conda = "auto")
 
       reticulate::use_condaenv(condaenv = paste0(envname),
@@ -79,7 +79,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
 
       reticulate::conda_create(
         envname = paste0(envname),
-        forge = TRUE,environment = NULL,
+        forge = FALSE,environment = NULL,
         conda = "auto")
 
       reticulate::use_condaenv(condaenv = paste0(envname),
