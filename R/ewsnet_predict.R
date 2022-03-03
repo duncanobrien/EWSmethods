@@ -58,7 +58,13 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
   pred <- ewsnet_obj$predict(x)
 
-  out <- data.frame("pred" = pred[[1]],
+  # out <- data.frame("pred" = pred[[1]], #pred[[1]] returning incorrect labels
+  #                   "no_trans_prob" = pred[[2]]$`No Transition`,
+  #                   "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
+  #                   "critical_trans_prob" = pred[[2]]$`Critical Transition`)
+  #
+
+  out <- data.frame("pred" = names(which.max(unlist(pred[[2]]))),
                     "no_trans_prob" = pred[[2]]$`No Transition`,
                     "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)
