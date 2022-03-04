@@ -1,6 +1,6 @@
 #' Reset EWSNet Model Weights
 #'
-#' Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This may be necessary after finetuning to reset the model. Follow this link (https://github.com/sahilsid/ewsnet) to find the original weights and extract the zip file in to a suitable location.
+#' Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This may be necessary after finetuning to reset the model. Follow this link (https://github.com/sahilsid/ewsnet) to find the original weights and extract the zip file in to a suitable location to use in \code{new_weight_location}.
 #'
 #'
 #' @param new_weight_location A path string to the location where the unzipped file has been saved. Include "Pretrained" as the final path folder.

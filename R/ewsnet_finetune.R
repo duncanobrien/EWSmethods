@@ -1,13 +1,12 @@
 #' EWSNet Finetune
 #'
-#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data.
+#' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data. This overwrites the Pretrained weights bundled with \code{EWSmethods}. See \code{reset_ewsnet()} on how to reset these trained weights.
 #'
 #' @param x A numeric matrix of to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.
 #' @param y A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).
-#' @param noise_type A string stating the form of noise to use. Options are "W" or "C".
+#' @param noise_type A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
-#' @param envname A string naming the Python environment prepared by \code{ewsnet_int()}.
-#' @returns A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
+#' @param envname A string naming the Python environment prepared by \code{ewsnet_init()}.
 #'
 #' @examples
 #' #Activate python environment (only necessary
@@ -55,6 +54,8 @@ ewsnet_finetune <- function(x, y, noise_type = "W", ensemble = 25,envname){
   if(!envname %in% (reticulate::conda_list()$name)){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_finetune(), or check your spelling of envname")
   }else{
+
+    EWSNet <- NULL # global variable to be populated by Python
 
     noise_type <- match.arg(noise_type, choices = c("W","C"))
     ensemble <- match.arg(paste(ensemble), choices = paste(1:25))

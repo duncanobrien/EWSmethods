@@ -9,14 +9,14 @@ ewsnet_predict(x, noise_type = "W", ensemble = 25, envname)
 \arguments{
 \item{x}{A numeric vector of values to be tested.}
 
-\item{noise_type}{A string stating the form of noise to use. Options are "W" or "C".}
+\item{noise_type}{A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).}
 
 \item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 
-\item{envname}{A string naming the Python environment prepared by \code{ewsnet_int()}.}
+\item{envname}{A string naming the Python environment prepared by \code{ewsnet_init()}.}
 }
 \value{
-A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
+A dataframe of EWSNet predictions. Values represent the estimated probability that the quoted event will occur.
 }
 \description{
 Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.

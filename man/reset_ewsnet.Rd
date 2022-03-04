@@ -10,7 +10,7 @@ reset_ewsnet(new_weight_location)
 \item{new_weight_location}{A path string to the location where the unzipped file has been saved. Include "Pretrained" as the final path folder.}
 }
 \description{
-Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This may be necessary after finetuning to reset the model. Follow this link (https://github.com/sahilsid/ewsnet) to find the original weights and extract the zip file in to a suitable location.
+Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This may be necessary after finetuning to reset the model. Follow this link (https://github.com/sahilsid/ewsnet) to find the original weights and extract the zip file in to a suitable location to use in \code{new_weight_location}.
 }
 \examples{
 \dontrun{reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained")} # Windows example

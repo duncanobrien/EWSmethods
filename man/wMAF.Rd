@@ -14,7 +14,7 @@ wMAF(
 )
 }
 \arguments{
-\item{data}{A n x m dataframe with the first column time indices with the remainder of the columns species abundances.}
+\item{data}{A n x m dataframe with the first column being time indices and the remainder of the columns being species abundances.}
 
 \item{method}{A single string stating either \code{"expanding"} or \code{"rolling"}.\code{"expanding"} calls the composite, expanding window EWS assessment. \code{"rolling"} calls the typical, rolling window EWS assessment.}
 

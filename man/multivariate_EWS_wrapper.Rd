@@ -40,7 +40,7 @@ A list containing up to two objects: EWS outputs through time (\code{EWS}), and 
 \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 }
 \description{
-A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with and/or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
+A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 }
 \examples{
 #Generate a random five species, non-transitioning

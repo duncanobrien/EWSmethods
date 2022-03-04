@@ -3,10 +3,10 @@
 #' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 #'
 #' @param x A numeric vector of values to be tested.
-#' @param noise_type A string stating the form of noise to use. Options are "W" or "C".
+#' @param noise_type A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
-#' @param envname A string naming the Python environment prepared by \code{ewsnet_int()}.
-#' @returns A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
+#' @param envname A string naming the Python environment prepared by \code{ewsnet_init()}.
+#' @returns A dataframe of EWSNet predictions. Values represent the estimated probability that the quoted event will occur.
 #'
 #' @examples
 #' #A dummy dataset of a hedgerow bird population
@@ -37,6 +37,8 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname")
   }else{
 
+  EWSNet <- NULL # global variable to be populated by Python
+
   noise_type <- match.arg(noise_type, choices = c("W","C"))
   ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
 
@@ -58,7 +60,7 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
   pred <- ewsnet_obj$predict(x)
 
-  out <- data.frame("pred" = pred[[1]], #pred[[1]] returning incorrect labels
+  out <- data.frame("pred" = pred[[1]],
                     "no_trans_prob" = pred[[2]]$`No Transition`,
                     "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)

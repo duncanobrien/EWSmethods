@@ -3,7 +3,7 @@
 \name{no.plot.ews}
 \alias{no.plot.ews}
 \title{Rolling Window Early Warning Signals
-An adaptation of the 'generic_ews' function in the R package 'earlywarnings'}
+An adaptation of the \code{generic_ews} function in the R package \code{earlywarnings}.}
 \usage{
 no.plot.ews(
   timeseries,
@@ -41,5 +41,5 @@ no.plot.ews(
 }
 \description{
 Rolling Window Early Warning Signals
-An adaptation of the 'generic_ews' function in the R package 'earlywarnings'
+An adaptation of the \code{generic_ews} function in the R package \code{earlywarnings}.
 }

@@ -1,6 +1,6 @@
 #' Multivariate Early Warning Signal Assessment
 #'
-#' A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with and/or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
+#' A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and all other columns are individual time series. These could be different species, populations or measurements.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.

@@ -7,5 +7,5 @@
 bypass_reticulate_autoinit()
 }
 \description{
-Adds 'RETICULATE_AUTOCONFIGURE = "FALSE"' to .Renviron to prevent 'reticulate' automatically loading Python environments.
+Adds \code{RETICULATE_AUTOCONFIGURE = "FALSE"} to \code{.Renviron} to prevent \code{reticulate} automatically loading Python environments.
 }

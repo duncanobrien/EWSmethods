@@ -11,17 +11,14 @@ ewsnet_finetune(x, y, noise_type = "W", ensemble = 25, envname)
 
 \item{y}{A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).}
 
-\item{noise_type}{A string stating the form of noise to use. Options are "W" or "C".}
+\item{noise_type}{A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).}
 
 \item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 
-\item{envname}{A string naming the Python environment prepared by \code{ewsnet_int()}.}
-}
-\value{
-A dataframe of EWSNET predictions. Values represent the estimated probability that the quoted event will occur.
+\item{envname}{A string naming the Python environment prepared by \code{ewsnet_init()}.}
 }
 \description{
-Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data.
+Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data. This overwrites the Pretrained weights bundled with \code{EWSmethods}. See \code{reset_ewsnet()} on how to reset these trained weights.
 }
 \examples{
 #Activate python environment (only necessary

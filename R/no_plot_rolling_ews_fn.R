@@ -1,6 +1,6 @@
 #' Rolling Window Early Warning Signals
 
-#' An adaptation of the 'generic_ews' function in the R package 'earlywarnings'
+#' An adaptation of the \code{generic_ews} function in the R package \code{earlywarnings}.
 #'
 #' @param timeseries A dataframe where first column is time (equally spaced) and second column is abundance.
 #' @param winsize Numeric. Defines the window size of the rolling window as a percentage of the timeseries.
