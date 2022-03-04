@@ -55,6 +55,7 @@ ewsnet_finetune <- function(x, y, noise_type = "W", ensemble = 25,envname){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_finetune(), or check your spelling of envname")
   }else{
 
+    wd <- getwd() #get working directory so it can be reset when Python alters the directory
     EWSNet <- NULL # global variable to be populated by Python
 
     noise_type <- match.arg(noise_type, choices = c("W","C"))
@@ -76,6 +77,8 @@ ewsnet_finetune <- function(x, y, noise_type = "W", ensemble = 25,envname){
 
     ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
     pred <- ewsnet_obj$finetune(x,y)
+
+    setwd(wd) # reset working directory
 
     message("Finetuning successful. Now run ews_predict() using the test data")
   }

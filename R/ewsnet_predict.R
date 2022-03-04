@@ -37,6 +37,7 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname")
   }else{
 
+  wd <- getwd() #get working directory so it can be reset when Python alters the directory
   EWSNet <- NULL # global variable to be populated by Python
 
   noise_type <- match.arg(noise_type, choices = c("W","C"))
@@ -65,7 +66,7 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
                     "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)
 
-
+  setwd(wd) # reset working directory
   # out <- data.frame("pred" = names(which.max(unlist(pred[[2]]))),
   #                   "no_trans_prob" = pred[[2]]$`No Transition`,
   #                   "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
