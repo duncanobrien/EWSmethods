@@ -62,7 +62,7 @@ exp_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metri
 head(exp_ews$EWS) #return the head of the EWS dataframe
 ```
 
-And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2$\sigma$ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
+And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2σ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
 
 ```{r expanding_plot, dpi=300, echo = FALSE}
 exp_ews$plot

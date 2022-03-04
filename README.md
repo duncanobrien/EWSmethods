@@ -85,10 +85,9 @@ head(exp_ews$EWS) #return the head of the EWS dataframe
 ```
 
 And again, we can then use the resulting figures to identify oncoming
-transitions. Whilst we have some trangressions of the
-2![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma")
-threshold, we only consider these signals “warnings” if two or more
-consecutive signals are identified (Clements *et al.* 2019).
+transitions. Whilst we have some trangressions of the 2σ threshold, we
+only consider these signals “warnings” if two or more consecutive
+signals are identified (Clements *et al.* 2019).
 
 <img src="man/figures/README-expanding_plot-1.png" width="100%" />
 
