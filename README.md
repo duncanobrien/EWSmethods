@@ -85,10 +85,8 @@ head(exp_ews$EWS) #return the head of the EWS dataframe
 ```
 
 And again, we can then use the resulting figures to identify oncoming
-transitions. Whilst we have some trangressions of the 2
-
-![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma")
-
+transitions. Whilst we have some trangressions of the
+2![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma")
 threshold, we only consider these signals “warnings” if two or more
 consecutive signals are identified (Clements *et al.* 2019).
 
@@ -190,8 +188,8 @@ head(py_packages)
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 print(skylark_ewsnet)
-#>            pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 No Transition  0.0001411153         0.2852249           0.7146339
+#>                  pred no_trans_prob smooth_trans_prob critical_trans_prob
+#> 1 Critical Transition  0.0001411153         0.2852249           0.7146339
 ```
 
 ## References
@@ -237,5 +235,3 @@ Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021)
 Evaluating the performance of multivariate indicators of resilience
 loss. *Scientific Reports*, 11, 9148.
 [10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)
-
-`devtools::build_readme()`

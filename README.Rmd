@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+#devtools::build_readme()
 ```
 
 # EWSmethods
@@ -61,7 +62,7 @@ exp_ews <- univariate_EWS_wrapper(data = skylark_data[,1:2],metrics =  ews_metri
 head(exp_ews$EWS) #return the head of the EWS dataframe
 ```
 
-And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2$$\sigma$$ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
+And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2$\sigma$ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
 
 ```{r expanding_plot, dpi=300, echo = FALSE}
 exp_ews$plot
@@ -139,5 +140,3 @@ Drake, J. & Griffen, B. (2010) Early warning signals of extinction in deteriorat
 O’Brien, D.A., Taylor, M.L., Masonjones, H.D., Boersch-Supan P.H. & O’Shea, O.R. (2020) Drivers of octopus abundance and density in an anchialine lake: a 30 year comparison. *Journal of Experimental Marine Biology and Ecology*, 528, 151377. [doi:10.1016/j.jembe.2020.151377](https://www.sciencedirect.com/science/article/pii/S0022098120300356)
 
 Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. *Scientific Reports*, 11, 9148. [10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)
-
-`devtools::build_readme()` 
