@@ -5,7 +5,7 @@
 #' @param timedat A numeric vector of equal spacing representing the time points
 #' @param data A numeric matrix of individual time series across the columns. These could be different species, populations or measurements.
 #' @param sost A 1 x n matrix where n is a length equal to the number of time series in \code{data}. Each value is the 'size of state' tolerable for that time series and typically is represented by the standard deviation of the time series during a reference period.
-#' @param hwin Numeric value. The number of data points within the window.
+#' @param winsize Numeric value. Defines the window size of the rolling window as a percentage of the time series length.
 #' @param winspace Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{hwin}.
 #' @param TL Numeric value. The 'tightening level' or percentage of points shared between states that allows the algorithm to classify data points as the same state.
 #'
@@ -16,7 +16,8 @@
 
 #' @export
 #'
-GFisher <- function(timedat,data,sost,hwin,winspace = 1,TL = 90){
+#'
+FI <- function(timedat,data,sost,winsize,winspace = 1,TL = 90){
   # calculates the FI from time series data.
   # Important parameters include:
   # FI: fisher information
@@ -34,6 +35,7 @@ GFisher <- function(timedat,data,sost,hwin,winspace = 1,TL = 90){
   FI <- matrix()
   t_win <- matrix(NA,nrow = hwin, ncol = 1)#?
   window <- 0
+  hwin <- round(dim(data)[1] * winsize/100)
 
   for (i in seq(from = 1, to = nrow(data), by = winspace)){
     #start big loop to go through all the data
