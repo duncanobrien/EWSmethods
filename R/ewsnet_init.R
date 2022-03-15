@@ -49,8 +49,14 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
                                 pip = T, pip_ignore_installed = pip_ignore_installed)
 
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                        conda = "auto", required = T)
 
+      # try.attempt <- suppressMessages(try(reticulate::use_condaenv(condaenv = paste0(envname),
+      #                          conda = "auto", required = T),silent = T))
+      #
+      # if(class(try.attempt) == "try-error"){
+      #   message("miniconda has successfully been installed but reticulate has initialised\nanother environment. You need to restart the R session and re-run 'ewsnet_init()'\nto complete python integration")
+      # }
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")

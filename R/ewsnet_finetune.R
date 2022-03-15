@@ -2,7 +2,7 @@
 #'
 #' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data. This overwrites the Pretrained weights bundled with \code{EWSmethods}. See \code{reset_ewsnet()} on how to reset these trained weights.
 #'
-#' @param x A numeric matrix of to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.
+#' @param x A numeric matrix to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.
 #' @param y A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).
 #' @param noise_type A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.

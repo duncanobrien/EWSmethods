@@ -7,7 +7,7 @@
 ewsnet_finetune(x, y, noise_type = "W", ensemble = 25, envname)
 }
 \arguments{
-\item{x}{A numeric matrix of to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.}
+\item{x}{A numeric matrix to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.}
 
 \item{y}{A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).}
 
