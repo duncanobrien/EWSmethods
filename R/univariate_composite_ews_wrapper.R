@@ -53,7 +53,7 @@
 #'  method = "expanding",
 #'  burn_in = 10,
 #'  ggplotIt =TRUE,
-#'  ylab = "Bird abundance")}
+#'  y_lab = "Bird abundance")}
 #'
 #' #Expanding window early warning signal assessment of
 #' #the bird abundance incorporating the trait
@@ -153,12 +153,14 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                                                    list(linetype = rep(1,length(to.test)),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-        labs(color='EWS Indicator\nStrength') +
+        labs(color='EWS indicator\nstrength') +
         theme(plot.margin = margin(c(10, 8, 5.5, 10)),
               legend.key.height = unit(0.3,"cm"),
               legend.key.width = unit(0.5,"cm"),
               legend.title = element_text(size = 10),
-              legend.text = element_text(size=10))
+              legend.text = element_text(size=10),
+              legend.background = element_blank(),
+              legend.box.background = element_rect(colour = "black"))
 
       if(tail.direction == "two.tailed"){
         p <- p + geom_hline(yintercept = -threshold, linetype="solid", color = "grey", size=1)
@@ -194,7 +196,9 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1))
         print(final.p)
@@ -220,7 +224,9 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p4,p,nrow = 2,heights = c(1, 1))
         print(final.p)
@@ -256,13 +262,15 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-          labs(color='EWS Indicator\nTrend') +
+          labs(color='EWS indicator\ntrend') +
           facet_wrap(~.data$metric.code,nrow=4)+
           theme(plot.margin = margin(c(10, 8, 5.5, 10)),
                 legend.key.height = unit(0.3,"cm"),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))+
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))+
           guides(alpha = guide_legend(order = 1),
                  col = guide_legend(order = 2))
 
@@ -277,7 +285,9 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 2))
         print(final.p)

@@ -88,7 +88,7 @@ roll_ews <- univariate_EWS_wrapper(
  method = "expanding",
  burn_in = 10,
  ggplotIt =TRUE,
- ylab = "Bird abundance")}
+ y_lab = "Bird abundance")}
 
 #Expanding window early warning signal assessment of
 #the bird abundance incorporating the trait

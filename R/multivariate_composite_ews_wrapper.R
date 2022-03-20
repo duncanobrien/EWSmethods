@@ -79,12 +79,14 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                                                    list(linetype = rep(1,11),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-        labs(color='Multivariate EWS\nIndicator Strength') +
+        labs(color='Multivariate EWS\nindicator strength') +
         theme(plot.margin = margin(c(10, 8, 5.5, 10)),
               legend.key.height = unit(0.3,"cm"),
               legend.key.width = unit(0.5,"cm"),
               legend.title = element_text(size = 10),
-              legend.text = element_text(size=10))
+              legend.text = element_text(size=10),
+              legend.background = element_blank(),
+              legend.box.background = element_rect(colour = "black"))
 
         plot.dat<- bind.res$dimred.ts %>%
           dplyr::mutate(across(-.data$time,~scale(.))) %>%
@@ -102,7 +104,9 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1))
         print(final.p)
@@ -136,13 +140,15 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                               guide = guide_legend(override.aes = list(linetype = rep(1,11),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-          labs(color='Multivariate EWS\nIndicator Trend') +
+          labs(color='Multivariate EWS\nindicator trend') +
           facet_wrap(~metric.code,nrow=4)+
           theme(plot.margin = margin(c(10, 8, 5.5, 10)),
                 legend.key.height = unit(0.3,"cm"),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))+
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))+
           guides(alpha = guide_legend(order = 1),
                  col = guide_legend(order = 2))
 
@@ -159,7 +165,9 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
                 legend.title = element_text(size = 10),
-                legend.text = element_text(size=10))
+                legend.text = element_text(size=10),
+                legend.background = element_blank(),
+                legend.box.background = element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p3,p,nrow = 2,heights = c(1, 2))
         print(final.p)
