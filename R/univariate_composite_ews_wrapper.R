@@ -1,6 +1,6 @@
 #' Univariate Early Warning Signal Assessment
 #'
-#' A function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding window) with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
+#' A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.
 #' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, \code{"mean.size"}, \code{"sd.size"}, \code{"sd.95"} and \code{"trait"}.
