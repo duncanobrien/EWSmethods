@@ -24,6 +24,8 @@
 
 ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
 
+  wd <- getwd() #get working directory so it can be reset when Python alters the directory
+
   conda <- try(reticulate::conda_list()) #extract list of conda Python environments
   if(class(conda) == "try-error"){
 
@@ -107,4 +109,6 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
               collapse = " ")
     }
   }
+  setwd(wd) # reset working directory
+
 }
