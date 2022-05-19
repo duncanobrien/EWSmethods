@@ -50,9 +50,9 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   noise_string = paste(c("Dataset-",paste(noise_type)),collapse = "")
 
   directory_string = paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
-  wd_string = paste(c("wd_string = '", wd,"'"),collapse = "")
+  #wd_string = paste(c("wd_string = '", wd,"'"),collapse = "")
   reticulate::py_run_string(directory_string)
-  reticulate::py_run_string(wd_string)
+  #reticulate::py_run_string(wd_string)
   reticulate::py_run_string("import os")
   reticulate::py_run_string("os.chdir(directory_string)")
   #reticulate::py_run_string("print(os.getcwd())")
@@ -72,7 +72,7 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)
 
   setwd(wd) # reset working directory
-  reticulate::py_run_string("os.chdir(wd_string)")
+  #reticulate::py_run_string("os.chdir(wd_string)")
 
   # out <- data.frame("pred" = names(which.max(unlist(pred[[2]]))),
   #                   "no_trans_prob" = pred[[2]]$`No Transition`,
