@@ -157,10 +157,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
         theme(plot.margin = margin(c(10, 8, 5.5, 10)),
               legend.key.height = unit(0.3,"cm"),
               legend.key.width = unit(0.5,"cm"),
-              legend.title = element_text(size = 10),
-              legend.text = element_text(size=10),
-              legend.background = element_blank(),
-              legend.box.background = element_rect(colour = "black"))
+              legend.title = ggplot2::element_text(size = 10),
+              legend.text = ggplot2::element_text(size=10),
+              legend.background = ggplot2::element_blank(),
+              legend.box.background = ggplot2::element_rect(colour = "black"))
 
       if(tail.direction == "two.tailed"){
         p <- p + geom_hline(yintercept = -threshold, linetype="solid", color = "grey", size=1)
@@ -195,10 +195,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
-                legend.title = element_text(size = 10),
-                legend.text = element_text(size=10),
-                legend.background = element_blank(),
-                legend.box.background = element_rect(colour = "black"))
+                legend.title = ggplot2::element_text(size = 10),
+                legend.text = ggplot2::element_text(size=10),
+                legend.background = ggplot2::element_blank(),
+                legend.box.background = ggplot2::element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1))
         print(final.p)
@@ -223,10 +223,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
-                legend.title = element_text(size = 10),
-                legend.text = element_text(size=10),
-                legend.background = element_blank(),
-                legend.box.background = element_rect(colour = "black"))
+                legend.title = ggplot2::element_text(size = 10),
+                legend.text = ggplot2::element_text(size=10),
+                legend.background = ggplot2::element_blank(),
+                legend.box.background = ggplot2::element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p4,p,nrow = 2,heights = c(1, 1))
         print(final.p)
@@ -250,11 +250,18 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           dplyr::left_join(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex")%>%
           tidyr::pivot_longer(-c(.data$timeindex,.data$count.used), names_to = "metric.code", values_to = "str")
 
+        if(length(metrics) == 1){
+          cor.dat <- data.frame("metric.code" = metrics,
+                                "cor" = paste(c("Tau:",round(bind.res$cor, digits = 3)),collapse = " ")) %>%
+                    dplyr::mutate(timeindex = quantile(plot.dat$timeindex,0.8), str =  max(plot.dat$str)*0.8)
+
+        }else{
         cor.dat <- bind.res$cor %>%
           tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
           dplyr::rowwise()%>%
           dplyr::mutate(cor = paste(c("Tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
           dplyr::mutate(timeindex = quantile(plot.dat$timeindex,0.8), str =  max(plot.dat$str)*0.8)
+        }
 
         p<- ggplot(data = plot.dat, aes(x=.data$timeindex,y=.data$str,group=.data$metric.code)) +
           geom_line(aes(col= .data$metric.code))+
@@ -267,10 +274,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           theme(plot.margin = margin(c(10, 8, 5.5, 10)),
                 legend.key.height = unit(0.3,"cm"),
                 legend.key.width = unit(0.5,"cm"),
-                legend.title = element_text(size = 10),
-                legend.text = element_text(size=10),
-                legend.background = element_blank(),
-                legend.box.background = element_rect(colour = "black"))+
+                legend.title = ggplot2::element_text(size = 10),
+                legend.text = ggplot2::element_text(size=10),
+                legend.background = ggplot2::element_blank(),
+                legend.box.background = ggplot2::element_rect(colour = "black"))+
           guides(alpha = guide_legend(order = 1),
                  col = guide_legend(order = 2))
 
@@ -284,10 +291,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           theme(plot.margin = margin(c(10, 8, 0, 10)),
                 legend.key.height = unit(0.3,"cm" ),
                 legend.key.width = unit(0.5,"cm"),
-                legend.title = element_text(size = 10),
-                legend.text = element_text(size=10),
-                legend.background = element_blank(),
-                legend.box.background = element_rect(colour = "black"))
+                legend.title = ggplot2::element_text(size = 10),
+                legend.text = ggplot2::element_text(size=10),
+                legend.background = ggplot2::element_blank(),
+                legend.box.background = ggplot2::element_rect(colour = "black"))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 2))
         print(final.p)

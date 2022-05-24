@@ -54,7 +54,7 @@ A list containing up to two objects: EWS outputs through time (\code{EWS}), and 
 \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 }
 \description{
-A function for performing early warning signal (EWS) assessment on univariate time series. Both traditional methods of EWS assessment can be performed (rolling vs expanding window) with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
+A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
 }
 \examples{
 #A dummy dataset of a hedgerow bird population over
