@@ -113,6 +113,18 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
     data <- as.data.frame(data)
   } #allows tibbles to be used
 
+  pal <- c("#6886c4",
+           "#bfbd3d",
+           "#5d3099",
+           "#69c756",
+           "#e281fe",
+           "#6ca181",
+           "#76c3ef",
+           "#d06329",
+           "#90676f",
+           "#ce5c6e",
+           "#5d4216")
+
   if(method == "expanding"){
     to.test.l<-list()
     for(jj in 1:length(metrics)){
@@ -148,7 +160,8 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                            guide = guide_legend(order = 1, override.aes =
                                                   list(linetype = c(0),shape = c(16),col="black"))) +
-        scale_colour_manual(values = scales::hue_pal()(length(to.test)),
+        #scale_colour_manual(values = scales::hue_pal()(length(to.test)),
+        scale_colour_manual(values = pal[1:length(to.test)],
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,length(to.test)),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
@@ -177,7 +190,8 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           # geom_line(aes(y=.data$count.used),linetype=1) +
           # geom_line(aes(y=(.data$trait*trait_scale)),linetype=2, size = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
+                    #aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
           scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -210,8 +224,9 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
           aes(group=NA)+
           geom_line(col = "black")+
           geom_point(data =bind.res[bind.res$metric.code == bind.res$metric.code[length(bind.res$metric.code)],],
-                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
-          scale_alpha_manual(values = c(0,1),
+                     #aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#53B400") +
+                     aes(x=.data$time, y = min(.data$count.used)*0.1,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
+         scale_alpha_manual(values = c(0,1),
                              breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
                                                     list(size = c(4),shape = c("|")))) +
@@ -266,7 +281,8 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
         p<- ggplot(data = plot.dat, aes(x=.data$timeindex,y=.data$str,group=.data$metric.code)) +
           geom_line(aes(col= .data$metric.code))+
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
-          scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
+          #scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
+          scale_colour_manual(values = pal[1:length(metrics)],guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='EWS indicator\ntrend') +

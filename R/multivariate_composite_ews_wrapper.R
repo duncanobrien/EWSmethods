@@ -54,6 +54,17 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                                      tail.direction = "one.tailed", burn_in = 5){
 
   method <- match.arg(method,choices = c("rolling","expanding"))
+  pal <- c("#6886c4",
+           "#bfbd3d",
+           "#5d3099",
+           "#69c756",
+           "#e281fe",
+           "#6ca181",
+           "#76c3ef",
+           "#d06329",
+           "#90676f",
+           "#ce5c6e",
+           "#5d4216")
 
   if(method == "expanding"){
 
@@ -74,7 +85,8 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "Multivariate EWS",
                            guide = guide_legend(order = 1, override.aes =
                                                   list(linetype = c(0),shape = c(16),col="black"))) +
-        scale_colour_manual(values = scales::hue_pal()(11),
+        #scale_colour_manual(values = scales::hue_pal()(11),
+        scale_colour_manual(values = pal,
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,11),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
@@ -124,7 +136,7 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
 
         plot.dat <- bind.res$raw %>%
           dplyr::mutate(time = as.numeric(.data$time))%>%
-          dplyr:: mutate(across(-c(.data$time),~scale(.x)))%>%
+          dplyr::mutate(across(-c(.data$time),~scale(.x)))%>%
           tidyr::pivot_longer(-c(.data$time), names_to = "metric.code", values_to = "str")
 
         cor.dat <- bind.res$cor %>%
@@ -136,7 +148,8 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
         p<- ggplot(data = plot.dat, aes(x=.data$time,y=.data$str,group=.data$metric.code)) +
           geom_line(aes(col= .data$metric.code))+
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
-          scale_colour_manual(values = scales::hue_pal()(11),
+          #scale_colour_manual(values = scales::hue_pal()(11),
+          scale_colour_manual(values = pal,
                               guide = guide_legend(override.aes = list(linetype = rep(1,11),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
