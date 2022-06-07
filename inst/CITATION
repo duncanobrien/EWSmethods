@@ -1,0 +1,15 @@
+citHeader("To cite EWSmethods in publications use:")
+
+citEntry(
+  entry    = "manual",
+ title = "{EWSmethods}: Pretty assessment of univariate and multivariate early warning signals",
+    author = personList(as.person("Duncan A. O'Brien"), as.person("Smita Deb"), as.person("Christopher F Clements")),
+    note = "R package version 0.1.0",
+    year = "2022",
+    url = "https://github.com/duncanobrien/EWSmethods",
+
+    textVersion  = paste("O'Brien D.A, Deb S. & Clements C.F (2022).",
+        "EWSmethods: Pretty assessment of univariate and multivariate early warning signals.",
+        "R package version 0.1.0",
+        "https://github.com/duncanobrien/EWSmethods.")
+)
