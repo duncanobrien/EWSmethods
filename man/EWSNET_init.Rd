@@ -25,6 +25,13 @@ Prepares your R session for communicating with Python. This function first searc
 #on first install of 'EWSmethods'.
 
 \dontrun{ewsnet_init(envname = "EWSNET_env")}
+#Common errors at this stage result from 'reticulate's
+#behaviour. For example, conflicts between 'ewsnet_init'
+#and RETICULATE_PYTHON may occur if run inside a
+#RStudio R project. To fix this, navigate to
+#Preferences -> Python, untick 'Automatically
+#activate project-local Python environments'
+#and restart R.
 
 \dontrun{reticulate::py_config()}
 #If successful, 'EWSNET_env forced by use_python
