@@ -42,7 +42,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          cache-version: 2
-          extra-packages: rcmdcheck, any::MASS
+          cache: false
+          #cache-version: 2
+          extra-packages: rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v1
