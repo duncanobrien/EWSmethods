@@ -7,6 +7,7 @@ citEntry(
     note = "R package version 0.1.0",
     year = "2022",
     url = "https://github.com/duncanobrien/EWSmethods",
+    doi = "10.5281/zenodo.6620844",
 
     textVersion  = paste("O'Brien D.A, Deb S. & Clements C.F (2022).",
         "EWSmethods: Pretty assessment of univariate and multivariate early warning signals.",

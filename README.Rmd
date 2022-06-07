@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 # EWSmethods
 
 <!-- badges: start -->
+[![DOI](https://zenodo.org/badge/462774077.svg)](https://zenodo.org/badge/latestdoi/462774077)
+
 [![R-CMD-check](https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg)](https://github.com/duncanobrien/EWSmethods/actions)
 <!-- badges: end -->
 
