@@ -15,11 +15,19 @@
 #' #on first install of 'EWSmethods'.
 #'
 #' \dontrun{ewsnet_init(envname = "EWSNET_env")}
+#' #Common errors at this stage result from 'reticulate's
+#' behaviour. For example, conflicts between 'ewsnet_init'
+#' and RETICULATE_PYTHON may occur if run inside a
+#' RStudio R project. To fix this, navigate to
+#' Preferences -> Python, untick 'Automatically
+#' activate project-local Python environments'
+#' and restart R.
 #'
 #' \dontrun{reticulate::py_config()}
 #' #If successful, 'EWSNET_env forced by use_python
 #' #function' will be printed.
 #'
+#
 #' @export
 
 ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
@@ -74,13 +82,13 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
     }else{
       message("Attention: may take up to 10 minutes to complete")
 
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
+
       reticulate::conda_install(envname = paste0(envname),
                                 packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                              "sphinxcontrib-matlabdomain","seaborn"),
                                 pip = T, pip_ignore_installed	= pip_ignore_installed)
-
-      reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
 
       message(paste(envname,"successfully found and activated. Necessary python packages installed"),
               collapse = " ")

@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 # EWSmethods
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg)](https://github.com/duncanobrien/EWSmethods/actions)
 <!-- badges: end -->
 
 `EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [__EWSNET__](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).

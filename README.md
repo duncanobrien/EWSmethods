@@ -4,6 +4,8 @@
 # EWSmethods
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg)](https://github.com/duncanobrien/EWSmethods/actions)
 <!-- badges: end -->
 
 `EWSmethods` is a user friendly interface to various methods of
@@ -188,7 +190,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 
 print(skylark_ewsnet)
 #>                  pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Critical Transition  0.0001411153         0.2852249           0.7146339
+#> 1 Critical Transition  0.0001411152         0.2852249           0.7146339
 ```
 
 ## References
