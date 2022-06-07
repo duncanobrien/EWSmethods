@@ -175,7 +175,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
 #' @return out A list containing the input data, the dimension reduction time series, rotations, autocorrelation and eigenvalues
 
 maf <- function(x){
-  if (isTRUE(is.data.frame(x)) || (class(x)=="matrix" && dim(x)[2]>1)){
+  if (isTRUE(is.data.frame(x)) || (inherits(x,"matrix") && dim(x)[2]>1)){
     p = dim(x)[2]
     n = dim(x)[1]
     x = scale(x)
