@@ -16,7 +16,7 @@ Imports:
     ggthemes,
     gtools,
     moments,
-    MASS (>= 7.3),
+    MASS (== 7.3-57),
     reticulate,
     scales,
     tidyr
