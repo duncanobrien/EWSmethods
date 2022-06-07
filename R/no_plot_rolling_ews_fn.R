@@ -179,7 +179,7 @@ no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
   KtCV <- try(cor.test(timevec, nCV, alternative = c("two.sided"),
                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
 
-  if(class(KtAR) == "try-error"){ #error occurs if too few observations therefore is applicable to all measures
+  if(inherits(KtAR, "try-error")){ #error occurs if too few observations therefore is applicable to all measures
     KtAR <- NA
     KtSD <- NA
     KtSK <- NA

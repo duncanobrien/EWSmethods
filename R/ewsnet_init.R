@@ -35,7 +35,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE){
   wd <- getwd() #get working directory so it can be reset when Python alters the directory
 
   conda <- try(reticulate::conda_list()) #extract list of conda Python environments
-  if(class(conda) == "try-error"){
+  if(inherits(conda, "try-error")){
 
     user_input1 <- readline("Anaconda not found. Would you like to download Anaconda? (y/n) ")
 
