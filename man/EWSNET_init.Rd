@@ -4,12 +4,14 @@
 \alias{ewsnet_init}
 \title{EWSNet Initialisation}
 \usage{
-ewsnet_init(envname, pip_ignore_installed = FALSE)
+ewsnet_init(envname, pip_ignore_installed = FALSE, conda_refresh = F)
 }
 \arguments{
 \item{envname}{A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.}
 
 \item{pip_ignore_installed}{Boolean. If \code{FALSE}, any packages already installed are loaded and not re-downloaded. However, if \code{TRUE}, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).}
+
+\item{conda_refresh}{Boolean. If \code{TRUE}, miniconda is uninstalled and then gives the user the opportunity to perform a fresh reinstall.}
 }
 \value{
 Does not return an object as is simply preparing your R session.
