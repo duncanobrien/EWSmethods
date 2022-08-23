@@ -20,7 +20,7 @@ home:
     structure: [links, license, community, citation, authors, dev]
 
 reference:
-- title: "Early Warning Signal Assessments"
+- title: "Early warning signal assessment"
   desc: >
     Functions for calculating univariate and multivariate
     early warning signals.
@@ -35,7 +35,7 @@ reference:
   - reset_ewsnet
   - bypass_reticulate_autoinit
 
-- title: "Other Resilience Metrics"
+- title: "Other resilience metrics"
   desc: >
     Additional functions estimating alternative
     measures of system stability/resilience.
@@ -43,7 +43,7 @@ reference:
   - FI
   - mvi
 
-- title: "Data Preparation"
+- title: "Data preparation"
   desc: >
      Functions useful for preprocessing
      data prior to analysis.

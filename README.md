@@ -8,6 +8,7 @@
 [![DOI](https://zenodo.org/badge/462774077.svg)](https://zenodo.org/badge/latestdoi/462774077)
 
 [![R-CMD-check](https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg)](https://github.com/duncanobrien/EWSmethods/actions)
+
 <!-- badges: end -->
 
 `EWSmethods` is a user friendly interface to various methods of
@@ -20,6 +21,8 @@ and ggplot inspired figures can also be generated during this process.
 [**EWSNET**](https://ewsnet.github.io), a deep learning modelling
 framework for predicting critical transitions (Deb *et al.* 2022).
 
+<br>
+
 ## Installation
 
 You can install the development version of `EWSmethods` from
@@ -30,14 +33,44 @@ You can install the development version of `EWSmethods` from
 # devtools::install_github("duncanobrien/EWSmethods")
 ```
 
-## Examples
+<br>
+
+## Getting Started
+
+``` r
+library(EWSmethods)
+```
+
+The remainder of this page will introduce the two primary ways of
+interacting with `EWSmethods` for your critical transition forecasting
+needs. For specific function help, please refer to the
+[Reference](https://duncanobrien.github.io/EWSmethods/reference/index.html)
+page.
+
+<br>
+
+## 1. Early Warning Signals
+
+Early warning signals are a collection of summary statistics that
+attempt to characterise the phenomenon of **critical slowing down
+(CSD)**. As a system approaches a tipping point (or bifurcation), it
+takes longer and longer for it to recover when it is pushed away from
+stability (Dakos *et al.* 2012). This increased **return rate** is a
+manifestation of CSD and can be detectable in data. `EWSmethods`
+provides a collection of these summary statistics which can be
+caluclated from either univariate or multivariate time series using
+`uniEWS()` and `multiEWS()` respectively.
+
+<br>
+
+### The univariate approach
 
 Imagine we have 50 years of monitoring data for a local population of
 skylarks (*Alauda arvensis*) and have measured mean body mass data
 throughout this period as well. We could calculate either rolling or
-expanding window EWSs using the abundance data via
-`univariate_EWS_wrapper()` but decide to initially focus on rolling
-windows. We would therefore parameterise the function to do so as below:
+expanding window EWSs using the abundance data via `uniEWS()` but decide
+to initially focus on rolling windows. We would therefore parameterise
+the function to do so as below:
 
 ``` r
 library(EWSmethods)
@@ -109,7 +142,6 @@ to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the
 `trait` argument.
 
 ``` r
-
 trait_metrics <- c("SD", "ar1", "trait")
 exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, method = "expanding", burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance",
 trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
@@ -118,8 +150,9 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 ```
 
 <img src="man/figures/README-expanding_plot_trait-1.png" width="100%" />
+<br>
 
-### Multivariate Early Warning Signals
+### The multivariate approach
 
 If we had data from multiple timeseries/measurements of the same system,
 we might be interested in multivariate early warning signals. These
@@ -131,7 +164,7 @@ dataset representing five related populations of Caribbean reef octopus
 (*Octopus briareus*) in Bahamian salt water lakes (O’Brien *et al.*
 2020) and are interested in assessing the resilience of this
 metapopulation. The following code shows how we would achieve this using
-the `EWSmethods` function `multivariate_EWS_wrapper()`.
+the `EWSmethods` function `multiEWS()`.
 
 ``` r
 set.seed(123)
@@ -146,9 +179,11 @@ oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold
 
 The figure again shows that one multivariate EWS indicator has expressed
 a warning, but that overall, no transition is anticipated.
-<img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
 
-## EWSNet
+<img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
+<br>
+
+## 2. EWSNet
 
 The other half of `EWSmethods` allows you to query the
 [Python-based](https://www.python.org) **EWSNet** via an easy to use R
@@ -198,6 +233,8 @@ print(skylark_ewsnet)
 #>                  pred no_trans_prob smooth_trans_prob critical_trans_prob
 #> 1 Critical Transition  0.0001411155         0.2852249           0.7146339
 ```
+
+<br>
 
 ## References
 
