@@ -2,4 +2,28 @@ url: https://duncanobrien.github.io/EWSmethods/
 template:
   bootstrap: 5
   bootswatch: lux
-
+navbar:
+  structure:
+    left:  [intro, reference, articles, tutorials, changelog]
+    right: [search, github]
+reference:
+- title: "Early Warning Signal Assessments"
+  desc: >
+    Functions for calculating univariate and multivariate
+    early warning signals.
+  contents:
+  - uniEWS
+  - multiEWS
+- title: "EWSNet"
+  desc: "Functions for interfacng with EWSNet."
+  contents:
+  - bypass_autoinit
+  - starts_with("ewsnet")
+  - reset_ewsnet
+- title: "Other Resilience Metrics"
+   desc: >
+    Additional functions estimating alternative
+    measures of system stability/resilience
+  contents:
+  - FI
+  - mvi
