@@ -2,10 +2,23 @@ url: https://duncanobrien.github.io/EWSmethods/
 template:
   bootstrap: 5
   bootswatch: lux
+  bslib:
+    pkgdown-nav-height: 100px
+
 navbar:
   structure:
     left:  [intro, reference, articles, tutorials, changelog]
-    right: [search, github]
+    right: [search, twitter, github]
+  components:
+    twitter:
+      icon: fa-twitter
+      href: http://twitter.com/duncanobrienn
+      aria-label: Twitter
+
+home:
+  sidebar:
+    structure: [links, license, community, citation, authors, dev]
+
 reference:
 - title: "Early Warning Signal Assessments"
   desc: >
