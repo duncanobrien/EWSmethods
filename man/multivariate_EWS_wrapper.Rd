@@ -10,9 +10,9 @@ multivariate_EWS_wrapper(
   interpolate = FALSE,
   ggplotIt = TRUE,
   winsize = 50,
+  burn_in = 5,
   threshold = 2,
-  tail.direction = "one.tailed",
-  burn_in = 5
+  tail.direction = "one.tailed"
 )
 }
 \arguments{
@@ -26,11 +26,11 @@ multivariate_EWS_wrapper(
 
 \item{winsize}{Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series' length.}
 
+\item{burn_in}{Numeric value. If \code{method = "expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.}
+
 \item{threshold}{Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".}
 
 \item{tail.direction}{String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.}
-
-\item{burn_in}{Numeric value. The number of data points to 'train' signals prior to EWS assessment.}
 }
 \value{
 A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
@@ -40,7 +40,7 @@ A list containing up to two objects: EWS outputs through time (\code{EWS}), and 
 \item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 }
 \description{
-A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
+A single function for performing early warning signal (EWS) assessment on multivariate systems where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling or expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 }
 \examples{
 #Generate a random five species, non-transitioning

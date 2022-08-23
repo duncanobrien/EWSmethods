@@ -1,15 +1,15 @@
 #' Multivariate Early Warning Signal Assessment
 #'
-#' A single function for performing early warning signal (EWS) assessment on multivariate time series where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling vs expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
+#' A single function for performing early warning signal (EWS) assessment on multivariate systems where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling or expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and all other columns are individual time series. These could be different species, populations or measurements.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
 #' @param interpolate Boolean. If \code{TRUE}, linearly interpolates missing values found within each time series.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND the estimated dimension reduction.
 #' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series' length.
+#' @param burn_in Numeric value. If \code{method = "expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
 #' @param threshold Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".
 #' @param tail.direction String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.
-#' @param burn_in Numeric value. The number of data points to 'train' signals prior to EWS assessment.
 #'
 #' @returns A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
 #' \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
@@ -50,8 +50,8 @@
 #' @export
 multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
                                      interpolate = FALSE, ggplotIt = TRUE,
-                                     winsize = 50, threshold = 2,
-                                     tail.direction = "one.tailed", burn_in = 5){
+                                     winsize = 50, burn_in = 5, threshold = 2,
+                                     tail.direction = "one.tailed"){
 
   method <- match.arg(method,choices = c("rolling","expanding"))
   pal <- c("#6886c4",

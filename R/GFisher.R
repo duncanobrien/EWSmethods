@@ -6,7 +6,7 @@
 #' @param data A numeric matrix of individual time series across the columns. These could be different species, populations or measurements.
 #' @param sost A 1 x n matrix where n is a length equal to the number of time series in \code{data}. Each value is the 'size of state' tolerable for that time series and typically is represented by the standard deviation of the time series during a reference period.
 #' @param winsize Numeric value. Defines the window size of the rolling window as a percentage of the time series length.
-#' @param winspace Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{hwin}.
+#' @param winspace Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{winsize}.
 #' @param TL Numeric value. The 'tightening level' or percentage of points shared between states that allows the algorithm to classify data points as the same state.
 #'
 #' @returns A list containing three objects:

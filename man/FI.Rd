@@ -15,7 +15,7 @@ FI(timedat, data, sost, winsize, winspace = 1, TL = 90)
 
 \item{winsize}{Numeric value. Defines the window size of the rolling window as a percentage of the time series length.}
 
-\item{winspace}{Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{hwin}.}
+\item{winspace}{Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{winsize}.}
 
 \item{TL}{Numeric value. The 'tightening level' or percentage of points shared between states that allows the algorithm to classify data points as the same state.}
 }
