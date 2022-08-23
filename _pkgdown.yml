@@ -1,0 +1,5 @@
+url: https://duncanobrien.github.io/EWSmethods/
+template:
+  bootstrap: 5
+  bootswatch: lux
+
