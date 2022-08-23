@@ -41,7 +41,7 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 
 ## Getting Started
 
-```{r, eval = F}
+```{r, message=FALSE}
 library(EWSmethods)
 ```
 
@@ -60,7 +60,6 @@ Early warning signals are a collection of summary statistics that attempt to cha
 Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via `uniEWS()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
 
 ```{r roll_example, fig.keep = "none"}
-library(EWSmethods)
 set.seed(125) #seed to ensure reproducible results
 
 skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 100,sd=20), trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset

@@ -73,10 +73,6 @@ to initially focus on rolling windows. We would therefore parameterise
 the function to do so as below:
 
 ``` r
-library(EWSmethods)
-#> Registered S3 method overwritten by 'quantmod':
-#>   method            from
-#>   as.zoo.data.frame zoo
 set.seed(125) #seed to ensure reproducible results
 
 skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 100,sd=20), trait = rnorm(50,mean=40,sd=5)) #dummy skylark dataset
