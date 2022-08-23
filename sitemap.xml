@@ -16,9 +16,6 @@
     <loc>https://duncanobrien.github.io/EWSmethods/index.html</loc>
   </url>
   <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/CV.html</loc>
-  </url>
-  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/EWSNET_init.html</loc>
   </url>
   <url>
@@ -46,9 +43,6 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/interp.html</loc>
-  </url>
-  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/maf.html</loc>
   </url>
   <url>
@@ -62,15 +56,6 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/reset_ewsnet.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/rolling_mean.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/rolling_sd.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/roundTO.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/uniEWS.html</loc>
