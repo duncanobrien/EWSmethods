@@ -2,7 +2,21 @@ Type: Package
 Package: EWSmethods
 Title: Simple Early Warning Signals for Univariate and Multivariate Time Series
 Version: 0.1.0
-Author: Duncan O'Brien
+Authors@R: c(
+    person(given   = "Duncan",
+           family  = "O'Brien",
+           email   = "duncan.a.obrien@gmail.com",
+           role    = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-3420-5210")),
+    person(given   = "Smita",
+           family  = "Deb",
+           email   = "smita.19maz0004@iitrpr.ac.in",
+           role    = "aut"),
+    person(given   = "Christopher",
+           family  = "Clements",
+           email   = "c.clements@bristol.ac.uk",
+           role    = "aut",
+           comment = c(ORCID = "0000-0001-5677-5401")))
 Maintainer: Duncan O'Brien <duncan.a.obrien@gmail.com>
 Description: Rolling and expanding window approaches to assessing abundance based early warning signals. ggplot based presentation of the outputs are also provided for clear and publishable figures.
 License: MIT + file LICENSE
