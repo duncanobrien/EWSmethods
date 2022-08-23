@@ -3,7 +3,7 @@ template:
   bootstrap: 5
   bootswatch: lux
   bslib:
-    pkgdown-nav-height: 100px
+    pkgdown-nav-height: 150px
 
 navbar:
   structure:
