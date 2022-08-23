@@ -4,7 +4,6 @@
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and all other columns are individual time series. These could be different species, populations or measurements.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
-#' @param interpolate Boolean. If \code{TRUE}, linearly interpolates missing values found within each time series.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND the estimated dimension reduction.
 #' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series' length.
 #' @param burn_in Numeric value. If \code{method = "expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
@@ -30,7 +29,7 @@
 #' #Rolling window early warning signal assessment of
 #' #the ecosystem, without plotting.
 #'
-#' roll_ews <- multivariate_EWS_wrapper(
+#' roll_ews <- multiEWS(
 #'  data = multi_spp_data,
 #'  method = "rolling",
 #'  winsize = 50,
@@ -39,7 +38,7 @@
 #' #Expanding window early warning signal assessment of
 #' #the ecosystem, with plotting.
 #'
-#' \dontrun{exp_ews <- multivariate_EWS_wrapper(
+#' \dontrun{exp_ews <- multiEWS(
 #'  data = multi_spp_data,
 #'  method = "expanding",
 #'  burn_in = 10,
@@ -48,9 +47,9 @@
 #' @importFrom dplyr .data
 #'
 #' @export
-multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
-                                     interpolate = FALSE, ggplotIt = TRUE,
-                                     winsize = 50, burn_in = 5, threshold = 2,
+multiEWS <- function(data, method = c("expanding","rolling"),
+                                     ggplotIt = TRUE,winsize = 50,
+                                     burn_in = 5, threshold = 2,
                                      tail.direction = "one.tailed"){
 
   method <- match.arg(method,choices = c("rolling","expanding"))
@@ -65,6 +64,10 @@ multivariate_EWS_wrapper <- function(data, method = c("expanding","rolling"),
            "#90676f",
            "#ce5c6e",
            "#5d4216")
+
+  if(any(is.na(data))){
+    stop('Data contains missing values. Interpolation of missing values is recommended')
+  }
 
   if(method == "expanding"){
 

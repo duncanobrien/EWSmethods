@@ -5,13 +5,12 @@
 #' @param data A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.
 #' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, \code{"mean.size"}, \code{"sd.size"}, \code{"sd.95"} and \code{"trait"}.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
-#' @param interpolate Boolean. If \code{TRUE}, linearly interpolates missing values found within the abundance time series.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND input abundance.
 #' @param y_lab String label. If \code{ggplotIt = TRUE}, labels the abundance y axis.
 #' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series length.
+#' @param burn_in Numeric value. If \code{method = "expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
 #' @param threshold Numeric value of either \code{1} or \code{2}. Threshold*sigma is the value which, if the EWS strength exceeds it, constitutes a "signal".
 #' @param tail.direction String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.
-#' @param burn_in Numeric value. The number of data points to 'train' signals prior to EWS assessment.
 #' @param trait A vector of numeric trait values if desired. Can be \code{NULL}
 #' @param trait_lab String label. If \code{ggplotIt = TRUE}, & trait populated, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
 #' @param trait_scale Numeric value. Scales trait y axis relative to abundance y axis.
@@ -37,7 +36,7 @@
 #' #Rolling window early warning signal assessment of
 #' #the bird abundance (no plotting).
 #'
-#' roll_ews <- univariate_EWS_wrapper(
+#' roll_ews <- uniEWS(
 #'  data = abundance_data[,1:2],
 #'  metrics =  ews_metrics,
 #'  ggplotIt = FALSE,
@@ -47,12 +46,12 @@
 #' #Expanding window early warning signal assessment of
 #' #the bird abundance (with plotting).
 #'
-#' \dontrun{exp_ews <- univariate_EWS_wrapper(
+#' \dontrun{exp_ews <- uniEWS(
 #'  data = abundance_data,
 #'  metrics = ews_metrics,
 #'  method = "expanding",
 #'  burn_in = 10,
-#'  ggplotIt =TRUE,
+#'  ggplotIt = TRUE,
 #'  y_lab = "Bird abundance")}
 #'
 #' #Expanding window early warning signal assessment of
@@ -60,12 +59,12 @@
 #' #information (with plotting).
 #'
 #' ews_metrics_trait <- c("SD","ar1","trait")
-#' \dontrun{trait_exp_ews <- univariate_EWS_wrapper(
+#' \dontrun{trait_exp_ews <- uniEWS(
 #'  data = abundance_data,
 #'  metrics = ews_metrics_trait,
 #'  method = "expanding",
 #'  burn_in = 10,
-#'  ggplotIt =TRUE,
+#'  ggplotIt = TRUE,
 #'  trait = abundance_data$trait,
 #'  trait_lab = "Bill length (mm)",
 #'  trait_scale = 10)}
@@ -99,10 +98,10 @@
 #' @importFrom dplyr .data
 #'
 #' @export
-univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"),
-                                   interpolate = FALSE, ggplotIt = TRUE, y_lab = "Generic indicator name",
-                                   winsize = 50, threshold = 2,tail.direction = "one.tailed",
-                                   burn_in = 5, trait = NULL,
+uniEWS <- function(data,metrics,method = c("expanding","rolling"),
+                                   ggplotIt = TRUE, y_lab = "Generic indicator name",
+                                   winsize = 50, burn_in = 5, threshold = 2,
+                                   tail.direction = "one.tailed", trait = NULL,
                                    trait_lab = "Generic Trait Name",
                                   trait_scale = 1000){
 
@@ -125,6 +124,10 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
            "#ce5c6e",
            "#5d4216")
 
+  if(any(is.na(data))){
+    stop('Data contains missing values. Interpolation of missing values is recommended')
+  }
+
   if(method == "expanding"){
     to.test.l<-list()
     for(jj in 1:length(metrics)){
@@ -143,7 +146,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
       ##set the weighing to 1 - just required to make the code run, doesnt do anythnig
       W<-data.frame(inds=sort(unlist(to.test[i])), "wei"=1)
       ##run the EWS from clements & ozgul nat comms and save out:
-      res[[i]]<-W_composite_ews(dat=data, indicators=sort(unlist(to.test[i])), weights=W, trait = trait, threshold=threshold, burn_in = burn_in, tail.direction = tail.direction,interpolate = interpolate)
+      res[[i]]<-W_composite_ews(dat=data, indicators=sort(unlist(to.test[i])), weights=W, trait = trait, threshold=threshold, burn_in = burn_in, tail.direction = tail.direction,interpolate = F)
     }
 
     bind.res<-data.table::rbindlist(res)
@@ -252,7 +255,7 @@ univariate_EWS_wrapper <- function(data,metrics,method = c("expanding","rolling"
 
   if(method == "rolling"){
 
-    bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = interpolate)
+    bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = F)
 
       bind.res$raw <- bind.res$raw[,c("timeindex",metrics)]
       bind.res$raw<-as.data.frame(bind.res$raw)
