@@ -31,14 +31,18 @@ abundance_data <- data.frame(time = seq(1:50),
 #Activate python environment (only necessary
 #on first opening of R session).
 
-\dontrun{ewsnet_init(envname = "EWSNET_env")}
+\dontrun{
+ewsnet_init(envname = "EWSNET_env")
+}
 
 #Generate EWSNet predictions.
 
-\dontrun{pred <- ewsnet_predict(
+\dontrun{
+pred <- ewsnet_predict(
  abundance_data$abundance,
  noise_type = "W",
  ensemble = 15,
- envname = "EWSNET_env")}
+ envname = "EWSNET_env")
+ }
 
 }

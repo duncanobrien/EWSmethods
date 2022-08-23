@@ -46,20 +46,23 @@
 #' #Expanding window early warning signal assessment of
 #' #the bird abundance (with plotting).
 #'
-#' \dontrun{exp_ews <- uniEWS(
+#' \dontrun{
+#' exp_ews <- uniEWS(
 #'  data = abundance_data,
 #'  metrics = ews_metrics,
 #'  method = "expanding",
 #'  burn_in = 10,
 #'  ggplotIt = TRUE,
-#'  y_lab = "Bird abundance")}
+#'  y_lab = "Bird abundance")
+#'  }
 #'
 #' #Expanding window early warning signal assessment of
 #' #the bird abundance incorporating the trait
 #' #information (with plotting).
 #'
 #' ews_metrics_trait <- c("SD","ar1","trait")
-#' \dontrun{trait_exp_ews <- uniEWS(
+#' \dontrun{
+#' trait_exp_ews <- uniEWS(
 #'  data = abundance_data,
 #'  metrics = ews_metrics_trait,
 #'  method = "expanding",
@@ -67,7 +70,8 @@
 #'  ggplotIt = TRUE,
 #'  trait = abundance_data$trait,
 #'  trait_lab = "Bill length (mm)",
-#'  trait_scale = 10)}
+#'  trait_scale = 10)
+#'  }
 #'
 #' @importFrom stats quantile
 #' @importFrom ggplot2 ggplot

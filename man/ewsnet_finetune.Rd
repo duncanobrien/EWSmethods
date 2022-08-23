@@ -24,7 +24,9 @@ Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework f
 #Activate python environment (only necessary
 #on first opening of R session).
 
-\dontrun{ewsnet_init(envname = "EWSNET_env")}
+\dontrun{
+ewsnet_init(envname = "EWSNET_env")
+}
 
 #A dummy dataset of a hedgerow bird population
 #monitored over 50 years that needs to be tuned.
@@ -40,23 +42,28 @@ x <- sapply(1:dim(x)[2], function(i){
  x[,i] <- rnorm(50,mean=20,sd=10)})
 
 #Label each time series.
+
 y <- sample(0:2,10,replace = TRUE)
 
 #Finetune EWSNet.
 
-\dontrun{ewsnet_finetune(
+\dontrun{
+ewsnet_finetune(
  x = x,
  y = y,
  noise_type = "W",
  ensemble = 25,
- envname = "EWSNET_env")}
+ envname = "EWSNET_env")
+ }
 
 #Generate new EWSNet predictions.
 
-\dontrun{pred <- ewsnet_predict(
+\dontrun{
+pred <- ewsnet_predict(
  abundance_data$abundance,
  noise_type = "W",
  ensemble = 15,
- envname = "EWSNET_env")}
+ envname = "EWSNET_env")
+ }
 
 }

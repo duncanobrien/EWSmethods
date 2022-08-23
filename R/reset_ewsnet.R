@@ -6,8 +6,13 @@
 #' @param new_weight_location A path string to the location where the unzipped file has been saved. Include "Pretrained" as the final path folder.
 #'
 #' @examples
-#' \dontrun{reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained")} # Windows example
-#' \dontrun{reset_ewsnet(new_weight_location = "/Users/your_name/Downloads/Pretrained")} # Mac example
+#' \dontrun{
+#' reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") # Windows example
+#' }
+#'
+#'\dontrun{
+#' reset_ewsnet(new_weight_location = "/Users/your_name/Downloads/Pretrained") # Mac example
+#'}
 #'
 #' @export
 

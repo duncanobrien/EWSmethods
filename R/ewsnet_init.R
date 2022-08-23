@@ -9,13 +9,17 @@
 #' @returns Does not return an object as is simply preparing your R session.
 #'
 #' @examples
-#' \dontrun{bypass_autoinit()}
+#' \dontrun{
+#' bypass_autoinit()
+#' }
 #' #this function prevents 'reticulate' automatically
 #' #reloading the python environment from the
 #' #previous session. Only needs to be run once
 #' #on first install of 'EWSmethods'.
 #'
-#' \dontrun{ewsnet_init(envname = "EWSNET_env")}
+#' \dontrun{
+#' ewsnet_init(envname = "EWSNET_env")
+#' }
 #' #Common errors at this stage result from 'reticulate's
 #' #behaviour. For example, conflicts between 'ewsnet_init'
 #' #and RETICULATE_PYTHON may occur if run inside a
@@ -24,7 +28,9 @@
 #' #activate project-local Python environments'
 #' #and restart R.
 #'
-#' \dontrun{reticulate::py_config()}
+#' \dontrun{
+#' reticulate::py_config()
+#' }
 #' #If successful, 'EWSNET_env forced by use_python
 #' #function' will be printed.
 #'

@@ -61,9 +61,11 @@ roll_ews <- multiEWS(
 #Expanding window early warning signal assessment of
 #the ecosystem, with plotting.
 
-\dontrun{exp_ews <- multiEWS(
+\dontrun{
+exp_ews <- multiEWS(
  data = multi_spp_data,
  method = "expanding",
  burn_in = 10,
- ggplotIt =TRUE)}
+ ggplotIt =TRUE)
+ }
 }
