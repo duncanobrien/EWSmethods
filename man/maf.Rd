@@ -15,3 +15,4 @@ out A list containing the input data, the dimension reduction time series, rotat
 \description{
 Maximum/Minimum Autocorrelation Factors
 }
+\keyword{internal}

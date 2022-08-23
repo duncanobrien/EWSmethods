@@ -40,3 +40,4 @@ Modified code from Clements, McCarthy, and Blanchard (2019) Nature
 Coms - "Early warning signals of rocovery in complex systems". Additional
 EWS indicators, burn_in and interpolation capability added
 }
+\keyword{internal}

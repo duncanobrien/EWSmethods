@@ -14,16 +14,25 @@ reference:
   contents:
   - uniEWS
   - multiEWS
+
 - title: "EWSNet"
-  desc: "Functions for interfacng with EWSNet."
+  desc: "Functions for interfacing with EWSNet."
   contents:
-  - bypass_autoinit
   - starts_with("ewsnet")
   - reset_ewsnet
+  - bypass_reticulate_autoinit
+
 - title: "Other Resilience Metrics"
-   desc: >
+  desc: >
     Additional functions estimating alternative
-    measures of system stability/resilience
+    measures of system stability/resilience.
   contents:
   - FI
   - mvi
+
+- title: "Data Preparation"
+  desc: >
+     Functions useful for preprocessing
+     data prior to analysis.
+  contents:
+  - deseason_ts

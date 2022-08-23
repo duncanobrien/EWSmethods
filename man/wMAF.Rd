@@ -32,3 +32,4 @@ A list containing \code{"raw"} (the early warning signals through time) and \cod
 \description{
 Multivariate Early Warning Signals
 }
+\keyword{internal}

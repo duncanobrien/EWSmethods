@@ -16,7 +16,8 @@
 #' @return output A matrix of early warning signal indicators through time.
 #'
 #' @importFrom stats spec.ar
-#'
+#' @keywords internal
+
 W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2, burn_in = 5, tail.direction = "one.tailed",interpolate = F){
 
   ############################################################

@@ -43,3 +43,4 @@ no.plot.ews(
 Rolling Window Early Warning Signals
 An adaptation of the \code{generic_ews} function in the R package \code{earlywarnings}.
 }
+\keyword{internal}

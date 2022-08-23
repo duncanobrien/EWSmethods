@@ -5,7 +5,7 @@
 #' @param na.rm Boolean. If TRUE, missing values are removed.
 #'
 #' @importFrom stats sd
-#'
+#' @noRd
 CV <- function(x, na.rm){
   ave<-mean(x, na.rm=na.rm)
   dev<-sd(x, na.rm=na.rm)
@@ -18,7 +18,7 @@ CV <- function(x, na.rm){
 #' @param obs A numeric vector.
 #'
 #' @importFrom stats approx
-#'
+#' @noRd
 interp<-function(days, obs){
   int.dat<-as.data.frame(approx(days, obs, n = length(obs), method = "linear"))
   names(int.dat)<-c("time", "counts")
@@ -28,6 +28,7 @@ interp<-function(days, obs){
 #' Rolling Mean
 #'
 #' @param x A numeric vector.
+#' @noRd
 rolling_mean <- function(x){
   k = length(x);
   result = rep(0, k);
@@ -42,6 +43,7 @@ rolling_mean <- function(x){
 #' @param x A numeric vector.
 #'
 #' @importFrom stats sd
+#' @noRd
 
 rolling_sd <- function(x){
   k = length(x);

@@ -25,3 +25,4 @@ A list \code{NewList} containing to two objects:
 \description{
 The purpose of this program is to bin the points into states by calculating the difference (dist) of each variable vector per timestep and then counting the variable vector if dist<= size of the state AND the percentage of variables in the vector that meets the criteria is over the tightening level.
 }
+\keyword{internal}

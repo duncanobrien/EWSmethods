@@ -11,6 +11,7 @@
 #' @returns A list \code{NewList} containing to two objects:
 #' \item{pdf}{A uniform probability density function.}
 #' \item{neighbour}{The time point indices that contribute to the calculation.}
+#' @keywords internal
 
 
 NFisherpdf <- function(data,lmin,lmax,sizeofstates,TL){
