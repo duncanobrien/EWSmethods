@@ -67,8 +67,9 @@
 <div class="page-header"><h1 id="ewsmethods">EWSmethods<a class="anchor" aria-label="anchor" href="#ewsmethods"></a>
 </h1></div>
 <!-- badges: start -->
-<p><a href="https://github.com/duncanobrien/EWSmethods/actions" class="external-link"><img src="https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <!-- badges: end --></p>
-<p><code>EWSmethods</code> is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos <em>et al.</em> 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. <code>EWSmethods</code> also provides an R interface to <a href="https://ewsnet.github.io" class="external-link"><strong>EWSNET</strong></a>, a deep learning modelling framework for predicting critical transitions (Deb <em>et al.</em> 2022).</p>
+
+<!-- badges: end --><p><code>EWSmethods</code> is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos <em>et al.</em> 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. <code>EWSmethods</code> also provides an R interface to <a href="https://ewsnet.github.io" class="external-link"><strong>EWSNET</strong></a>, a deep learning modelling framework for predicting critical transitions (Deb <em>et al.</em> 2022).</p>
+<p><br></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -76,12 +77,26 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="co"># devtools::install_github("duncanobrien/EWSmethods")</span></span></code></pre></div>
+<p><br></p>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>Imagine we have 50 years of monitoring data for a local population of skylarks (<em>Alauda arvensis</em>) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via <code>univariate_EWS_wrapper()</code> but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/duncanobrien/EWSmethods" class="external-link">EWSmethods</a></span><span class="op">)</span></span></code></pre></div>
+<p>The remainder of this page will introduce the two primary ways of interacting with <code>EWSmethods</code> for your critical transition forecasting needs. For specific function help, please refer to the <a href="https://duncanobrien.github.io/EWSmethods/reference/index.html">Reference</a> page.</p>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="1-early-warning-signals">1. Early Warning Signals<a class="anchor" aria-label="anchor" href="#1-early-warning-signals"></a>
+</h2>
+<p>Early warning signals are a collection of summary statistics that attempt to characterise the phenomenon of <strong>critical slowing down (CSD)</strong>. As a system approaches a tipping point (or bifurcation), it takes longer and longer for it to recover when it is pushed away from stability (Dakos <em>et al.</em> 2012). This increased <strong>return rate</strong> is a manifestation of CSD and can be detectable in data. <code>EWSmethods</code> provides a collection of these summary statistics which can be caluclated from either univariate or multivariate time series using <code><a href="reference/uniEWS.html">uniEWS()</a></code> and <code><a href="reference/multiEWS.html">multiEWS()</a></code> respectively.</p>
+<p><br></p>
+<div class="section level3">
+<h3 id="the-univariate-approach">The univariate approach<a class="anchor" aria-label="anchor" href="#the-univariate-approach"></a>
+</h3>
+<p>Imagine we have 50 years of monitoring data for a local population of skylarks (<em>Alauda arvensis</em>) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via <code><a href="reference/uniEWS.html">uniEWS()</a></code> but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/duncanobrien/EWSmethods" class="external-link">EWSmethods</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Registered S3 method overwritten by 'quantmod':</span></span>
 <span><span class="co">#&gt;   method            from</span></span>
@@ -100,7 +115,7 @@
 <p>We can then use the resulting figures to identify oncoming transitions. In this case, we expect no transition as the data is randomly sampled from a normal distribution and this is evident in the Kendall Tau values, with no strong positive correlation with time:</p>
 <p><img src="reference/figures/README-rolling_plot-1.png" width="100%"></p>
 <p>Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">ews_metrics</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>,  tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span><span class="cn">TRUE</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span><span class="op">)</span> <span class="co">#lets use a rolling window approach</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span>
@@ -123,19 +138,19 @@
 <p>And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2σ threshold, we only consider these signals “warnings” if two or more consecutive signals are identified (Clements <em>et al.</em> 2019).</p>
 <p><img src="reference/figures/README-expanding_plot-1.png" width="100%"></p>
 <p>A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah <em>et al.</em> 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the <code>univariate_EWS_wrapper()</code> function in <code>EWSmethods</code>, using the <code>trait</code> argument.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">trait_metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SD"</span>, <span class="st">"ar1"</span>, <span class="st">"trait"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trait_metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SD"</span>, <span class="st">"ar1"</span>, <span class="st">"trait"</span><span class="op">)</span></span>
 <span><span class="va">exp_ews_trait</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">trait_metrics</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span><span class="cn">TRUE</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span>,</span>
 <span>trait <span class="op">=</span> <span class="va">skylark_data</span><span class="op">$</span><span class="va">trait</span>, trait_lab <span class="op">=</span> <span class="st">"Body mass (g)"</span>, trait_scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p><img src="reference/figures/README-expanding_plot_trait-1.png" width="100%"></p>
+<p><img src="reference/figures/README-expanding_plot_trait-1.png" width="100%"><br></p>
+</div>
 <div class="section level3">
-<h3 id="multivariate-early-warning-signals">Multivariate Early Warning Signals<a class="anchor" aria-label="anchor" href="#multivariate-early-warning-signals"></a>
+<h3 id="the-multivariate-approach">The multivariate approach<a class="anchor" aria-label="anchor" href="#the-multivariate-approach"></a>
 </h3>
-<p>If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans <em>et al.</em> 2021 for an overview of each indicator). Here we’ve constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (<em>Octopus briareus</em>) in Bahamian salt water lakes (O’Brien <em>et al.</em> 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the <code>EWSmethods</code> function <code>multivariate_EWS_wrapper()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans <em>et al.</em> 2021 for an overview of each indicator). Here we’ve constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (<em>Octopus briareus</em>) in Bahamian salt water lakes (O’Brien <em>et al.</em> 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the <code>EWSmethods</code> function <code><a href="reference/multiEWS.html">multiEWS()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">octopus_spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">50</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -144,14 +159,15 @@
 <span><span class="va">oct_exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">octopus_spp_data</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co">#lets use an expanding window approach</span></span>
 <span><span class="co">#&gt; Warning: Removed 22 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 22 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p>The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated. <img src="reference/figures/README-expanding_oct_plot-1.png" width="100%"></p>
+<p>The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.</p>
+<p><img src="reference/figures/README-expanding_oct_plot-1.png" width="100%"><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="ewsnet">EWSNet<a class="anchor" aria-label="anchor" href="#ewsnet"></a>
+<h2 id="2-ewsnet">2. EWSNet<a class="anchor" aria-label="anchor" href="#2-ewsnet"></a>
 </h2>
 <p>The other half of <code>EWSmethods</code> allows you to query the <a href="https://www.python.org" class="external-link">Python-based</a> <strong>EWSNet</strong> via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/" class="external-link">R package</a>) and then calls <strong>EWSNet</strong> to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> before b) using <code><a href="reference/ewsnet_predict.html">ewsnet_predict()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/bypass_reticulate_autoinit.html">bypass_reticulate_autoinit</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#edits your global R environment with the line: RETICULATE_AUTOCONFIGURE = "FALSE". This ensures 'reticulate' does not load a python environment until 'ewsnet_init()' has been called</span></span>
 <span><span class="co">#&gt; RETICULATE_AUTOCONFIGURE already set to FALSE</span></span>
 <span></span>
@@ -189,6 +205,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">skylark_ewsnet</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
 <span><span class="co">#&gt; 1 Critical Transition  0.0001411155         0.2852249           0.7146339</span></span></code></pre></div>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -240,6 +257,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://zenodo.org/badge/latestdoi/462774077" class="external-link"><img src="https://zenodo.org/badge/462774077.svg" alt="DOI"></a></li>
+<li><a href="https://github.com/duncanobrien/EWSmethods/actions" class="external-link"><img src="https://github.com/duncanobrien/EWSmethods/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
