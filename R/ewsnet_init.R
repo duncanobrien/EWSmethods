@@ -38,7 +38,7 @@
 #
 #' @export
 
-ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F, auto = F){
+ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = FALSE, auto = FALSE){
 
   if(isTRUE(conda_refresh)){
   reticulate::miniconda_uninstall() # start with a blank slate

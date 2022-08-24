@@ -4,7 +4,12 @@
 \alias{ewsnet_init}
 \title{EWSNet Initialisation}
 \usage{
-ewsnet_init(envname, pip_ignore_installed = FALSE, conda_refresh = F, auto = F)
+ewsnet_init(
+  envname,
+  pip_ignore_installed = FALSE,
+  conda_refresh = FALSE,
+  auto = FALSE
+)
 }
 \arguments{
 \item{envname}{A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.}

@@ -49,7 +49,7 @@ ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh
 
 ```{r ewsnet_init_true, echo=FALSE,warning = FALSE,message=FALSE}
 bypass_reticulate_autoinit()
-reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 library(ggplot2)
 library(tidyr)
 ```
@@ -120,7 +120,7 @@ for(i in seq_along(expanding_range)){
 #plot the results
 ggplot(expanding_ewsnet |> pivot_longer(-cutoff_ind,names_to = "Prediction",values_to = "prob"),
                 aes(x=cutoff_ind,y=prob)) +
-    geom_point(aes(col=pos_prediction)) + theme_bw() +
+    geom_point(aes(col=Prediction)) + theme_bw() +
     xlab("Assessment index") + ylab("Prediction probability")
 ```
 
