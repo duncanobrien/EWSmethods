@@ -58,7 +58,7 @@ takes longer and longer for it to recover when it is pushed away from
 stability (Dakos *et al.* 2012). This increased **return rate** is a
 manifestation of CSD and can be detectable in data. `EWSmethods`
 provides a collection of these summary statistics which can be
-caluclated from either univariate or multivariate time series using
+calculated from either univariate or multivariate time series using
 `uniEWS()` and `multiEWS()` respectively.
 
 <br>
@@ -67,10 +67,11 @@ caluclated from either univariate or multivariate time series using
 
 Imagine we have 50 years of monitoring data for a local population of
 skylarks (*Alauda arvensis*) and have measured mean body mass data
-throughout this period as well. We could calculate either rolling or
-expanding window EWSs using the abundance data via `uniEWS()` but decide
-to initially focus on rolling windows. We would therefore parameterise
-the function to do so as below:
+throughout this period as well.
+
+We could calculate either rolling or expanding window EWSs using the
+abundance data via `uniEWS()` but decide to initially focus on rolling
+windows. We would therefore parameterise the function to do so as below:
 
 ``` r
 set.seed(125) #seed to ensure reproducible results
@@ -132,10 +133,12 @@ information can be used to improve the reliability of the assessment.
 Including trait information has been shown to decrease the likelihood of
 both false positive and false negative signals (Clements and Ozgul,
 2016; Baruah *et al.* 2019) and therefore should be considered if
-possible. For example, in our hypothetical skylark dataset, we have
-measured average population body mass. This data can then be delivered
-to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the
-`trait` argument.
+possible.
+
+For example, in our hypothetical skylark dataset, we have measured
+average population body mass. This data can then be delivered to the
+`univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait`
+argument.
 
 ``` r
 trait_metrics <- c("SD", "ar1", "trait")
@@ -156,12 +159,14 @@ we might be interested in multivariate early warning signals. These
 indicators exploit either dimension reduction techniques (such as
 Principal Component Analysis) or community average estimates to give an
 overall measure of system resilience (see Weinans *et al.* 2021 for an
-overview of each indicator). Here we’ve constructed another hypothetical
-dataset representing five related populations of Caribbean reef octopus
-(*Octopus briareus*) in Bahamian salt water lakes (O’Brien *et al.*
-2020) and are interested in assessing the resilience of this
-metapopulation. The following code shows how we would achieve this using
-the `EWSmethods` function `multiEWS()`.
+overview of each indicator).
+
+Here we’ve constructed another hypothetical dataset representing five
+related populations of Caribbean reef octopus (*Octopus briareus*) in
+Bahamian salt water lakes (O’Brien *et al.* 2020) and are interested in
+assessing the resilience of this metapopulation. The following code
+shows how we would achieve this using the `EWSmethods` function
+`multiEWS()`.
 
 ``` r
 set.seed(123)

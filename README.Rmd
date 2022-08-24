@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-`EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [**EWSNET**](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
+`EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [**EWSNet**](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
 
 <br>
 
@@ -52,13 +52,15 @@ The remainder of this page will introduce the two primary ways of interacting wi
 
 ## 1. Early Warning Signals
 
-Early warning signals are a collection of summary statistics that attempt to characterise the phenomenon of **critical slowing down (CSD)**. As a system approaches a tipping point (or bifurcation), it takes longer and longer for it to recover when it is pushed away from stability (Dakos *et al.* 2012). This increased **return rate** is a manifestation of CSD and can be detectable in data. `EWSmethods` provides a collection of these summary statistics which can be caluclated from either univariate or multivariate time series using `uniEWS()` and `multiEWS()` respectively.
+Early warning signals are a collection of summary statistics that attempt to characterise the phenomenon of **critical slowing down (CSD)**. As a system approaches a tipping point (or bifurcation), it takes longer and longer for it to recover when it is pushed away from stability (Dakos *et al.* 2012). This increased **return rate** is a manifestation of CSD and can be detectable in data. `EWSmethods` provides a collection of these summary statistics which can be calculated from either univariate or multivariate time series using `uniEWS()` and `multiEWS()` respectively.
 
 <br>
 
 ### The univariate approach
 
-Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. We could calculate either rolling or expanding window EWSs using the abundance data via `uniEWS()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
+Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. 
+
+We could calculate either rolling or expanding window EWSs using the abundance data via `uniEWS()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
 
 ```{r roll_example, fig.keep = "none"}
 set.seed(125) #seed to ensure reproducible results
@@ -92,7 +94,9 @@ And again, we can then use the resulting figures to identify oncoming transition
 exp_ews$plot
 ```
 
-A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
+A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. 
+
+For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
 
 ```{r expand_trait_example, fig.keep = "none"}
 trait_metrics <- c("SD", "ar1", "trait")
@@ -109,7 +113,9 @@ exp_ews_trait$plot
 
 ### The multivariate approach
 
-If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the `EWSmethods` function `multiEWS()`.
+If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). 
+
+Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the `EWSmethods` function `multiEWS()`.
 
 ```{r multivariate_example, fig.keep = "none"}
 set.seed(123)

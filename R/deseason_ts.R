@@ -36,6 +36,7 @@
 #' order = "ymd")
 #'
 #' @importFrom forecast seasadj
+#' @importFrom zoo na.approx
 #' @importFrom seasonal seas
 #' @export
 

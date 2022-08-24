@@ -6,8 +6,9 @@ template:
     pkgdown-nav-height: 150px
 
 navbar:
+  bg: dark
   structure:
-    left:  [intro, reference, articles, tutorials, changelog]
+    left:  [reference, articles, changelog]
     right: [search, twitter, github]
   components:
     twitter:
