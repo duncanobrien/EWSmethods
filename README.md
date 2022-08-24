@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# EWSmethods
+# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150" /></a>
 
 <!-- badges: start -->
 
@@ -146,6 +146,7 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 ```
 
 <img src="man/figures/README-expanding_plot_trait-1.png" width="100%" />
+
 <br>
 
 ### The multivariate approach
@@ -177,6 +178,7 @@ The figure again shows that one multivariate EWS indicator has expressed
 a warning, but that overall, no transition is anticipated.
 
 <img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
+
 <br>
 
 ## 2. EWSNet

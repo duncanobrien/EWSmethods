@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 #devtools::build_readme()
 ```
 
-# EWSmethods
+# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150" /></a>
 
 <!-- badges: start -->
 
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 `EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [**EWSNET**](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
 
-<br>  
+<br>
 
 ## Installation
 
@@ -37,7 +37,8 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 # install.packages("devtools")
 # devtools::install_github("duncanobrien/EWSmethods")
 ```
-<br>  
+
+<br>
 
 ## Getting Started
 
@@ -103,7 +104,8 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 ```{r expanding_plot_trait, dpi=300, echo = FALSE}
 exp_ews_trait$plot
 ```
-<br>  
+
+<br>
 
 ### The multivariate approach
 
@@ -123,7 +125,8 @@ The figure again shows that one multivariate EWS indicator has expressed a warni
 ```{r expanding_oct_plot, dpi=300, echo = FALSE}
 oct_exp_ews$plot
 ```
-<br>  
+
+<br>
 
 ## 2. EWSNet
 
@@ -148,7 +151,8 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensem
 print(skylark_ewsnet)
 
 ```
-<br>  
+
+<br>
 
 ## References
 
