@@ -114,7 +114,8 @@
 <p>Rather than requiring the user to learn <code>reticulate</code> and setup the R session themselves, <code>EWSmethods</code> provides a single function capable of checking your machine for Python, installing it if it’s not found (along with the critical packages), creating a new Python environment to hold these packages, and then activating that environment when ready. To prevent the user accidentally installing Python or packages, the function does require confirmation inputs from the user and so needs to be run <strong>at the start of any new R session</strong>.</p>
 <p>For example, to create a new Python environment called <code>"EWSNET_env"</code> and install Python, the function would be written as below. The environment name (<code>"EWSNET_env"</code>) will be critical to running the later functions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, pip_ignore_installed <span class="op">=</span> <span class="cn">FALSE</span>,  conda_refresh <span class="op">=</span> <span class="cn">FALSE</span>, auto<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
+<code class="sourceCode R"><span><span class="co">#prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
+<span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, pip_ignore_installed <span class="op">=</span> <span class="cn">FALSE</span>,  conda_refresh <span class="op">=</span> <span class="cn">FALSE</span>, auto<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; + '/usr/share/miniconda/bin/conda' 'create' '--yes' '--name' 'EWSNET_env' 'python=3.8' '--quiet'</span></span>
 <span><span class="co">#&gt; EWSNET_env successfully installed and activated. Necessary python packages installed</span></span></code></pre></div>
 <p>If successful, you will see the message <code>"EWSNET_env successfully found and activated. Necessary Python packages installed"</code>). If not, please refer to the Troubleshooting section at the end of the tutorial.</p>
@@ -122,6 +123,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
 <span></span>
+<span><span class="co">#print which Python environment `EWSmethods` is using</span></span>
 <span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; python:         /usr/share/miniconda/envs/EWSNET_env/bin/python</span></span>
 <span><span class="co">#&gt; libpython:      /usr/share/miniconda/envs/EWSNET_env/lib/libpython3.8.so</span></span>
@@ -132,7 +134,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; NOTE: Python version was forced by use_python function</span></span>
 <span></span>
-<span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
+<span><span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
+<span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py_packages</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         package version       requirement   channel</span></span>
 <span><span class="co">#&gt; 1 _libgcc_mutex     0.1 _libgcc_mutex=0.1 pkgs/main</span></span>
@@ -151,11 +154,7 @@
 <code class="sourceCode R"><span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,mean <span class="op">=</span> <span class="fl">0</span>, sd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="using_ewsnet_files/figure-html/create_white_data-1.png" alt="Our white noise training data" width="1000"><p class="caption">
-Our white noise training data
-</p>
-</div>
+<p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1000"></p>
 <p>We then simply provide this vector to <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>,noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
@@ -166,37 +165,37 @@ Our white noise training data
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
-<p>As with any machine learning model, interpreting prediction probabilities is difficult. In EWSNet’s case, as three possible predictions can be made - _No transition, Smooth transition, Critical transition__ - a chance prediction is one that is approximately 0.33 (1.0 divided by 3 is ~0.33).</p>
+<p>As with any machine learning model, interpreting prediction probabilities is difficult. In EWSNet’s case, as three possible predictions can be made - <em>No transition, Smooth transition, Critical transition</em> - a chance prediction is one that is approximately 0.33 (1.0 divided by 3 is ~0.33).</p>
 <p>Therefore any probability greater than 0.33 implies a stronger than chance prediction and anything greater than 0.6 warrants serious scrutiny.</p>
-<p>Similarly, the real world manifestation of a Smooth or Critical transition is vague (Kefi <em>et al</em> 2013, Gsell <em>et al</em> 2016). EWSNet therefore considers a <code>"Smooth Transition"</code> prediction to indicate a directional trend in the system whereas a <code>"Critical Transition"</code> indicates a rapid non-linear change. A <code>"No Transition"</code> prediction consequently suggests a stable period.</p>
+<p>Similarly, the real world manifestation of a Smooth or Critical transition is unclear (Kefi <em>et al</em> 2013, Gsell <em>et al</em> 2016). EWSNet therefore considers a <code>"Smooth Transition"</code> prediction to indicate a directional trend in the system whereas a <code>"Critical Transition"</code> indicates a rapid non-linear change. A <code>"No Transition"</code> prediction consequently suggests a stable period.</p>
 </div>
 <div class="section level4">
 <h4 id="predictions-through-time">Predictions through time<a class="anchor" aria-label="anchor" href="#predictions-through-time"></a>
 </h4>
 <p>An additional way to use EWSNet is to explore how predictions change through time. By iteratively adding in new data, we can see how those predictions evolve.</p>
-<p>For example, using our test data, we could achieve this using this code to identify transitions that may have happened in the past:</p>
+<p>For example, using our test data, we could use this code to identify transitions that may have happened in the past:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">expanding_range</span> <span class="op">&lt;-</span> <span class="fl">20</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span> <span class="co">#define the range of indexes to test over</span></span>
+<span><span class="co">#define the range of indexes to test over</span></span>
+<span><span class="va">expanding_range</span> <span class="op">&lt;-</span> <span class="fl">20</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span> </span>
 <span></span>
+<span><span class="co">#pre-define our out file</span></span>
 <span><span class="va">expanding_ewsnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">expanding_range</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>,ncol<span class="op">=</span><span class="fl">3</span> <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">`colnames&lt;-`</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cutoff_ind"</span>,<span class="st">"No transition"</span>,<span class="st">'Smooth'</span>,<span class="st">'Critical'</span><span class="op">)</span><span class="op">)</span> <span class="co">#pre-define our out file</span></span>
+<span>  <span class="fu">`colnames&lt;-`</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cutoff_ind"</span>,<span class="st">"No transition"</span>,<span class="st">'Smooth'</span>,<span class="st">'Critical'</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">expanding_range</span><span class="op">)</span><span class="op">)</span><span class="op">{</span> <span class="co">#use `ewsnet_predict()` for each index </span></span>
+<span><span class="co">#call `ewsnet_predict()` for each index </span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">expanding_range</span><span class="op">)</span><span class="op">)</span><span class="op">{</span> </span>
 <span>  <span class="va">ews.tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">expanding_range</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span>  </span>
 <span>  <span class="va">expanding_ewsnet</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">expanding_range</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">no_trans_prob</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">smooth_trans_prob</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">critical_trans_prob</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">expanding_ewsnet</span> <span class="op">|&gt;</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">cutoff_ind</span>,names_to <span class="op">=</span> <span class="st">"pos_prediction"</span>,values_to <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
+<span><span class="co">#plot the results</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">expanding_ewsnet</span> <span class="op">|&gt;</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">cutoff_ind</span>,names_to <span class="op">=</span> <span class="st">"Prediction"</span>,values_to <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">cutoff_ind</span>,y<span class="op">=</span><span class="va">prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>col<span class="op">=</span><span class="va">pos_prediction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>col<span class="op">=</span><span class="va">Prediction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"Assessment index"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Prediction probability"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="using_ewsnet_files/figure-html/expanding_ewsnet-1.png" alt="Changing EWSNet predictions through time" width="1000"><p class="caption">
-Changing EWSNet predictions through time
-</p>
-</div>
+<p><img src="using_ewsnet_files/figure-html/expanding_ewsnet-1.png" width="1000"></p>
 <p>Here we see how prediction probabilities fluctuate with new data, with the trends in probabilities also providing information on how the system has changed over time.</p>
 <p><br></p>
 </div>
@@ -210,12 +209,12 @@ Changing EWSNet predictions through time
 <div class="section level3">
 <h3 id="resetting-ewsnet">4. Resetting EWSNet<a class="anchor" aria-label="anchor" href="#resetting-ewsnet"></a>
 </h3>
-<p>Following finetuning, it may be desirable to reset the model weights to their default. Using the <code><a href="../reference/reset_ewsnet.html">reset_ewsnet()</a></code> function, the user can direct <code>EWSmethods</code> to the path of the default weights (these can be redownloaded from the <a href="(https://github.com/sahilsid/ewsnet)" class="external-link">EWSNet github</a> which will overwrite the current model weights stored by <code>EWSmethods</code>.</p>
+<p>Following finetuning, it may be desirable to reset the model weights to their default. Using the <code><a href="../reference/reset_ewsnet.html">reset_ewsnet()</a></code> function, the user can direct <code>EWSmethods</code> to the path of the default weights (these can be redownloaded from the <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>) which will overwrite the current model weights stored by <code>EWSmethods</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/reset_ewsnet.html">reset_ewsnet</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"C:/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Windows users</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/reset_ewsnet.html">reset_ewsnet</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Mac users</span></span></code></pre></div>
-<p>You may want to remove <code>EWSmethods</code> downloaded Python and environment. You can acheive this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the <code>conda_refresh =</code> argument.</p>
+<p>You may want to remove Python downloads and environment setup by <code>EWSmethods</code>. You can acheive this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the <code>conda_refresh =</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>,conda_refresh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
@@ -236,7 +235,7 @@ Changing EWSNet predictions through time
 <tbody>
 <tr class="odd">
 <td><code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code></td>
-<td>Prepares the session to interface with Python. <strong>Critical first step</strong>
+<td>Prepares the session to interface with Python. <em>Critical first step</em>
 </td>
 </tr>
 <tr class="even">
@@ -263,15 +262,15 @@ Changing EWSNet predictions through time
 <div class="section level3">
 <h3 id="reticulate-is-activating-a-different-environment-to-the-one-i-gave-to-ewsnet_init">1. <em><code>reticulate</code> is activating a different environment to the one I gave to <code>ewsnet_init()</code></em><a class="anchor" aria-label="anchor" href="#reticulate-is-activating-a-different-environment-to-the-one-i-gave-to-ewsnet_init"></a>
 </h3>
-<p>This is the main error when using <code>EWSmethods</code>. The first solution is to simply restart the R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>. If <code>reticulate</code> is loaded before <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> is run, then the default <code>reticulate</code> environment “r-reticulate’ is activated instead of your EWSNet environment. Therefore ensure no <code>reticulate</code> command or <code><a href="https://rstudio.github.io/reticulate/" class="external-link">library(reticulate)</a></code> is run prior to <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
-<p>If the error remains and your RStudio version &gt;=1.4, you may need to edit your Python interpreter settings in RStudio’s preferences. Go to Preferences -&gt; Python and untick “Automatically activate project-level Python environments”. Then restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
-<p>The final solution we are aware of involves deactivating <code>reticulate</code>’s default behaviour in your global R environment settings. Running <code><a href="../reference/bypass_reticulate_autoinit.html">bypass_reticulate_autoinit()</a></code> will turn off <code>reticulate</code>’s to load a Python environment without a user request. Restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> once ready.</p>
+<p>This is the main error when using <code>EWSmethods</code>. The first solution is to simply restart the R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>. If <code>reticulate</code> is loaded before <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> is run, then the default <code>reticulate</code> environment <code>"r-reticulate"</code> is activated instead of your EWSNet environment. Therefore ensure no <code>reticulate</code> command or <code><a href="https://rstudio.github.io/reticulate/" class="external-link">library(reticulate)</a></code> is run prior to <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
+<p>If the error remains and your RStudio version is &gt;=1.4, you may need to edit your Python interpreter settings in RStudio’s preferences. Go to Preferences -&gt; Python and untick “Automatically activate project-level Python environments”. Then restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
+<p>The final solution we are aware of involves deactivating <code>reticulate</code>’s default behaviour in your global R environment settings. Running <code><a href="../reference/bypass_reticulate_autoinit.html">bypass_reticulate_autoinit()</a></code> will disable <code>reticulate</code>’s ability to load a Python environment without a user request. Restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> once ready.</p>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="ewsnet_predict-is-returning-python-errors">2. <em><code>ewsnet_predict()</code> is returning Python errors</em><a class="anchor" aria-label="anchor" href="#ewsnet_predict-is-returning-python-errors"></a>
 </h3>
-<p>These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session or killing of the running function. The error is therefore often solved by restarting the R session and rerunning <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
+<p>These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session, or killing of the running function. The error is therefore often solved by restarting the R session and rerunning <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
 <p>If the error remains, please submit a bug report <a href="https://github.com/duncanobrien/EWSmethods/issues" class="external-link">here</a>.</p>
 <p><br></p>
 </div>
