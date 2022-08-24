@@ -43,7 +43,8 @@ Rather than requiring the user to learn `reticulate` and setup the R session the
 For example, to create a new Python environment called `"EWSNET_env"` and install Python, the function would be written as below. The environment name (`"EWSNET_env"`) will be critical to running the later functions.
 
 ```{r ewsnet_init, warning = FALSE}
-ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto=T) #prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+#prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto=TRUE) 
 ```
 
 ```{r ewsnet_init_true, echo=FALSE,warning = FALSE,message=FALSE}
@@ -60,9 +61,11 @@ To double check the environment activation, you could use `reticulate` functions
 ```{r reticulate}
 library(reticulate)
 
+#print which Python environment `EWSmethods` is using
 reticulate::py_config()
 
-py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
+#list all packages currently loaded in to "EWSNET_env"
+py_packages <- reticulate::py_list_packages() 
 head(py_packages)
 ```
 
@@ -72,7 +75,7 @@ head(py_packages)
 
 To give an example on how to use `ewsnet_predict()` we need some test data. Here, we will use some random noise around a mean of 0 which we expect to be predicted as `"No Transition"`.
 
-```{r create_white_data, warning = FALSE,dpi=200, fig.width=5,fig.height=5,fig.cap="Our white noise training data"}
+```{r create_white_data, warning = FALSE,dpi=200, fig.width=5,fig.height=4}
 test_data <- rnorm(50,mean = 0, sd=2)
 
 plot(test_data)
@@ -87,31 +90,35 @@ ewsnet_prediction
 ```
 
 ### Interpreting EWSNet
-As with any machine learning model, interpreting prediction probabilities is difficult. In EWSNet's case, as three possible predictions can be made - _No transition, Smooth transition, Critical transition__ - a chance prediction is one that is approximately 0.33 (1.0 divided by 3 is ~0.33). 
+As with any machine learning model, interpreting prediction probabilities is difficult. In EWSNet's case, as three possible predictions can be made - _No transition, Smooth transition, Critical transition_ - a chance prediction is one that is approximately 0.33 (1.0 divided by 3 is ~0.33). 
 
 Therefore any probability greater than 0.33 implies a stronger than chance prediction and anything greater than 0.6 warrants serious scrutiny. 
 
-Similarly, the real world manifestation of a Smooth or Critical transition is vague (Kefi *et al* 2013, Gsell *et al* 2016). EWSNet therefore considers a `"Smooth Transition"` prediction to indicate a directional trend in the system whereas a `"Critical Transition"` indicates a rapid non-linear change. A `"No Transition"` prediction consequently suggests a stable period.
+Similarly, the real world manifestation of a Smooth or Critical transition is unclear (Kefi *et al* 2013, Gsell *et al* 2016). EWSNet therefore considers a `"Smooth Transition"` prediction to indicate a directional trend in the system whereas a `"Critical Transition"` indicates a rapid non-linear change. A `"No Transition"` prediction consequently suggests a stable period.
 
 ### Predictions through time
 An additional way to use EWSNet is to explore how predictions change through time. By iteratively adding in new data, we can see how those predictions evolve.
 
-For example, using our test data, we could achieve this using this code to identify transitions that may have happened in the past:
+For example, using our test data, we could use this code to identify transitions that may have happened in the past:
 
-```{r expanding_ewsnet, warning = FALSE,dpi=200, fig.width=5,fig.height=5,fig.cap="Changing EWSNet predictions through time"}
+```{r expanding_ewsnet, warning = FALSE,dpi=200, fig.width=5,fig.height=4}
 
-expanding_range <- 20:length(test_data) #define the range of indexes to test over
+#define the range of indexes to test over
+expanding_range <- 20:length(test_data) 
 
+#pre-define our out file
 expanding_ewsnet <- data.frame(expanding_range, matrix(NA,ncol=3 )) |>
-  `colnames<-`(c("cutoff_ind","No transition",'Smooth','Critical')) #pre-define our out file
+  `colnames<-`(c("cutoff_ind","No transition",'Smooth','Critical')) 
 
-for(i in seq_along(expanding_range)){ #use `ewsnet_predict()` for each index 
+#call `ewsnet_predict()` for each index 
+for(i in seq_along(expanding_range)){ 
   ews.tmp <- ewsnet_predict(test_data[1:expanding_range[i]],noise_type = "W", ensemble = 25, envname = "EWSNET_env") 
   
   expanding_ewsnet[i,] <- c(expanding_range[i],ews.tmp$no_trans_prob,ews.tmp$smooth_trans_prob,ews.tmp$critical_trans_prob)
 }
 
-ggplot(expanding_ewsnet |> pivot_longer(-cutoff_ind,names_to = "pos_prediction",values_to = "prob"),
+#plot the results
+ggplot(expanding_ewsnet |> pivot_longer(-cutoff_ind,names_to = "Prediction",values_to = "prob"),
                 aes(x=cutoff_ind,y=prob)) +
     geom_point(aes(col=pos_prediction)) + theme_bw() +
     xlab("Assessment index") + ylab("Prediction probability")
@@ -129,7 +136,7 @@ __Development in progress__
 
 ## 4. Resetting EWSNet
 
-Following finetuning, it may be desirable to reset the model weights to their default. Using the `reset_ewsnet()` function, the user can direct `EWSmethods` to the path of the default weights (these can be redownloaded from the [EWSNet github ]((https://github.com/sahilsid/ewsnet)) which will overwrite the current model weights stored by `EWSmethods`.
+Following finetuning, it may be desirable to reset the model weights to their default. Using the `reset_ewsnet()` function, the user can direct `EWSmethods` to the path of the default weights (these can be redownloaded from the [EWSNet github ](https://github.com/sahilsid/ewsnet)) which will overwrite the current model weights stored by `EWSmethods`.
 
 ```{r ewsnet_reset, eval= FALSE}
 reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") #for Windows users
@@ -137,8 +144,7 @@ reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") #f
 reset_ewsnet(new_weight_location = "/Users/your_name/Downloads/Pretrained") #for Mac users
 ```
 
-You may want to remove `EWSmethods` downloaded Python and environment. You can acheive this using `ewsnet_init()` and the 
-`conda_refresh =` argument.
+You may want to remove Python downloads and environment setup by `EWSmethods`. You can acheive this using `ewsnet_init()` and the `conda_refresh =` argument.
 
 ```{r ewsnet_refresh, eval= FALSE}
 ewsnet_init(envname = "EWSNET_env",conda_refresh = TRUE)
@@ -150,7 +156,7 @@ ewsnet_init(envname = "EWSNET_env",conda_refresh = TRUE)
 
 Function name | Purpose |
 |------------------------|------------------------|
-| `ewsnet_init()`                                                                                                                                                                                                                             | Prepares the session to interface with Python. **Critical first step**                                                                        |         |
+| `ewsnet_init()`                                                                                                                                                                                                                             | Prepares the session to interface with Python. _Critical first step_                                                                       |         |
 | `ewsnet_predict()`                                                                                                                                                                                                                          | Using the Python environment initialised by `ewsnet_init()`, builds the EWSNet model and makes predictions from the user supplied time series |         |
 | `ewsnet_finetune()`                                                                                                                                                                                                                         | Retrains the initial EWSNet model weights based upon new user provided training data                                                          |         |
 | `reset_ewsnet()`| Overwrites the model weights with the default weights downloaded from [EWSNet github](https://github.com/sahilsid/ewsnet) |`bypass_reticulate_autoinit()`| Optional set up function to get around quirks of`reticulate` |                                                                                                                                               |         |
@@ -163,18 +169,18 @@ Greater detail on each function can be found at the [Reference](https://duncanob
 
 ## 1. _`reticulate` is activating a different environment to the one I gave to `ewsnet_init()`_
 
-This is the main error when using `EWSmethods`. The first solution is to simply restart the R session and rerun `ewsnet_init()`. If `reticulate` is loaded before `ewsnet_init()` is run, then the default `reticulate` environment "r-reticulate' is activated instead of your EWSNet environment. Therefore ensure no `reticulate` command or `library(reticulate)` is run prior to 
+This is the main error when using `EWSmethods`. The first solution is to simply restart the R session and rerun `ewsnet_init()`. If `reticulate` is loaded before `ewsnet_init()` is run, then the default `reticulate` environment `"r-reticulate"` is activated instead of your EWSNet environment. Therefore ensure no `reticulate` command or `library(reticulate)` is run prior to 
 `ewsnet_init()`.
 
-If the error remains and your RStudio version >=1.4, you may need to edit your Python interpreter settings in RStudio's preferences. Go to Preferences -> Python and untick "Automatically activate project-level Python environments". Then restart your R session and rerun `ewsnet_init()`.
+If the error remains and your RStudio version is >=1.4, you may need to edit your Python interpreter settings in RStudio's preferences. Go to Preferences -> Python and untick "Automatically activate project-level Python environments". Then restart your R session and rerun `ewsnet_init()`.
 
-The final solution we are aware of involves deactivating `reticulate`'s default behaviour in your global R environment settings. Running `bypass_reticulate_autoinit()` will turn off `reticulate`'s to load a Python environment without a user request. Restart your R session and rerun `ewsnet_init()` once ready.
+The final solution we are aware of involves deactivating `reticulate`'s default behaviour in your global R environment settings. Running `bypass_reticulate_autoinit()` will disable `reticulate`'s ability to load a Python environment without a user request. Restart your R session and rerun `ewsnet_init()` once ready.
 
 <br>  
 
 ## 2. _`ewsnet_predict()` is returning Python errors_
 
-These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session or killing of the running function. The error is therefore often solved by restarting the R session and rerunning `ewsnet_init()`.
+These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session, or killing of the running function. The error is therefore often solved by restarting the R session and rerunning `ewsnet_init()`.
 
 If the error remains, please submit a bug report [here](https://github.com/duncanobrien/EWSmethods/issues).
 
