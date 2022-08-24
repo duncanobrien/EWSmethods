@@ -43,10 +43,10 @@ Rather than requiring the user to learn `reticulate` and setup the R session the
 For example, to create a new Python environment called `"EWSNET_env"` and install Python, the function would be written as below. The environment name (`"EWSNET_env"`) will be critical to running the later functions.
 
 ```{r ewsnet_init, warning = FALSE}
-ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE) #prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto=T) #prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 ```
 
-```{r ewsnet_init_true, echo=FALSE,warning = FALSE}
+```{r ewsnet_init_true, echo=FALSE,warning = FALSE,message=FALSE}
 bypass_reticulate_autoinit()
 reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 library(ggplot2)

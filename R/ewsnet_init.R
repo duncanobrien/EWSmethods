@@ -5,12 +5,13 @@
 #' @param envname A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.
 #' @param pip_ignore_installed Boolean. If \code{FALSE}, any packages already installed are loaded and not re-downloaded. However, if \code{TRUE}, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).
 #' @param conda_refresh Boolean. If \code{TRUE}, miniconda is uninstalled and then gives the user the opportunity to perform a fresh reinstall.
+#' @param auto Boolean. If \code{TRUE}, no user confirmation is required for activation.
 #'
 #' @returns Does not return an object as is simply preparing your R session.
 #'
 #' @examples
 #' \dontrun{
-#' bypass_autoinit()
+#' bypass_reticulate_autoinit()
 #' }
 #' #this function prevents 'reticulate' automatically
 #' #reloading the python environment from the
@@ -37,7 +38,7 @@
 #
 #' @export
 
-ewsnet_init <- function(envname, pip_ignore_installed = FALSE,conda_refresh = F){
+ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F, auto = F){
 
   if(isTRUE(conda_refresh)){
   reticulate::miniconda_uninstall() # start with a blank slate
@@ -49,10 +50,44 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE,conda_refresh = F)
   conda <- try(reticulate::conda_list()) #extract list of conda Python environments
   if(inherits(conda, "try-error")){
 
+    if(isTRUE(auto)){
+      reticulate::install_miniconda(force = F)
+
+      reticulate::conda_create(
+        envname = paste0(envname),
+        forge = FALSE,environment = NULL,
+        conda = "auto")
+
+      if(detect.sys == "Darwin_arm64"){ # specfic install for MACOSX M1 machines
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }else{
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
+      #keras::install_keras(envname = paste0(envname))
+      # try.attempt <- suppressMessages(try(reticulate::use_condaenv(condaenv = paste0(envname),
+      #                          conda = "auto", required = T),silent = T))
+      #
+      # if(class(try.attempt) == "try-error"){
+      #   message("miniconda has successfully been installed but reticulate has initialised\nanother environment. You need to restart the R session and re-run 'ewsnet_init()'\nto complete python integration")
+      # }
+
+      message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
+              collapse = " ")
+
+    }
+
+    if(isFALSE(auto)){
     user_input1 <- readline("Anaconda not found. Would you like to download Anaconda? (y/n) ")
 
     if(user_input1 != 'y'){
-
       message('Aborting')
 
     }else{
@@ -88,9 +123,34 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE,conda_refresh = F)
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
-
+}
     }
+
   }else if(envname %in% conda$name){ #if desired environment found, activate and install necessary packages
+
+    if(isTRUE(auto)){
+      message("Attention: may take up to 10 minutes to complete")
+
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
+
+      if(detect.sys == "Darwin_arm64"){
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }else{
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }
+
+      message(paste(envname,"successfully found and activated. Necessary python packages installed"),
+              collapse = " ")
+    }
+
+    if(isFALSE(auto)){
 
     string <- c("conda env",envname, "found. Would you like to activate it and install necessary\npackages? (y/n) ")
     user_input2 <- readline(paste(string,collapse =" "))
@@ -119,10 +179,41 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE,conda_refresh = F)
               collapse = " ")
     }
 
+    }
+
   }else{ #if desired environment not found, ask permission to create new environment
+
+    if(isTRUE(auto)){
+
+      reticulate::conda_create(
+        envname = paste0(envname),
+        forge = FALSE,environment = NULL,
+        conda = "auto")
+
+      if(detect.sys == "Darwin_arm64"){
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }else{
+        reticulate::conda_install(envname = paste0(envname),
+                                  packages = c("tensorflow","scikit-learn","pandas","matplotlib",
+                                               "sphinxcontrib-matlabdomain","seaborn"),
+                                  pip = T, pip_ignore_installed = pip_ignore_installed)
+      }
+      reticulate::use_condaenv(condaenv = paste0(envname),
+                               conda = "auto", required = T)
+
+      message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
+              collapse = " ")
+    }
+
+
+    if(isFALSE(auto)){
     string <- c("conda env",envname, "not found. Would you like to install a new env? (y/n) ")
     user_input2 <- readline(paste(string,collapse =" "))
-    if(user_input2 != 'y'){ message('Aborting')
+    if(user_input2 != 'y'){
+      message('Aborting')
     }else{
 
       reticulate::conda_create(
@@ -146,6 +237,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE,conda_refresh = F)
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
+    }
     }
   }
   setwd(wd) # reset working directory
