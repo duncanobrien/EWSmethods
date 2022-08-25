@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150" /></a>
+# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150"/></a>
 
 <!-- badges: start -->
 
@@ -18,7 +18,7 @@ traditional rolling window (e.g. Dakos *et al.* 2012) or expanding
 window (Drake and Griffin, 2010) EWS approaches. Publication standard
 and ggplot inspired figures can also be generated during this process.
 `EWSmethods` also provides an R interface to
-[**EWSNET**](https://ewsnet.github.io), a deep learning modelling
+[**EWSNet**](https://ewsnet.github.io), a deep learning modelling
 framework for predicting critical transitions (Deb *et al.* 2022).
 
 <br>
@@ -32,6 +32,9 @@ You can install the development version of `EWSmethods` from
 # install.packages("devtools")
 # devtools::install_github("duncanobrien/EWSmethods")
 ```
+
+**Be aware, due to the large file sizes of the EWSNet model weights, the
+size of the package is \~100MB.**
 
 <br>
 

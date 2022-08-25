@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 #devtools::build_readme()
 ```
 
-# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150" /></a>
+# EWSmethods <a href="https://duncanobrien.github.io/EWSmethods/"><img src="man/figures/logo.svg" align="right" height="150"/></a>
 
 <!-- badges: start -->
 
@@ -38,6 +38,8 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 # devtools::install_github("duncanobrien/EWSmethods")
 ```
 
+**Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is \~100MB.**
+
 <br>
 
 ## Getting Started
@@ -58,7 +60,7 @@ Early warning signals are a collection of summary statistics that attempt to cha
 
 ### The univariate approach
 
-Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well. 
+Imagine we have 50 years of monitoring data for a local population of skylarks (*Alauda arvensis*) and have measured mean body mass data throughout this period as well.
 
 We could calculate either rolling or expanding window EWSs using the abundance data via `uniEWS()` but decide to initially focus on rolling windows. We would therefore parameterise the function to do so as below:
 
@@ -94,7 +96,7 @@ And again, we can then use the resulting figures to identify oncoming transition
 exp_ews$plot
 ```
 
-A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible. 
+A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible.
 
 For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
 
@@ -113,7 +115,7 @@ exp_ews_trait$plot
 
 ### The multivariate approach
 
-If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator). 
+If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans *et al.* 2021 for an overview of each indicator).
 
 Here we've constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (*Octopus briareus*) in Bahamian salt water lakes (O'Brien *et al.* 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the `EWSmethods` function `multiEWS()`.
 

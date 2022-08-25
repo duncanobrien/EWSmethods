@@ -41,6 +41,10 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname")
   }else{
 
+    if(!is.vector(x)){
+      stop('Time series is not a vector')
+    }
+
     if(!is.numeric(x) ){
       stop('Time series is not numeric')
     }
