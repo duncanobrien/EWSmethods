@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   using_ewsnet: using_ewsnet.html
-last_built: 2022-08-25T07:33Z
+last_built: 2022-08-25T10:01Z
 urls:
   reference: https://duncanobrien.github.io/EWSmethods/reference
   article: https://duncanobrien.github.io/EWSmethods/articles
