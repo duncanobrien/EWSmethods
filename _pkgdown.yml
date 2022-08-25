@@ -50,3 +50,9 @@ reference:
      data prior to analysis.
   contents:
   - deseason_ts
+
+- title: Datasets
+  desc: >
+   The exemplary dataset used in `EWSmethods` tutorials and testing.
+  contents:
+  - ewsmethods_trans_dat
