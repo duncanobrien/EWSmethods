@@ -53,6 +53,8 @@ reference:
 
 - title: Datasets
   desc: >
-   The exemplary dataset used in `EWSmethods` tutorials and testing.
+   The exemplary datasets used in `EWSmethods` tutorials and testing.
   contents:
-  - ewsmethods_trans_dat
+  - simTransComms
+  - CODrecovery
+
