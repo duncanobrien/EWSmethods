@@ -65,7 +65,8 @@ multiEWS <- function(data, method = c("expanding","rolling"),
            "#d06329",
            "#90676f",
            "#ce5c6e",
-           "#5d4216")
+           "#5d4216",
+           "black")
 
   if(any(is.na(data))){
     stop('Data contains missing values. Interpolation of missing values is recommended')
@@ -93,7 +94,7 @@ multiEWS <- function(data, method = c("expanding","rolling"),
         #scale_colour_manual(values = scales::hue_pal()(11),
         scale_colour_manual(values = pal,
                             guide = guide_legend(order = 2, override.aes =
-                                                   list(linetype = rep(1,11),shape= NA))) +
+                                                   list(linetype = rep(1,12),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nindicator strength') +
@@ -155,7 +156,7 @@ multiEWS <- function(data, method = c("expanding","rolling"),
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
           #scale_colour_manual(values = scales::hue_pal()(11),
           scale_colour_manual(values = pal,
-                              guide = guide_legend(override.aes = list(linetype = rep(1,11),shape=NA))) +
+                              guide = guide_legend(override.aes = list(linetype = rep(1,12),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='Multivariate EWS\nindicator trend') +
