@@ -122,11 +122,11 @@
 <p>We can visualise a community from each of these datasets using the code below:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"Transitioning five species community"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/vis_data-1.png" width="800"></p>
+<p><img src="ews_assessments_files/figure-html/vis_data-1.png" width="576"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span><span class="op">$</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span><span class="op">$</span><span class="va">biomass</span>, type<span class="op">=</span><span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Year"</span>, ylab <span class="op">=</span> <span class="st">"Abundance"</span>, main <span class="op">=</span> <span class="st">"Recovering cod population"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/vis_data-2.png" width="800"></p>
+<p><img src="ews_assessments_files/figure-html/vis_data-2.png" width="576"></p>
 <p>These plots show that a transition takes place at <code>time ~= 180</code> in <code>"simTransComms$1_5_1"</code> and <code>year ~= 2050</code> in <code>"CODrecovery$1_20"</code>. <code>EWSmethods</code> helpfully provides this information in each dataset under the <code>inflection_pt</code> column.</p>
 <table class="table">
 <thead><tr class="header">
@@ -150,8 +150,11 @@
 <h3 id="univariate-ewss">2. Univariate EWSs<a class="anchor" aria-label="anchor" href="#univariate-ewss"></a>
 </h3>
 <p><code>EWSmethods</code> provides two computational approaches to calculate univariate EWSs via the <code><a href="../reference/uniEWS.html">uniEWS()</a></code> function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before ‘rolling’ on one data point and reassessing, whereas expanding windows add data points sequentially in to an ‘expanding’ assessment and then standardises against the running mean and standard deviation of the previous window.</p>
-<p><img src="ewsmethods_eg_fig.png" width="1707"></p>
-<p>ewsmethods_eg_fig.pdf</p>
+<div class="figure">
+<img src="ewsmethods_eg_fig.png" alt="Rolling vs expanding window diagram" width="1707"><p class="caption">
+Rolling vs expanding window diagram
+</p>
+</div>
 <p>Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
 <table class="table">
 <colgroup>
@@ -217,7 +220,7 @@
 <span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/rolling_ews_fig-1.png" width="1000"></p>
+<p><img src="ews_assessments_files/figure-html/rolling_ews_fig-1.png" width="720"></p>
 <p>Note how all EWS indicators begin to trend upwards at <code>time ~= 170</code> which results in the positive Kendall Tau correlation coefficient indicative of an oncoming transition/tipping point.</p>
 <p><br></p>
 </div>
@@ -235,7 +238,7 @@
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/expanding_ews_fig-1.png" width="1000"></p>
+<p><img src="ews_assessments_files/figure-html/expanding_ews_fig-1.png" width="720"></p>
 <p>Similar to the rolling window approach, EWS indicators calculated by expanding windows have identified warnings from <code>time ~= 170</code>. However we are more confident in this conclusion as the composite metrics also display this warning. These composite metrics simple sum the standardised individual indicator strengths together and are known to provide a more reliable signal than lone indicators (Clements &amp; Ozgul, 2016).</p>
 <p><br></p>
 </div>
@@ -256,7 +259,7 @@
 <span><span class="co">#&gt; Warning: Removed 217 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/trait_ews_fig-1.png" width="1000"></p>
+<p><img src="ews_assessments_files/figure-html/trait_ews_fig-1.png" width="720"></p>
 <p><br></p>
 </div>
 </div>
@@ -268,7 +271,7 @@
 <span>                         method <span class="op">=</span> <span class="st">"rolling"</span>,</span>
 <span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/multi_ews_fig-1.png" width="1000"></p>
+<p><img src="ews_assessments_files/figure-html/multi_ews_fig-1.png" width="720"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_ews_eg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
@@ -276,7 +279,7 @@
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 24 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="1000"></p>
+<p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="720"></p>
 <p><br></p>
 </div>
 </div>
