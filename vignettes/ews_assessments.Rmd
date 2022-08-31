@@ -3,8 +3,6 @@ title: "Performing Early Warning Signal Assessments"
 author: "Duncan O'Brien"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-resource_files:
-  - man/figures/ewsmethods_eg_fig.png
 vignette: >
   %\VignetteIndexEntry{Performing Early Warning Signal Assessments}
   %\VignetteEngine{knitr::rmarkdown}
@@ -84,8 +82,8 @@ Now the data has been loaded and truncated, it can now be passed to `uniEWS()` a
 
 `EWSmethods` provides two computational approaches to calculate univariate EWSs via the `uniEWS()` function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before 'rolling' on one data point and reassessing, whereas expanding windows add data points sequentially in to an 'expanding' assessment and then standardises against the running mean and standard deviation of the previous window.
 
-```{r, echo=F,dpi=200,fig.width=5,fig.height=4}
-knitr::include_graphics("../man/figures/ewsmethods_eg_fig.png")
+```{r, echo=F}
+knitr::include_graphics("ewsmethods_eg_fig.png", dpi = 144)
 ```
 
 
