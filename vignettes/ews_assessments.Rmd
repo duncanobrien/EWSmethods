@@ -12,8 +12,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
-)
+  comment = "#>")
+
 ```
 
 # About this tutorial
@@ -51,7 +51,7 @@ data("CODrecovery")
 
 We can visualise a community from each of these datasets using the code below:
 
-```{r vis_data,dpi=200, fig.width=4,fig.height=4}
+```{r vis_data,dpi=144, fig.width=4,fig.height=4}
 matplot(simTransComms$`1_5_1`[,3:7], type = "l", xlab = "Time", ylab = "Density",  main = "Transitioning five species community")
 
 plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type="l", xlab = "Year", ylab = "Abundance", main = "Recovering cod population")
@@ -82,13 +82,9 @@ Now the data has been loaded and truncated, it can now be passed to `uniEWS()` a
 
 `EWSmethods` provides two computational approaches to calculate univariate EWSs via the `uniEWS()` function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before 'rolling' on one data point and reassessing, whereas expanding windows add data points sequentially in to an 'expanding' assessment and then standardises against the running mean and standard deviation of the previous window.
 
-```{r, echo=F}
+```{r figure, echo=F,fig.cap = "Rolling vs expanding window diagram"}
 knitr::include_graphics("ewsmethods_eg_fig.png", dpi = 144)
 ```
-
-
-ewsmethods_eg_fig.pdf
-
 
 Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in `uniEWS()`.
 
@@ -118,7 +114,7 @@ rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r rolling_ews_fig,dpi=200,fig.width=5,fig.height=6,echo=F}
+```{r rolling_ews_fig,dpi=144,fig.width=5,fig.height=6,echo=F}
 rolling_ews_eg$plot
 ```
 
@@ -140,7 +136,7 @@ expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r expanding_ews_fig,dpi=200,fig.width=5,fig.height=4,echo=F}
+```{r expanding_ews_fig,dpi=144,fig.width=5,fig.height=4,echo=F}
 expanding_ews_eg$plot
 ```
 
@@ -164,7 +160,7 @@ trait_ews_eg <- uniEWS(data = pre_CODrecovery[,c(2,3)],
                          ggplotIt = TRUE)
 ```
 
-```{r trait_ews_fig,dpi=200,fig.width=5,fig.height=4,echo=F}
+```{r trait_ews_fig,dpi=144,fig.width=5,fig.height=4,echo=F}
 trait_ews_eg$plot
 ```
 
@@ -179,7 +175,7 @@ multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
+```{r multi_ews_fig,dpi=144,fig.width=5,fig.height=5,echo=F}
 multi_ews_eg$plot
 ```
 
@@ -191,7 +187,7 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews2_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
+```{r multi_ews2_fig,dpi=144,fig.width=5,fig.height=5,echo=F}
 multi_ews_eg2$plot
 ```
 
