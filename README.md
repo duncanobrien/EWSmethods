@@ -178,8 +178,8 @@ octopus_spp_data <- matrix(nrow = 50, ncol = 5)
 octopus_spp_data <- as.data.frame(cbind("time"=seq(1:50),sapply(1:dim(octopus_spp_data)[2], function(x){octopus_spp_data[,x] <- rnorm(50,mean=500,sd=200)}))) #create our hypothetical, uncollapsing ecosystem
 
 oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold = 2, tail.direction = "one.tailed", ggplotIt = TRUE) #lets use an expanding window approach
-#> Warning: Removed 22 row(s) containing missing values (geom_path).
-#> Warning: Removed 22 rows containing missing values (geom_point).
+#> Warning: Removed 24 row(s) containing missing values (geom_path).
+#> Warning: Removed 24 rows containing missing values (geom_point).
 ```
 
 The figure again shows that one multivariate EWS indicator has expressed
