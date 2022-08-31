@@ -150,8 +150,7 @@
 <h3 id="univariate-ewss">2. Univariate EWSs<a class="anchor" aria-label="anchor" href="#univariate-ewss"></a>
 </h3>
 <p><code>EWSmethods</code> provides two computational approaches to calculate univariate EWSs via the <code><a href="../reference/uniEWS.html">uniEWS()</a></code> function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before ‘rolling’ on one data point and reassessing, whereas expanding windows add data points sequentially in to an ‘expanding’ assessment and then standardises against the running mean and standard deviation of the previous window.</p>
-<p><a href="https://duncanobrien.github.io/EWSmethods/"><img src="articles/ewsmethods_eg_fig.pdf" max-width="100%"></a></p>
-<p>Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
+<embed src="../man/figures/ewsmethods_eg_fig.pdf" style="display: block; margin: auto;" type="application/pdf"></embed><p>Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
 <table class="table">
 <colgroup>
 <col width="34%">
@@ -179,7 +178,7 @@
 <td align="center">Autocorrelation at lag1</td>
 <td>Autocorrelation (similarity between successive observations) increases approaching a transition. The value of this indicator can be estimated as either the autocorrelation coefficient estimated from a first order autoregressive model or the estimated autocorrelation function at lag1</td>
 <td align="center">
-<code>"ar1"</code> - autoregressive model; <code>"acf"</code>- autocorrelation function</td>
+<code>"ar1"</code> - autoregressive model, <code>"acf"</code>- autocorrelation function</td>
 </tr>
 <tr class="even">
 <td align="center">Skewness</td>
@@ -262,34 +261,36 @@
 <div class="section level3">
 <h3 id="multivariate-ewss">3. Multivariate EWSs<a class="anchor" aria-label="anchor" href="#multivariate-ewss"></a>
 </h3>
-<p><strong>Development in progress</strong></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multi_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
+<span>                         method <span class="op">=</span> <span class="st">"rolling"</span>,</span>
+<span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ews_assessments_files/figure-html/multi_ews_fig-1.png" width="1000"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multi_ews_eg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
+<span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
+<span>                         burn_in <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 row(s) containing missing values (geom_path).</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (geom_point).</span></span></code></pre></div>
+<p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="1000"></p>
 <p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
+<h2 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
 </h2>
 <div class="section level3">
-<h3 id="reticulate-is-activating-a-different-environment-to-the-one-i-gave-to-ewsnet_init">1. <em><code>reticulate</code> is activating a different environment to the one I gave to <code>ewsnet_init()</code></em><a class="anchor" aria-label="anchor" href="#reticulate-is-activating-a-different-environment-to-the-one-i-gave-to-ewsnet_init"></a>
+<h3 id="rolling-windows-1">1. Rolling windows<a class="anchor" aria-label="anchor" href="#rolling-windows-1"></a>
 </h3>
-<p>This is the main error when using <code>EWSmethods</code>. The first solution is to simply restart the R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>. If <code>reticulate</code> is loaded before <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> is run, then the default <code>reticulate</code> environment <code>"r-reticulate"</code> is activated instead of your EWSNet environment. Therefore ensure no <code>reticulate</code> command or <code><a href="https://rstudio.github.io/reticulate/" class="external-link">library(reticulate)</a></code> is run prior to <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
-<p>If the error remains and your RStudio version is &gt;=1.4, you may need to edit your Python interpreter settings in RStudio’s preferences. Go to Preferences -&gt; Python and untick “Automatically activate project-level Python environments”. Then restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
-<p>The final solution we are aware of involves deactivating <code>reticulate</code>’s default behaviour in your global R environment settings. Running <code><a href="../reference/bypass_reticulate_autoinit.html">bypass_reticulate_autoinit()</a></code> will disable <code>reticulate</code>’s ability to load a Python environment without a user request. Restart your R session and rerun <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> once ready.</p>
+<p>The simplicity of the rolling window approach also limits its usefulness. A ‘warning’ is indicated when an EWS displays a strong positive Kendall Tau correlation with time. However, it is unclear what constitutes a ‘strong’ correlation in this context with published warnings ranging from 0.5 through to 0.9 (Dakos <em>et al. 2012</em>, Harris <em>et al.</em> 2020, Southall <em>et al.</em> 2022). The strength of correlation therefore appears to be context dependent and system specific.</p>
 <p><br></p>
 </div>
 <div class="section level3">
-<h3 id="ewsnet_predict-is-returning-python-errors">2. <em><code>ewsnet_predict()</code> is returning Python errors</em><a class="anchor" aria-label="anchor" href="#ewsnet_predict-is-returning-python-errors"></a>
+<h3 id="expanding-windows-1">2. Expanding windows<a class="anchor" aria-label="anchor" href="#expanding-windows-1"></a>
 </h3>
-<p>These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session, or killing of the running function. The error is therefore often solved by restarting the R session and rerunning <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code>.</p>
-<p>If the error remains, please submit a bug report <a href="https://github.com/duncanobrien/EWSmethods/issues" class="external-link">here</a>.</p>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="i-want-to-uninstall-python-and-its-environments">3. <em>I want to uninstall Python and its environments</em><a class="anchor" aria-label="anchor" href="#i-want-to-uninstall-python-and-its-environments"></a>
-</h3>
-<p><code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> provides the capabaility to do this using the <code>conda_refresh =</code> argument:</p>
-<p><code>ewsnet_init(envname = "envname",conda_refresh = TRUE)</code>.</p>
-<p>This function will remove any downloaded Python versions, packages or environments to allow a fresh install or permanent removal.</p>
+<p>Expanding windows have a stronger evidence base for what constitutes a ‘warning’. Clements <em>et al.</em> 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall <em>et al.</em> 2022 although they suggest that more than two consecutive signals should be aimed for.</p>
 <p><br></p>
 </div>
 </div>
