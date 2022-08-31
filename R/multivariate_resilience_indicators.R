@@ -47,6 +47,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     sd <- sd(tmp.maf$mafs[,1])
     pca.ar <- ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
     pca.sd <- sd(tmp.pca$x[,1])
+    eigen.cov <- max(eigen(cov(scale(data[i:(i+winsize_true-1),-1])))$values)
     max.cov <- max(cov(scale(data[i:(i+winsize_true-1),-1]))[lower.tri(cov(data[i:(i+winsize_true-1),-1]),diag = F)])
     expl.sd <- tmp.pca$importance[2,1]
 
@@ -55,12 +56,13 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                            "maxAR" = max.ar,
                            "meanSD" = mean.sd,
                            "maxSD" = max.sd,
-                           "mafEIGENval" = eigen,
+                           "eigenMAF" = eigen,
                            "mafAR" = ar,
                            "mafSD" = sd,
                            "pcaAR" = pca.ar,
                            "pcaSD" = pca.sd,
                            "explSD" = expl.sd,
+                           "eigenCOV" = eigen.cov,
                            "maxCOV" = max.cov)
   }
     output<-do.call("rbind", RES)
@@ -69,12 +71,13 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                           "maxAR" = cor.test(as.numeric(output$time), output$maxAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "meanSD" = cor.test(as.numeric(output$time), output$meanSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "maxSD" = cor.test(as.numeric(output$time), output$maxSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "mafEIGENval" = cor.test(as.numeric(output$time), output$mafEIGENval, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
+                          "eigenMAF" = cor.test(as.numeric(output$time), output$eigenMAF, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "mafAR" = cor.test(as.numeric(output$time), output$mafAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "mafSD" = cor.test(as.numeric(output$time), output$mafSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "pcaAR" = cor.test(as.numeric(output$time), output$pcaAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "pcaSD" = cor.test(as.numeric(output$time), output$pcaSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "explSD" = cor.test(as.numeric(output$time), output$explSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
+                          "eigenCOV" = cor.test(as.numeric(output$time), output$eigenCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "maxCOV" = cor.test(as.numeric(output$time), output$maxCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
 
   }
@@ -92,6 +95,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     roll.max.ar <- NULL
     roll.mean.sd <- NULL
     roll.max.sd <- NULL
+    roll.cov.eigen <- NULL
 
     for(i in (burn_in):dim(data)[1]){
 
@@ -128,6 +132,9 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
       roll.cov[[i]]<-max(cov(scale(data[1:i,-1]))[lower.tri(cov(data[1:i,-1]),diag = F)])
       max.cov<-(max(cov(scale(data[1:i,-1]))[lower.tri(cov(data[1:i,-1]),diag = F)])-mean(unlist(roll.cov), na.rm=TRUE))/sd(unlist(roll.cov), na.rm = TRUE)
 
+      roll.cov.eigen[[i]]<-max(eigen(cov(scale(data[1:i,-1])))$values)
+      eigen.cov<-(max(eigen(cov(scale(data[1:i,-1])))$values)-mean(unlist(roll.cov.eigen), na.rm=TRUE))/sd(unlist(roll.cov.eigen), na.rm = TRUE)
+
       roll.expl.sd[[i]]<- tmp.pca$importance[2,1]
       expl.sd<-(tmp.pca$importance[2,1]-mean(unlist(roll.expl.sd), na.rm=TRUE))/sd(unlist(roll.expl.sd), na.rm = TRUE)
 
@@ -136,12 +143,13 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                              "maxAR" = max.ar,
                              "meanSD" = mean.sd,
                              "maxSD" = max.sd,
-                             "mafEIGENval" = eigen,
+                             "eigenMAF" = eigen,
                              "mafAR" = ar,
                              "mafSD" = sd,
                              "pcaAR" = pca.ar,
                              "pcaSD" = pca.sd,
                              "explSD" = expl.sd,
+                             "eigenCOV" = eigen.cov,
                              "maxCOV" = max.cov)
 
     }
