@@ -105,6 +105,32 @@
 
 </dl></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Load the multivariate simulated</span></span></span>
+<span class="r-in"><span><span class="co">#dataset `simTransComms`</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Estimate the size-of-states for each</span></span></span>
+<span class="r-in"><span><span class="co">#time series in the "1_5_1" community.</span></span></span>
+<span class="r-in"><span><span class="co">#This is typically suggested</span></span></span>
+<span class="r-in"><span><span class="co">#to be the standard deviation of a</span></span></span>
+<span class="r-in"><span><span class="co">#reference period or the entire time</span></span></span>
+<span class="r-in"><span><span class="co">#series</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">eg.sost</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>, FUN <span class="op">=</span> <span class="va">sd</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#transpose required to ensure a 1 x n matrix</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">egFI</span> <span class="op">&lt;-</span> <span class="fu">FI</span><span class="op">(</span>timedat <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">$</span><span class="va">time</span>,</span></span>
+<span class="r-in"><span>data <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>sost <span class="op">=</span>  <span class="va">eg.sost</span>,</span></span>
+<span class="r-in"><span>winsize <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>winspace <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>TL <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
