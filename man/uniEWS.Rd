@@ -22,7 +22,7 @@ uniEWS(
 \arguments{
 \item{data}{A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.}
 
-\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, \code{"mean.size"}, \code{"sd.size"}, \code{"sd.95"} and \code{"trait"}.}
+\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"}.}
 
 \item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
 

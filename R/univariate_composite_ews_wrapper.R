@@ -3,7 +3,7 @@
 #' A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.
-#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, \code{"mean.size"}, \code{"sd.size"}, \code{"sd.95"} and \code{"trait"}.
+#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"}.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND input abundance.
 #' @param y_lab String label. If \code{ggplotIt = TRUE}, labels the abundance y axis.
