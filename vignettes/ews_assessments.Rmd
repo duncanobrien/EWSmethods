@@ -3,6 +3,8 @@ title: "Performing Early Warning Signal Assessments"
 author: "Duncan O'Brien"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+resource_files:
+  - vignettes/ewsmethods_eg_fig.pdf
 vignette: >
   %\VignetteIndexEntry{Performing Early Warning Signal Assessments}
   %\VignetteEngine{knitr::rmarkdown}
@@ -82,7 +84,9 @@ Now the data has been loaded and truncated, it can now be passed to `uniEWS()` a
 
 `EWSmethods` provides two computational approaches to calculate univariate EWSs via the `uniEWS()` function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before 'rolling' on one data point and reassessing, whereas expanding windows add data points sequentially in to an 'expanding' assessment and then standardises against the running mean and standard deviation of the previous window.
 
-<a href="https://duncanobrien.github.io/EWSmethods/"><img src="vignettes/ewsmethods_eg_fig.pdf" max-width="100%"/></a>
+```{r fig_pdf, echo=F,fig.align='center'}
+knitr::include_graphics("../man/figures/ewsmethods_eg_fig.pdf")
+```
 
 Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in `uniEWS()`.
 
@@ -90,7 +94,7 @@ Both computational approaches can calculate the same EWS indicators however. A b
 |:------------------------:|------------------------|:------------------------:|
 | Standard deviation |	Increasing variance/standard deviation is observed approaching a transition | `"SD"` |
 | Coefficient of variation |	Equivalent to SD as is simply SD at time t divided by the mean SD of the time series | `"cv"` |
-| Autocorrelation at lag1 |	Autocorrelation (similarity between successive observations) increases approaching a transition. The value of this indicator can be estimated as either the autocorrelation coefficient estimated from a first order autoregressive model or the estimated autocorrelation function at lag1 | `"ar1"` - autoregressive model; `"acf"`- autocorrelation function | 
+| Autocorrelation at lag1 |	Autocorrelation (similarity between successive observations) increases approaching a transition. The value of this indicator can be estimated as either the autocorrelation coefficient estimated from a first order autoregressive model or the estimated autocorrelation function at lag1 | `"ar1"` - autoregressive model, `"acf"`- autocorrelation function | 
 | Skewness | At a transition, the distribution of values in the time series can become asymmetric | `"skew"` |
 | Kurtosis | Kurtosis represents the system reaching more extreme values in the presence of a transition. Due to the increased presence of rare values in the time series, the tails of the observation distribution widen | `"kurt"` |
 | Return rate	| The inverse of the first-order term of a fitted autoregressive AR(1) model. Return rate is the primary quantity impacted by CSD – return rate decreases as a tipping point is approached | `"rr"` |
@@ -112,7 +116,7 @@ rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r rolling_ews_fig,dpi=200,fig.width=5,fig.height=4,echo=F}
+```{r rolling_ews_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
 rolling_ews_eg$plot
 ```
 
@@ -166,39 +170,42 @@ trait_ews_eg$plot
 
 ## 3. Multivariate EWSs
 
-__Development in progress__
+```{r multi_ews, fig.keep = "none"}
+multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
+                         method = "rolling",
+                         winsize = 50,
+                         ggplotIt = TRUE)
+```
+
+```{r multi_ews_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
+multi_ews_eg$plot
+```
+
+
+```{r multi_ews2, fig.keep = "none"}
+multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
+                         method = "expanding",
+                         burn_in = 50,
+                         ggplotIt = TRUE)
+```
+
+```{r multi_ews2_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
+multi_ews_eg2$plot
+```
 
 <br>  
 
+# Interpretation
 
-# Troubleshooting
+## 1. Rolling windows
 
-## 1. _`reticulate` is activating a different environment to the one I gave to `ewsnet_init()`_
-
-This is the main error when using `EWSmethods`. The first solution is to simply restart the R session and rerun `ewsnet_init()`. If `reticulate` is loaded before `ewsnet_init()` is run, then the default `reticulate` environment `"r-reticulate"` is activated instead of your EWSNet environment. Therefore ensure no `reticulate` command or `library(reticulate)` is run prior to 
-`ewsnet_init()`.
-
-If the error remains and your RStudio version is >=1.4, you may need to edit your Python interpreter settings in RStudio's preferences. Go to Preferences -> Python and untick "Automatically activate project-level Python environments". Then restart your R session and rerun `ewsnet_init()`.
-
-The final solution we are aware of involves deactivating `reticulate`'s default behaviour in your global R environment settings. Running `bypass_reticulate_autoinit()` will disable `reticulate`'s ability to load a Python environment without a user request. Restart your R session and rerun `ewsnet_init()` once ready.
+The simplicity of the rolling window approach also limits its usefulness. A 'warning' is indicated when an EWS displays a strong positive Kendall Tau correlation with time. However, it is unclear what constitutes a 'strong' correlation in this context with published warnings ranging from 0.5 through to 0.9 (Dakos *et al. 2012*, Harris *et al.* 2020, Southall *et al.* 2022). The strength of correlation therefore appears to be context dependent and system specific.
 
 <br>  
 
-## 2. _`ewsnet_predict()` is returning Python errors_
+## 2. Expanding windows
 
-These errors are extremely difficult to debug through R . Fortunately, in our experience, such errors are legacies of previous issues such as incorrect initialising of the Python environment, the crashing of an R session, or killing of the running function. The error is therefore often solved by restarting the R session and rerunning `ewsnet_init()`.
-
-If the error remains, please submit a bug report [here](https://github.com/duncanobrien/EWSmethods/issues).
-
-<br>  
-
-## 3. _I want to uninstall Python and its environments_
-
-`ewsnet_init()` provides the capabaility to do this using the `conda_refresh =` argument: 
-
-`ewsnet_init(envname = "envname",conda_refresh = TRUE)`.
-
-This function will remove any downloaded Python versions, packages or environments to allow a fresh install or permanent removal.
+Expanding windows have a stronger evidence base for what constitutes a 'warning'. Clements *et al.* 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall *et al.* 2022 although they suggest that more than two consecutive signals should be aimed for.
 
 <br>  
 
