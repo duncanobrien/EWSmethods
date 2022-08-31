@@ -23,6 +23,8 @@
 #' @importFrom stats acf
 #'
 #' @keywords internal
+#' @noRd
+
 
 no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
                                                                 "loess", "linear", "first-diff"),

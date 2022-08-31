@@ -18,6 +18,8 @@
 #' @importFrom dplyr .data
 #'
 #' @keywords internal
+#' @noRd
+
 
 wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
 
@@ -176,6 +178,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
 #' @param x dataframe A n x m dataframe species (columns) abundances through time (rows)
 #' @return out A list containing the input data, the dimension reduction time series, rotations, autocorrelation and eigenvalues
 #' @keywords internal
+#' @noRd
 
 maf <- function(x){
   if (isTRUE(is.data.frame(x)) || (inherits(x,"matrix") && dim(x)[2]>1)){

@@ -13,7 +13,30 @@
 #' \item{FI}{A numeric vector of Fisher information estimates}
 #' \item{midt_win}{A numeric vector of the time index at the centre of the window for that associated value in \code{FI}.}
 #' \item{t_win}{A n x m numeric matrix where the length of n is the winspace and length of m is the number of window shifts made. Values are consequently the timepoint indices that contribute to that window.}
-
+#'
+#' @examples
+#' #Load the multivariate simulated
+#' #dataset `simTransComms`
+#'
+#' data(simTransComms)
+#'
+#' #Estimate the size-of-states for each
+#' #time series in the "1_5_1" community.
+#' #This is typically suggested
+#' #to be the standard deviation of a
+#' #reference period or the entire time
+#' #series
+#'
+#' eg.sost <- apply(simTransComms$`1_5_1`[,3:7], MARGIN = 2, FUN = sd) |>
+#' t() #transpose required to ensure a 1 x n matrix
+#'
+#' egFI <- FI(timedat = simTransComms$`1_5_1`$time,
+#' data = simTransComms$`1_5_1`[,3:7],
+#' sost =  eg.sost,
+#' winsize = 10,
+#' winspace = 1,
+#' TL = 90)
+#'
 #' @export
 #'
 #'
@@ -33,9 +56,9 @@ FI <- function(timedat,data,sost,winsize,winspace = 1,TL = 90){
   # pre-define variables
   midt_win <- matrix()
   FI <- matrix()
+  hwin <- round(dim(data)[1] * winsize/100)
   t_win <- matrix(NA,nrow = hwin, ncol = 1)#?
   window <- 0
-  hwin <- round(dim(data)[1] * winsize/100)
 
   for (i in seq(from = 1, to = nrow(data), by = winspace)){
     #start big loop to go through all the data

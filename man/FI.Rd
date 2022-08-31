@@ -28,3 +28,27 @@ A list containing three objects:
 \description{
 Uses a multivariate array of time series to estimate Fisher information following the approach of Karunanithi et al. (2010).
 }
+\examples{
+#Load the multivariate simulated
+#dataset `simTransComms`
+
+data(simTransComms)
+
+#Estimate the size-of-states for each
+#time series in the "1_5_1" community.
+#This is typically suggested
+#to be the standard deviation of a
+#reference period or the entire time
+#series
+
+eg.sost <- apply(simTransComms$`1_5_1`[,3:7], MARGIN = 2, FUN = sd) |>
+t() #transpose required to ensure a 1 x n matrix
+
+egFI <- FI(timedat = simTransComms$`1_5_1`$time,
+data = simTransComms$`1_5_1`[,3:7],
+sost =  eg.sost,
+winsize = 10,
+winspace = 1,
+TL = 90)
+
+}

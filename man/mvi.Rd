@@ -4,10 +4,10 @@
 \alias{mvi}
 \title{Multivariate Variance Index function}
 \usage{
-mvi(df, winsize)
+mvi(data, winsize)
 }
 \arguments{
-\item{df}{A numeric matrix of species abundances, names across columns, time across rows}
+\item{data}{A numeric matrix of species abundances, names across columns, time across rows}
 
 \item{winsize}{Numeric. Defines the window size of the rolling window as a percentage of the time series length.}
 }
@@ -16,4 +16,16 @@ A matrix where the first column is last time index of the window and the second 
 }
 \description{
 Calculate a multivariate variance following Brock, W. A., and S. R. Carpenter. 2006. Variance as a leading indicator of regime shift in ecosystem services. Ecology and Society 11(2): 9.
+}
+\examples{
+#Load the multivariate simulated
+#dataset `simTransComms`
+
+data(simTransComms)
+
+#Estimate the MVI for the "1_38_1" community
+
+egMVI <- mvi(data = simTransComms$`1_38_1`[,3:7],
+winsize = 10)
+
 }

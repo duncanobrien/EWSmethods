@@ -12,6 +12,8 @@
 #' \item{pdf}{A uniform probability density function.}
 #' \item{neighbour}{The time point indices that contribute to the calculation.}
 #' @keywords internal
+#' @noRd
+
 
 
 NFisherpdf <- function(data,lmin,lmax,sizeofstates,TL){
