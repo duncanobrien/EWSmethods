@@ -4,7 +4,7 @@ author: "Duncan O'Brien"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 resource_files:
-  - vignettes/ewsmethods_eg_fig.pdf
+  - man/figures/ewsmethods_eg_fig.png
 vignette: >
   %\VignetteIndexEntry{Performing Early Warning Signal Assessments}
   %\VignetteEngine{knitr::rmarkdown}
@@ -53,7 +53,7 @@ data("CODrecovery")
 
 We can visualise a community from each of these datasets using the code below:
 
-```{r vis_data,dpi=200, fig.width=5,fig.height=4}
+```{r vis_data,dpi=200, fig.width=4,fig.height=4}
 matplot(simTransComms$`1_5_1`[,3:7], type = "l", xlab = "Time", ylab = "Density",  main = "Transitioning five species community")
 
 plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type="l", xlab = "Year", ylab = "Abundance", main = "Recovering cod population")
@@ -67,7 +67,7 @@ knitr::kable(data.frame("simTransComms" = simTransComms$`1_5_1`$inflection_pt[1]
 CODrecovery$`1_20`$inflection_pt[1]))
 ```
 
-However, EWS assessments are only meaningful if performed on data prior to a transition. As both `EWsmethods` provides the time point of transition, we can truncate our data to only pre-transition.
+However, EWS assessments are only meaningful if performed on data prior to a transition. As `EWsmethods` provides the time point of transition for both datasets, we can truncate our data to only pre-transition.
 
 ```{r trunc_data}
 pre_simTransComms <- subset(simTransComms$`1_5_1`,time < inflection_pt)
@@ -84,9 +84,13 @@ Now the data has been loaded and truncated, it can now be passed to `uniEWS()` a
 
 `EWSmethods` provides two computational approaches to calculate univariate EWSs via the `uniEWS()` function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before 'rolling' on one data point and reassessing, whereas expanding windows add data points sequentially in to an 'expanding' assessment and then standardises against the running mean and standard deviation of the previous window.
 
-```{r, echo=F,fig.align='center'}
-knitr::include_graphics("../man/figures/ewsmethods_eg_fig.pdf")
+```{r, echo=F,dpi=200,fig.width=5,fig.height=4}
+knitr::include_graphics("../man/figures/ewsmethods_eg_fig.png")
 ```
+
+
+ewsmethods_eg_fig.pdf
+
 
 Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in `uniEWS()`.
 
@@ -116,7 +120,7 @@ rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r rolling_ews_fig,dpi=200,fig.width=5,fig.height=5,echo=F}
+```{r rolling_ews_fig,dpi=200,fig.width=5,fig.height=6,echo=F}
 rolling_ews_eg$plot
 ```
 
