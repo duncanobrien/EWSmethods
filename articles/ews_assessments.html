@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Performing Early Warning Signal Assessments</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-08-31</h4>
+            <h4 data-toc-skip class="date">2022-09-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/ews_assessments.Rmd" class="external-link"><code>vignettes/ews_assessments.Rmd</code></a></small>
       <div class="d-none name"><code>ews_assessments.Rmd</code></div>
@@ -112,7 +112,7 @@
 <h3 id="the-data">1. The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h3>
 <p><code>EWSmethods</code> comes bundled with two data objects which allow you to practice using the <code><a href="../reference/uniEWS.html">uniEWS()</a></code> and <code><a href="../reference/multiEWS.html">multiEWS()</a></code> functions in both transitioning and non-transitioning data before applying it to your own use case.</p>
-<p><code>"simTransComms"</code> contains three replicate datasets of a simulated five species community that has been driven to transition by the introduction of an invasive species follwing Dakos (2018). This will be our multivariate dataset when using <code><a href="../reference/multiEWS.html">multiEWS()</a></code> although we may also use each time series in isolation in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
+<p><code>"simTransComms"</code> contains three replicate datasets of a simulated five species community that has been driven to transition by the introduction of an invasive species (following Dakos 2018). This will be our multivariate dataset when using <code><a href="../reference/multiEWS.html">multiEWS()</a></code> although we may also use each time series in isolation in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
 <p><code>"CODrecovery"</code> contains three replicate datasets of a simulated cod ( <em>Gadus morhua</em> ) population that transitions from an overfished to a recovered state following the relaxation of fishing pressure. This data was first published by Clements <em>et al.</em> 2019. While univariate, <code>"CODrecovery"</code> provides extra information on the body size of cod individuals which will improve composite EWSs estimated by <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Load the two datasets in to the session</span></span>
@@ -138,11 +138,12 @@
 <td align="right">2055</td>
 </tr></tbody>
 </table>
-<p>However, EWS assessments are only meaningful if performed on data prior to a transition. As <code>EWsmethods</code> provides the time point of transition for both datasets, we can truncate our data to only pre-transition.</p>
+<p>However, EWS assessments are only meaningful if performed on data prior to a transition. As <code>EWsmethods</code> provides the time point of transition for both datasets, we can truncate our time series to pre-transition data only.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pre_CODrecovery</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></code></pre></div>
+<p>In reality, EWSs will be assessed in real-time with the presence of past/present tipping points often unknown. If past transitions are known to have occurred, it may be prudent to follow the suggestions of O’Brien &amp; Clements (2021) who show that the occurrence of a historic transition can mask an oncoming event and that only using data post the hisotric transition improves EWS reliability.</p>
 <p>Now the data has been loaded and truncated, it can now be passed to <code><a href="../reference/uniEWS.html">uniEWS()</a></code> and <code><a href="../reference/multiEWS.html">multiEWS()</a></code> to perform EWS assessments.</p>
 <p><br></p>
 </div>
@@ -151,10 +152,11 @@
 </h3>
 <p><code>EWSmethods</code> provides two computational approaches to calculate univariate EWSs via the <code><a href="../reference/uniEWS.html">uniEWS()</a></code> function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before ‘rolling’ on one data point and reassessing, whereas expanding windows add data points sequentially in to an ‘expanding’ assessment and then standardises against the running mean and standard deviation of the previous window.</p>
 <div class="figure">
-<img src="ewsmethods_eg_fig.png" alt="Rolling vs expanding window diagram" width="1707"><p class="caption">
-Rolling vs expanding window diagram
+<img src="ewsmethods_eg_fig.png" alt="Rolling (A) vs expanding (C) window concept diagram. Panels B and D introduce the circumstance when a 'warning' is signalled in both approaches" width="1707"><p class="caption">
+Rolling (A) vs expanding (C) window concept diagram. Panels B and D introduce the circumstance when a ‘warning’ is signalled in both approaches
 </p>
 </div>
+<p><br></p>
 <p>Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in <code><a href="../reference/uniEWS.html">uniEWS()</a></code>.</p>
 <table class="table">
 <colgroup>
@@ -211,8 +213,8 @@ Rolling vs expanding window diagram
 <div class="section level4">
 <h4 id="rolling-windows">Rolling windows<a class="anchor" aria-label="anchor" href="#rolling-windows"></a>
 </h4>
-<p>The rolling window approach is the most commonly used form of EWS computation due to the work of Dakos <em>et al</em> 2012. <code><a href="../reference/uniEWS.html">uniEWS()</a></code> accepts a <code>method =</code> and a <code>winsize =</code> argument which calls the expanding window method and creates a rolling window <code>winsize</code>% of the total time series length.</p>
-<p>Lets use an example where we are interested in the autocorrelation, variance and skewness of one of the five species in <code>pre_simTransComms</code>.</p>
+<p>The rolling window approach is the most commonly used form of EWS computation due to the work of Dakos <em>et al</em> 2012 and the <code>earlywarnings</code> package. <code><a href="../reference/uniEWS.html">uniEWS()</a></code> accepts a <code>method =</code> and a <code>winsize =</code> argument which calls the expanding window method and creates a rolling window <code>winsize</code>% of the total time series length.</p>
+<p>Lets use an example where we are interested in the autocorrelation, variance and skewness of one of the five species in <code>pre_simTransComms</code>. First we supply a dataframe/matrix of n x 2 dimensions (first column is an equally time sequence and the second is the abundance/biomass time series) and the EWS indicator metrics. Then the form of computation, window size and plotting characteristics.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rolling_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"skew"</span><span class="op">)</span>,</span>
@@ -227,7 +229,7 @@ Rolling vs expanding window diagram
 <div class="section level4">
 <h4 id="expanding-windows">Expanding windows<a class="anchor" aria-label="anchor" href="#expanding-windows"></a>
 </h4>
-<p>Let’s explore the alternative expanding window approach. All we need to change in <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is the <code>method =</code> argument, and replace <code>winsize =</code> with <code>burn_in =</code>. Instead of dictating the size of the rolling window, <code>burn_in =</code> dictates the number of datapoints <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is to use to ‘train’ the algorithm. This mitigates the high number of false-positive signals resulting from the short time series length and high variability when few data points are supplied at the beginning of assessment (O’Brien &amp; Clements, 2021).</p>
+<p>Let’s explore the alternative expanding window approach. All we need to change in <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is the <code>method =</code> argument, and replace <code>winsize =</code> with <code>burn_in =</code>. Instead of specifying the size of the rolling window, <code>burn_in =</code> dictates the number of datapoints <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is to use to ‘train’ the algorithm. This mitigates the high number of false-positive signals resulting from the short time series length and high variability when few data points are supplied at the beginning of assessment (O’Brien &amp; Clements, 2021).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">expanding_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"skew"</span><span class="op">)</span>,</span>
@@ -239,13 +241,13 @@ Rolling vs expanding window diagram
 <span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/expanding_ews_fig-1.png" width="720"></p>
-<p>Similar to the rolling window approach, EWS indicators calculated by expanding windows have identified warnings from <code>time ~= 170</code>. However we are more confident in this conclusion as the composite metrics also display this warning. These composite metrics simple sum the standardised individual indicator strengths together and are known to provide a more reliable signal than lone indicators (Clements &amp; Ozgul, 2016).</p>
+<p>Similar to the rolling window approach, EWS indicators calculated by expanding windows have exceeded the 2σ threshold for more than two consecutive time points and thus identified warnings from <code>time ~= 170</code>. However we are more confident in this conclusion as the composite metrics also display this warning. These composite metrics simple sum the standardised individual indicator strengths together and are known to provide a more reliable signal than lone indicators (Clements &amp; Ozgul, 2016).</p>
 <p><br></p>
 </div>
 <div class="section level4">
 <h4 id="trait-information">Trait information<a class="anchor" aria-label="anchor" href="#trait-information"></a>
 </h4>
-<p>The final contribution by <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is the ability to integrate multiple information sources in the assessment. For example, including body size estimates improves assessment reliability by reducing false positive rate whilst increasing the number of true positives (Clements and Ozgul 2016, Baruah et al. 2020). <code><a href="../reference/uniEWS.html">uniEWS()</a></code> consequently accepts a <code>trait =</code> argument where an additional trait time series can be combined with the other abundance-based EWSs as a composite metric. This capability is only available if <code>method = "expanding"</code></p>
+<p>The final contribution by <code><a href="../reference/uniEWS.html">uniEWS()</a></code> is the ability to integrate multiple information sources in the assessment. For example, including body size estimates improves assessment reliability by reducing false positive rate whilst increasing the number of true positives (Clements and Ozgul 2016, Baruah et al. 2020). <code><a href="../reference/uniEWS.html">uniEWS()</a></code> consequently accepts a <code>trait =</code> argument where an additional trait time series can be combined with the other abundance-based EWSs as a composite metric. This capability is only available if <code>method = "expanding"</code> and <code>metrics =</code> contains <code>"trait"</code></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trait_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_CODrecovery</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"trait"</span><span class="op">)</span>,</span>
@@ -266,12 +268,110 @@ Rolling vs expanding window diagram
 <div class="section level3">
 <h3 id="multivariate-ewss">3. Multivariate EWSs<a class="anchor" aria-label="anchor" href="#multivariate-ewss"></a>
 </h3>
+<p>A brief outline of each can be found in the following table as well as their reference code in <code>multEWS()</code>.</p>
+<table class="table">
+<colgroup>
+<col width="21%">
+<col width="36%">
+<col width="21%">
+<col width="21%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">Multivariate EWS indicator</th>
+<th>Description</th>
+<th align="center">
+<code>multEWS()</code> metric code</th>
+<th align="center">Average or dimension reduction technique</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">Mean standard deviation</td>
+<td>Average variance across all time series representing the system</td>
+<td align="center"><code>"meanSD"</code></td>
+<td align="center">Average</td>
+</tr>
+<tr class="even">
+<td align="center">Max standard deviation</td>
+<td>The variance of the time series with the highest variance of all assessed time series</td>
+<td align="center"><code>"maxSD"</code></td>
+<td align="center">Average</td>
+</tr>
+<tr class="odd">
+<td align="center">Mean autocorrelation at lag1</td>
+<td>Average autocorrelation across all time series representing the system</td>
+<td align="center"><code>"meanAR"</code></td>
+<td align="center">Average</td>
+</tr>
+<tr class="even">
+<td align="center">Max autocorrelation at lag1</td>
+<td>The autocorrelation of the time series with the highest autocorrelation of all assessed time series</td>
+<td align="center"><code>"maxAR"</code></td>
+<td align="center">Average</td>
+</tr>
+<tr class="odd">
+<td align="center">Dominant MAF (maximum autocorrelation factor) eigenvalue</td>
+<td>The minimum eigenvalue of the system following MAF dimension reduction</td>
+<td align="center"><code>"eigenMAF"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="even">
+<td align="center">MAF autocorrelation</td>
+<td>The autocorrelation of the data projected on to the first MAF – i.e. the autocorrelation of the first MAF.</td>
+<td align="center"><code>"mafAR"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="odd">
+<td align="center">MAF standard deviation</td>
+<td>The variance of the data projected on to the first MAF – i.e. the variance of the first MAF</td>
+<td align="center"><code>"mafSD"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="even">
+<td align="center">First PC (principal component) autocorrelation</td>
+<td>The autocorrelation of the data projected on to the first PC – i.e. the autocorrelation of the first PC</td>
+<td align="center"><code>"pcaAR"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="odd">
+<td align="center">First PC standard deviation/ Explained variance</td>
+<td>The variance of the data projected on to the first PC – i.e. the variance of the first PC</td>
+<td align="center">
+<code>"pcaSD"</code>/<code>"explSD"</code>
+</td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="even">
+<td align="center">First PC standard deviation/ Explained variance</td>
+<td>The variance of the data projected on to the first PC – i.e. the variance of the first PC</td>
+<td align="center">
+<code>"pcaSD"</code>/<code>"explSD"</code>
+</td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="odd">
+<td align="center">Dominant eigenvalue of the covariance matrix</td>
+<td>The maximum eigenvalue of the covariance matrix between all representative time series</td>
+<td align="center"><code>"eigenCOV"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+<tr class="even">
+<td align="center">Maximum covariance</td>
+<td>The maximum value of the covariance matrix between all representative time series.</td>
+<td align="center"><code>"maxCOV"</code></td>
+<td align="center">Dimension reduction</td>
+</tr>
+</tbody>
+</table>
+<p>Using <code><a href="../reference/multiEWS.html">multiEWS()</a></code> we can estimate each of these multivariate indicators in the same way as <code><a href="../reference/uniEWS.html">uniEWS()</a></code> - specifying the <code>method =</code>, <code>winsize =</code>, <code>burn_in =</code> etc - but must provide a n x m data.frame/matrix of all representative time series. The first column must again be an equally spaced time sequence.</p>
+<p>A rolling window assessment would therefore be coded as such:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"rolling"</span>,</span>
 <span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/multi_ews_fig-1.png" width="720"></p>
+<p>Many of these indicators a postively correlated with time and therefore are ‘warnings’.</p>
+<p>We could also use expanding windows to achieve a similar result. <strong>Note</strong> - no composite metric is computed in <code><a href="../reference/multiEWS.html">multiEWS()</a></code> as it is currently unknown how combining multivariate EWS indicators influences prediction reliability.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_ews_eg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
@@ -280,22 +380,54 @@ Rolling vs expanding window diagram
 <span><span class="co">#&gt; Warning: Removed 24 row(s) containing missing values (geom_path).</span></span>
 <span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="720"></p>
+<p>In this circumstance, many of the indicators are warning at different times (e.g. <code>"eigenMAF"</code> at <code>time ~= 65</code> or <code>"meanAR"</code> at <code>time ~= 100</code>) but that the vast majority are warning in the last 20 time points. This highlights the usefulness of expanding windows over rolling as the exact time point of warning can be determined.</p>
 <p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
+<h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
 </h2>
 <div class="section level3">
-<h3 id="rolling-windows-1">1. Rolling windows<a class="anchor" aria-label="anchor" href="#rolling-windows-1"></a>
+<h3 id="how-do-i-interpret-ewss">1. How do I interpret EWSs?<a class="anchor" aria-label="anchor" href="#how-do-i-interpret-ewss"></a>
 </h3>
+<div class="section level4">
+<h4 id="rolling-windows-1">Rolling windows<a class="anchor" aria-label="anchor" href="#rolling-windows-1"></a>
+</h4>
 <p>The simplicity of the rolling window approach also limits its usefulness. A ‘warning’ is indicated when an EWS displays a strong positive Kendall Tau correlation with time. However, it is unclear what constitutes a ‘strong’ correlation in this context with published warnings ranging from 0.5 through to 0.9 (Dakos <em>et al. 2012</em>, Harris <em>et al.</em> 2020, Southall <em>et al.</em> 2022). The strength of correlation therefore appears to be context dependent and system specific.</p>
+</div>
+<div class="section level4">
+<h4 id="expanding-windows-1">Expanding windows<a class="anchor" aria-label="anchor" href="#expanding-windows-1"></a>
+</h4>
+<p>Expanding windows have a stronger evidence base for what constitutes a ‘warning’. Clements <em>et al.</em> 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall <em>et al.</em> 2022 although they suggest that more than two consecutive signals should be aimed for.</p>
 <p><br></p>
 </div>
+</div>
 <div class="section level3">
-<h3 id="expanding-windows-1">2. Expanding windows<a class="anchor" aria-label="anchor" href="#expanding-windows-1"></a>
+<h3 id="my-data-is-seasonalcontains-cycles--can-i-still-use-ewss">2. My data is seasonal/contains cycles. Can I still use EWSs?<a class="anchor" aria-label="anchor" href="#my-data-is-seasonalcontains-cycles--can-i-still-use-ewss"></a>
 </h3>
-<p>Expanding windows have a stronger evidence base for what constitutes a ‘warning’. Clements <em>et al.</em> 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall <em>et al.</em> 2022 although they suggest that more than two consecutive signals should be aimed for.</p>
+<p>Early warning signal indicators are particularly sensitive to cyclical data as the repeated non-linearity throughout the year/cycle period will be interpreted as a transition initially, before masking future cycles and tipping points. It is therefore sensible to deseason seasonal data prior to assessment.</p>
+<p><code>EWSmethods</code> provides a suite of average and time series decomposition deseasoning techniques via the <code><a href="../reference/deseason_ts.html">deseason_ts()</a></code> function. This function takes a n x m data.frame of time series to be deaseasoned. The first column must be a vector of dates with the <code>increment =</code> and <code>order =</code> arguments indicating the data resolution (year, month, day) and the order of the date vector (ymd/dmy/ydm). The form of deseasoning can then be selected using the <code>method =</code> argument.</p>
+<p>Lets create some dummy monthly data that we can deseason.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">5</span><span class="op">*</span><span class="fl">12</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">spp_data</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span></span>
+<span>  <span class="va">spp_data</span><span class="op">[</span>,<span class="va">x</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">*</span><span class="fl">12</span>,mean<span class="op">=</span><span class="fl">20</span>,sd<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">multi_spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="st">"time"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2000/01/01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2004/12/01'</span><span class="op">)</span>, by<span class="op">=</span><span class="st">"month"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">spp_data</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">multi_spp_data</span><span class="op">$</span><span class="va">time</span>, y<span class="op">=</span><span class="va">multi_spp_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Date"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"Seasonal five species community"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ews_assessments_files/figure-html/create_seasonal-1.png" width="720"></p>
+<p>As <code>multi_spp_data</code> is random, there are few pronounced cycles but for the sake of this tutorial, <code><a href="../reference/deseason_ts.html">deseason_ts()</a></code> would be applied to it as such:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deseas_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deseason_ts.html">deseason_ts</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">multi_spp_data</span>, increment <span class="op">=</span> <span class="st">"month"</span>, method <span class="op">=</span> <span class="st">"stl"</span>, order <span class="op">=</span> <span class="st">"ymd"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; data successfully aggregated into monthly time steps</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">deseas_dat</span><span class="op">$</span><span class="va">date</span>, y<span class="op">=</span><span class="va">deseas_dat</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Date"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"Deseasoned five species community"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ews_assessments_files/figure-html/deseason-1.png" width="720"></p>
+<p>The <code>method = "stl"</code> argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. <code>method = "decompose"/method = "x11"</code> perform a similar process but use classical decomposition and x11 ARIMA modelling respectively. <code>method = "average"</code> is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key.</p>
+<p>In our example, we can see that large monthly values shared across multiple years have been shrunk - e.g. the red dashed species at ~2001 - whereas anomalous values have been maintained - e.g. the green dotted species at ~2003.5.</p>
 <p><br></p>
 </div>
 </div>
