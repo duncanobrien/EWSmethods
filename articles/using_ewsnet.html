@@ -158,7 +158,7 @@
 <p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1000"></p>
 <p>We then simply provide this vector to <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>,noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
+<code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>, noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
