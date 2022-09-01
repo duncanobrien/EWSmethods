@@ -38,7 +38,7 @@ library(EWSmethods)
 
 `EWSmethods` comes bundled with two data objects which allow you to practice using the `uniEWS()` and `multiEWS()` functions in both transitioning and non-transitioning data before applying it to your own use case.
 
-`"simTransComms"` contains three replicate datasets of a simulated five species community that has been driven to transition by the introduction of an invasive species follwing Dakos (2018). This will be our multivariate dataset when using `multiEWS()` although we may also use each time series in isolation in `uniEWS()`.
+`"simTransComms"` contains three replicate datasets of a simulated five species community that has been driven to transition by the introduction of an invasive species (following Dakos 2018). This will be our multivariate dataset when using `multiEWS()` although we may also use each time series in isolation in `uniEWS()`.
 
 `"CODrecovery"` contains three replicate datasets of a simulated cod ( _Gadus morhua_ ) population that transitions from an overfished to a recovered state following the relaxation of fishing pressure. This data was first published by Clements _et al._ 2019. While univariate, `"CODrecovery"` provides extra information on the body size of cod individuals which will improve composite EWSs estimated by `uniEWS()`.
 
@@ -65,7 +65,7 @@ knitr::kable(data.frame("simTransComms" = simTransComms$`1_5_1`$inflection_pt[1]
 CODrecovery$`1_20`$inflection_pt[1]))
 ```
 
-However, EWS assessments are only meaningful if performed on data prior to a transition. As `EWsmethods` provides the time point of transition for both datasets, we can truncate our data to only pre-transition.
+However, EWS assessments are only meaningful if performed on data prior to a transition. As `EWsmethods` provides the time point of transition for both datasets, we can truncate our time series to pre-transition data only. 
 
 ```{r trunc_data}
 pre_simTransComms <- subset(simTransComms$`1_5_1`,time < inflection_pt)
@@ -73,6 +73,8 @@ pre_simTransComms <- subset(simTransComms$`1_5_1`,time < inflection_pt)
 pre_CODrecovery <- subset(CODrecovery$`1_20`,time < inflection_pt)
 
 ```
+
+In reality, EWSs will be assessed in real-time with the presence of past/present tipping points often unknown. If past transitions are known to have occurred, it may be prudent to follow the suggestions of O'Brien & Clements (2021) who show that the occurrence of a historic transition can mask an oncoming event and that only using data post the hisotric transition improves EWS reliability. 
 
 Now the data has been loaded and truncated, it can now be passed to `uniEWS()` and `multiEWS()` to perform EWS assessments.
 
@@ -82,9 +84,11 @@ Now the data has been loaded and truncated, it can now be passed to `uniEWS()` a
 
 `EWSmethods` provides two computational approaches to calculate univariate EWSs via the `uniEWS()` function - rolling vs expanding windows. The difference between the two is evident in the figure below but simply, rolling windows estimate EWSs in subsets of the overall time series before 'rolling' on one data point and reassessing, whereas expanding windows add data points sequentially in to an 'expanding' assessment and then standardises against the running mean and standard deviation of the previous window.
 
-```{r figure, echo=F,fig.cap = "Rolling vs expanding window diagram"}
+```{r figure, echo=F,fig.cap = "Rolling (A) vs expanding (C) window concept diagram. Panels B and D introduce the circumstance when a 'warning' is signalled in both approaches"}
 knitr::include_graphics("ewsmethods_eg_fig.png", dpi = 144)
 ```
+
+<br>  
 
 Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in `uniEWS()`.
 
@@ -101,9 +105,9 @@ Both computational approaches can calculate the same EWS indicators however. A b
 <br>  
 
 ### Rolling windows
-The rolling window approach is the most commonly used form of EWS computation due to the work of Dakos *et al* 2012. `uniEWS()` accepts a `method =` and a `winsize =` argument which calls the expanding window method and creates a rolling window `winsize`% of the total time series length.
+The rolling window approach is the most commonly used form of EWS computation due to the work of Dakos *et al* 2012 and the `earlywarnings` package. `uniEWS()` accepts a `method =` and a `winsize =` argument which calls the expanding window method and creates a rolling window `winsize`% of the total time series length.
 
-Lets use an example where we are interested in the autocorrelation, variance and skewness of one of the five species in `pre_simTransComms`.
+Lets use an example where we are interested in the autocorrelation, variance and skewness of one of the five species in `pre_simTransComms`. First we supply a dataframe/matrix of n x 2 dimensions (first column is an equally time sequence and the second is the abundance/biomass time series) and the EWS indicator metrics. Then the form of computation, window size and plotting characteristics.
 
 ```{r rolling_ews,fig.keep = "none"}
 rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
@@ -123,8 +127,7 @@ Note how all EWS indicators begin to trend upwards at `time ~= 170 ` which resul
 <br>  
 
 ### Expanding windows
-
-Let's explore the alternative expanding window approach. All we need to change in `uniEWS()` is the `method =` argument, and replace `winsize =` with `burn_in =`. Instead of dictating the size of the rolling window, `burn_in =` dictates the number of datapoints `uniEWS()` is to use to ‘train’ the algorithm. This  mitigates the high number of false-positive signals resulting from the short time series length and high variability when few data points are supplied at the beginning of assessment (O'Brien & Clements, 2021). 
+Let's explore the alternative expanding window approach. All we need to change in `uniEWS()` is the `method =` argument, and replace `winsize =` with `burn_in =`. Instead of specifying the size of the rolling window, `burn_in =` dictates the number of datapoints `uniEWS()` is to use to ‘train’ the algorithm. This  mitigates the high number of false-positive signals resulting from the short time series length and high variability when few data points are supplied at the beginning of assessment (O'Brien & Clements, 2021). 
 
 ```{r expanding_ews,fig.keep = "none"}
 expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
@@ -140,13 +143,12 @@ expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
 expanding_ews_eg$plot
 ```
 
-Similar to the rolling window approach, EWS indicators calculated by expanding windows have identified warnings from `time ~= 170`. However we are more confident in this conclusion as the composite metrics also display this warning. These composite metrics simple sum the standardised individual indicator strengths together and are known to provide a more reliable signal than lone indicators (Clements & Ozgul, 2016).
+Similar to the rolling window approach, EWS indicators calculated by expanding windows have exceeded the 2σ threshold for more than two consecutive time points and thus identified warnings from `time ~= 170`. However we are more confident in this conclusion as the composite metrics also display this warning. These composite metrics simple sum the standardised individual indicator strengths together and are known to provide a more reliable signal than lone indicators (Clements & Ozgul, 2016).
 
 <br>  
 
 ### Trait information
-
-The final contribution by `uniEWS()` is the ability to integrate multiple information sources in the assessment. For example, including body size estimates improves assessment reliability by reducing false positive rate whilst increasing the number of true positives (Clements and Ozgul 2016, Baruah et al. 2020). `uniEWS()` consequently accepts a `trait =` argument where an additional trait time series can be combined with the other abundance-based EWSs as a composite metric. This capability is only available if `method = "expanding"`
+The final contribution by `uniEWS()` is the ability to integrate multiple information sources in the assessment. For example, including body size estimates improves assessment reliability by reducing false positive rate whilst increasing the number of true positives (Clements and Ozgul 2016, Baruah et al. 2020). `uniEWS()` consequently accepts a `trait =` argument where an additional trait time series can be combined with the other abundance-based EWSs as a composite metric. This capability is only available if `method = "expanding"` and `metrics =` contains `"trait"`
 
 ```{r trait_ews,fig.keep = "none"}
 trait_ews_eg <- uniEWS(data = pre_CODrecovery[,c(2,3)],
@@ -168,6 +170,27 @@ trait_ews_eg$plot
 
 ## 3. Multivariate EWSs
 
+A brief outline of each can be found in the following table as well as their reference code in `multEWS()`.
+
+| Multivariate EWS indicator | Description | `multEWS()` metric code | Average or dimension reduction technique |
+|:-------------:|--------------------------|:-------------:|:-------------:|
+| Mean standard deviation |	Average variance across all time series representing the system | `"meanSD"` | Average |
+| Max standard deviation |	The variance of the time series with the highest variance of all assessed time series | `"maxSD"` | Average |
+| Mean autocorrelation at lag1 |	Average autocorrelation across all time series representing the system | `"meanAR"`  | Average |
+| Max autocorrelation at lag1 | The autocorrelation of the time series with the highest autocorrelation of all assessed time series | `"maxAR"` | Average |
+| Dominant MAF (maximum autocorrelation factor) eigenvalue | The minimum eigenvalue of the system following MAF dimension reduction | `"eigenMAF"` | Dimension reduction |
+| MAF	autocorrelation | The autocorrelation of the data projected on to the first MAF – i.e. the autocorrelation of the first MAF. | `"mafAR"` | Dimension reduction |
+| MAF	standard deviation | The variance of the data projected on to the first MAF – i.e. the variance of the first MAF | `"mafSD"` | Dimension reduction |
+| First PC (principal component) autocorrelation	| The autocorrelation of the data projected on to the first PC – i.e. the autocorrelation of the first PC | `"pcaAR"` | Dimension reduction |
+| First PC standard deviation/ Explained variance | The variance of the data projected on to the first PC – i.e. the variance of the first PC | `"pcaSD"`/`"explSD"` | Dimension reduction |
+| First PC 	standard deviation/ Explained variance | The variance of the data projected on to the first PC – i.e. the variance of the first PC | `"pcaSD"`/`"explSD"` | Dimension reduction |
+| Dominant eigenvalue of the covariance matrix | The maximum eigenvalue of the covariance matrix between all representative time series | `"eigenCOV"` | Dimension reduction |
+| Maximum covariance | The maximum value of the covariance matrix between all representative time series. | `"maxCOV"` | Dimension reduction |
+
+Using `multiEWS()` we can estimate each of these multivariate indicators in the same way as `uniEWS()` - specifying the `method =`, `winsize =`, `burn_in =` etc - but must provide a n x m data.frame/matrix of all representative time series. The first column must again be an equally spaced time sequence.
+
+A rolling window assessment would therefore be coded as such:
+
 ```{r multi_ews, fig.keep = "none"}
 multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
                          method = "rolling",
@@ -179,6 +202,9 @@ multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
 multi_ews_eg$plot
 ```
 
+Many of these indicators a postively correlated with time and therefore are 'warnings'.
+
+We could also use expanding windows to achieve a similar result. __Note__ - no composite metric is computed in `multiEWS()` as it is currently unknown how combining multivariate EWS indicators influences prediction reliability.
 
 ```{r multi_ews2, fig.keep = "none"}
 multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
@@ -191,19 +217,54 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
 multi_ews_eg2$plot
 ```
 
+In this circumstance, many of the indicators are warning at different times (e.g. `"eigenMAF"` at `time ~= 65` or `"meanAR"` at `time ~= 100`) but that the vast majority are warning in the last 20 time points. This highlights the usefulness of expanding windows over rolling as the exact time point of warning can be determined. 
+
 <br>  
 
-# Interpretation
+# FAQ
 
-## 1. Rolling windows
+## 1. How do I interpret EWSs?
 
+### Rolling windows
 The simplicity of the rolling window approach also limits its usefulness. A 'warning' is indicated when an EWS displays a strong positive Kendall Tau correlation with time. However, it is unclear what constitutes a 'strong' correlation in this context with published warnings ranging from 0.5 through to 0.9 (Dakos *et al. 2012*, Harris *et al.* 2020, Southall *et al.* 2022). The strength of correlation therefore appears to be context dependent and system specific.
 
+### Expanding windows
+Expanding windows have a stronger evidence base for what constitutes a 'warning'. Clements *et al.* 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall *et al.* 2022 although they suggest that more than two consecutive signals should be aimed for.
+
 <br>  
 
-## 2. Expanding windows
+## 2. My data is seasonal/contains cycles. Can I still use EWSs?
 
-Expanding windows have a stronger evidence base for what constitutes a 'warning'. Clements *et al.* 2019 show that two consecutive transgressions of the 2σ threshold reduce false-postive rates and improve the number of true-postives. This has been validated by Southall *et al.* 2022 although they suggest that more than two consecutive signals should be aimed for.
+Early warning signal indicators are particularly sensitive to cyclical data as the repeated non-linearity throughout the year/cycle period will be interpreted as a transition initially, before masking future cycles and tipping points. It is therefore sensible to deseason seasonal data prior to assessment.
+
+`EWSmethods` provides a suite of average and time series decomposition deseasoning techniques via the `deseason_ts()` function. This function takes a n x m data.frame of time series to be deaseasoned. The first column must be a vector of dates with the `increment =` and `order =` arguments indicating the data resolution (year, month, day) and the order of the date vector (ymd/dmy/ydm). The form of deseasoning can then be selected using the `method =` argument. 
+
+Lets create some dummy monthly data that we can deseason.
+
+```{r create_seasonal,dpi=144,fig.width=5,fig.height=4}
+spp_data <- matrix(nrow = 5*12, ncol = 5)
+
+spp_data <- sapply(1:dim(spp_data)[2], function(x){
+
+  spp_data[,x] <- rnorm(5*12,mean=20,sd=5)})
+
+multi_spp_data <- cbind("time" = seq(as.Date('2000/01/01'), as.Date('2004/12/01'), by="month"), as.data.frame(spp_data))
+  
+matplot(x = multi_spp_data$time, y=multi_spp_data[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Seasonal five species community")
+
+```
+
+As `multi_spp_data` is random, there are few pronounced cycles but for the sake of this tutorial, `deseason_ts()` would be applied to it as such:
+
+```{r deseason,dpi=144,fig.width=5,fig.height=4}
+deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "stl", order = "ymd")
+
+matplot(x = deseas_dat$date, y=deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
+```
+
+The `method = "stl"` argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. `method = "decompose"/method = "x11"` perform a similar process but use classical decomposition and x11 ARIMA modelling respectively. `method = "average"` is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key.
+
+In our example, we can see that large monthly values shared across multiple years have been shrunk - e.g. the red dashed species at ~2001 - whereas anomalous values have been maintained - e.g. the green dotted species at ~2003.5.
 
 <br>  
 
