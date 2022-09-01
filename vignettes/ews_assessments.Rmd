@@ -210,6 +210,7 @@ We could also use expanding windows to achieve a similar result. __Note__ - no c
 multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
                          method = "expanding",
                          burn_in = 50,
+                         threshold = 2,
                          ggplotIt = TRUE)
 ```
 

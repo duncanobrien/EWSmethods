@@ -184,6 +184,7 @@ no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
 
   if(inherits(KtAR, "try-error")){ #error occurs if too few observations therefore is applicable to all measures
+    warning("Correlation coefficents not returned as too few observations")
     KtAR <- NA
     KtSD <- NA
     KtSK <- NA

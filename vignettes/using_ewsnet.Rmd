@@ -84,7 +84,7 @@ plot(test_data)
 We then simply provide this vector to `ewsnet_predict()` while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).
 
 ```{r ewsnet_predict, warning = FALSE}
-ewsnet_prediction <- ewsnet_predict(test_data,noise_type = "W", ensemble = 25, envname = "EWSNET_env") 
+ewsnet_prediction <- ewsnet_predict(test_data, noise_type = "W", ensemble = 25, envname = "EWSNET_env") 
 
 ewsnet_prediction
 ```

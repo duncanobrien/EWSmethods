@@ -43,7 +43,7 @@
 #'  data = multi_spp_data,
 #'  method = "expanding",
 #'  burn_in = 10,
-#'  ggplotIt =TRUE)
+#'  ggplotIt = TRUE)
 #'  }
 
 #' @importFrom dplyr .data

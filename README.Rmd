@@ -33,9 +33,9 @@ knitr::opts_chunk$set(
 
 You can install the development version of `EWSmethods` from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
-```{r}
-# install.packages("devtools")
-# devtools::install_github("duncanobrien/EWSmethods")
+```{r, eval=F}
+install.packages("devtools")
+devtools::install_github("duncanobrien/EWSmethods")
 ```
 
 **Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is \~100MB.**
