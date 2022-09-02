@@ -75,7 +75,7 @@ head(py_packages)
 
 To give an example on how to use `ewsnet_predict()` we need some test data. Here, we will use some random noise around a mean of 0 which we expect to be predicted as `"No Transition"`.
 
-```{r create_white_data, warning = FALSE,dpi=200, fig.width=5,fig.height=4}
+```{r create_white_data, warning = FALSE,dpi=144}
 test_data <- rnorm(50,mean = 0, sd=2)
 
 plot(test_data)
@@ -96,12 +96,20 @@ Therefore any probability greater than 0.33 implies a stronger than chance predi
 
 Similarly, the real world manifestation of a Smooth or Critical transition is unclear (Kefi *et al* 2013, Gsell *et al* 2016). EWSNet therefore considers a `"Smooth Transition"` prediction to indicate a directional trend in the system whereas a `"Critical Transition"` indicates a rapid non-linear change. A `"No Transition"` prediction consequently suggests a stable period.
 
+The below figure visually depicts the models that have been used to train these predictions and how those predictions relate to time series data.
+
+```{r figure, echo=F,fig.cap = "Conceptual diagram of A) the type of transitions that EWSNet has been trained on and B) how those transitons can appear in real time series data"}
+knitr::include_graphics("figure_3.png", dpi = 144)
+```
+
+<br>  
+
 ### Predictions through time
 An additional way to use EWSNet is to explore how predictions change through time. By iteratively adding in new data, we can see how those predictions evolve.
 
 For example, using our test data, we could use this code to identify transitions that may have happened in the past:
 
-```{r expanding_ewsnet, warning = FALSE,dpi=200, fig.width=5,fig.height=4}
+```{r expanding_ewsnet, warning = FALSE,dpi=144}
 
 #define the range of indexes to test over
 expanding_range <- 20:length(test_data) 

@@ -51,7 +51,7 @@ data("CODrecovery")
 
 We can visualise a community from each of these datasets using the code below:
 
-```{r vis_data,dpi=144, fig.width=4,fig.height=4}
+```{r vis_data,dpi=144}
 matplot(simTransComms$`1_5_1`[,3:7], type = "l", xlab = "Time", ylab = "Density",  main = "Transitioning five species community")
 
 plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type="l", xlab = "Year", ylab = "Abundance", main = "Recovering cod population")
@@ -59,7 +59,7 @@ plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type="l", xlab
 
 These plots show that a transition takes place at `time ~= 180` in `"simTransComms$1_5_1"` and `year ~= 2050` in `"CODrecovery$1_20"`. `EWSmethods` helpfully provides this information in each dataset under the `inflection_pt` column.
 
-```{r inflec_data,echo=F}
+```{r inflec_data,echo=F,fig.align='center'}
 knitr::kable(data.frame("simTransComms" = simTransComms$`1_5_1`$inflection_pt[1],
 "CODrecovery" = 
 CODrecovery$`1_20`$inflection_pt[1]))
@@ -74,7 +74,7 @@ pre_CODrecovery <- subset(CODrecovery$`1_20`,time < inflection_pt)
 
 ```
 
-In reality, EWSs will be assessed in real-time with the presence of past/present tipping points often unknown. If past transitions are known to have occurred, it may be prudent to follow the suggestions of O'Brien & Clements (2021) who show that the occurrence of a historic transition can mask an oncoming event and that only using data post the hisotric transition improves EWS reliability. 
+In reality, EWSs will be assessed in real-time with the presence of past/present tipping points often unknown. If past transitions are known to have occurred, it may be prudent to follow the suggestions of O'Brien & Clements (2021) who show that the occurrence of a historic transition can mask an oncoming event and that only using data post the historic transition improves EWS reliability. 
 
 Now the data has been loaded and truncated, it can now be passed to `uniEWS()` and `multiEWS()` to perform EWS assessments.
 
@@ -93,7 +93,7 @@ knitr::include_graphics("ewsmethods_eg_fig.png", dpi = 144)
 Both computational approaches can calculate the same EWS indicators however. A brief outline of each can be found in the following table as well as their reference code in `uniEWS()`.
 
 | EWS indicator | Description | `uniEWS()` metric code |
-|:------------------------:|------------------------|:------------------------:|
+|:-------------:|------------------------|:-------------:|
 | Standard deviation |	Increasing variance/standard deviation is observed approaching a transition | `"SD"` |
 | Coefficient of variation |	Equivalent to SD as is simply SD at time t divided by the mean SD of the time series | `"cv"` |
 | Autocorrelation at lag1 |	Autocorrelation (similarity between successive observations) increases approaching a transition. The value of this indicator can be estimated as either the autocorrelation coefficient estimated from a first order autoregressive model or the estimated autocorrelation function at lag1 | `"ar1"` - autoregressive model, `"acf"`- autocorrelation function | 
@@ -118,7 +118,7 @@ rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r rolling_ews_fig,dpi=144,fig.width=5,fig.height=6,echo=F}
+```{r rolling_ews_fig,dpi=144,fig.height=6,echo=F}
 rolling_ews_eg$plot
 ```
 
@@ -139,7 +139,7 @@ expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r expanding_ews_fig,dpi=144,fig.width=5,fig.height=4,echo=F}
+```{r expanding_ews_fig,dpi=144,echo=F}
 expanding_ews_eg$plot
 ```
 
@@ -162,7 +162,7 @@ trait_ews_eg <- uniEWS(data = pre_CODrecovery[,c(2,3)],
                          ggplotIt = TRUE)
 ```
 
-```{r trait_ews_fig,dpi=144,fig.width=5,fig.height=4,echo=F}
+```{r trait_ews_fig,dpi=144,echo=F}
 trait_ews_eg$plot
 ```
 
@@ -198,7 +198,7 @@ multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews_fig,dpi=144,fig.width=5,fig.height=5,echo=F}
+```{r multi_ews_fig,dpi=144,echo=F,fig.height=6}
 multi_ews_eg$plot
 ```
 
@@ -214,11 +214,11 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews2_fig,dpi=144,fig.width=5,fig.height=5,echo=F}
+```{r multi_ews2_fig,dpi=144,echo=F}
 multi_ews_eg2$plot
 ```
 
-In this circumstance, many of the indicators are warning at different times (e.g. `"eigenMAF"` at `time ~= 65` or `"meanAR"` at `time ~= 100`) but that the vast majority are warning in the last 20 time points. This highlights the usefulness of expanding windows over rolling as the exact time point of warning can be determined. 
+In this circumstance, many of the indicators are warning at different times (e.g. `"eigenMAF"` at `time ~= 65` or `"meanAR"` at `time ~= 100`) but that the vast majority are warning in the last 20 time points. This highlights the usefulness of expanding windows over rolling as the exact time point of warning can be determined, and supports Weinans *et al.*'s (2021) suggestion that there is no superior multivariate EWS indicator; the best fit depends on the scenario the system is subject t0.
 
 <br>  
 
@@ -242,7 +242,7 @@ Early warning signal indicators are particularly sensitive to cyclical data as t
 
 Lets create some dummy monthly data that we can deseason.
 
-```{r create_seasonal,dpi=144,fig.width=5,fig.height=4}
+```{r create_seasonal,dpi=144}
 spp_data <- matrix(nrow = 5*12, ncol = 5)
 
 spp_data <- sapply(1:dim(spp_data)[2], function(x){
@@ -257,7 +257,7 @@ matplot(x = multi_spp_data$time, y=multi_spp_data[,2:6], type = "l", xlab = "Dat
 
 As `multi_spp_data` is random, there are few pronounced cycles but for the sake of this tutorial, `deseason_ts()` would be applied to it as such:
 
-```{r deseason,dpi=144,fig.width=5,fig.height=4}
+```{r deseason,dpi=144}
 deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "stl", order = "ymd")
 
 matplot(x = deseas_dat$date, y=deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
@@ -271,8 +271,20 @@ In our example, we can see that large monthly values shared across multiple year
 
 # References
 
+Clements, C.F. & Ozgul, A. (2016). Including trait-based early warning signals helps predict population collapse. *Nature Communications*, 7, 10984. [doi:10.1038/ncomms10984](https://www.nature.com/articles/ncomms10984)
+
 Clements, C.F., McCarthy, M.A. & Blanchard, J.L. (2019) Early warning signals of recovery in complex systems. *Nature Communications*, 10, 1681. [doi:10.1038/s41467-019-09684-y](https://www.nature.com/articles/s41467-019-09684-y)
 
-Kéfi S., Dakos V., Scheffer M., Van Nes E.H. & Rietkerk, M. (2013) Early warning signals also precede non-catastrophic transitions. *Oikos*, 122: 641-648. [doi:10.1111/j.1600-0706.2012.20838.x](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1600-0706.2012.20838.x) 
+Dakos, V. (2018). Identifying best-indicator species for abrupt transitions in multispecies communities. *Ecological Indicators*, 94, 494–502. [doi:10.1016/j.ecolind.2017.10.024](https://www.sciencedirect.com/science/article/pii/S1470160X17306611)
+
+Dakos, V., Carpenter, S.R., Brock, W.A., Ellison, A.M., Guttal, V., Ives, A.R., et al. (2012). Methods for detecting early warnings of critical transitions in time series illustrated using simulated ecological data. *PLoS One*, 7, e41010. [doi:10.1371/journal.pone.0041010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0041010)
+
+Harris, M.J., Hay, S.I. & Drake, J.M. (2020). Early warning signals of malaria resurgence in Kericho, Kenya. *Biology Letters*, 16, 20190713. [doi:10.1098/rsbl.2019.0713](https://royalsocietypublishing.org/doi/10.1098/rsbl.2019.0713)
+
+O'Brien, D.A. & Clements, C.F. (2021) Early warning signal reliability varies with COVID-19 waves. *Biology Letters*, 17, 20210487. [doi:10.1098/rsbl.2021.0487](https://royalsocietypublishing.org/doi/full/10.1098/rsbl.2021.0487)
+
+Southall E., Tildesley, M.J. & Dyson, L. (2022). How early can an upcoming critical transition be detected? *medRxiv* 2022.05.27.22275693. [doi:10.1101/2022.05.27.22275693](https://www.medrxiv.org/content/10.1101/2022.05.27.22275693v1)
+
+Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. *Scientific Reports*, 11, 9148. [10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)
 
 <br>  
