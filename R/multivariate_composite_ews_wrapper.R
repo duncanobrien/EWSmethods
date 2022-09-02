@@ -66,7 +66,8 @@ multiEWS <- function(data, method = c("expanding","rolling"),
            "#90676f",
            "#ce5c6e",
            "#5d4216",
-           "black")
+           "black",
+           "grey")
 
   if(any(is.na(data))){
     stop('Data contains missing values. Interpolation of missing values is recommended')

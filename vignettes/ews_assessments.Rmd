@@ -54,7 +54,7 @@ We can visualise a community from each of these datasets using the code below:
 ```{r vis_data,dpi=144}
 matplot(simTransComms$`1_5_1`[,3:7], type = "l", xlab = "Time", ylab = "Density",  main = "Transitioning five species community")
 
-plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type="l", xlab = "Year", ylab = "Abundance", main = "Recovering cod population")
+plot(x = CODrecovery$`1_20`$time, y = CODrecovery$`1_20`$biomass, type = "l", xlab = "Year", ylab = "Abundance", main = "Recovering cod population")
 ```
 
 These plots show that a transition takes place at `time ~= 180` in `"simTransComms$1_5_1"` and `year ~= 2050` in `"CODrecovery$1_20"`. `EWSmethods` helpfully provides this information in each dataset under the `inflection_pt` column.
@@ -139,7 +139,7 @@ expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
                          ggplotIt = TRUE)
 ```
 
-```{r expanding_ews_fig,dpi=144,echo=F}
+```{r expanding_ews_fig,dpi=144,fig.height=6,echo=F}
 expanding_ews_eg$plot
 ```
 
@@ -172,7 +172,7 @@ trait_ews_eg$plot
 
 A brief outline of each can be found in the following table as well as their reference code in `multEWS()`.
 
-| Multivariate EWS indicator | Description | `multEWS()` metric code | Average or dimension reduction technique |
+| Multivariate EWS indicator | Description | `multiEWS()` metric code | Average or dimension reduction technique |
 |:-------------:|--------------------------|:-------------:|:-------------:|
 | Mean standard deviation |	Average variance across all time series representing the system | `"meanSD"` | Average |
 | Max standard deviation |	The variance of the time series with the highest variance of all assessed time series | `"maxSD"` | Average |
@@ -186,6 +186,7 @@ A brief outline of each can be found in the following table as well as their ref
 | First PC 	standard deviation/ Explained variance | The variance of the data projected on to the first PC – i.e. the variance of the first PC | `"pcaSD"`/`"explSD"` | Dimension reduction |
 | Dominant eigenvalue of the covariance matrix | The maximum eigenvalue of the covariance matrix between all representative time series | `"eigenCOV"` | Dimension reduction |
 | Maximum covariance | The maximum value of the covariance matrix between all representative time series. | `"maxCOV"` | Dimension reduction |
+| Mutual informatio | . | `"mutINFO"` | Neither |
 
 Using `multiEWS()` we can estimate each of these multivariate indicators in the same way as `uniEWS()` - specifying the `method =`, `winsize =`, `burn_in =` etc - but must provide a n x m data.frame/matrix of all representative time series. The first column must again be an equally spaced time sequence.
 
@@ -214,7 +215,7 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews2_fig,dpi=144,echo=F}
+```{r multi_ews2_fig,dpi=144,,fig.height=6,echo=F}
 multi_ews_eg2$plot
 ```
 
@@ -249,9 +250,9 @@ spp_data <- sapply(1:dim(spp_data)[2], function(x){
 
   spp_data[,x] <- rnorm(5*12,mean=20,sd=5)})
 
-multi_spp_data <- cbind("time" = seq(as.Date('2000/01/01'), as.Date('2004/12/01'), by="month"), as.data.frame(spp_data))
+multi_spp_data <- cbind("time" = seq(as.Date('2000/01/01'), as.Date('2004/12/01'), by = "month"), as.data.frame(spp_data))
   
-matplot(x = multi_spp_data$time, y=multi_spp_data[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Seasonal five species community")
+matplot(x = multi_spp_data$time, y = multi_spp_data[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Seasonal five species community")
 
 ```
 
@@ -260,7 +261,7 @@ As `multi_spp_data` is random, there are few pronounced cycles but for the sake 
 ```{r deseason,dpi=144}
 deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "stl", order = "ymd")
 
-matplot(x = deseas_dat$date, y=deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
+matplot(x = deseas_dat$date, y = deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
 ```
 
 The `method = "stl"` argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. `method = "decompose"/method = "x11"` perform a similar process but use classical decomposition and x11 ARIMA modelling respectively. `method = "average"` is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key.

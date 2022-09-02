@@ -46,10 +46,11 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     ar <- ar.ols(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
     sd <- sd(tmp.maf$mafs[,1])
     pca.ar <- ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
-    pca.sd <- sd(tmp.pca$x[,1])
+    #pca.sd <- sd(tmp.pca$x[,1])
     eigen.cov <- max(eigen(cov(scale(data[i:(i+winsize_true-1),-1])))$values)
     max.cov <- max(cov(scale(data[i:(i+winsize_true-1),-1]))[lower.tri(cov(data[i:(i+winsize_true-1),-1]),diag = F)])
     expl.sd <- tmp.pca$importance[2,1]
+    mi <- MI(data[i:(i+winsize_true-1),-1])
 
     RES[[i]] <- data.frame("time" = data[i+winsize_true-1,1],
                            "meanAR" = mean.ar,
@@ -60,10 +61,11 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                            "mafAR" = ar,
                            "mafSD" = sd,
                            "pcaAR" = pca.ar,
-                           "pcaSD" = pca.sd,
+                           #"pcaSD" = pca.sd,
                            "explSD" = expl.sd,
                            "eigenCOV" = eigen.cov,
-                           "maxCOV" = max.cov)
+                           "maxCOV" = max.cov,
+                           "mutINFO" = mi)
   }
     output<-do.call("rbind", RES)
 
@@ -75,10 +77,11 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                           "mafAR" = cor.test(as.numeric(output$time), output$mafAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "mafSD" = cor.test(as.numeric(output$time), output$mafSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "pcaAR" = cor.test(as.numeric(output$time), output$pcaAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "pcaSD" = cor.test(as.numeric(output$time), output$pcaSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
+                          #"pcaSD" = cor.test(as.numeric(output$time), output$pcaSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "explSD" = cor.test(as.numeric(output$time), output$explSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
                           "eigenCOV" = cor.test(as.numeric(output$time), output$eigenCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "maxCOV" = cor.test(as.numeric(output$time), output$maxCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+                          "maxCOV" = cor.test(as.numeric(output$time), output$maxCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
+                          "mutINFO" = cor.test(as.numeric(output$time), output$mutINFO, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
 
   }
 
@@ -96,6 +99,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
     roll.mean.sd <- NULL
     roll.max.sd <- NULL
     roll.cov.eigen <- NULL
+    roll.mi <- NULL
 
     for(i in (burn_in):dim(data)[1]){
 
@@ -126,8 +130,8 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
       roll.pca.ar[[i]] <-  ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
       pca.ar<-(ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]-mean(unlist(roll.pca.ar), na.rm=TRUE))/sd(unlist(roll.pca.ar), na.rm = TRUE)
 
-      roll.pca.sd[[i]]<-sd(tmp.pca$x[,1])
-      pca.sd<-(sd(tmp.pca$x[,1])-mean(unlist(roll.pca.sd), na.rm=TRUE))/sd(unlist(roll.pca.sd), na.rm = TRUE)
+      #roll.pca.sd[[i]]<-sd(tmp.pca$x[,1])
+      #pca.sd<-(sd(tmp.pca$x[,1])-mean(unlist(roll.pca.sd), na.rm=TRUE))/sd(unlist(roll.pca.sd), na.rm = TRUE)
 
       roll.cov[[i]]<-max(cov(scale(data[1:i,-1]))[lower.tri(cov(data[1:i,-1]),diag = F)])
       max.cov<-(max(cov(scale(data[1:i,-1]))[lower.tri(cov(data[1:i,-1]),diag = F)])-mean(unlist(roll.cov), na.rm=TRUE))/sd(unlist(roll.cov), na.rm = TRUE)
@@ -138,6 +142,9 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
       roll.expl.sd[[i]]<- tmp.pca$importance[2,1]
       expl.sd<-(tmp.pca$importance[2,1]-mean(unlist(roll.expl.sd), na.rm=TRUE))/sd(unlist(roll.expl.sd), na.rm = TRUE)
 
+      roll.mi[[i]]<- MI(data[1:i,-1])
+      mi<-(MI(data[1:i,-1])-mean(unlist(roll.mi), na.rm=TRUE))/sd(unlist(roll.mi), na.rm = TRUE)
+
       RES[[i]] <- data.frame(time =data[i,1],
                              "meanAR" = mean.ar,
                              "maxAR" = max.ar,
@@ -147,10 +154,11 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                              "mafAR" = ar,
                              "mafSD" = sd,
                              "pcaAR" = pca.ar,
-                             "pcaSD" = pca.sd,
+                             #"pcaSD" = pca.sd,
                              "explSD" = expl.sd,
                              "eigenCOV" = eigen.cov,
-                             "maxCOV" = max.cov)
+                             "maxCOV" = max.cov,
+                             "mutINFO" = mi)
 
     }
     results<-do.call("rbind", RES)
@@ -221,3 +229,27 @@ maf <- function(x){
   class(out) = c("Maf")
   out
 }
+
+#' Calculation Mutual Information
+#'
+#' @param data A numeric matrix/dataframe.
+#' @param bins Numeric. The number of bins to discretise over.
+#' @param method String. The entropy estimator. Choices are \code{"emp"}, \code{"mm"},\code{"shrink"} or \code{"sg"}
+#'
+#' @importFrom infotheo discretize
+#' @importFrom infotheo multiinformation
+#'
+#' @noRd
+#'
+
+MI <- function(data, bins = 5, method = "emp"){
+
+  if(is.vector(data)){
+    stop("data must be a numeric matrix/dataframe")
+  }
+  dat <- infotheo::discretize(data,nbins = bins)
+
+  out <- multiinformation(dat,method = method)
+  return(out)
+}
+
