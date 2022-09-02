@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Using EWSNet</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-09-01</h4>
+            <h4 data-toc-skip class="date">2022-09-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -155,7 +155,7 @@
 <code class="sourceCode R"><span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,mean <span class="op">=</span> <span class="fl">0</span>, sd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code></pre></div>
-<p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1000"></p>
+<p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1050"></p>
 <p>We then simply provide this vector to <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>, noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
@@ -169,6 +169,13 @@
 <p>As with any machine learning model, interpreting prediction probabilities is difficult. In EWSNet’s case, as three possible predictions can be made - <em>No transition, Smooth transition, Critical transition</em> - a chance prediction is one that is approximately 0.33 (1.0 divided by 3 is ~0.33).</p>
 <p>Therefore any probability greater than 0.33 implies a stronger than chance prediction and anything greater than 0.6 warrants serious scrutiny.</p>
 <p>Similarly, the real world manifestation of a Smooth or Critical transition is unclear (Kefi <em>et al</em> 2013, Gsell <em>et al</em> 2016). EWSNet therefore considers a <code>"Smooth Transition"</code> prediction to indicate a directional trend in the system whereas a <code>"Critical Transition"</code> indicates a rapid non-linear change. A <code>"No Transition"</code> prediction consequently suggests a stable period.</p>
+<p>The below figure visually depicts the models that have been used to train these predictions and how those predictions relate to time series data.</p>
+<div class="figure">
+<img src="figure_3.png" alt="Conceptual diagram of A) the type of transitions that EWSNet has been trained on and B) how those transitons can appear in real time series data" width="2016"><p class="caption">
+Conceptual diagram of A) the type of transitions that EWSNet has been trained on and B) how those transitons can appear in real time series data
+</p>
+</div>
+<p><br></p>
 </div>
 <div class="section level4">
 <h4 id="predictions-through-time">Predictions through time<a class="anchor" aria-label="anchor" href="#predictions-through-time"></a>
@@ -196,7 +203,7 @@
 <span>                <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">cutoff_ind</span>,y<span class="op">=</span><span class="va">prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>col<span class="op">=</span><span class="va">Prediction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"Assessment index"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Prediction probability"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="using_ewsnet_files/figure-html/expanding_ewsnet-1.png" width="1000"></p>
+<p><img src="using_ewsnet_files/figure-html/expanding_ewsnet-1.png" width="1050"></p>
 <p>Here we see how prediction probabilities fluctuate with new data, with the trends in probabilities also providing information on how the system has changed over time.</p>
 <p><br></p>
 </div>
