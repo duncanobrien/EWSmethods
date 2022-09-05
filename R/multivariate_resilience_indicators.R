@@ -249,7 +249,7 @@ MI <- function(data, bins = 5, method = "emp"){
   }
   dat <- infotheo::discretize(data,nbins = bins)
 
-  out <- multiinformation(dat,method = method)
+  out <- infotheo::multiinformation(dat,method = method)
   return(out)
 }
 
