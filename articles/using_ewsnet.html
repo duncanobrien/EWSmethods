@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Using EWSNet</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-09-02</h4>
+            <h4 data-toc-skip class="date">2022-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -96,7 +96,7 @@
 <div class="section level2">
 <h2 id="about-this-tutorial">About this tutorial<a class="anchor" aria-label="anchor" href="#about-this-tutorial"></a>
 </h2>
-<p>This tutorial introduces how to interface with <strong>EWSNet</strong>, a machine learning model trained to predict critical transitions and regime shifts (Deb <em>et al.</em> 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific <a href="https://ewsnet.github.io" class="external-link">website and documentation</a> or the associated <a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211475" class="external-link">publication</a>.</p>
+<p>This tutorial introduces how to interface with <strong>EWSNet</strong>, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb <em>et al.</em> 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific <a href="https://ewsnet.github.io" class="external-link">website and documentation</a> or the associated <a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211475" class="external-link">publication</a>.</p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -116,10 +116,8 @@
 <p>For example, to create a new Python environment called <code>"EWSNET_env"</code> and install Python, the function would be written as below. The environment name (<code>"EWSNET_env"</code>) will be critical to running the later functions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
-<span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, pip_ignore_installed <span class="op">=</span> <span class="cn">FALSE</span>,  conda_refresh <span class="op">=</span> <span class="cn">FALSE</span>, auto<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; + '/usr/share/miniconda/bin/conda' 'create' '--yes' '--name' 'EWSNET_env' 'python=3.8' '--quiet'</span></span>
-<span><span class="co">#&gt; EWSNET_env successfully installed and activated. Necessary python packages installed</span></span></code></pre></div>
-<p>If successful, you will see the message <code>"EWSNET_env successfully found and activated. Necessary Python packages installed"</code>). If not, please refer to the Troubleshooting section at the end of the tutorial.</p>
+<span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, pip_ignore_installed <span class="op">=</span> <span class="cn">FALSE</span>,  conda_refresh <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>If successful, you will have had to input <code>"y"</code> to allow <code>EWSmethods</code> to download and activate the Python environment and now see the message <code>"EWSNET_env successfully found and activated. Necessary Python packages installed"</code>). If not, please refer to the Troubleshooting section at the end of the tutorial.</p>
 <p>To double check the environment activation, you could use <code>reticulate</code> functions to check first what environment is active and second what Python packages have been loaded:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
@@ -162,7 +160,7 @@
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Critical Transition   0.006503536        0.01897631           0.9745203</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Critical Transition   0.006503539        0.01897631           0.9745203</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
