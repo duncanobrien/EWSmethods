@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # About this tutorial
 
-This tutorial introduces how to interface with **EWSNet**, a machine learning model trained to predict critical transitions and regime shifts (Deb *et al.* 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific [website and documentation](https://ewsnet.github.io) or the associated [publication](https://royalsocietypublishing.org/doi/10.1098/rsos.211475).
+This tutorial introduces how to interface with **EWSNet**, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb *et al.* 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific [website and documentation](https://ewsnet.github.io) or the associated [publication](https://royalsocietypublishing.org/doi/10.1098/rsos.211475).
 
 <br>  
 
@@ -42,19 +42,23 @@ Rather than requiring the user to learn `reticulate` and setup the R session the
 
 For example, to create a new Python environment called `"EWSNET_env"` and install Python, the function would be written as below. The environment name (`"EWSNET_env"`) will be critical to running the later functions.
 
-```{r ewsnet_init, warning = FALSE}
+```{r ewsnet_init, warning = FALSE,eval=F}
 #prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
-ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto=TRUE) 
+ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE)
 ```
 
 ```{r ewsnet_init_true, echo=FALSE,warning = FALSE,message=FALSE}
 bypass_reticulate_autoinit()
+
+#set auto = T so no user input required
+ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto = T)
+
 #reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 library(ggplot2)
 library(tidyr)
 ```
 
-If successful, you will see the message `"EWSNET_env successfully found and activated. Necessary Python packages installed"`). If not, please refer to the Troubleshooting section at the end of the tutorial.
+If successful, you will have had to input `"y"` to allow `EWSmethods` to download and activate the Python environment and now see the message `"EWSNET_env successfully found and activated. Necessary Python packages installed"`). If not, please refer to the Troubleshooting section at the end of the tutorial.
 
 To double check the environment activation, you could use `reticulate` functions to check first what environment is active and second what Python packages have been loaded:
 

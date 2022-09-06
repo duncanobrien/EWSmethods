@@ -242,61 +242,64 @@ maf <- function(x){
 #' @noRd
 #'
 
-# MI <- function(data, bins = 5, method = "emp"){
-#
-#   if(is.vector(data)){
-#     stop("data must be a numeric matrix/dataframe")
-#   }
-#   dat <- infotheo::discretize(data,nbins = bins)
-#
-#   out <- infotheo::multiinformation(dat,method = method)
-#   return(out)
-# }
-
-MI <- function(data, max.lag = 12, bins = 10, method = "emp"){
+MI <- function(data, bins = 5, method = "emp"){
 
   if(is.vector(data)){
     stop("data must be a numeric matrix/dataframe")
   }
+  dat <- infotheo::discretize(data,nbins = bins)
 
-  init.mi <- infotheo::multiinformation(infotheo::discretize(data,nbins = bins),method = method)
-
-  prep_data <- do.call("rbind", lapply(1:dim(data)[2],function(i){
-
-    sub.dat <- data.frame("lag" = seq(0,max.lag),"mi" = c(tseriesChaos::mutual(data[,i],partitions = bins,lag.max = max.lag,plot = F)))
-
-    #fm <- lm(log1p(mi) ~ lag,data = sub.dat)
-
-    #return(
-      #coefficients(
-      # nls(mi ~ SSasymp(lag, Asym, R0, lrc), data = sub.dat,
-      #     control=nls.control(maxiter = 1000, tol = 1e-08,warnOnly = T)
-
-         # nls(mi ~ 1+a^lag, data = sub.dat,start = list(a =1))
-          #coef(fm)[2]*log(0.5)
-
-          #)
-      #)
-
-    return(sub.dat)
-  }) ) |>
-    as.data.frame()
-  prep_data$data_source <- rep(colnames(data),each = length(0:max.lag))
-
-  #fit <- coefficients(nls(mi ~ stats::SSasymp(lag, yf, y0, log_alpha), data = prep_data))[1]
-
-  #fit <- lm(log1p(mi) ~ lag,data = prep_data[sort(prep_data$lag),])
-
-  fm0 <- lm(log1p(mi) ~ lag, prep_data[sort(prep_data$lag),])
-  st <- list(a = exp(coef(fm0)[[1]]), b = -coef(fm0)[[2]])
-
-  fit <- coefficients(nls(mi ~ a * exp(-b * lag ), data = prep_data[sort(prep_data$lag),],
-                          start = st, control = nls.control(maxiter=1000)))[1]
-
-   # fit <- coefficients(
-   #   nls(mi ~ SSasymp(lag, Asym, R0, lrc), data = prep_data[sort(prep_data$lag),])
-   #   )[3]
-
-  return(fit*log(0.5))
-  #return(coef(fit)[2]*log(0.5))
+  out <- infotheo::multiinformation(dat,method = method)
+  return(out)
 }
+
+# MI <- function(data, max.lag = 12, bins = 10, method = "emp"){
+#
+#   if(is.vector(data)){
+#     stop("data must be a numeric matrix/dataframe")
+#   }
+#
+#   init.mi <- infotheo::multiinformation(infotheo::discretize(data,nbins = bins),method = method)
+#
+#   prep_data <- do.call("rbind", lapply(1:dim(data)[2],function(i){
+#
+#     sub.dat <- data.frame("lag" = seq(0,max.lag),"mi" = c(tseriesChaos::mutual(data[,i],partitions = bins,lag.max = max.lag,plot = F)))
+#
+#     #fm <- lm(log1p(mi) ~ lag,data = sub.dat)
+#
+#     #return(
+#       #coefficients(
+#       # nls(mi ~ SSasymp(lag, Asym, R0, lrc), data = sub.dat,
+#       #     control=nls.control(maxiter = 1000, tol = 1e-08,warnOnly = T)
+#
+#          # nls(mi ~ 1+a^lag, data = sub.dat,start = list(a =1))
+#           #coef(fm)[2]*log(0.5)
+#
+#           #)
+#       #)
+#   out <- infotheo::multiinformation(dat,method = method)
+#   return(out)
+# }
+#
+#     return(sub.dat)
+#   }) ) |>
+#     as.data.frame()
+#   prep_data$data_source <- rep(colnames(data),each = length(0:max.lag))
+#
+#   #fit <- coefficients(nls(mi ~ stats::SSasymp(lag, yf, y0, log_alpha), data = prep_data))[1]
+#
+#   #fit <- lm(log1p(mi) ~ lag,data = prep_data[sort(prep_data$lag),])
+#
+#   fm0 <- lm(log1p(mi) ~ lag, prep_data[sort(prep_data$lag),])
+#   st <- list(a = exp(coef(fm0)[[1]]), b = -coef(fm0)[[2]])
+#
+#   fit <- coefficients(nls(mi ~ a * exp(-b * lag ), data = prep_data[sort(prep_data$lag),],
+#                           start = st, control = nls.control(maxiter=1000)))[1]
+#
+#    # fit <- coefficients(
+#    #   nls(mi ~ SSasymp(lag, Asym, R0, lrc), data = prep_data[sort(prep_data$lag),])
+#    #   )[3]
+#
+#   return(fit*log(0.5))
+#   #return(coef(fit)[2]*log(0.5))
+# }
