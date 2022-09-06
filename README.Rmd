@@ -78,7 +78,7 @@ roll_ews$EWS$cor #return the Kendall Tau correlations for each EWS metric
 
 We can then use the resulting figures to identify oncoming transitions. In this case, we expect no transition as the data is randomly sampled from a normal distribution and this is evident in the Kendall Tau values, with no strong positive correlation with time:
 
-```{r rolling_plot, dpi=300, echo = FALSE}
+```{r rolling_plot, dpi=144, echo = FALSE}
 roll_ews$plot
 ```
 
@@ -92,7 +92,7 @@ head(exp_ews$EWS) #return the head of the EWS dataframe
 
 And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2σ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
 
-```{r expanding_plot, dpi=300, echo = FALSE}
+```{r expanding_plot, dpi=144, echo = FALSE}
 exp_ews$plot
 ```
 
@@ -107,7 +107,7 @@ trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 
 ```
 
-```{r expanding_plot_trait, dpi=300, echo = FALSE}
+```{r expanding_plot_trait, dpi=144, echo = FALSE}
 exp_ews_trait$plot
 ```
 
@@ -130,7 +130,7 @@ oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold
 
 The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.
 
-```{r expanding_oct_plot, dpi=300, echo = FALSE}
+```{r expanding_oct_plot, dpi=144, echo = FALSE}
 oct_exp_ews$plot
 ```
 
@@ -145,9 +145,9 @@ bypass_reticulate_autoinit() #edits your global R environment with the line: RET
 
 library(reticulate)
 
-ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 
-reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 
 print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
 

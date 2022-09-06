@@ -29,8 +29,8 @@ You can install the development version of `EWSmethods` from
 [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` r
-# install.packages("devtools")
-# devtools::install_github("duncanobrien/EWSmethods")
+install.packages("devtools")
+devtools::install_github("duncanobrien/EWSmethods")
 ```
 
 **Be aware, due to the large file sizes of the EWSNet model weights, the
@@ -206,12 +206,11 @@ bypass_reticulate_autoinit() #edits your global R environment with the line: RET
 
 library(reticulate)
 
-ewsnet_init(envname = "EWSNET_env") #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
-#> conda env EWSNET_env found. Would you like to activate it and install necessary
-#> packages? (y/n)
-#> Aborting
+ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+#> Attention: may take up to 10 minutes to complete
+#> EWSNET_env successfully found and activated. Necessary python packages installed
 
-reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 
 print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
 #> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
