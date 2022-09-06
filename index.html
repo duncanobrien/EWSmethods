@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,8 +92,8 @@
 </h2>
 <p>You can install the development version of <code>EWSmethods</code> from <a href="https://github.com/duncanobrien/EWSmethods" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="co"># devtools::install_github("duncanobrien/EWSmethods")</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"duncanobrien/EWSmethods"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is ~100MB.</strong></p>
 <p><br></p>
 </div>
@@ -192,12 +192,11 @@
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
-<span><span class="co">#&gt; conda env EWSNET_env found. Would you like to activate it and install necessary</span></span>
-<span><span class="co">#&gt; packages? (y/n)</span></span>
-<span><span class="co">#&gt; Aborting</span></span>
+<span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
+<span><span class="co">#&gt; Attention: may take up to 10 minutes to complete</span></span>
+<span><span class="co">#&gt; EWSNET_env successfully found and activated. Necessary python packages installed</span></span>
 <span></span>
-<span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">use_condaenv</a></span><span class="op">(</span><span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#redundant step necessary for RMarkdown</span></span>
+<span><span class="co">#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co">#confirm that "EWSNET_env" has been loaded</span></span>
 <span><span class="co">#&gt; python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python</span></span>
