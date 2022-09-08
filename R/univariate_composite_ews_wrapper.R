@@ -275,7 +275,7 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
         if(length(metrics) == 1){
           cor.dat <- data.frame("metric.code" = metrics,
                                 "cor" = paste(c("Tau:",round(bind.res$cor, digits = 3)),collapse = " ")) %>%
-                    dplyr::mutate(timeindex = quantile(plot.dat$timeindex,0.8), str =  max(plot.dat$str)*0.8)
+                    dplyr::mutate(timeindex = quantile(plot.dat$timeindex,0.85), str =  max(plot.dat$str)*0.8)
 
         }else{
         cor.dat <- bind.res$cor %>%
@@ -287,7 +287,7 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
 
         p<- ggplot(data = plot.dat, aes(x=.data$timeindex,y=.data$str,group=.data$metric.code)) +
           geom_line(aes(col= .data$metric.code))+
-          geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
+          geom_text(data = cor.dat,aes(label = .data$cor),size = 3, hjust = 0.75)+
           #scale_colour_manual(values = scales::hue_pal()(length(metrics)),guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
           scale_colour_manual(values = pal[1:length(metrics)],guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +

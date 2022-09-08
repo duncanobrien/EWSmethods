@@ -150,11 +150,11 @@ multiEWS <- function(data, method = c("expanding","rolling"),
           tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
           dplyr::rowwise()%>%
           dplyr::mutate(cor = paste(c("Tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
-          dplyr::mutate(time = quantile(plot.dat$time,0.8), str =  max(plot.dat$str)*0.8)
+          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
 
         p<- ggplot(data = plot.dat, aes(x=.data$time,y=.data$str,group=.data$metric.code)) +
           geom_line(aes(col= .data$metric.code))+
-          geom_text(data = cor.dat,aes(label = .data$cor),size = 3)+
+          geom_text(data = cor.dat,aes(label = .data$cor),size = 3,hjust=0.75)+
           #scale_colour_manual(values = scales::hue_pal()(11),
           scale_colour_manual(values = pal,
                               guide = guide_legend(override.aes = list(linetype = rep(1,12),shape=NA))) +
