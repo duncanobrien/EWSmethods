@@ -201,18 +201,13 @@ occurring in the skylark time series. This is a two step process where
 we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
 ``` r
-bypass_reticulate_autoinit() #edits your global R environment with the line: RETICULATE_AUTOCONFIGURE = "FALSE". This ensures 'reticulate' does not load a python environment until 'ewsnet_init()' has been called
-#> RETICULATE_AUTOCONFIGURE already set to FALSE
-
-library(reticulate)
-
 ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 #> Attention: may take up to 10 minutes to complete
 #> EWSNET_env successfully found and activated. Necessary python packages installed
 
-#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
+library(reticulate)
 
-print(reticulate::py_config()) #confirm that "EWSNET_env" has been loaded
+reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 #> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
 #> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.8.dylib
 #> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
@@ -234,7 +229,7 @@ head(py_packages)
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
-print(skylark_ewsnet)
+skylark_ewsnet
 #>                  pred no_trans_prob smooth_trans_prob critical_trans_prob
 #> 1 Critical Transition  0.0001411155         0.2852249           0.7146339
 ```
