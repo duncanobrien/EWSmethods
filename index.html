@@ -187,18 +187,13 @@
 </h2>
 <p>The other half of <code>EWSmethods</code> allows you to query the <a href="https://www.python.org" class="external-link">Python-based</a> <strong>EWSNet</strong> via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/" class="external-link">R package</a>) and then calls <strong>EWSNet</strong> to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> before b) using <code><a href="reference/ewsnet_predict.html">ewsnet_predict()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/bypass_reticulate_autoinit.html">bypass_reticulate_autoinit</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#edits your global R environment with the line: RETICULATE_AUTOCONFIGURE = "FALSE". This ensures 'reticulate' does not load a python environment until 'ewsnet_init()' has been called</span></span>
-<span><span class="co">#&gt; RETICULATE_AUTOCONFIGURE already set to FALSE</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
 <span><span class="co">#&gt; Attention: may take up to 10 minutes to complete</span></span>
 <span><span class="co">#&gt; EWSNET_env successfully found and activated. Necessary python packages installed</span></span>
 <span></span>
-<span><span class="co">#reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co">#confirm that "EWSNET_env" has been loaded</span></span>
+<span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#confirm that "EWSNET_env" has been loaded</span></span>
 <span><span class="co">#&gt; python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python</span></span>
 <span><span class="co">#&gt; libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.8.dylib</span></span>
 <span><span class="co">#&gt; pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env</span></span>
@@ -220,7 +215,7 @@
 <span></span>
 <span><span class="va">skylark_ewsnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">skylark_data</span><span class="op">$</span><span class="va">abundance</span>, noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">skylark_ewsnet</span><span class="op">)</span></span>
+<span><span class="va">skylark_ewsnet</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
 <span><span class="co">#&gt; 1 Critical Transition  0.0001411155         0.2852249           0.7146339</span></span></code></pre></div>
 <p><br></p>
