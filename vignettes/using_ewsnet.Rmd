@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
 
 This tutorial introduces how to interface with **EWSNet**, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb *et al.* 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific [website and documentation](https://ewsnet.github.io) or the associated [publication](https://royalsocietypublishing.org/doi/10.1098/rsos.211475).
 
+__NOTE__ This version of EWSNet differs from that published by Deb *et al.* (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This immproves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.
+
 <br>  
 
 # Getting started
@@ -88,7 +90,7 @@ plot(test_data)
 We then simply provide this vector to `ewsnet_predict()` while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).
 
 ```{r ewsnet_predict, warning = FALSE}
-ewsnet_prediction <- ewsnet_predict(test_data, noise_type = "W", ensemble = 25, envname = "EWSNET_env") 
+ewsnet_prediction <- ewsnet_predict(test_data, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") 
 
 ewsnet_prediction
 ```
@@ -124,7 +126,7 @@ expanding_ewsnet <- data.frame(expanding_range, matrix(NA,ncol=3 )) |>
 
 #call `ewsnet_predict()` for each index 
 for(i in seq_along(expanding_range)){ 
-  ews.tmp <- ewsnet_predict(test_data[1:expanding_range[i]],noise_type = "W", ensemble = 25, envname = "EWSNET_env") 
+  ews.tmp <- ewsnet_predict(test_data[1:expanding_range[i]],scaling = TRUE, ensemble = 25, envname = "EWSNET_env") 
   
   expanding_ewsnet[i,] <- c(expanding_range[i],ews.tmp$no_trans_prob,ews.tmp$smooth_trans_prob,ews.tmp$critical_trans_prob)
 }

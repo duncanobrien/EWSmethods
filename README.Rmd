@@ -38,7 +38,7 @@ install.packages("devtools")
 devtools::install_github("duncanobrien/EWSmethods")
 ```
 
-**Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is \~100MB.**
+**Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is \~230MB.**
 
 <br>
 
@@ -150,7 +150,7 @@ reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
 
-skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
+skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 ```

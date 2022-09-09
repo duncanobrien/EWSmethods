@@ -34,7 +34,7 @@ devtools::install_github("duncanobrien/EWSmethods")
 ```
 
 **Be aware, due to the large file sizes of the EWSNet model weights, the
-size of the package is \~100MB.**
+size of the package is \~230MB.**
 
 <br>
 
@@ -227,11 +227,11 @@ head(py_packages)
 #> 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge
 #> 6 ca-certificates 2022.6.15 ca-certificates=2022.6.15 conda-forge
 
-skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, noise_type = "W", ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
+skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
-#>                  pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Critical Transition  0.0001411155         0.2852249           0.7146339
+#>                pred no_trans_prob smooth_trans_prob critical_trans_prob
+#> 1 Smooth Transition    0.01044229         0.9741974          0.01536029
 ```
 
 <br>

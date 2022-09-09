@@ -3,7 +3,7 @@
 #' Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and returns the model's prediction for the inputted univariate time series.
 #'
 #' @param x A numeric vector of values to be tested.
-#' @param noise_type A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).
+#' @param scaling Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
 #' @param envname A string naming the Python environment prepared by \code{ewsnet_init()}.
 #' @returns A dataframe of EWSNet predictions. Values represent the estimated probability that the quoted event will occur.
@@ -27,7 +27,7 @@
 #' \dontrun{
 #' pred <- ewsnet_predict(
 #'  abundance_data$abundance,
-#'  noise_type = "W",
+#'  scaling = TRUE,
 #'  ensemble = 15,
 #'  envname = "EWSNET_env")
 #'  }

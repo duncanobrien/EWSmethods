@@ -4,12 +4,12 @@
 \alias{ewsnet_predict}
 \title{EWSNet Predict}
 \usage{
-ewsnet_predict(x, noise_type = "W", ensemble = 25, envname)
+ewsnet_predict(x, scaling = TRUE, ensemble = 25, envname)
 }
 \arguments{
 \item{x}{A numeric vector of values to be tested.}
 
-\item{noise_type}{A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).}
+\item{scaling}{Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.}
 
 \item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 
@@ -40,7 +40,7 @@ ewsnet_init(envname = "EWSNET_env")
 \dontrun{
 pred <- ewsnet_predict(
  abundance_data$abundance,
- noise_type = "W",
+ scaling = TRUE,
  ensemble = 15,
  envname = "EWSNET_env")
  }
