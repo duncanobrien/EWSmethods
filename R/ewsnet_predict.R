@@ -34,8 +34,9 @@
 #'
 #' @export
 #'
-#ewsNETw_25 <- function(x, noise_type = "W", ensemble = "25"){
-ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
+ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
+
+#ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
 
   if(!envname %in% (reticulate::conda_list()$name)){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname")
@@ -52,12 +53,18 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   wd <- getwd() #get working directory so it can be reset when Python alters the directory
   EWSNet <- NULL # global variable to be populated by Python
 
-  noise_type <- match.arg(noise_type, choices = c("W","C"))
+  #noise_type <- match.arg(noise_type, choices = c("W","C"))
   ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
 
-  noise_string = paste(c("Dataset-",paste(noise_type)),collapse = "")
+  #noise_string <- paste(c("Dataset-", paste(noise_type)), collapse = "")
 
-  directory_string = paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
+  if(isTRUE(scaling)){
+    scaling_string <- paste("Scaled")
+  }else if(isFALSE(scaling)){
+    scaling_string <- paste("Unscaled")
+  }
+
+  directory_string <- paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
   #wd_string = paste(c("wd_string = '", wd,"'"),collapse = "")
   reticulate::py_run_string(directory_string)
   #reticulate::py_run_string(wd_string)
@@ -66,13 +73,19 @@ ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
   #reticulate::py_run_string("print(os.getcwd())")
 
   #reticulate::source_python(system.file("inst/python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
-  #reticulate::source_python(system.file("python/src/inference/stupid_attempt.py", package = "EWSmethods"))
 
   reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
-  #pred <- ewsnetW_25$predict(x)
 
-  ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
-  pred <- ewsnet_obj$predict(x)
+  ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
+  #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
+
+  #pred <- ewsnet_obj$predict(x)
+
+  if(isTRUE(scaling)){
+    pred <- ewsnet_obj$predict(data_scaling(x))
+  }else if(isFALSE(scaling)){
+    pred <- ewsnet_obj$predict(x)
+  }
 
   out <- data.frame("pred" = pred[[1]],
                     "no_trans_prob" = pred[[2]]$`No Transition`,

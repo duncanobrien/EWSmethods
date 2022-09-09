@@ -9,6 +9,51 @@ from tensorflow.keras import regularizers
 import numpy as np 
 from sklearn.model_selection import train_test_split
 
+class VariableLenModel(Model):
+    
+    sample_random_length = True
+    augment_iter = 10
+    min_window_len = 15
+
+    def random_window(self, total_len=400):
+        window_len = self.min_window_len + np.random.randint(0,total_len-self.min_window_len)
+        start_idx  = np.random.randint(0,total_len-window_len)
+        end_idx    = start_idx + window_len
+        return start_idx,end_idx,window_len
+
+    def train_step(self, data):
+        # Unpack the data. Its structure depends on your model and
+        # on what you pass to `fit()`.
+        x, y = data
+        start_idx, end_idx, window_len = 0, x.shape[-1], x.shape[-1]
+        # print("Before Random Sampling:",x.shape,window_len)
+        
+        def train_iter(x_,y):
+          x = x_[:,:,start_idx:end_idx]
+          # print("After Random Sampling:",x.shape,window_len)
+          with tf.GradientTape() as tape:
+              y_pred = self(x, training=True)  # Forward pass
+              # Compute the loss value
+              # (the loss function is configured in `compile()`)
+              loss = self.compiled_loss(y, y_pred, regularization_losses=self.losses)
+
+          # Compute gradients
+          trainable_vars = self.trainable_variables
+          gradients = tape.gradient(loss, trainable_vars)
+          # Update weights
+          self.optimizer.apply_gradients(zip(gradients, trainable_vars))
+          # Update metrics (includes the metric that tracks the loss)
+          self.compiled_metrics.update_state(y, y_pred)
+        
+        train_iter(x,y)
+        if(self.sample_random_length):
+            for aiter in range(self.augment_iter):
+              start_idx, end_idx, window_len = self.random_window(x.shape[-1])
+              train_iter(x,y)
+        
+        # Return a dict mapping metric names to current value
+        return {m.name: m.result() for m in self.metrics}
+
 class EWSNet():
 
     def __init__(self,ensemble=1, weight_dir=None, prefix="",suffix=".h5"):
@@ -16,15 +61,21 @@ class EWSNet():
         This is a wrapper class to load pretrained EWSNet models and perform inference on custom data points.
         To instanatiate this inference wrapper, you need to have pretrained weights stored in a local directory.
         Supports ensembling multiple models for increased reliability and robustness.
+
         Initializing the EWSNet wrapper.
+
         :param ensemble: A variable indicating the no. of models to ensemble and average predictions over.
         :type ensemble: int, optional
+
         :param weight_dir: Path to the directory to load the weights from.
         :type weight_dir: str, optional
+
         :param prefix: Prefix for the weight filenames
         :type prefix: str, optional
+
         :param suffix: Suffix for the weight filenames
         :type suffix: str, optional
+
         `Attributes`
     
         - model
@@ -33,6 +84,7 @@ class EWSNet():
         .. note:: Note that the model weights should be saved as $_PREFIX_$i$_SUFFIX_ where i corresponds to the index of the model in the ensemble.
         
         .. note:: Once loading of the weights is successfull, use the predict() function to test custom time series data using EWSNet.
+
         """
         
         self.ensemble = ensemble
@@ -45,10 +97,13 @@ class EWSNet():
     def predict(self,x):
         """
         Function to make predictions using EWSNet. 
+
         :param x: The datapoint (univariate timeseries) to test for future transitions
         :type x: 1 dimensional np.array or list , required
+
         Returns: 
             A tuple consisting of the predicted label and the predictoin probability for each class.
+
         """
         
         x = np.array(x)
@@ -65,18 +120,25 @@ class EWSNet():
     def finetune(self,X,y, freeze_feature_extractor=True, learning_rate = 5e-5, batch_size = 512, tune_epochs = 5):
         """
         Function to finetune EWSNet on a custom dataset. By default finetunes all models in the ensemble based on the given data and set of parameters.
+
         :param X: The data points (univariate timeseries) to finetune EWSNet on. Dimension - (N x D) or (N x 1 x D) where `N` denotes the no. of samples and `D` denotes the no. of time steps.
         :type X:  np.array, required
+
         :param y: The target labels corresponding to the data points (X). Dimension - (N, ) or (N x 1) where `N` denotes the no. of samples.
         :type y:  np.array, required
+
         :param freeze_feature_extractor: A boolean flag that determines the part of the network to be finetuned. When set to False. the entire network is finetuned. When set to True, only the fully connected layers are finetuned and the feature extraction blocks are frozen.
         :type freeze_feature_extractor:  bool, optional
+
         :param learning_rate: The learning rate for finetuning the models.
         :type learning_rate:  float, optional
+
         :param batch_size: The batch size for finetuning the models.
         :type batch_size:  int, optional
+
         :param tune_epochs: The no. of epochs for finetuning the models.
         :type tune_epochs:  int, optional
+
         """
         
         if(len(X.shape)==2):
@@ -98,6 +160,7 @@ class EWSNet():
     def build_model(self):
         """
         Function to define and build the neural network architecture for EWSNet
+
     
         """
         
@@ -119,18 +182,22 @@ class EWSNet():
         x = concatenate([x, y])
         x = Dense(256, activation='relu',kernel_regularizer=regularizers.l2(0.01))(x)
         out = Dense(3, activation='softmax',kernel_regularizer=regularizers.l2(0.001))(x)
-        model = Model(ip, out)
+        model = VariableLenModel(ip, out)
         return model
 
     def load_model(self,weight_dir,prefix,suffix):
         """
         Function to load the model from the weights present in the given directory
+
         :param weight_dir: Path to the directory to load the weights from.
         :type weight_dir: str, 
+
         :param prefix: Prefix for the weight filenames
         :type prefix: str, 
+
         :param suffix: Suffix for the weight filenames
         :type suffix: str, 
+
         """
         
         for i in range(self.ensemble):
