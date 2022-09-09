@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Using EWSNet</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-09-08</h4>
+            <h4 data-toc-skip class="date">2022-09-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -97,6 +97,7 @@
 <h2 id="about-this-tutorial">About this tutorial<a class="anchor" aria-label="anchor" href="#about-this-tutorial"></a>
 </h2>
 <p>This tutorial introduces how to interface with <strong>EWSNet</strong>, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb <em>et al.</em> 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific <a href="https://ewsnet.github.io" class="external-link">website and documentation</a> or the associated <a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211475" class="external-link">publication</a>.</p>
+<p><strong>NOTE</strong> This version of EWSNet differs from that published by Deb <em>et al.</em> (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This immproves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.</p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -156,11 +157,11 @@
 <p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1050"></p>
 <p>We then simply provide this vector to <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>, noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
+<code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
-<span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Critical Transition    0.00806084       0.004108576           0.9878306</span></span></code></pre></div>
+<span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
+<span><span class="co">#&gt; 1 Smooth Transition    0.01513964         0.9677295           0.0171307</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
@@ -191,7 +192,7 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 <span></span>
 <span><span class="co">#call `ewsnet_predict()` for each index </span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">expanding_range</span><span class="op">)</span><span class="op">)</span><span class="op">{</span> </span>
-<span>  <span class="va">ews.tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">expanding_range</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,noise_type <span class="op">=</span> <span class="st">"W"</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
+<span>  <span class="va">ews.tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">expanding_range</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>,scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span>  </span>
 <span>  <span class="va">expanding_ewsnet</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">expanding_range</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">no_trans_prob</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">smooth_trans_prob</span>,<span class="va">ews.tmp</span><span class="op">$</span><span class="va">critical_trans_prob</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
