@@ -20,5 +20,12 @@ reset_ewsnet <- function(new_weight_location){
 
  target_folder <- system.file("python/weights", package = "EWSmethods")
  file.copy(new_weight_location, target_folder, recursive = T)
- message("Model weights replaced")
+
+ # zip <- paste(c(target_folder,"temp.zip"),collapse = "/")
+ #
+ # download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=1-aY2MepouLQdMSNkYD6jgSedwFXB8BUP",
+ #                       destfile  = zip, overwrite = TRUE)
+ # unzip(zip,exdir = target_folder)
+ # file.remove(zip)
+ # message("Model weights replaced")
 }

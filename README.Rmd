@@ -130,7 +130,7 @@ oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold
 
 The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.
 
-```{r expanding_oct_plot, dpi=144, echo = FALSE}
+```{r expanding_oct_plot, dpi=144, fig.height=6,echo = FALSE}
 oct_exp_ews$plot
 ```
 

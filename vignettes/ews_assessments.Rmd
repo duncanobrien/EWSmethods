@@ -217,7 +217,7 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
                          ggplotIt = TRUE)
 ```
 
-```{r multi_ews2_fig,dpi=144,,fig.height=6,echo=F}
+```{r multi_ews2_fig,dpi=144,fig.height=6,echo=F}
 multi_ews_eg2$plot
 ```
 

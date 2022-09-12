@@ -213,19 +213,19 @@ reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 #> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
 #> version:        3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 06:05:16)  [Clang 12.0.1 ]
 #> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.8/site-packages/numpy
-#> numpy_version:  1.23.1
+#> numpy_version:  1.23.3
 #> 
 #> NOTE: Python version was forced by use_python function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package   version               requirement     channel
-#> 1         absl-py     1.1.0             absl-py=1.1.0        pypi
-#> 2       alabaster    0.7.12          alabaster=0.7.12        pypi
-#> 3      astunparse     1.6.3          astunparse=1.6.3        pypi
-#> 4           babel    2.10.3              babel=2.10.3        pypi
-#> 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge
-#> 6 ca-certificates 2022.6.15 ca-certificates=2022.6.15 conda-forge
+#>           package     version                 requirement     channel
+#> 1         absl-py       1.2.0               absl-py=1.2.0        pypi
+#> 2       alabaster      0.7.12            alabaster=0.7.12        pypi
+#> 3      astunparse       1.6.3            astunparse=1.6.3        pypi
+#> 4           babel      2.10.3                babel=2.10.3        pypi
+#> 5           bzip2       1.0.8                 bzip2=1.0.8 conda-forge
+#> 6 ca-certificates 2022.6.15.1 ca-certificates=2022.6.15.1 conda-forge
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
