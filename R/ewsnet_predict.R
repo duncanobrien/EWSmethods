@@ -76,15 +76,16 @@ ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
 
   reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
 
-  ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
+  ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
+  #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
   #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
 
   #pred <- ewsnet_obj$predict(x)
 
   if(isTRUE(scaling)){
-    pred <- ewsnet_obj$predict(data_scaling(x))
+    pred <- ewsnet_obj$predict(data_scaling(x),ensemble_subset = as.integer(ensemble))
   }else if(isFALSE(scaling)){
-    pred <- ewsnet_obj$predict(x)
+    pred <- ewsnet_obj$predict(x,ensemble_subset = as.integer(ensemble))
   }
 
   out <- data.frame("pred" = pred[[1]],
