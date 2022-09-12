@@ -33,7 +33,6 @@ reference:
   desc: "Functions for interfacing with EWSNet."
   contents:
   - starts_with("ewsnet")
-  - reset_ewsnet
   - bypass_reticulate_autoinit
 
 - title: "Other resilience metrics"
