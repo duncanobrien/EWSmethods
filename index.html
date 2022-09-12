@@ -199,19 +199,19 @@
 <span><span class="co">#&gt; pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env</span></span>
 <span><span class="co">#&gt; version:        3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 06:05:16)  [Clang 12.0.1 ]</span></span>
 <span><span class="co">#&gt; numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.8/site-packages/numpy</span></span>
-<span><span class="co">#&gt; numpy_version:  1.23.1</span></span>
+<span><span class="co">#&gt; numpy_version:  1.23.3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; NOTE: Python version was forced by use_python function</span></span>
 <span></span>
 <span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py_packages</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           package   version               requirement     channel</span></span>
-<span><span class="co">#&gt; 1         absl-py     1.1.0             absl-py=1.1.0        pypi</span></span>
-<span><span class="co">#&gt; 2       alabaster    0.7.12          alabaster=0.7.12        pypi</span></span>
-<span><span class="co">#&gt; 3      astunparse     1.6.3          astunparse=1.6.3        pypi</span></span>
-<span><span class="co">#&gt; 4           babel    2.10.3              babel=2.10.3        pypi</span></span>
-<span><span class="co">#&gt; 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge</span></span>
-<span><span class="co">#&gt; 6 ca-certificates 2022.6.15 ca-certificates=2022.6.15 conda-forge</span></span>
+<span><span class="co">#&gt;           package     version                 requirement     channel</span></span>
+<span><span class="co">#&gt; 1         absl-py       1.2.0               absl-py=1.2.0        pypi</span></span>
+<span><span class="co">#&gt; 2       alabaster      0.7.12            alabaster=0.7.12        pypi</span></span>
+<span><span class="co">#&gt; 3      astunparse       1.6.3            astunparse=1.6.3        pypi</span></span>
+<span><span class="co">#&gt; 4           babel      2.10.3                babel=2.10.3        pypi</span></span>
+<span><span class="co">#&gt; 5           bzip2       1.0.8                 bzip2=1.0.8 conda-forge</span></span>
+<span><span class="co">#&gt; 6 ca-certificates 2022.6.15.1 ca-certificates=2022.6.15.1 conda-forge</span></span>
 <span></span>
 <span><span class="va">skylark_ewsnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">skylark_data</span><span class="op">$</span><span class="va">abundance</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()</span></span>
 <span></span>
