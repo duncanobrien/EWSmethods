@@ -150,12 +150,12 @@ __Development in progress__
 
 ## 4. Resetting EWSNet
 
-Following finetuning, it may be desirable to reset the model weights to their default. Using the `reset_ewsnet()` function, the user can direct `EWSmethods` to the path of the default weights (these can be redownloaded from the [EWSNet github ](https://github.com/sahilsid/ewsnet)) which will overwrite the current model weights stored by `EWSmethods`.
+Following finetuning, it may be desirable to reset the model weights to their default. Using the `ewsnet_reset()` function, the user can direct `EWSmethods` to the path of the default weights (these can be redownloaded from the [EWSNet github ](https://github.com/sahilsid/ewsnet)) which will overwrite the current model weights stored by `EWSmethods`.
 
 ```{r ewsnet_reset, eval= FALSE}
-reset_ewsnet(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") #for Windows users
+ewsnet_reset(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") #for Windows users
 
-reset_ewsnet(new_weight_location = "/Users/your_name/Downloads/Pretrained") #for Mac users
+ewsnet_reset(new_weight_location = "/Users/your_name/Downloads/Pretrained") #for Mac users
 ```
 
 You may want to remove Python downloads and environment setup by `EWSmethods`. You can acheive this using `ewsnet_init()` and the `conda_refresh =` argument.
@@ -173,7 +173,7 @@ Function name | Purpose |
 | `ewsnet_init()`                                                                                                                                                                                                                             | Prepares the session to interface with Python. _Critical first step_                                                                       |         |
 | `ewsnet_predict()`                                                                                                                                                                                                                          | Using the Python environment initialised by `ewsnet_init()`, builds the EWSNet model and makes predictions from the user supplied time series |         |
 | `ewsnet_finetune()`                                                                                                                                                                                                                         | Retrains the initial EWSNet model weights based upon new user provided training data                                                          |         |
-| `reset_ewsnet()`| Overwrites the model weights with the default weights downloaded from [EWSNet github](https://github.com/sahilsid/ewsnet) |`bypass_reticulate_autoinit()`| Optional set up function to get around quirks of`reticulate` |                                                                                                                                               |         |
+| `ewsnet_reset()`| Overwrites the model weights with the default weights downloaded from [EWSNet github](https://github.com/sahilsid/ewsnet) |`bypass_reticulate_autoinit()`| Optional set up function to get around quirks of`reticulate` |                                                                                                                                               |         |
 
 Greater detail on each function can be found at the [Reference](https://duncanobrien.github.io/EWSmethods/reference/index.html) page.
 
