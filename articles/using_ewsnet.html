@@ -161,7 +161,7 @@
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Smooth Transition    0.02270057         0.9648048          0.01249461</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Smooth Transition      0.021951         0.9639326          0.01411636</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
@@ -216,11 +216,11 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 <div class="section level3">
 <h3 id="resetting-ewsnet">4. Resetting EWSNet<a class="anchor" aria-label="anchor" href="#resetting-ewsnet"></a>
 </h3>
-<p>Following finetuning, it may be desirable to reset the model weights to their default. Using the <code><a href="../reference/reset_ewsnet.html">reset_ewsnet()</a></code> function, the user can direct <code>EWSmethods</code> to the path of the default weights (these can be redownloaded from the <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>) which will overwrite the current model weights stored by <code>EWSmethods</code>.</p>
+<p>Following finetuning, it may be desirable to reset the model weights to their default. Using the <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code> function, the user can direct <code>EWSmethods</code> to the path of the default weights (these can be redownloaded from the <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>) which will overwrite the current model weights stored by <code>EWSmethods</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/reset_ewsnet.html">reset_ewsnet</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"C:/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Windows users</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"C:/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Windows users</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/reset_ewsnet.html">reset_ewsnet</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Mac users</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Mac users</span></span></code></pre></div>
 <p>You may want to remove Python downloads and environment setup by <code>EWSmethods</code>. You can acheive this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the <code>conda_refresh =</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>,conda_refresh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -254,7 +254,7 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 <td>Retrains the initial EWSNet model weights based upon new user provided training data</td>
 </tr>
 <tr class="even">
-<td><code><a href="../reference/reset_ewsnet.html">reset_ewsnet()</a></code></td>
+<td><code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code></td>
 <td>Overwrites the model weights with the default weights downloaded from <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>
 </td>
 </tr>
