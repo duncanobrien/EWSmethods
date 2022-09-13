@@ -55,6 +55,8 @@ bypass_reticulate_autoinit()
 #set auto = T so no user input required
 ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh = FALSE, auto = T)
 
+ewsnet_reset(remove_weights = FALSE,auto = T)
+
 #reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
 library(ggplot2)
 library(tidyr)
