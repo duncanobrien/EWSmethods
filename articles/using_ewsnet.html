@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Using EWSNet</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-09-12</h4>
+            <h4 data-toc-skip class="date">2022-09-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -144,24 +144,28 @@
 <span><span class="co">#&gt; 4     alabaster  0.7.12  alabaster=0.7.12      pypi</span></span>
 <span><span class="co">#&gt; 5    astunparse   1.6.3  astunparse=1.6.3      pypi</span></span>
 <span><span class="co">#&gt; 6         babel  2.10.3      babel=2.10.3      pypi</span></span></code></pre></div>
+<p><code>EWSmethods</code> also does not come bundled with the necessary model weights to make predictions. This is due the size of the weight files being ~220 MB which is not appropriate for all users of the package. To download these weights, we can use the <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code> function which can either remove no-longer-needed weights or re/download from <a href="https://ewsnet.github.io" class="external-link">https://ewsnet.github.io</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>If successful, you will have had to input <code>"y"</code> to allow <code>EWSmethods</code> to download the pretrained weights.</p>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="predictions-from-ewsnet">2. Predictions from <strong>EWSNet</strong><a class="anchor" aria-label="anchor" href="#predictions-from-ewsnet"></a>
 </h3>
 <p>To give an example on how to use <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> we need some test data. Here, we will use some random noise around a mean of 0 which we expect to be predicted as <code>"No Transition"</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,mean <span class="op">=</span> <span class="fl">0</span>, sd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="using_ewsnet_files/figure-html/create_white_data-1.png" width="1050"></p>
 <p>We then simply provide this vector to <code><a href="../reference/ewsnet_predict.html">ewsnet_predict()</a></code> while also specifying the Python environment, the scaling of the data and ensemble number (how many models to average the prediction over).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">test_data</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Smooth Transition      0.021951         0.9639326          0.01411636</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Smooth Transition   0.005044856         0.9716814           0.0232737</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
@@ -181,7 +185,7 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 </h4>
 <p>An additional way to use EWSNet is to explore how predictions change through time. By iteratively adding in new data, we can see how those predictions evolve.</p>
 <p>For example, using our test data, we could use this code to identify transitions that may have happened in the past:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#define the range of indexes to test over</span></span>
 <span><span class="va">expanding_range</span> <span class="op">&lt;-</span> <span class="fl">20</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span> </span>
@@ -217,13 +221,13 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 <h3 id="resetting-ewsnet">4. Resetting EWSNet<a class="anchor" aria-label="anchor" href="#resetting-ewsnet"></a>
 </h3>
 <p>Following finetuning, it may be desirable to reset the model weights to their default. Using the <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code> function, the user can direct <code>EWSmethods</code> to the path of the default weights (these can be redownloaded from the <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>) which will overwrite the current model weights stored by <code>EWSmethods</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"C:/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Windows users</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>new_weight_location <span class="op">=</span> <span class="st">"/Users/your_name/Downloads/Pretrained"</span><span class="op">)</span> <span class="co">#for Mac users</span></span></code></pre></div>
-<p>You may want to remove Python downloads and environment setup by <code>EWSmethods</code>. You can acheive this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the <code>conda_refresh =</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>,conda_refresh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
+<p>You may want to remove Python downloads and environment setup by <code>EWSmethods</code> and/or any downloaded EWSNet weights. You can achieve this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the <code>conda_refresh =</code> argument, and <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code> respectively.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>,conda_refresh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># removes Python, its packages and the "EWSNET_env" environment</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># removes any downloaded EWSNet weights</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
