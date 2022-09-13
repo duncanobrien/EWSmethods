@@ -200,6 +200,17 @@ then calls **EWSNet** to assess the probability of a transition
 occurring in the skylark time series. This is a two step process where
 we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
+However, because this is the first time using EWSNet via `EWSmethods`,
+we must first download the pretrained model weights from
+<https://ewsnet.github.io>.
+
+``` r
+ewsnet_reset(remove_weights = FALSE, auto = T)
+#> Model weights reset
+```
+
+Now we can setup our R session and interface with EWSNet.
+
 ``` r
 ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 #> Attention: may take up to 10 minutes to complete
@@ -231,7 +242,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01044229         0.9741974          0.01536029
+#> 1 Smooth Transition    0.01044229         0.9741974           0.0153603
 ```
 
 <br>

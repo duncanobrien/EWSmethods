@@ -4,21 +4,23 @@
 \alias{ewsnet_reset}
 \title{Reset EWSNet Model Weights}
 \usage{
-ewsnet_reset(new_weight_location)
+ewsnet_reset(remove_weights = FALSE, auto = FALSE)
 }
 \arguments{
-\item{new_weight_location}{A path string to the location where the unzipped file has been saved. Include "Pretrained" as the final path folder.}
+\item{remove_weights}{Boolean. Should all weights be removed (\code{TRUE}) or should weights be re/downloaded (\code{FALSE}).}
+
+\item{auto}{Boolean. If \code{TRUE}, no user confirmation is required for re/download.}
 }
 \description{
-Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This may be necessary after finetuning to reset the model. Follow this link (https://github.com/sahilsid/ewsnet) to find the original weights and extract the zip file in to a suitable location to use in \code{new_weight_location}.
+Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This is vital on first use of EWSNet as no model weights are provided with `EWSmethods`. The use of this function may also be necessary after finetuning to reset the model.
 }
 \examples{
 \dontrun{
-ewsnet_reset(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") # Windows example
+ewsnet_reset(remove_weights = FALSE, auto = FALSE) # on first use of EWSNet via `EWSmethods`
 }
 
 \dontrun{
-ewsnet_reset(new_weight_location = "/Users/your_name/Downloads/Pretrained") # Mac example
+ewsnet_reset(remove_weights = TRUE) # to remove all downloaded weights
 }
 
 }

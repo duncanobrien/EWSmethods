@@ -75,10 +75,22 @@ py_packages <- reticulate::py_list_packages()
 head(py_packages)
 ```
 
+`EWSmethods` also does not come bundled with the necessary model weights to make predictions. This is due the size of the weight files being ~220 MB which is not appropriate for all users of the package. To download these weights, we can use the `ewsnet_reset()` function which can either remove no-longer-needed weights or re/download from [https://ewsnet.github.io](https://ewsnet.github.io).
+
+```{r ewsnet_reset,warning = FALSE,eval=F}
+ewsnet_reset(remove_weights = FALSE)
+```
+
+```{r ewsnet_reset_true, echo=FALSE,warning = FALSE,message=FALSE}
+ewsnet_reset(remove_weights = FALSE, auto = T)
+```
+
+If successful, you will have had to input `"y"` to allow `EWSmethods` to download the pretrained weights.
+
 <br>  
 
 ## 2. Predictions from **EWSNet**
-
+ 
 To give an example on how to use `ewsnet_predict()` we need some test data. Here, we will use some random noise around a mean of 0 which we expect to be predicted as `"No Transition"`.
 
 ```{r create_white_data, warning = FALSE,dpi=144}
@@ -152,16 +164,18 @@ __Development in progress__
 
 Following finetuning, it may be desirable to reset the model weights to their default. Using the `ewsnet_reset()` function, the user can direct `EWSmethods` to the path of the default weights (these can be redownloaded from the [EWSNet github ](https://github.com/sahilsid/ewsnet)) which will overwrite the current model weights stored by `EWSmethods`.
 
-```{r ewsnet_reset, eval= FALSE}
-ewsnet_reset(new_weight_location = "C:/Users/your_name/Downloads/Pretrained") #for Windows users
-
-ewsnet_reset(new_weight_location = "/Users/your_name/Downloads/Pretrained") #for Mac users
+```{r ewsnet_reset2, eval= FALSE}
+ewsnet_reset(remove_weights = FALSE) 
 ```
 
-You may want to remove Python downloads and environment setup by `EWSmethods`. You can acheive this using `ewsnet_init()` and the `conda_refresh =` argument.
+You may want to remove Python downloads and environment setup by `EWSmethods` and/or any downloaded EWSNet weights. You can achieve this using `ewsnet_init()` and the `conda_refresh =` argument, and `ewsnet_reset()` respectively.
 
 ```{r ewsnet_refresh, eval= FALSE}
-ewsnet_init(envname = "EWSNET_env",conda_refresh = TRUE)
+ewsnet_init(envname = "EWSNET_env",conda_refresh = TRUE) # removes Python, its packages and the "EWSNET_env" environment
+```
+
+```{r ewsnet_refresh2, eval= FALSE}
+ewsnet_reset(remove_weights = TRUE) # removes any downloaded EWSNet weights
 ```
 
 <br>  
