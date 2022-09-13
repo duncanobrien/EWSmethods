@@ -28,7 +28,13 @@
 
 ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
 
-  target_folder <- system.file("python/weights", package = "EWSmethods")
+  #target_folder <- system.file("python/weights", package = "EWSmethods")
+
+  target_folder <- paste(c(system.file("python", package = "EWSmethods"),"weights"),collapse = "/")
+
+  if(!dir.exists(file.path(target_folder)) & target_folder != ""){
+    dir.create(file.path(target_folder))
+    }
 
   if(isTRUE(remove_weights)){
     unlink(paste(c(target_folder,"Pretrained"),collapse = "/"),recursive = T)
