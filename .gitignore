@@ -5,4 +5,4 @@
 .DS_Store
 docs
 inst/doc
-inst/Python/**/*.h5
+inst/python/weights/**/*.h5

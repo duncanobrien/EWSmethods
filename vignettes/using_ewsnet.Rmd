@@ -83,10 +83,6 @@ head(py_packages)
 ewsnet_reset(remove_weights = FALSE)
 ```
 
-```{r ewsnet_reset_true, echo=FALSE,warning = FALSE,message=FALSE}
-ewsnet_reset(remove_weights = FALSE, auto = T)
-```
-
 If successful, you will have had to input `"y"` to allow `EWSmethods` to download the pretrained weights.
 
 <br>  
