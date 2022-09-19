@@ -51,7 +51,7 @@ ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
 
         utils::unzip(zip,exdir = target_folder)
         unlink(zip)
-        message("Model weights reset")
+        message("Model weights downloaded")
 
       }else if(isFALSE(auto)){
       user_input1 <- readline("EWSNet weights are are a ~ 220 MB download. Would you like to continue? (y/n) ")
