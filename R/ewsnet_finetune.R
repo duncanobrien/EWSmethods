@@ -4,8 +4,7 @@
 #'
 #' @param x A numeric matrix to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.
 #' @param y A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).
-#' @param noise_type A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).
-#' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
+#' @param scaling Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.
 #' @param envname A string naming the Python environment prepared by \code{ewsnet_init()}.
 #'
 #' @examples
@@ -39,8 +38,7 @@
 #' ewsnet_finetune(
 #'  x = x,
 #'  y = y,
-#'  noise_type = "W",
-#'  ensemble = 25,
+#'  scaling = TRUE,
 #'  envname = "EWSNET_env")
 #'  }
 #'
@@ -49,28 +47,41 @@
 #' \dontrun{
 #' pred <- ewsnet_predict(
 #'  abundance_data$abundance,
-#'  noise_type = "W",
+#'  scaling = TRUE,
 #'  ensemble = 15,
 #'  envname = "EWSNET_env")
 #'  }
 #'
 #' @export
 #'
-ewsnet_finetune <- function(x, y, noise_type = "W", ensemble = 25,envname){
+ewsnet_finetune <- function(x, y, scaling = TRUE, envname){
 
   if(!envname %in% (reticulate::conda_list()$name)){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_finetune(), or check your spelling of envname")
   }else{
 
+    if(!is.vector(x) | !is.vector(y)){
+      stop('x and y must be vectors')
+    }
+
+    if(!is.numeric(x) | !is.numeric(y)){
+      stop('x and y must be numeric')
+    }
+
     wd <- getwd() #get working directory so it can be reset when Python alters the directory
     EWSNet <- NULL # global variable to be populated by Python
 
-    noise_type <- match.arg(noise_type, choices = c("W","C"))
-    ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
+    if(isTRUE(scaling)){
+      scaling_string <- paste("Scaled")
+    }else if(isFALSE(scaling)){
+      scaling_string <- paste("Unscaled")
+    }
 
-    noise_string = paste(c("Dataset-",paste(noise_type)),collapse = "")
+    #noise_string = paste(c("Dataset-",paste(noise_type)),collapse = "")
 
-    directory_string = paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
+    directory_string <- paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
+
+    #directory_string = paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
 
     reticulate::py_run_string(directory_string)
     reticulate::py_run_string("import os")
@@ -82,7 +93,8 @@ ewsnet_finetune <- function(x, y, noise_type = "W", ensemble = 25,envname){
 
     reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
 
-    ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
+    ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
+    #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
     pred <- ewsnet_obj$finetune(x,y)
 
     setwd(wd) # reset working directory
