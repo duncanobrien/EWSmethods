@@ -99,7 +99,8 @@ ewsnet_finetune <- function(x, y, scaling = TRUE, envname){
 
     ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
     #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
-    pred <- ewsnet_obj$finetune(x,y)
+    ewsnet_obj$finetune(t(x),y)
+    #ewsnet_obj$finetune(x,y)
 
     setwd(wd) # reset working directory
 

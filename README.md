@@ -33,8 +33,10 @@ install.packages("devtools")
 devtools::install_github("duncanobrien/EWSmethods")
 ```
 
-**Be aware, due to the large file sizes of the EWSNet model weights, the
-size of the package is \~230MB.**
+**Be aware, due to the large file sizes of the EWSNet model weights
+(\~230MB), `EWSmethods` does not come bundled with them. Users must
+download weights using `ewsnet_init()` or `ewsnet_reset()` because
+interfacing with EWSNet.**
 
 <br>
 
@@ -206,7 +208,7 @@ we must first download the pretrained model weights from
 
 ``` r
 ewsnet_reset(remove_weights = FALSE, auto = T)
-#> Model weights reset
+#> Model weights downloaded
 ```
 
 Now we can setup our R session and interface with EWSNet.
@@ -242,7 +244,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01044229         0.9741974           0.0153603
+#> 1 Smooth Transition    0.02115191         0.9610476          0.01780066
 ```
 
 <br>
