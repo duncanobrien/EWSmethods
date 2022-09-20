@@ -4,16 +4,14 @@
 \alias{ewsnet_finetune}
 \title{EWSNet Finetune}
 \usage{
-ewsnet_finetune(x, y, noise_type = "W", ensemble = 25, envname)
+ewsnet_finetune(x, y, scaling = TRUE, envname)
 }
 \arguments{
 \item{x}{A numeric matrix to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.}
 
 \item{y}{A numeric vector consisting of target labels for each training time series. Labels include: 0 (no transition), 1 (smooth transition) or 2 (critical transition).}
 
-\item{noise_type}{A string stating the form of noise to use. Options are "W" (white noise) or "C" (coloured noise).}
-
-\item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
+\item{scaling}{Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.}
 
 \item{envname}{A string naming the Python environment prepared by \code{ewsnet_init()}.}
 }
@@ -51,8 +49,7 @@ y <- sample(0:2,10,replace = TRUE)
 ewsnet_finetune(
  x = x,
  y = y,
- noise_type = "W",
- ensemble = 25,
+ scaling = TRUE,
  envname = "EWSNET_env")
  }
 
@@ -61,7 +58,7 @@ ewsnet_finetune(
 \dontrun{
 pred <- ewsnet_predict(
  abundance_data$abundance,
- noise_type = "W",
+ scaling = TRUE,
  ensemble = 15,
  envname = "EWSNET_env")
  }

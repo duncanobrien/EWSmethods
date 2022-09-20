@@ -60,11 +60,15 @@ ewsnet_finetune <- function(x, y, scaling = TRUE, envname){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_finetune(), or check your spelling of envname")
   }else{
 
-    if(!is.vector(x) | !is.vector(y)){
-      stop('x and y must be vectors')
+    if(!is.data.frame(x) & !is.matrix(x)){
+      stop('x must be a matrix or dataframe')
     }
 
-    if(!is.numeric(x) | !is.numeric(y)){
+    if(!is.vector(y)){
+      stop('y must be a vectors')
+    }
+
+    if(!all(unlist(lapply(x,is.numeric))) | !is.numeric(y)){
       stop('x and y must be numeric')
     }
 
