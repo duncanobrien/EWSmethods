@@ -94,7 +94,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"duncanobrien/EWSmethods"</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Be aware, due to the large file sizes of the EWSNet model weights, the size of the package is ~230MB.</strong></p>
+<p><strong>Be aware, due to the large file sizes of the EWSNet model weights (~230MB), <code>EWSmethods</code> does not come bundled with them. Users must download weights using <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> or <code><a href="reference/ewsnet_reset.html">ewsnet_reset()</a></code> because interfacing with EWSNet.</strong></p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -189,7 +189,7 @@
 <p>However, because this is the first time using EWSNet via <code>EWSmethods</code>, we must first download the pretrained model weights from <a href="https://ewsnet.github.io" class="external-link uri">https://ewsnet.github.io</a>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Model weights reset</span></span></code></pre></div>
+<span><span class="co">#&gt; Model weights downloaded</span></span></code></pre></div>
 <p>Now we can setup our R session and interface with EWSNet.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
@@ -222,7 +222,7 @@
 <span></span>
 <span><span class="va">skylark_ewsnet</span></span>
 <span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Smooth Transition    0.01044229         0.9741974           0.0153603</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Smooth Transition    0.02115191         0.9610476          0.01780066</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
