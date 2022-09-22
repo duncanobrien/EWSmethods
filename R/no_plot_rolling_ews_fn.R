@@ -97,103 +97,103 @@ no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
 #     smY <- Y
 #     nsmY <- Y
 #   }
-#   mw <- round(length(Y) * winsize/100)
-#   omw <- length(nsmY) - mw + 1
-#   low <- 6
-#   high <- omw
-#   nMR <- matrix(data = NA, nrow = mw, ncol = omw)
-#   x1 <- 1:mw
-#   for (i in 1:omw) {
-#     Ytw <- nsmY[i:(i + mw - 1)]
-#     nMR[, i] <- Ytw
-#   }
-#   nARR <- numeric()
-#   nSD <- numeric()
-#   nSK <- numeric()
-#   nKURT <- numeric()
-#   nACF <- numeric()
-#   nDENSITYRATIO <- numeric()
-#   nSPECT <- matrix(0, nrow = omw, ncol = ncol(nMR))
-#   nCV <- numeric()
-#   smARall <- numeric()
-#   smARmaxeig <- numeric()
-#   detB <- numeric()
-#   ARn <- numeric()
-#   nSD <- apply(nMR, 2, sd, na.rm = TRUE)
-#   for (i in 1:ncol(nMR)) {
-#     if(length(which(diff(nMR[, i])!=0))>0){
-#       nYR <- ar.ols(nMR[, i], aic = FALSE, order.max = 1, dmean = FALSE,
-#                     intercept = FALSE)
-#       nARR[i] <- nYR$ar
-#       nSK[i] <- abs(moments::skewness(nMR[, i], na.rm = TRUE))
-#       nKURT[i] <- moments::kurtosis(nMR[, i], na.rm = TRUE)
-#       nCV[i] <- nSD[i]/mean(nMR[, i])
-#       ACF <- acf(nMR[, i], lag.max = 1, type = c("correlation"),
-#                  plot = FALSE)
-#       nACF[i] <- ACF$acf[2]
-#       spectfft <- spec.ar(nMR[, i], n.freq = omw, plot = FALSE,
-#                           order = 1)
-#       nSPECT[, i] <- spectfft$spec
-#       nDENSITYRATIO[i] <- spectfft$spec[low]/spectfft$spec[high]
-#       if (AR_n) {
-#         ARall <- ar.ols(nMR[, i], aic = TRUE, order.max = 6,
-#                         demean = F, intercept = F)
-#         smARall[i] <- ARall$ar[1]
-#         ARn[i] <- ARall$order
-#         roots <- Mod(polyroot(c(rev(-ARall$ar), 1)))
-#         smARmaxeig[i] <- max(roots)
-#         detB[i] <- (prod(roots))^(2/ARn[i])
-#       }
-#     }else{ nYR<-NA
-#     nARR[i] <- NA
-#     nSK[i] <- NA
-#     nKURT[i] <- NA
-#     nCV[i] <- NA
-#     nACF[i] <- NA
-#     nSPECT[, i] <- NA
-#     nDENSITYRATIO[i] <- NA
-#     if (AR_n) {
-#       ARall <- ar.ols(nMR[, i], aic = TRUE, order.max = 6,
-#                       demean = F, intercept = F)
-#       smARall[i] <- ARall$ar[1]
-#       ARn[i] <- ARall$order
-#       roots <- Mod(polyroot(c(rev(-ARall$ar), 1)))
-#       smARmaxeig[i] <- max(roots)
-#       detB[i] <- (prod(roots))^(2/ARn[i])
-#     }
-#     }
-#   }
-#   nRETURNRATE = 1/nARR
-#   timevec <- seq(1, length(nARR))
-#
-#   KtAR <- try(cor.test(timevec, nARR, alternative = c("two.sided"),
-#                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtACF <- try(cor.test(timevec, nACF, alternative = c("two.sided"),
-#                         method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtSD <- try(cor.test(timevec, nSD, alternative = c("two.sided"),
-#                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtSK <- try(cor.test(timevec, nSK, alternative = c("two.sided"),
-#                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtKU <- try(cor.test(timevec, nKURT, alternative = c("two.sided"),
-#                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtDENSITYRATIO <- try(cor.test(timevec, nDENSITYRATIO, alternative = c("two.sided"),
-#                                  method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtRETURNRATE <- try(cor.test(timevec, nRETURNRATE, alternative = c("two.sided"),
-#                                method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#   KtCV <- try(cor.test(timevec, nCV, alternative = c("two.sided"),
-#                        method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
-#
-#   if(inherits(KtAR, "try-error")){ #error occurs if too few observations therefore is applicable to all measures
-#     warning("Correlation coefficents not returned as too few observations")
-#     KtAR <- NA
-#     KtSD <- NA
-#     KtSK <- NA
-#     KtKU <- NA
-#     KtCV <- NA
-#     KtDENSITYRATIO <- NA
-#     KtRETURNRATE <- NA
-#     KtACF <- NA
-#   }
+  # mw <- round(length(Y) * winsize/100)
+  # omw <- length(nsmY) - mw + 1
+  # low <- 6
+  # high <- omw
+  # nMR <- matrix(data = NA, nrow = mw, ncol = omw)
+  # x1 <- 1:mw
+  # for (i in 1:omw) {
+  #   Ytw <- nsmY[i:(i + mw - 1)]
+  #   nMR[, i] <- Ytw
+  # }
+  # nARR <- numeric()
+  # nSD <- numeric()
+  # nSK <- numeric()
+  # nKURT <- numeric()
+  # nACF <- numeric()
+  # nDENSITYRATIO <- numeric()
+  # nSPECT <- matrix(0, nrow = omw, ncol = ncol(nMR))
+  # nCV <- numeric()
+  # smARall <- numeric()
+  # smARmaxeig <- numeric()
+  # detB <- numeric()
+  # ARn <- numeric()
+  # nSD <- apply(nMR, 2, sd, na.rm = TRUE)
+  # for (i in 1:ncol(nMR)) {
+  #   if(length(which(diff(nMR[, i])!=0))>0){
+  #     nYR <- ar.ols(nMR[, i], aic = FALSE, order.max = 1, dmean = FALSE,
+  #                   intercept = FALSE)
+  #     nARR[i] <- nYR$ar
+  #     nSK[i] <- abs(moments::skewness(nMR[, i], na.rm = TRUE))
+  #     nKURT[i] <- moments::kurtosis(nMR[, i], na.rm = TRUE)
+  #     nCV[i] <- nSD[i]/mean(nMR[, i])
+  #     ACF <- acf(nMR[, i], lag.max = 1, type = c("correlation"),
+  #                plot = FALSE)
+  #     nACF[i] <- ACF$acf[2]
+  #     spectfft <- spec.ar(nMR[, i], n.freq = omw, plot = FALSE,
+  #                         order = 1)
+  #     nSPECT[, i] <- spectfft$spec
+  #     nDENSITYRATIO[i] <- spectfft$spec[low]/spectfft$spec[high]
+  #     if (AR_n) {
+  #       ARall <- ar.ols(nMR[, i], aic = TRUE, order.max = 6,
+  #                       demean = F, intercept = F)
+  #       smARall[i] <- ARall$ar[1]
+  #       ARn[i] <- ARall$order
+  #       roots <- Mod(polyroot(c(rev(-ARall$ar), 1)))
+  #       smARmaxeig[i] <- max(roots)
+  #       detB[i] <- (prod(roots))^(2/ARn[i])
+  #     }
+  #   }else{ nYR<-NA
+  #   nARR[i] <- NA
+  #   nSK[i] <- NA
+  #   nKURT[i] <- NA
+  #   nCV[i] <- NA
+  #   nACF[i] <- NA
+  #   nSPECT[, i] <- NA
+  #   nDENSITYRATIO[i] <- NA
+  #   if (AR_n) {
+  #     ARall <- ar.ols(nMR[, i], aic = TRUE, order.max = 6,
+  #                     demean = F, intercept = F)
+  #     smARall[i] <- ARall$ar[1]
+  #     ARn[i] <- ARall$order
+  #     roots <- Mod(polyroot(c(rev(-ARall$ar), 1)))
+  #     smARmaxeig[i] <- max(roots)
+  #     detB[i] <- (prod(roots))^(2/ARn[i])
+  #   }
+  #   }
+  # }
+  # nRETURNRATE = 1/nARR
+  # timevec <- seq(1, length(nARR))
+  #
+  # KtAR <- try(cor.test(timevec, nARR, alternative = c("two.sided"),
+  #                      method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtACF <- try(cor.test(timevec, nACF, alternative = c("two.sided"),
+  #                       method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtSD <- try(cor.test(timevec, nSD, alternative = c("two.sided"),
+  #                      method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtSK <- try(cor.test(timevec, nSK, alternative = c("two.sided"),
+  #                      method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtKU <- try(cor.test(timevec, nKURT, alternative = c("two.sided"),
+  #                      method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtDENSITYRATIO <- try(cor.test(timevec, nDENSITYRATIO, alternative = c("two.sided"),
+  #                                method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtRETURNRATE <- try(cor.test(timevec, nRETURNRATE, alternative = c("two.sided"),
+  #                              method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  # KtCV <- try(cor.test(timevec, nCV, alternative = c("two.sided"),
+  #                      method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+  #
+  # if(inherits(KtAR, "try-error")){ #error occurs if too few observations therefore is applicable to all measures
+  #   warning("Correlation coefficents not returned as too few observations")
+  #   KtAR <- NA
+  #   KtSD <- NA
+  #   KtSK <- NA
+  #   KtKU <- NA
+  #   KtCV <- NA
+  #   KtDENSITYRATIO <- NA
+  #   KtRETURNRATE <- NA
+  #   KtACF <- NA
+  # }
 #   out.cor <- data.frame("ar1" = KtAR, "SD" = KtSD,"skew" = KtSK, "kurt" = KtKU,
 #                         "cv" = KtCV, "rr" = KtRETURNRATE,  "dr" = KtDENSITYRATIO, "acf" = KtACF)
 #
@@ -219,6 +219,7 @@ winsize_true <- round(dim(data)[1] * winsize/100)
 
 RES <- list()
 for(i in 1:(dim(data)[1]-winsize_true+1)){
+  if(length(which(diff(data[i:(i+winsize_true-1),2])!=0))>0){
 
   nARR  <- ar.ols(data[i:(i+winsize_true-1),2], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
 
@@ -239,6 +240,16 @@ for(i in 1:(dim(data)[1]-winsize_true+1)){
 
   nRETURNRATE = 1/nARR
 
+  }else{
+    nARR <- NA
+    nSK <- NA
+    nKURT <- NA
+    nSD <- NA
+    nACF <- NA
+    nDENSITYRATIO<- NA
+    nRETURNRATE <- NA
+  }
+
   RES[[i]] <- data.frame("timeindex" = data[i+winsize_true-1,1],
                          "ar1" = nARR,
                          "skew" = nSK,
@@ -247,7 +258,6 @@ for(i in 1:(dim(data)[1]-winsize_true+1)){
                          "acf" = nACF,
                          "dr" = nDENSITYRATIO,
                          "rr" = nRETURNRATE)
-
 }
 output<-do.call("rbind", RES)
 output$cv <- sapply(1:(dim(data)[1]-winsize_true+1),function(i){
