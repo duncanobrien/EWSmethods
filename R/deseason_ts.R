@@ -45,14 +45,16 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
 
   increment<-increment[1]
   method<-method[1]
+  #data1<- data
 
   # remove any columns that contain only zeros
-  data1<-data
-  if(any(apply(data[,-1],2,mean,na.rm=T)==0)){
+  if(any(apply(as.data.frame(data[,-1]),2,mean,na.rm=T)==0)){
     data1<-data[,-(which(apply(data[,-1],2,mean,na.rm=T)==0)+1)]
     cat(paste(length(which(apply(data[,-1],2,mean,na.rm=T)==0)),"columns containing all zeros omitted\n"))
+    data1 <- as.data.frame(data1)
+    }else{
+  data1 <- as.data.frame(data)
   }
-  data1 <- as.data.frame(data1)
   #====================================================================================
   # 1) FORMAT DATES AND AGGREGATE TAXA BY INCREMENT:
   #====================================================================================
