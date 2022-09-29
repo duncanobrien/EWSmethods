@@ -244,7 +244,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition   0.007305885         0.9572502          0.03544404
+#> 1 Smooth Transition    0.01527405         0.9658694          0.01885661
 ```
 
 <br>
