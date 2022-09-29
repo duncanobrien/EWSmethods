@@ -57,7 +57,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                            "maxAR" = max.ar,
                            "meanSD" = mean.sd,
                            "maxSD" = max.sd,
-                           "eigenMAF" = eigen,
+                           "eigenMAF" = -1*eigen, #as expected to decrease
                            "mafAR" = ar,
                            "mafSD" = sd,
                            "pcaAR" = pca.ar,
@@ -150,7 +150,7 @@ wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, t
                              "maxAR" = max.ar,
                              "meanSD" = mean.sd,
                              "maxSD" = max.sd,
-                             "eigenMAF" = eigen,
+                             "eigenMAF" = -1*eigen, #as expected to decrease
                              "mafAR" = ar,
                              "mafSD" = sd,
                              "pcaAR" = pca.ar,

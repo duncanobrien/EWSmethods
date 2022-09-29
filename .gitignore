@@ -6,3 +6,5 @@
 docs
 inst/doc
 inst/python/weights/**/*.h5
+/doc/
+/Meta/
