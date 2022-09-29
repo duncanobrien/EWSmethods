@@ -48,6 +48,7 @@ reference:
      Functions useful for preprocessing
      data prior to analysis.
   contents:
+  - detrend_ts
   - deseason_ts
 
 - title: Datasets

@@ -134,31 +134,41 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
       inc <- overall.inc[i]
       #(byinc[i,-c(1:2)]-oim[which(oim$increment==inc),-1])/oisd[which(oisd$increment==inc),-1]->zscore
       (byinc[i,-c(1:2)]-oim[which(oim$increment==inc),-1])->zscore
-
       zscores<-rbind(zscores,zscore)}
 
     zscores <- data.frame(byinc[,1:2],zscores)
+    #zscores <- pmax(zscores,0)
+
 
     #cat("data successfully z-scored with deseasoning\n")
   }
 
   if (method=="decompose"){
     byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)],FUN = function(x){
-      x - c(stats::decompose(stats::ts(x,frequency = 12),type="additive")$seasonal)
+      tmp.decomp <- stats::decompose(stats::ts(x,frequency = 12),type="additive")
+      #x - c(tmp.decomp$seasonal)
+      pmax(tmp.decomp$trend+tmp.decomp$random,0)
     })
     zscores<-byinc
   }
 
+
   if (method=="stl"){
     byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)],FUN = function(x){
-      x - c(stats::stl(stats::ts(x,frequency = 12),s.window=13, robust=F)$time.series[,1])
-    })
+      tmp.decomp <-stats::stl(stats::ts(x,frequency = 12),s.window=13, robust=F)
+
+      #c(tmp.decomp$time.series[,1])
+
+      pmax(tmp.decomp$time.series[,2]+tmp.decomp$time.series[,3],0)
+
+      })
     zscores<-byinc
   }
 
   if(method=="x11"){
     byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)],FUN = function(x){
       tmp.ts <- stats::ts(x,start = c(as.numeric(substr(byinc$date[1],1,4)), as.numeric(substr(byinc$date[1],6,7))),frequency = 12)
+
       if(any(tmp.ts == 0)){
         tmp.ts <- tmp.ts+1
         out <- tryCatch(forecast::seasadj(seasonal::seas(tmp.ts,estimate.maxiter = 9999,x11="")), error=function(e){

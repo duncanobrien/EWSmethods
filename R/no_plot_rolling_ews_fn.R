@@ -212,7 +212,7 @@ no.plot.ews<-function(timeseries, winsize = 50, detrending = c("no", "gaussian",
   data <- data.matrix(timeseries)
 
   if(length(dim(timeseries)) != 2){
-  stop("not right format of timeseries input")
+  stop("not right format of data input")
 }
 
 winsize_true <- round(dim(data)[1] * winsize/100)
