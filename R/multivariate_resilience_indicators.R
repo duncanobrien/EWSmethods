@@ -238,7 +238,6 @@ maf <- function(x){
 #'
 #' @importFrom infotheo discretize
 #' @importFrom infotheo multiinformation
-#' @importFrom NlinTS mi_disc
 
 #' @noRd
 #'
@@ -250,9 +249,13 @@ MI <- function(data, bins = 5, method = "emp"){
   }
   dat <- infotheo::discretize(data,nbins = bins)
 
-  #out <- infotheo::multiinformation(dat,method = method)
+  out <- infotheo::multiinformation(dat,method = method)
 
-  out <- NlinTS::mi_disc(dat,normalize = T)
+  #out <- NlinTS::mi_disc(dat,normalize = T)
+
+  #out <-sum(sapply(colnames(dat),FUN = function(x) infotheo::entropy(dat[,x],method = method))) - infotheo::entropy(dat, method = method)
+
+
   return(out)
 }
 

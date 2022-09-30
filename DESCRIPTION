@@ -36,7 +36,6 @@ Imports:
     seasonal,
     forecast,
     infotheo,
-    NlinTS,
     zoo
 RoxygenNote: 7.2.1
 URL: https://github.com/duncanobrien/EWSmethods,
