@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 This tutorial introduces how to interface with **EWSNet**, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb *et al.* 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific [website and documentation](https://ewsnet.github.io) or the associated [publication](https://royalsocietypublishing.org/doi/10.1098/rsos.211475).
 
-__NOTE__ This version of EWSNet differs from that published by Deb *et al.* (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This immproves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.
+__NOTE__ This version of EWSNet differs from that published by Deb *et al.* (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This improves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.
 
 <br>  
 
@@ -158,7 +158,7 @@ Here we see how prediction probabilities fluctuate with new data, with the trend
 
 In the circumstance where training data is available, it may be preferable to finetune EWSNet. Finetuning alters the EWSNet model weights based upon the training data in an attempt to improve predictions. For example, the user could simulate their own collapsing time series of the same length as their test data. EWSNet would then be tuned to identify features specific to the time series of interest. 
 
-An example is given below using a mock data set matched to the same length of `pre_simTransComms` - `r length(pre_simTransComms[,3])`.
+An example is given below using a mock data set matched to the same length of `pre_simTransComms` - `r length(pre_simTransComms[,3])` data points.
 
 ```{r ewsnet_finetune, eval= FALSE}
 x <- matrix(nrow = length(pre_simTransComms[,3]), ncol = 10)

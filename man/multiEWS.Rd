@@ -6,6 +6,8 @@
 \usage{
 multiEWS(
   data,
+  metrics = c("meanAR", "maxAR", "meanSD", "maxSD", "eigenMAF", "mafAR", "mafSD",
+    "pcaAR", "pcaSD", "eigenCOV", "maxCOV", "mutINFO"),
   method = c("expanding", "rolling"),
   ggplotIt = TRUE,
   winsize = 50,
@@ -16,6 +18,8 @@ multiEWS(
 }
 \arguments{
 \item{data}{A dataframe where the first column is an equally spaced time vector and all other columns are individual time series. These could be different species, populations or measurements.}
+
+\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"meanSD"}, \code{"maxSD"}, \code{"meanAR"}, \code{"maxAR"}, \code{"eigenMAF"}, \code{"mafAR"}, \code{"mafSD"}, \code{"pcaAR"}, \code{"pcaSD"}, \code{"eigenCOV"}, \code{"maxCOV"} and \code{"mutINFO"}.}
 
 \item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
 

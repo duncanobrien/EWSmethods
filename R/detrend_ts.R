@@ -5,7 +5,7 @@
 #' @param data The dataframe to be detrended. The first column must be a vector of dates with all other columns the individual time series.
 #' @param method The method of detrending. Options include \code{"linear"} (residuals of a linear regression), \code{loess} (smoothing by local polynomial regression), \code{gaussian} (smoothing by a gaussian kernel), or \code{first.difference}.
 #' @param bandwidth If \code{method = "gaussian"}, dictates the bandwidth of the gaussian kernel. If \code{NULL}, this is estimated from the data.
-#' @param span If \code{method = "loess"}, controls the degree of smoothing. If \code{NULL}, is set to 0.25.
+#' @param span If \code{method = "loess"}, controls the degree of smoothing as a proportion of points to be used (if \code{span = 1}, all points are used)
 #' @param degree If \code{method = "loess"}, specifies the degree polynomials allowed. Options are normally \code{1} or \code{2}.
 #'
 #' @returns Dataframe of deseasoned time series.
@@ -28,7 +28,7 @@
 #' @export
 
 
-detrend_ts <- function(data, method = "linear", bandwidth = NULL, span = NULL, degree = 2){
+detrend_ts <- function(data, method = "linear", bandwidth = NULL, span = 0.25, degree = 2){
 
   if(length(dim(data)) == 1){
     stop("not right format of data input")

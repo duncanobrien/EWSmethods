@@ -4,7 +4,7 @@
 \alias{detrend_ts}
 \title{Detrend Time Series}
 \usage{
-detrend_ts(data, method = "linear", bandwidth = NULL, span = NULL, degree = 2)
+detrend_ts(data, method = "linear", bandwidth = NULL, span = 0.25, degree = 2)
 }
 \arguments{
 \item{data}{The dataframe to be detrended. The first column must be a vector of dates with all other columns the individual time series.}
@@ -13,7 +13,7 @@ detrend_ts(data, method = "linear", bandwidth = NULL, span = NULL, degree = 2)
 
 \item{bandwidth}{If \code{method = "gaussian"}, dictates the bandwidth of the gaussian kernel. If \code{NULL}, this is estimated from the data.}
 
-\item{span}{If \code{method = "loess"}, controls the degree of smoothing. If \code{NULL}, is set to 0.25.}
+\item{span}{If \code{method = "loess"}, controls the degree of smoothing as a proportion of points to be used (if \code{span = 1}, all points are used)}
 
 \item{degree}{If \code{method = "loess"}, specifies the degree polynomials allowed. Options are normally \code{1} or \code{2}.}
 }

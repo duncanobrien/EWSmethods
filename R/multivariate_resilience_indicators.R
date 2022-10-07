@@ -1,6 +1,7 @@
 #' Multivariate Early Warning Signals
 #'
 #' @param data A n x m dataframe with the first column being time indices and the remainder of the columns being species abundances.
+#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"meanSD"}, \code{"maxSD"}, \code{"meanAR"}, \code{"maxAR"}, \code{"eigenMAF"}, \code{"mafAR"}, \code{"mafSD"}, \code{"pcaAR"}, \code{"pcaSD"}, \code{"eigenCOV"}, \code{"maxCOV"} and \code{"mutINFO"}.
 #' @param method A single string stating either \code{"expanding"} or \code{"rolling"}.\code{"expanding"} calls the composite, expanding window EWS assessment. \code{"rolling"} calls the typical, rolling window EWS assessment.
 #' @param winsize Numeric. If "method" = \code{"rolling"}, defines the window size of the rolling window as a percentage of the time series length.
 #' @param burn_in Numeric. If "method" = \code{"expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
@@ -21,9 +22,11 @@
 #' @noRd
 
 
-wMAF <- function(data,method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
+wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"),
+                 method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
 
   meth <- match.arg(method,choices = c("rolling","expanding"))
+  metrics <-match.arg(metrics, choices =  c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"), several.ok=T)
 
   if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
   data <- as.data.frame(data)

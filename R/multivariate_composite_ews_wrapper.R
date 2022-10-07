@@ -3,6 +3,7 @@
 #' A single function for performing early warning signal (EWS) assessment on multivariate systems where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling or expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and all other columns are individual time series. These could be different species, populations or measurements.
+#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"meanSD"}, \code{"maxSD"}, \code{"meanAR"}, \code{"maxAR"}, \code{"eigenMAF"}, \code{"mafAR"}, \code{"mafSD"}, \code{"pcaAR"}, \code{"pcaSD"}, \code{"eigenCOV"}, \code{"maxCOV"} and \code{"mutINFO"}.
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
 #' @param ggplotIt Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND the estimated dimension reduction.
 #' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series' length.
@@ -49,12 +50,14 @@
 #' @importFrom dplyr .data
 #'
 #' @export
-multiEWS <- function(data, method = c("expanding","rolling"),
+multiEWS <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"),
+                     method = c("expanding","rolling"),
                                      ggplotIt = TRUE,winsize = 50,
                                      burn_in = 5, threshold = 2,
                                      tail.direction = "one.tailed"){
 
   method <- match.arg(method,choices = c("rolling","expanding"))
+  metrics <-match.arg(metrics, choices =  c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"), several.ok=T)
   pal <- c("#6886c4",
            "#bfbd3d",
            "#5d3099",
@@ -75,10 +78,11 @@ multiEWS <- function(data, method = c("expanding","rolling"),
 
   if(method == "expanding"){
 
-    bind.res <- wMAF(data = data,threshold = threshold, burn_in = burn_in,
+    bind.res <- wMAF(data = data,metrics=metrics,threshold = threshold, burn_in = burn_in,
                      tail.direction = tail.direction,
                       method = "expanding")
 
+    bind.res$raw <- subset(bind.res$raw,bind.res$raw$metric.code %in% metrics)
     bind.res$raw$str<-(bind.res$raw$metric.score-bind.res$raw$rolling.mean)/bind.res$raw$rolling.sd
     bind.res$raw<-as.data.frame(bind.res$raw)
 
@@ -93,9 +97,9 @@ multiEWS <- function(data, method = c("expanding","rolling"),
                            guide = guide_legend(order = 1, override.aes =
                                                   list(linetype = c(0),shape = c(16),col="black"))) +
         #scale_colour_manual(values = scales::hue_pal()(11),
-        scale_colour_manual(values = pal,
+        scale_colour_manual(values = pal[1:length(metrics)],
                             guide = guide_legend(order = 2, override.aes =
-                                                   list(linetype = rep(1,12),shape= NA))) +
+                                                   list(linetype = rep(1,length(metrics)),shape= NA))) +
         ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nindicator strength') +
@@ -136,8 +140,13 @@ multiEWS <- function(data, method = c("expanding","rolling"),
 
   if(method == "rolling"){
 
-    bind.res <- wMAF(data = data,winsize = winsize,method = "rolling")
+    bind.res <- wMAF(data = data,metrics=metrics,winsize = winsize,method = "rolling")
 
+    bind.res$raw <- bind.res$raw[,c("time",metrics)]
+    bind.res$cor <- as.data.frame(bind.res$cor[,c(metrics)])
+    if(length(bind.res$cor) == 1){
+      names(bind.res$cor) <- metrics
+    }
 
       if(isTRUE(ggplotIt)){
 
@@ -156,8 +165,8 @@ multiEWS <- function(data, method = c("expanding","rolling"),
           geom_line(aes(col= .data$metric.code))+
           geom_text(data = cor.dat,aes(label = .data$cor),size = 3,hjust=0.75)+
           #scale_colour_manual(values = scales::hue_pal()(11),
-          scale_colour_manual(values = pal,
-                              guide = guide_legend(override.aes = list(linetype = rep(1,12),shape=NA))) +
+          scale_colour_manual(values = pal[1:length(metrics)],
+                              guide = guide_legend(override.aes = list(linetype = rep(1,length(metrics)),shape=NA))) +
           ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           labs(color='Multivariate EWS\nindicator trend') +
