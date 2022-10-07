@@ -85,7 +85,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Using EWSNet</h1>
                         <h4 data-toc-skip class="author">Duncan O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-09-30</h4>
+            <h4 data-toc-skip class="date">2022-10-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -97,7 +97,7 @@
 <h2 id="about-this-tutorial">About this tutorial<a class="anchor" aria-label="anchor" href="#about-this-tutorial"></a>
 </h2>
 <p>This tutorial introduces how to interface with <strong>EWSNet</strong>, a machine learning model trained to predict critical transitions, tipping points, and regime shifts (Deb <em>et al.</em> 2022). We will only focus on how to set up your R session to interact with EWSNet and how to interpret the output rather than the theory and mathematics underlying the model. If you are interest in those details, please refer to the EWSNet specific <a href="https://ewsnet.github.io" class="external-link">website and documentation</a> or the associated <a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211475" class="external-link">publication</a>.</p>
-<p><strong>NOTE</strong> This version of EWSNet differs from that published by Deb <em>et al.</em> (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This immproves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.</p>
+<p><strong>NOTE</strong> This version of EWSNet differs from that published by Deb <em>et al.</em> (2022) in that is has been retrained using a range of time series lengths (minimum = 15). This improves the accuracy of EWSNet over a range of time series lengths but we recommend that the minimum length to be tested should be 15 data points.</p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -167,7 +167,7 @@
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Critical Transition     0.2658612        0.05696279            0.677176</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Critical Transition     0.2576549        0.06387473           0.6784704</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
@@ -217,7 +217,7 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 <h3 id="finetuning-ewsnet">3. Finetuning EWSNet<a class="anchor" aria-label="anchor" href="#finetuning-ewsnet"></a>
 </h3>
 <p>In the circumstance where training data is available, it may be preferable to finetune EWSNet. Finetuning alters the EWSNet model weights based upon the training data in an attempt to improve predictions. For example, the user could simulate their own collapsing time series of the same length as their test data. EWSNet would then be tuned to identify features specific to the time series of interest.</p>
-<p>An example is given below using a mock data set matched to the same length of <code>pre_simTransComms</code> - 191.</p>
+<p>An example is given below using a mock data set matched to the same length of <code>pre_simTransComms</code> - 191 data points.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
@@ -326,7 +326,7 @@ Conceptual diagram of A) the type of transitions that EWSNet has been trained on
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Duncan O’Brien, Smita Deb, Christopher Clements.</p>
+<p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Partha Dutta, Christopher Clements.</p>
 </div>
 
 <div class="pkgdown-footer-right">
