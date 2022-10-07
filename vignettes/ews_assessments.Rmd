@@ -289,7 +289,7 @@ matplot(x = multi_spp_data$time, y = multi_spp_data[,2:6], type = "l", xlab = "D
 As `multi_spp_data` is random, there are few pronounced cycles but for the sake of this tutorial, `deseason_ts()` would be applied to it as such:
 
 ```{r deseason,dpi=144}
-deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "stl", order = "ymd")
+deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "average", order = "ymd")
 
 matplot(x = deseas_dat$date, y = deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
 ```
