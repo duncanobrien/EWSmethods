@@ -60,8 +60,8 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
   #====================================================================================
 
   dates<-as.character(data1[,1])
-  d<-strsplit(dates[1],"")[[1]]
-  sep<-unique(d[is.na(suppressWarnings(as.numeric(d)))])
+  d<-base::strsplit(dates[1],"")[[1]]
+  sep<-base::unique(d[is.na(suppressWarnings(as.numeric(d)))])
   if(length(sep)!=1) stop("Unrecognized date format. Make sure dates are in first column
   and use consistent non-numeric seperator between year, month, and day.")
   d<-data.frame(apply(t(data.frame(strsplit(dates,sep))),2,as.numeric))
@@ -78,7 +78,7 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
   data2<-stats::aggregate(data2[,-1],by=list(data2[,1]),mean,na.rm=T)
   names(data2)[1]<-"date"
   date<-seq.Date(min(data2[,1]),max(data2[,1]),1)
-  data2<-merge(data.frame(date=date),data2,all=T)
+  data2<-base::merge(data.frame(date=date),data2,all=T)
   taxa <- data2[,-1]
 
   if(increment=="month") t<-"%Y-%m"
@@ -137,8 +137,6 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
       zscores<-rbind(zscores,zscore)}
 
     zscores <- data.frame(byinc[,1:2],zscores)
-    #zscores <- pmax(zscores,0)
-
 
     #cat("data successfully z-scored with deseasoning\n")
   }

@@ -280,7 +280,7 @@ spp_data <- sapply(1:dim(spp_data)[2], function(x){
   
   })
 
-multi_spp_data <- cbind("time" = seq(as.Date('2000/01/01'), as.Date('2004/12/01'), by = "month"), as.data.frame(spp_data))
+multi_spp_data <- cbind("time" = seq(base::as.Date('2000/01/01'), base::as.Date('2004/12/01'), by = "month"), as.data.frame(spp_data))
   
 matplot(x = multi_spp_data$time, y = multi_spp_data[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Seasonal five species community")
 
