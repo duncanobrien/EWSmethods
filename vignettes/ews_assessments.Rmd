@@ -274,13 +274,15 @@ Lets create some dummy monthly data that we can deseason.
 ```{r create_seasonal,dpi=144}
 spp_data <- matrix(nrow = 5*12, ncol = 5)
 
+seasonal_cycle <-  20*sin(2*pi*(1:5*12)/12)
+
 spp_data <- sapply(1:dim(spp_data)[2], function(x){
 
-  spp_data[,x] <- rnorm(5*12,mean=20,sd=5)
+  spp_data[,x] <- ts(rnorm(5*12,mean = 20, sd = 3) + seasonal_cycle, freq = 12, start = c(2000, 1)) #add seasonal cycle to random noise
   
   })
 
-multi_spp_data <- cbind("time" = seq(base::as.Date('2000/01/01'), base::as.Date('2004/12/01'), by = "month"), as.data.frame(spp_data))
+multi_spp_data <- cbind("time" = base::seq(base::as.Date('2000/01/01'), base::as.Date('2004/12/01'), by = "month"), as.data.frame(spp_data))
   
 matplot(x = multi_spp_data$time, y = multi_spp_data[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Seasonal five species community")
 
@@ -296,7 +298,7 @@ matplot(x = deseas_dat$date, y = deseas_dat[,2:6], type = "l", xlab = "Date", yl
 
 The `method = "stl"` argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. `method = "decompose"/method = "x11"` perform a similar process but use classical decomposition and x11 ARIMA modelling (Ladiray & Quenneville, 2001) respectively. `method = "average"` is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key. `deseason_ts()` simply provides the default procedure for each of these methods and consequently we visualising the results of `deseason_ts()` before using it in downstream analyses.
 
-In our example, we can see that large monthly values shared across multiple years have been shrunk - e.g. the red dashed species at ~2001 - whereas anomalous values have been maintained - e.g. the green dotted species at ~2003.5.
+In our example, we can see that large monthly values shared across multiple years have been shrunk - e.g. the black dashed species at ~2001 - whereas anomalous values have been maintained - e.g. the green dotted species at ~2002.75.
 
 <br>  
 
