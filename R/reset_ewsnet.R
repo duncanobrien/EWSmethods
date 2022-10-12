@@ -47,7 +47,7 @@ ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
         zip <- paste(c(target_folder,"temp.zip"),collapse = "/")
 
         utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                      destfile  = zip, overwrite = TRUE) #VariableLenModel EWSNet
+                      destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
 
         utils::unzip(zip,exdir = target_folder)
         unlink(zip)
@@ -67,7 +67,7 @@ ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
       #               destfile  = zip, overwrite = TRUE) #original EWSNet
 
       utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                destfile  = zip, overwrite = TRUE) #VariableLenModel EWSNet
+                destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
 
       utils::unzip(zip,exdir = target_folder)
       unlink(zip)
