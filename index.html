@@ -85,7 +85,9 @@
 </div>
 <!-- badges: start -->
 
-<!-- badges: end --><p><code>EWSmethods</code> is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos <em>et al.</em> 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. <code>EWSmethods</code> also provides an R interface to <a href="https://ewsnet.github.io" class="external-link"><strong>EWSNet</strong></a>, a deep learning modelling framework for predicting critical transitions (Deb <em>et al.</em> 2022).</p>
+
+<!-- badges: end -->
+<p><code>EWSmethods</code> is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos <em>et al.</em> 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. <code>EWSmethods</code> also provides an R interface to <a href="https://ewsnet.github.io" class="external-link"><strong>EWSNet</strong></a>, a deep learning modelling framework for predicting critical transitions (Deb <em>et al.</em> 2022).</p>
 <p><br></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -106,7 +108,7 @@
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="1-early-warning-signals">1. Early Warning Signals<a class="anchor" aria-label="anchor" href="#1-early-warning-signals"></a>
+<h2 id="id_1-early-warning-signals">1. Early Warning Signals<a class="anchor" aria-label="anchor" href="#id_1-early-warning-signals"></a>
 </h2>
 <p>Early warning signals are a collection of summary statistics that attempt to characterise the phenomenon of <strong>critical slowing down (CSD)</strong>. As a system approaches a tipping point (or bifurcation), it takes longer and longer for it to recover when it is pushed away from stability (Dakos <em>et al.</em> 2012). This increased <strong>return rate</strong> is a manifestation of CSD and can be detectable in data. <code>EWSmethods</code> provides a collection of these summary statistics which can be calculated from either univariate or multivariate time series using <code><a href="reference/uniEWS.html">uniEWS()</a></code> and <code><a href="reference/multiEWS.html">multiEWS()</a></code> respectively.</p>
 <p><br></p>
@@ -183,7 +185,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="2-ewsnet">2. EWSNet<a class="anchor" aria-label="anchor" href="#2-ewsnet"></a>
+<h2 id="id_2-ewsnet">2. EWSNet<a class="anchor" aria-label="anchor" href="#id_2-ewsnet"></a>
 </h2>
 <p>The other half of <code>EWSmethods</code> allows you to query the <a href="https://www.python.org" class="external-link">Python-based</a> <strong>EWSNet</strong> via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/" class="external-link">R package</a>) and then calls <strong>EWSNet</strong> to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> before b) using <code><a href="reference/ewsnet_predict.html">ewsnet_predict()</a></code>.</p>
 <p>However, because this is the first time using EWSNet via <code>EWSmethods</code>, we must first download the pretrained model weights from <a href="https://ewsnet.github.io" class="external-link uri">https://ewsnet.github.io</a>.</p>
