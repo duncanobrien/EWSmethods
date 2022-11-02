@@ -296,7 +296,7 @@ deseas_dat <- deseason_ts(data = multi_spp_data, increment = "month", method = "
 matplot(x = deseas_dat$date, y = deseas_dat[,2:6], type = "l", xlab = "Date", ylab = "Density",  main = "Deseasoned five species community")
 ```
 
-The `method = "stl"` argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. `method = "decompose"/method = "x11"` perform a similar process but use classical decomposition and x11 ARIMA modelling (Ladiray & Quenneville, 2001) respectively. `method = "average"` is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key. `deseason_ts()` simply provides the default procedure for each of these methods and consequently we visualising the results of `deseason_ts()` before using it in downstream analyses.
+The `method = "stl"` argument shows that we have chosen to deseason using LOESS (locally weighted smoothing) by estimating the cyclical component for each time series and then subtracting it. `method = "decompose"/method = "x11"` perform a similar process but use classical decomposition and x11 ARIMA modelling (Ladiray & Quenneville, 2001) respectively. `method = "average"` is the simplest method where the average increment value is estimated for each unique increment and that value subtracted from each data point that shares that increment key. `deseason_ts()` simply provides the default procedure for each of these methods and consequently we visualise the results of `deseason_ts()` before using it in downstream analyses.
 
 In our example, we can see that large monthly values shared across multiple years have been shrunk - e.g. the black dashed species at ~2001 - whereas anomalous values have been maintained - e.g. the green dotted species at ~2002.75.
 
@@ -308,7 +308,7 @@ Clements, C.F. & Ozgul, A. (2016) Including trait-based early warning signals he
 
 Clements, C.F., McCarthy, M.A. & Blanchard, J.L. (2019) Early warning signals of recovery in complex systems. *Nature Communications*, 10, 1681. [doi:10.1038/s41467-019-09684-y](https://www.nature.com/articles/s41467-019-09684-y)
 
-Cleveland, R.B., Cleveland, W.S., McRae, J.E., & Terpenning, I.J. (1990) STL: A seasonal-trend decomposition procedure based on loess. *Journal of Official Statistics*, 6, 1, 3–33. [http://bit.ly/stl1990](http://bit.ly/stl1990)
+Cleveland, R.B., Cleveland, W.S., McRae, J.E., & Terpenning, I.J. (1990) STL: A seasonal-trend decomposition procedure based on loess. *Journal of Official Statistics*, 6, 1, 3–33. [http://bit.ly/stl1990](https://www.scb.se/contentassets/ca21efb41fee47d293bbee5bf7be7fb3/stl-a-seasonal-trend-decomposition-procedure-based-on-loess.pdf)
 
 Dablander, F., Heesterbeek H., Borsboom D. & Drake J.M. (2022) Overlapping timescales obscure early warning signals of the second COVID-19 wave. *Proceedings of the Royal Society B* , 289, 20211809. [doi:10.1098/rspb.2021.1809](https://royalsocietypublishing.org/doi/full/10.1098/rspb.2021.1809)
 
@@ -320,7 +320,7 @@ Gama Dessavre, A., Southall, E., Tildesley, M.J. & Dyson, L. (2019) The problem 
 
 Ladiray, D., & Quenneville, B. (2001) Seasonal Adjustment with the X-11 Method. Springer. [doi:10.1007/978-1-4613-0175-2](https://link.springer.com/book/10.1007/978-1-4613-0175-2)
 
-Lenton T M., Livina V.N., Dakos V., van Nes E.H. & Scheffer M. (2012) Early warning of climate tipping points from critical slowing down: comparing methods to improve robustness *Philosophical Transactions of the Royal Society A* 370, 1185–1204. [doi:10.1098/rsta.2011.03047](https://doi.org/10.1098/rsta.2011.03047)
+Lenton T M., Livina V.N., Dakos V., van Nes E.H. & Scheffer M. (2012) Early warning of climate tipping points from critical slowing down: comparing methods to improve robustness *Philosophical Transactions of the Royal Society A* 370, 1185–1204. [doi:10.1098/rsta.2011.03047](https://royalsocietypublishing.org/doi/10.1098/rsta.2011.0304)
 
 O'Brien, D.A. & Clements, C.F. (2021) Early warning signal reliability varies with COVID-19 waves. *Biology Letters*, 17, 20210487. [doi:10.1098/rsbl.2021.0487](https://royalsocietypublishing.org/doi/full/10.1098/rsbl.2021.0487)
 

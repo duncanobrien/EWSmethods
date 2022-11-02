@@ -127,7 +127,7 @@ An additional way to use EWSNet is to explore how predictions change through tim
 
 For example, using our test data, we could use this code to identify transitions that may have happened in the past:
 
-```{r expanding_ewsnet, warning = FALSE,dpi=144}
+```{r expanding_ewsnet, eval = FALSE, warning = FALSE,dpi = 144}
 
 #define the range of indexes to test over
 expanding_range <- 50:length(pre_simTransComms[,3]) 
@@ -149,7 +149,9 @@ ggplot(expanding_ewsnet |> pivot_longer(-cutoff_ind,names_to = "Prediction",valu
     geom_point(aes(col=Prediction)) + theme_bw() +
     xlab("Assessment index") + ylab("Prediction probability")
 ```
-
+```{r figure2, echo=F}
+knitr::include_graphics("expanding_ewsnet-1.png", dpi = 144)
+```
 Here we see how prediction probabilities fluctuate with new data, with the trends in probabilities also providing information on how the system has changed over time.
 
 <br>  

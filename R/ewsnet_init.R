@@ -51,7 +51,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
   if(inherits(conda, "try-error")){
 
     if(isTRUE(auto)){
-      reticulate::install_miniconda(force = F)
+      reticulate::install_miniconda(force = F,update=F)
 
       reticulate::conda_create(
         envname = paste0(envname),
@@ -93,7 +93,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
     }else{
       message("Attention: may take up to 10 minutes to complete")
 
-      reticulate::install_miniconda(force = F)
+      reticulate::install_miniconda(force = F,update=F)
 
       reticulate::conda_create(
         envname = paste0(envname),
