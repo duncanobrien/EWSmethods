@@ -3,6 +3,9 @@
 \name{mvi}
 \alias{mvi}
 \title{Multivariate Variance Index function}
+\source{
+Brock, W.A. & Carpenter, S.R. (2006) Variance as a leading indicator of regime shift in ecosystem services. Ecology and Society 11(2): 9.
+}
 \usage{
 mvi(data, winsize)
 }
