@@ -86,7 +86,7 @@
                         <h4 data-toc-skip class="author">Duncan
 O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2022-11-02</h4>
+            <h4 data-toc-skip class="date">2022-11-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/ews_assessments.Rmd" class="external-link"><code>vignettes/ews_assessments.Rmd</code></a></small>
       <div class="d-none name"><code>ews_assessments.Rmd</code></div>
@@ -322,8 +322,8 @@ the beginning of assessment (O’Brien &amp; Clements, 2021).</p>
 <span>                         threshold <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/expanding_ews_fig-1.png" width="1050"></p>
 <p>Similar to the rolling window approach, EWS indicators calculated by
 expanding windows have exceeded the 2σ threshold for more than two
@@ -359,9 +359,9 @@ only available if <code>method = "expanding"</code> and
 <span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
 <span>                         trait_lab <span class="op">=</span> <span class="st">"Mean size (g)"</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 217 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 217 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/trait_ews_fig-1.png" width="1050"></p>
 <p><br></p>
 </div>
@@ -513,8 +513,8 @@ multivariate EWS indicators influences prediction reliability.</p>
 <span>                         burn_in <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>                         threshold <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 24 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="1050"></p>
 <p>In this circumstance, many of the indicators are warning at different
 times (e.g. <code>"eigenMAF"</code> at <code>time ~= 65</code> or
