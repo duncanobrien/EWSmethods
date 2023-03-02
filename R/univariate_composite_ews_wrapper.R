@@ -111,6 +111,7 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
 
   method <- match.arg(method,choices = c("expanding","rolling"))
   tail.direction <- match.arg(tail.direction,choices = c("one.tailed","two.tailed"))
+  metrics <- match.arg(metrics,choices = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","SD","trait"), several.ok=T)
 
   if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
     data <- as.data.frame(data)
