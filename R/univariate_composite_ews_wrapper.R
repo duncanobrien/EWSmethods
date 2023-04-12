@@ -269,7 +269,7 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
       if(isTRUE(ggplotIt)){
 
         plot.dat <- bind.res$raw %>%
-          dplyr:: mutate(across(-c(.data$timeindex),~scale(.x)))%>%
+          dplyr::mutate(across(-c(.data$timeindex),~scale(.x)))%>%
           dplyr::left_join(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex")%>%
           tidyr::pivot_longer(-c(.data$timeindex,.data$count.used), names_to = "metric.code", values_to = "str")
 

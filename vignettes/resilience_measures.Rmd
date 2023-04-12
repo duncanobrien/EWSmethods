@@ -14,12 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-#find_emo <- system.file(package = "tt")
-#if(find_emo == ""){
-#devtools::install_github("hadley/emo",force = TRUE)
-#}
-library(emo)
 ```
 
 # About this tutorial
@@ -158,7 +152,7 @@ Conversely, to compute multivariate form of Jacobian estimation, we can use the 
 
 Note `E` and `tau` are not required for the `EWSmethods` form of index. For `E`, the number of species themselves are used for embedding, though this does limit the minimum length of time series to being the number of species. Instead, `theta` is impactful, and represents the tuning parameter for forecasts (if not provided, `multiJI()` identifies the optimal `theta` using root mean square error). Conversely, `tau` is held constant at `-1` as there is no self embedding due to the index being a multivariate measure. 
 
-> `r emo::ji("warning")` **Warning!** - 
+> ⚠️ **Warning!** - 
 > *`multiJI()` is significantly slower than any of the other resilience indicators provided by `EWSMethods` due to the multiple cross referencing required between species. Therefore increasing the number of species and length of time series (or decreasing `winsize`) can dramatically increase computation time*.
 
 <br>  

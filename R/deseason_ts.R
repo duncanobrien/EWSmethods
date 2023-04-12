@@ -86,7 +86,8 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
   if(increment=="week") t<-"%Y-%U"
   if(increment=="day") t<-"%Y-%j"
 
-  tstep=as.character(date,t)
+  #tstep = base::as.character(date,format=t)
+  tstep = base::as.character(format(date,t))
 
   byinc <- stats::aggregate(data2,by=list(tstep=tstep),mean,na.rm=T)
   byinc.taxa<-byinc[,-c(1:2)]
