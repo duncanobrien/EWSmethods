@@ -25,6 +25,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
+    <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
   </div>
 </li>
@@ -71,7 +72,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A numeric matrix of species abundances, names across columns, time across rows</p></dd>
+<dd><p>A numeric matrix of species abundances, names across columns, time across rows. The first column is a time vector, the remainder are species values.</p></dd>
 
 
 <dt>winsize</dt>
@@ -94,7 +95,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Estimate the MVI for the "1_38_1" community</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egMVI</span> <span class="op">&lt;-</span> <span class="fu">mvi</span><span class="op">(</span>data <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_38_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egMVI</span> <span class="op">&lt;-</span> <span class="fu">mvi</span><span class="op">(</span>data <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_38_1`</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>winsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

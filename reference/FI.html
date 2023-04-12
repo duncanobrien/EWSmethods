@@ -25,6 +25,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
+    <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
   </div>
 </li>
@@ -61,17 +62,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FI</span><span class="op">(</span><span class="va">timedat</span>, <span class="va">data</span>, <span class="va">sost</span>, <span class="va">winsize</span>, winspace <span class="op">=</span> <span class="fl">1</span>, TL <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FI</span><span class="op">(</span><span class="va">data</span>, <span class="va">sost</span>, <span class="va">winsize</span>, winspace <span class="op">=</span> <span class="fl">1</span>, TL <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>timedat</dt>
-<dd><p>A numeric vector of equal spacing representing the time points</p></dd>
-
-
-<dt>data</dt>
-<dd><p>A numeric matrix of individual time series across the columns. These could be different species, populations or measurements.</p></dd>
+    <dl><dt>data</dt>
+<dd><p>A numeric matrix of individual time series across the columns. These could be different species, populations or measurements. The first column must be an equally spaced time vector.</p></dd>
 
 
 <dt>sost</dt>
@@ -96,7 +93,7 @@
 
 <p>A list containing three objects:</p>
 <dl><dt>FI</dt>
-<dd><p>A numeric vector of Fisher information estimates</p></dd>
+<dd><p>A dataframe of Fisher information estimates and the last time point contributing to each window.</p></dd>
 
 <dt>midt_win</dt>
 <dd><p>A numeric vector of the time index at the centre of the window for that associated value in <code>FI</code>.</p></dd>
@@ -123,8 +120,7 @@
 <span class="r-in"><span><span class="va">eg.sost</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>, FUN <span class="op">=</span> <span class="va">sd</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#transpose required to ensure a 1 x n matrix</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egFI</span> <span class="op">&lt;-</span> <span class="fu">FI</span><span class="op">(</span>timedat <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">$</span><span class="va">time</span>,</span></span>
-<span class="r-in"><span>data <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egFI</span> <span class="op">&lt;-</span> <span class="fu">FI</span><span class="op">(</span>data <span class="op">=</span> <span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>sost <span class="op">=</span>  <span class="va">eg.sost</span>,</span></span>
 <span class="r-in"><span>winsize <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>winspace <span class="op">=</span> <span class="fl">1</span>,</span></span>

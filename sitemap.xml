@@ -16,6 +16,9 @@
     <loc>https://duncanobrien.github.io/EWSmethods/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/articles/resilience_measures.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/articles/using_ewsnet.html</loc>
   </url>
   <url>
@@ -58,18 +61,24 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/multiEWS.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/multiJI.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/multi_smap_jacobian.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/mvi.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc>
   </url>
   <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/smapJI.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/smap_jacobian.html</loc>
-  </url>
-  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/uniEWS.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/uniJI.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/uni_smap_jacobian.html</loc>
   </url>
 </urlset>

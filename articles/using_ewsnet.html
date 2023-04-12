@@ -49,6 +49,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
+    <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
   </div>
 </li>
@@ -86,7 +87,7 @@
                         <h4 data-toc-skip class="author">Duncan
 O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2023-03-02</h4>
+            <h4 data-toc-skip class="date">2023-04-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/using_ewsnet.Rmd" class="external-link"><code>vignettes/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -166,9 +167,9 @@ active and second what Python packages have been loaded:</p>
 <span><span class="co">#&gt; python:         /usr/share/miniconda/envs/EWSNET_env/bin/python</span></span>
 <span><span class="co">#&gt; libpython:      /usr/share/miniconda/envs/EWSNET_env/lib/libpython3.8.so</span></span>
 <span><span class="co">#&gt; pythonhome:     /usr/share/miniconda/envs/EWSNET_env:/usr/share/miniconda/envs/EWSNET_env</span></span>
-<span><span class="co">#&gt; version:        3.8.16 (default, Jan 17 2023, 23:13:24)  [GCC 11.2.0]</span></span>
+<span><span class="co">#&gt; version:        3.8.16 (default, Mar  2 2023, 03:21:46)  [GCC 11.2.0]</span></span>
 <span><span class="co">#&gt; numpy:          /usr/share/miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy</span></span>
-<span><span class="co">#&gt; numpy_version:  1.24.2</span></span>
+<span><span class="co">#&gt; numpy_version:  1.23.5</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; NOTE: Python version was forced by use_python function</span></span>
 <span></span>
@@ -217,7 +218,7 @@ over).</p>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Critical Transition     0.2672743        0.04899138           0.6837344</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Critical Transition     0.2572538        0.06432829           0.6784179</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
@@ -273,10 +274,10 @@ transitions that may have happened in the past:</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co">#plot the results</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">expanding_ewsnet</span> <span class="op">|&gt;</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">cutoff_ind</span>,names_to <span class="op">=</span> <span class="st">"Prediction"</span>,values_to <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">cutoff_ind</span>,y<span class="op">=</span><span class="va">prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>col<span class="op">=</span><span class="va">Prediction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"Assessment index"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Prediction probability"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">expanding_ewsnet</span> <span class="op">|&gt;</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">cutoff_ind</span>,names_to <span class="op">=</span> <span class="st">"Prediction"</span>,values_to <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">cutoff_ind</span>,y<span class="op">=</span><span class="va">prob</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span><span class="va">Prediction</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Assessment index"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Prediction probability"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="expanding_ewsnet-1.png" width="1400"> Here we see how
 prediction probabilities fluctuate with new data, with the trends in
 probabilities also providing information on how the system has changed
