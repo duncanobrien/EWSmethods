@@ -10,7 +10,7 @@ Brock, W.A. & Carpenter, S.R. (2006) Variance as a leading indicator of regime s
 mvi(data, winsize)
 }
 \arguments{
-\item{data}{A numeric matrix of species abundances, names across columns, time across rows}
+\item{data}{A numeric matrix of species abundances, names across columns, time across rows. The first column is a time vector, the remainder are species values.}
 
 \item{winsize}{Numeric. Defines the window size of the rolling window as a percentage of the time series length.}
 }
@@ -28,7 +28,7 @@ data(simTransComms)
 
 #Estimate the MVI for the "1_38_1" community
 
-egMVI <- mvi(data = simTransComms$`1_38_1`[,3:7],
+egMVI <- mvi(data = simTransComms$`1_38_1`[,2:7],
 winsize = 10)
 
 }

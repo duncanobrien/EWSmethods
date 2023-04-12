@@ -328,6 +328,6 @@ Persons, W.M. (1919) General considerations and assumptions. *The Review of Econ
 
 Southall E., Tildesley, M.J. & Dyson, L. (2022) How early can an upcoming critical transition be detected? *medRxiv* 2022.05.27.22275693. [doi:10.1101/2022.05.27.22275693](https://www.medrxiv.org/content/10.1101/2022.05.27.22275693v1)
 
-Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. *Scientific Reports*, 11, 9148. [10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)
+Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. *Scientific Reports*, 11, 9148. [doi:10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)
 
 <br>  

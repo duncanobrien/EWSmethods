@@ -11,7 +11,8 @@ Authors@R: c(
     person(given   = "Smita",
            family  = "Deb",
            email   = "smita.19maz0004@iitrpr.ac.in",
-           role    = "aut"),
+           role    = "aut",
+           comment = c(ORCID = "0000-0001-7037-7055")),
     person(given   = "Sahil",
            family  = "Sidheekh",
            email   = "sahil.sidheekh@outlook.com",
@@ -33,7 +34,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     data.table,
-    dplyr,
+    dplyr (>= 1.0.6),
     egg,
     forecast,
     ggplot2,
@@ -47,13 +48,14 @@ Imports:
     seasonal,
     tidyr,
     zoo
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 URL: https://github.com/duncanobrien/EWSmethods,
     https://duncanobrien.github.io/EWSmethods/
 BugReports: https://github.com/duncanobrien/EWSmethods/issues
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    emo
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)

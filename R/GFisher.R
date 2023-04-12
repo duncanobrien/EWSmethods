@@ -2,15 +2,14 @@
 #'
 #' Uses a multivariate array of time series to estimate Fisher information following the approach of Karunanithi et al. (2010).
 #'
-#' @param timedat A numeric vector of equal spacing representing the time points
-#' @param data A numeric matrix of individual time series across the columns. These could be different species, populations or measurements.
+#' @param data A numeric matrix of individual time series across the columns. These could be different species, populations or measurements. The first column must be an equally spaced time vector.
 #' @param sost A 1 x n matrix where n is a length equal to the number of time series in \code{data}. Each value is the 'size of state' tolerable for that time series and typically is represented by the standard deviation of the time series during a reference period.
 #' @param winsize Numeric value. Defines the window size of the rolling window as a percentage of the time series length.
 #' @param winspace Numeric value. The number of data points to roll the window over in each iteration. Must be less than \code{winsize}.
 #' @param TL Numeric value. The 'tightening level' or percentage of points shared between states that allows the algorithm to classify data points as the same state.
 #'
 #' @returns A list containing three objects:
-#' \item{FI}{A numeric vector of Fisher information estimates}
+#' \item{FI}{A dataframe of Fisher information estimates and the last time point contributing to each window.}
 #' \item{midt_win}{A numeric vector of the time index at the centre of the window for that associated value in \code{FI}.}
 #' \item{t_win}{A n x m numeric matrix where the length of n is the winspace and length of m is the number of window shifts made. Values are consequently the timepoint indices that contribute to that window.}
 #'
@@ -30,8 +29,7 @@
 #' eg.sost <- apply(simTransComms$`1_5_1`[,3:7], MARGIN = 2, FUN = sd) |>
 #' t() #transpose required to ensure a 1 x n matrix
 #'
-#' egFI <- FI(timedat = simTransComms$`1_5_1`$time,
-#' data = simTransComms$`1_5_1`[,3:7],
+#' egFI <- FI(data = simTransComms$`1_5_1`[,2:7],
 #' sost =  eg.sost,
 #' winsize = 10,
 #' winspace = 1,
@@ -40,7 +38,7 @@
 #' @export
 #'
 #'
-FI <- function(timedat,data,sost,winsize,winspace = 1,TL = 90){
+FI <- function(data,sost,winsize,winspace = 1,TL = 90){
   # calculates the FI from time series data.
   # Important parameters include:
   # FI: fisher information
@@ -59,6 +57,9 @@ FI <- function(timedat,data,sost,winsize,winspace = 1,TL = 90){
   hwin <- round(dim(data)[1] * winsize/100)
   t_win <- matrix(NA,nrow = hwin, ncol = 1)#?
   window <- 0
+
+  timedat <- data[,1]
+  data <- data[,-1]
 
   for (i in seq(from = 1, to = nrow(data), by = winspace)){
     #start big loop to go through all the data
@@ -133,7 +134,7 @@ FI <- function(timedat,data,sost,winsize,winspace = 1,TL = 90){
       }
     }
   }
-  listFI <- list("FI" = FI,"midt_win" = midt_win,"t_win" = t_win[,-1]) # t_win[,-1] drops NA column
+  listFI <- list("FI" = data.frame("time" = apply(t_win[,-1], MARGIN = 2, FUN = max),"FI" = FI),"midt_win" = midt_win,"t_win" = t_win[,-1]) # t_win[,-1] drops NA column
   return(listFI)
 }
 

@@ -41,8 +41,10 @@ reference:
     measures of system stability/resilience.
   contents:
   - FI
-  - smapJI
-  - smap_jacobian
+  - uniJI
+  - uni_smap_jacobian
+  - multiJI
+  - multi_smap_jacobian
   - mvi
 
 - title: "Data preparation"
@@ -59,4 +61,3 @@ reference:
   contents:
   - simTransComms
   - CODrecovery
-
