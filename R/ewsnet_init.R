@@ -42,6 +42,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
 
   if(isTRUE(conda_refresh)){
     reticulate::miniconda_uninstall() # start with a blank slate
+    message("Anaconda successfully removed")
     #reticulate::conda_remove(envname, packages = NULL, conda = "auto")
   }
 
