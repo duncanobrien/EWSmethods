@@ -30,13 +30,13 @@ You can install the development version of `EWSmethods` from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("duncanobrien/EWSmethods")
+devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
-**Be aware, due to the large file sizes of the EWSNet model weights
-(\~230MB), `EWSmethods` does not come bundled with them. Users must
-download weights using `ewsnet_init()` or `ewsnet_reset()` because
-interfacing with EWSNet.**
+> ⚠️ **Warning!** - *Due to the large file size of the EWSNet model
+> weights (\~230MB), `EWSmethods` does not come bundled with them. Users
+> must download weights using `ewsnet_reset()` before interfacing with
+> EWSNet.*.
 
 <br>
 
@@ -85,7 +85,7 @@ skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 100,sd=
 
 ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to compute
 
-roll_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "rolling", winsize = 50, ggplotIt =TRUE,  y_lab = "Skylark abundance") #lets use a rolling window approach
+roll_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "rolling", winsize = 50) #lets use a rolling window approach
 
 roll_ews$EWS$cor #return the Kendall Tau correlations for each EWS metric
 #>            SD        ar1       skew
@@ -97,6 +97,10 @@ In this case, we expect no transition as the data is randomly sampled
 from a normal distribution and this is evident in the Kendall Tau
 values, with no strong positive correlation with time:
 
+``` r
+plot(roll_ews,  y_lab = "Skylark abundance")
+```
+
 <img src="man/figures/README-rolling_plot-1.png" width="100%" />
 
 Alternatively, we may be more interested in expanding windows as that
@@ -105,9 +109,7 @@ allows the strength of multiple signals to be combined. We could achieve
 this using the following code:
 
 ``` r
-exp_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "expanding", burn_in = 10, threshold = 2,  tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance") #lets use a rolling window approach
-#> Warning: Removed 7 row(s) containing missing values (geom_path).
-#> Warning: Removed 7 rows containing missing values (geom_point).
+exp_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "expanding", burn_in = 10, threshold = 2,  tail.direction = "one.tailed") #lets use a rolling window approach
 
 head(exp_ews$EWS) #return the head of the EWS dataframe
 #>   time metric.score metric.code rolling.mean rolling.sd threshold.crossed
@@ -131,6 +133,13 @@ transitions. Whilst we have some trangressions of the 2σ threshold, we
 only consider these signals “warnings” if two or more consecutive
 signals are identified (Clements *et al.* 2019).
 
+``` r
+plot(exp_ews, y_lab = "Skylark abundance")
+#> Warning: Removed 7 rows containing missing values (`geom_line()`).
+#> Warning: Removed 7 rows containing missing values (`geom_point()`).
+#> Warning: Removed 7 rows containing missing values (`geom_line()`).
+```
+
 <img src="man/figures/README-expanding_plot-1.png" width="100%" />
 
 A second benefit of the expanding window approach is that additional
@@ -147,10 +156,15 @@ argument.
 
 ``` r
 trait_metrics <- c("SD", "ar1", "trait")
-exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, method = "expanding", burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance",
-trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
-#> Warning: Removed 7 row(s) containing missing values (geom_path).
-#> Warning: Removed 7 rows containing missing values (geom_point).
+
+exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, trait = skylark_data$trait, method = "expanding", burn_in = 10, threshold = 2, tail.direction = "one.tailed")
+```
+
+``` r
+plot(exp_ews_trait, y_lab = "Skylark abundance", trait_lab = "Body mass (g)", trait_scale = 5)
+#> Warning: Removed 7 rows containing missing values (`geom_line()`).
+#> Warning: Removed 7 rows containing missing values (`geom_point()`).
+#> Warning: Removed 7 rows containing missing values (`geom_line()`).
 ```
 
 <img src="man/figures/README-expanding_plot_trait-1.png" width="100%" />
@@ -179,13 +193,18 @@ set.seed(123)
 octopus_spp_data <- matrix(nrow = 50, ncol = 5)
 octopus_spp_data <- as.data.frame(cbind("time"=seq(1:50),sapply(1:dim(octopus_spp_data)[2], function(x){octopus_spp_data[,x] <- rnorm(50,mean=500,sd=200)}))) #create our hypothetical, uncollapsing ecosystem
 
-oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold = 2, tail.direction = "one.tailed", ggplotIt = TRUE) #lets use an expanding window approach
-#> Warning: Removed 24 row(s) containing missing values (geom_path).
-#> Warning: Removed 24 rows containing missing values (geom_point).
+oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold = 2, tail.direction = "one.tailed") #lets use an expanding window approach
 ```
 
 The figure again shows that one multivariate EWS indicator has expressed
 a warning, but that overall, no transition is anticipated.
+
+``` r
+plot(oct_exp_ews)
+#> Warning: Removed 24 rows containing missing values (`geom_line()`).
+#> Warning: Removed 24 rows containing missing values (`geom_point()`).
+#> Warning: Removed 24 rows containing missing values (`geom_line()`).
+```
 
 <img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
 
@@ -221,30 +240,30 @@ ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 're
 library(reticulate)
 
 reticulate::py_config() #confirm that "EWSNET_env" has been loaded
-#> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
-#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.8.dylib
-#> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
-#> version:        3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 06:05:16)  [Clang 12.0.1 ]
-#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.8/site-packages/numpy
-#> numpy_version:  1.23.3
+#> python:         /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/bin/python
+#> libpython:      /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/libpython3.8.dylib
+#> pythonhome:     /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env:/Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env
+#> version:        3.8.16 (default, Mar  1 2023, 21:19:10)  [Clang 14.0.6 ]
+#> numpy:          /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy
+#> numpy_version:  1.23.5
 #> 
 #> NOTE: Python version was forced by use_python function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package     version                 requirement     channel
-#> 1         absl-py       1.2.0               absl-py=1.2.0        pypi
-#> 2       alabaster      0.7.12            alabaster=0.7.12        pypi
-#> 3      astunparse       1.6.3            astunparse=1.6.3        pypi
-#> 4           babel      2.10.3                babel=2.10.3        pypi
-#> 5           bzip2       1.0.8                 bzip2=1.0.8 conda-forge
-#> 6 ca-certificates 2022.6.15.1 ca-certificates=2022.6.15.1 conda-forge
+#>           package    version                requirement   channel
+#> 1         absl-py      1.4.0              absl-py=1.4.0      pypi
+#> 2       alabaster     0.7.13           alabaster=0.7.13      pypi
+#> 3      astunparse      1.6.3           astunparse=1.6.3      pypi
+#> 4           babel     2.12.1               babel=2.12.1      pypi
+#> 5 ca-certificates 2023.01.10 ca-certificates=2023.01.10 pkgs/main
+#> 6      cachetools      5.3.0           cachetools=5.3.0      pypi
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01527405         0.9658694          0.01885661
+#> 1 Smooth Transition    0.01157713         0.9787119         0.009710852
 ```
 
 <br>

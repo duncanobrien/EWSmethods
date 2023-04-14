@@ -14,6 +14,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+set.seed(123) #to ensure reproducible data
+library(EWSmethods)
+library(ggplot2)
+library(tidyr)
 ```
 
 # About this tutorial
@@ -26,10 +30,12 @@ __NOTE__ This version of EWSNet differs from that published by Deb *et al.* (202
 
 # Getting started
 
-```{r, message=FALSE}
+```{r, message=FALSE,eval=F}
 set.seed(123) #to ensure reproducible data
 
 library(EWSmethods)
+library(ggplot2)
+library(tidyr)
 ```
 
 As EWSNet has been written and developed in Python, for R to interact with it, we need to exploit the `reticulate` [R package](https://rstudio.github.io/reticulate/). `reticulate` provides the tools to run Python code in R and transfer objects between the two languages but tends to run much smoother in RStudio rather than base R. It is therefore recommended that you use the [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) when using the EWSNet portion of `EWSmethods`.
@@ -58,8 +64,6 @@ ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE,  conda_refresh
 ewsnet_reset(remove_weights = FALSE,auto = T)
 
 #reticulate::use_condaenv("EWSNET_env") #redundant step necessary for RMarkdown
-library(ggplot2)
-library(tidyr)
 ```
 
 If successful, you will have had to input `"y"` to allow `EWSmethods` to download and activate the Python environment and now see the message `"EWSNET_env successfully found and activated. Necessary Python packages installed"`). If not, please refer to the Troubleshooting section at the end of the tutorial.
@@ -94,7 +98,7 @@ To give an example on how to use `ewsnet_predict()` we need some test data. Here
 ```{r create_white_data, warning = FALSE,dpi=144}
 data("simTransComms")
 
-pre_simTransComms <- subset(simTransComms$`1_255_1`,time < inflection_pt)
+pre_simTransComms <- subset(simTransComms$community1,time < inflection_pt)
 
 plot(pre_simTransComms[,3], xlab = "Year", ylab = "Density")
 ```

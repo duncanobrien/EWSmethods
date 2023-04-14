@@ -28,6 +28,7 @@ reference:
   contents:
   - uniEWS
   - multiEWS
+  - plot.EWSmethods
 
 - title: "EWSNet"
   desc: "Functions for interfacing with EWSNet."

@@ -1,6 +1,6 @@
 Type: Package
 Package: EWSmethods
-Title: Simple Early Warning Signals for Univariate and Multivariate Time Series
+Title: Forecasting Tipping Points at the Community Level using Early Warning Signals and Machine Learning Models
 Version: 1.0.0
 Authors@R: c(
     person(given   = "Duncan",
@@ -17,6 +17,10 @@ Authors@R: c(
            family  = "Sidheekh",
            email   = "sahil.sidheekh@outlook.com",
            role    = "aut"),
+    person(given   = "Narayanan",
+           family  = "Krishnan",
+           email   = "ckn@iitpkd.ac.in",
+           role    = "aut"),
     person(given   = "Partha",
            family  = "Dutta",
            email   = "parthasharathi@iitrpr.ac.in",
@@ -28,21 +32,20 @@ Authors@R: c(
            role    = "aut",
            comment = c(ORCID = "0000-0001-5677-5401")))
 Maintainer: Duncan O'Brien <duncan.a.obrien@gmail.com>
-Description: Rolling and expanding window approaches to assessing abundance based early warning signals. ggplot based presentation of the outputs are also provided for clear and publishable figures.
+Description: Rolling and expanding window approaches to assessing abundance based early warning signals, non-equilibrium resilience measures, and machine learning. Graphical presentation of the outputs are also provided for clear and publishable figures.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    data.table,
     dplyr (>= 1.0.6),
     egg,
-    forecast,
+    forecast (>= 8.21),
     ggplot2,
     ggthemes,
     gtools,
     infotheo,
     moments,
-    rEDM,
+    rEDM (>= 1.14.0),
     reticulate,
     scales,
     seasonal,
@@ -55,6 +58,7 @@ BugReports: https://github.com/duncanobrien/EWSmethods/issues
 Suggests: 
     devtools,
     knitr,
+    fs,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr

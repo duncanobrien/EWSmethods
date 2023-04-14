@@ -31,9 +31,9 @@ Performs the S-map on a multivariate time series to infer the Jacobian matrix at
 
 data("simTransComms")
 
-#Subset the "1_38_1" community prior to the transition
+#Subset the third community prior to the transition
 
-pre_simTransComms <- subset(simTransComms$`1_255_1`,time < inflection_pt)
+pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
 winsize <- round(dim(pre_simTransComms)[1] * 50/100)
 
 #Estimate the Jacobian using s-map (typically only

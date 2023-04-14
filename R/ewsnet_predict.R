@@ -64,6 +64,12 @@ ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
     scaling_string <- paste("Unscaled")
   }
 
+  target_folder <- paste(c(system.file("python", package = "EWSmethods"),"weights","Pretrained"),collapse = "/")
+
+  if(!dir.exists(file.path(target_folder)) & target_folder != ""){
+    stop('No model weights found. Call ewsnet_reset(remove_weights = FALSE) to download weights')
+  }
+
   directory_string <- paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
   #wd_string = paste(c("wd_string = '", wd,"'"),collapse = "")
   reticulate::py_run_string(directory_string)

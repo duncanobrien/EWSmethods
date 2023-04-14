@@ -26,9 +26,9 @@ Calculate a multivariate variance following Brock, W. A., and S. R. Carpenter. 2
 
 data(simTransComms)
 
-#Estimate the MVI for the "1_38_1" community
+#Estimate the MVI for the second community
 
-egMVI <- mvi(data = simTransComms$`1_38_1`[,2:7],
+egMVI <- mvi(data = simTransComms$community2[,2:7],
 winsize = 10)
 
 }

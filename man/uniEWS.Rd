@@ -8,15 +8,11 @@ uniEWS(
   data,
   metrics,
   method = c("expanding", "rolling"),
-  ggplotIt = TRUE,
-  y_lab = "Generic indicator name",
   winsize = 50,
   burn_in = 5,
   threshold = 2,
   tail.direction = "one.tailed",
-  trait = NULL,
-  trait_lab = "Generic Trait Name",
-  trait_scale = 1000
+  trait = NULL
 )
 }
 \arguments{
@@ -25,10 +21,6 @@ uniEWS(
 \item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"}.}
 
 \item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
-
-\item{ggplotIt}{Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND input abundance.}
-
-\item{y_lab}{String label. If \code{ggplotIt = TRUE}, labels the abundance y axis.}
 
 \item{winsize}{Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series length.}
 
@@ -39,19 +31,14 @@ uniEWS(
 \item{tail.direction}{String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.}
 
 \item{trait}{A vector of numeric trait values if desired. Can be \code{NULL}}
-
-\item{trait_lab}{String label. If \code{ggplotIt = TRUE}, & trait populated, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.}
-
-\item{trait_scale}{Numeric value. Scales trait y axis relative to abundance y axis.}
 }
 \value{
 A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
 \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
 \item{EWS$cor}{Dataframe of Kendall Tau correlations. Only returned if \code{method = "rolling"}.}
-\item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 }
 \description{
-A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe with or without a standardised ggplot-based figure.
+A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe.
 }
 \examples{
 #A dummy dataset of a hedgerow bird population over
@@ -67,43 +54,34 @@ abundance_data <- data.frame(time = seq(1:50),
 ews_metrics <- c("SD","ar1","skew")
 
 #Rolling window early warning signal assessment of
-#the bird abundance (no plotting).
+#the bird abundance.
 
 roll_ews <- uniEWS(
  data = abundance_data[,1:2],
  metrics =  ews_metrics,
- ggplotIt = FALSE,
  method = "rolling",
  winsize = 50)
 
 #Expanding window early warning signal assessment of
 #the bird abundance (with plotting).
 
-\dontrun{
 exp_ews <- uniEWS(
  data = abundance_data,
  metrics = ews_metrics,
  method = "expanding",
- burn_in = 10,
- ggplotIt = TRUE,
- y_lab = "Bird abundance")
- }
+ burn_in = 10)
 
 #Expanding window early warning signal assessment of
 #the bird abundance incorporating the trait
-#information (with plotting).
+#information.
 
 ews_metrics_trait <- c("SD","ar1","trait")
-\dontrun{
+
 trait_exp_ews <- uniEWS(
  data = abundance_data,
  metrics = ews_metrics_trait,
  method = "expanding",
  burn_in = 10,
- ggplotIt = TRUE,
- trait = abundance_data$trait,
- trait_lab = "Bill length (mm)",
- trait_scale = 10)
- }
+ trait = abundance_data$trait)
 
 }

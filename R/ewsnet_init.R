@@ -51,7 +51,9 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
   if(inherits(conda, "try-error")){
 
     if(isTRUE(auto)){
-      reticulate::install_miniconda(force = F)
+      message("Attention: may take up to 10 minutes to complete")
+
+      reticulate::install_miniconda(force = T)
 
       reticulate::conda_create(
         envname = paste0(envname),
@@ -82,9 +84,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
 
-    }
-
-    if(isFALSE(auto)){
+    }else if(isFALSE(auto)){
     user_input1 <- readline("Anaconda not found. Would you like to download Anaconda? (y/n) ")
 
     if(user_input1 != 'y'){
@@ -148,9 +148,7 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
 
       message(paste(envname,"successfully found and activated. Necessary python packages installed"),
               collapse = " ")
-    }
-
-    if(isFALSE(auto)){
+    }else if(isFALSE(auto)){
 
     string <- c("conda env",envname, "found. Would you like to activate it and install necessary\npackages? (y/n) ")
     user_input2 <- readline(paste(string,collapse =" "))

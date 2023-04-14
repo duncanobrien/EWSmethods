@@ -35,10 +35,11 @@ You can install the development version of `EWSmethods` from [GitHub](https://gi
 
 ```{r, eval=F}
 install.packages("devtools")
-devtools::install_github("duncanobrien/EWSmethods")
+devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
-**Be aware, due to the large file sizes of the EWSNet model weights (\~230MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_init()` or `ewsnet_reset()` because interfacing with EWSNet.**
+> ⚠️ **Warning!** - 
+> *Due to the large file size of the EWSNet model weights (\~230MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_reset()` before interfacing with EWSNet.*.
 
 <br>
 
@@ -71,29 +72,29 @@ skylark_data <- data.frame(time = seq(1:50), abundance = rnorm(50,mean = 100,sd=
 
 ews_metrics <- c("SD","ar1","skew") #the early warning signal metrics we wish to compute
 
-roll_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "rolling", winsize = 50, ggplotIt =TRUE,  y_lab = "Skylark abundance") #lets use a rolling window approach
+roll_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "rolling", winsize = 50) #lets use a rolling window approach
 
 roll_ews$EWS$cor #return the Kendall Tau correlations for each EWS metric
 ```
 
 We can then use the resulting figures to identify oncoming transitions. In this case, we expect no transition as the data is randomly sampled from a normal distribution and this is evident in the Kendall Tau values, with no strong positive correlation with time:
 
-```{r rolling_plot, dpi=144, echo = FALSE}
-roll_ews$plot
+```{r rolling_plot, dpi=144}
+plot(roll_ews,  y_lab = "Skylark abundance")
 ```
 
 Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:
 
 ```{r _expand_example, fig.keep = "none"}
-exp_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "expanding", burn_in = 10, threshold = 2,  tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance") #lets use a rolling window approach
+exp_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "expanding", burn_in = 10, threshold = 2,  tail.direction = "one.tailed") #lets use a rolling window approach
 
 head(exp_ews$EWS) #return the head of the EWS dataframe
 ```
 
 And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2σ threshold, we only consider these signals "warnings" if two or more consecutive signals are identified (Clements *et al.* 2019).
 
-```{r expanding_plot, dpi=144, echo = FALSE}
-exp_ews$plot
+```{r expanding_plot, dpi=144}
+plot(exp_ews, y_lab = "Skylark abundance")
 ```
 
 A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible.
@@ -102,13 +103,12 @@ For example, in our hypothetical skylark dataset, we have measured average popul
 
 ```{r expand_trait_example, fig.keep = "none"}
 trait_metrics <- c("SD", "ar1", "trait")
-exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, method = "expanding", burn_in = 10, threshold = 2, tail.direction = "one.tailed", ggplotIt =TRUE, y_lab = "Skylark abundance",
-trait = skylark_data$trait, trait_lab = "Body mass (g)", trait_scale = 5)
 
+exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, trait = skylark_data$trait, method = "expanding", burn_in = 10, threshold = 2, tail.direction = "one.tailed")
 ```
 
-```{r expanding_plot_trait, dpi=144, echo = FALSE}
-exp_ews_trait$plot
+```{r expanding_plot_trait, dpi=144}
+plot(exp_ews_trait, y_lab = "Skylark abundance", trait_lab = "Body mass (g)", trait_scale = 5)
 ```
 
 <br>
@@ -125,13 +125,13 @@ set.seed(123)
 octopus_spp_data <- matrix(nrow = 50, ncol = 5)
 octopus_spp_data <- as.data.frame(cbind("time"=seq(1:50),sapply(1:dim(octopus_spp_data)[2], function(x){octopus_spp_data[,x] <- rnorm(50,mean=500,sd=200)}))) #create our hypothetical, uncollapsing ecosystem
 
-oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold = 2, tail.direction = "one.tailed", ggplotIt = TRUE) #lets use an expanding window approach
+oct_exp_ews <- multiEWS(data = octopus_spp_data, method = "expanding", threshold = 2, tail.direction = "one.tailed") #lets use an expanding window approach
 ```
 
 The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.
 
-```{r expanding_oct_plot, dpi=144, fig.height=6,echo = FALSE}
-oct_exp_ews$plot
+```{r expanding_oct_plot, dpi=144, fig.height=6}
+plot(oct_exp_ews)
 ```
 
 <br>

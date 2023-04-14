@@ -17,12 +17,12 @@
 #'
 #' data(simTransComms)
 #'
-#'#Subset the "1_38_1" community prior to the transition
+#'#Subset the second community prior to the transition
 #'
-#' pre_simTransComms <- subset(simTransComms$`1_38_1`,time < inflection_pt)
+#' pre_simTransComms <- subset(simTransComms$community2,time < inflection_pt)
 #'
 #' #Estimate the univariate stability index for the first species in
-#' #the "1_38_1" community
+#' #the second community
 #'
 #' egJI <- uniJI(data = pre_simTransComms[,2:3],
 #' winsize = 25, E = 3)

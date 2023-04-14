@@ -15,11 +15,11 @@
 #'
 #' data(simTransComms)
 #'
-#'#Subset the "1_38_1" community prior to the transition
+#' #Subset the third community prior to the transition
 #'
-#' pre_simTransComms <- subset(simTransComms$`1_38_1`,time < inflection_pt)
+#' pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
 #'
-#' #Estimate the stability index for the "1_38_1" community
+#' #Estimate the stability index for the third community
 #'
 #' egJI <- multiJI(data = pre_simTransComms[,2:7],
 #' winsize = 25)

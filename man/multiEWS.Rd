@@ -9,7 +9,6 @@ multiEWS(
   metrics = c("meanAR", "maxAR", "meanSD", "maxSD", "eigenMAF", "mafAR", "mafSD",
     "pcaAR", "pcaSD", "eigenCOV", "maxCOV", "mutINFO"),
   method = c("expanding", "rolling"),
-  ggplotIt = TRUE,
   winsize = 50,
   burn_in = 5,
   threshold = 2,
@@ -22,8 +21,6 @@ multiEWS(
 \item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"meanSD"}, \code{"maxSD"}, \code{"meanAR"}, \code{"maxAR"}, \code{"eigenMAF"}, \code{"mafAR"}, \code{"mafSD"}, \code{"pcaAR"}, \code{"pcaSD"}, \code{"eigenCOV"}, \code{"maxCOV"} and \code{"mutINFO"}.}
 
 \item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
-
-\item{ggplotIt}{Boolean. If \code{TRUE}, returns a ggplot plot of EWS strength trends AND the estimated dimension reduction.}
 
 \item{winsize}{Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series' length.}
 
@@ -38,10 +35,9 @@ A list containing up to two objects: EWS outputs through time (\code{EWS}), and 
 \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
 \item{EWS$dimred.ts}{Dataframe containing the dimension reduction time series}
 \item{EWS$cor}{Dataframe of Kendall Tau correlations. Only returned if \code{method = "rolling"}.}
-\item{plot}{Plot object. Only returned if \code{ggplotIt = "TRUE"}.}
 }
 \description{
-A single function for performing early warning signal (EWS) assessment on multivariate systems where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling or expanding windows) with the assessments returned as a dataframe with or without a standardised ggplot-based figure. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
+A single function for performing early warning signal (EWS) assessment on multivariate systems where multiple time series have been measured. Both methods of EWS assessment can be performed (rolling or expanding windows) with the assessments returned as a dataframe. The two methods of dimension reduction used to perform these assessments are Principal Component Analysis and Maximum/Minimum Autocorrelation Factors.
 }
 \examples{
 #Generate a random five species, non-transitioning
@@ -54,22 +50,19 @@ spp_data <- sapply(1:dim(spp_data)[2], function(x){
  seq(1:50), spp_data))
 
 #Rolling window early warning signal assessment of
-#the ecosystem, without plotting.
+#the ecosystem.
 
 roll_ews <- multiEWS(
  data = multi_spp_data,
  method = "rolling",
- winsize = 50,
- ggplotIt =FALSE)
+ winsize = 50)
 
 #Expanding window early warning signal assessment of
-#the ecosystem, with plotting.
+#the ecosystem.
 
-\dontrun{
 exp_ews <- multiEWS(
  data = multi_spp_data,
  method = "expanding",
- burn_in = 10,
- ggplotIt = TRUE)
- }
+ burn_in = 10)
+
 }
