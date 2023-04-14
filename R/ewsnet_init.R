@@ -41,7 +41,8 @@
 ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = FALSE, auto = FALSE){
 
   if(isTRUE(conda_refresh)){
-  reticulate::miniconda_uninstall() # start with a blank slate
+    reticulate::miniconda_uninstall() # start with a blank slate
+    #reticulate::conda_remove(envname, packages = NULL, conda = "auto")
   }
 
   detect.sys <- paste(Sys.info()["sysname"],Sys.info()["machine"],sep = "_") #identify whether
