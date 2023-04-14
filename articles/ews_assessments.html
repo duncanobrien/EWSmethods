@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Duncan
 O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2023-04-12</h4>
+            <h4 data-toc-skip class="date">2023-04-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/ews_assessments.Rmd" class="external-link"><code>vignettes/ews_assessments.Rmd</code></a></small>
       <div class="d-none name"><code>ews_assessments.Rmd</code></div>
@@ -143,15 +143,15 @@ composite EWSs estimated by <code><a href="../reference/uniEWS.html">uniEWS()</a
 <p>We can visualise a community from each of these datasets using the
 code below:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"Transitioning five species community"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">community1</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Time"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"Transitioning five species community"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/vis_data-1.png" width="1050"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span><span class="op">$</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span><span class="op">$</span><span class="va">biomass</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Year"</span>, ylab <span class="op">=</span> <span class="st">"Abundance"</span>, main <span class="op">=</span> <span class="st">"Recovering cod population"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">scenario2</span><span class="op">$</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">CODrecovery</span><span class="op">$</span><span class="va">scenario2</span><span class="op">$</span><span class="va">biomass</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Year"</span>, ylab <span class="op">=</span> <span class="st">"Abundance"</span>, main <span class="op">=</span> <span class="st">"Recovering cod population"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/vis_data-2.png" width="1050"></p>
 <p>These plots show that a transition takes place at
-<code>time ~= 180</code> in <code>"simTransComms$1_5_1"</code> and
-<code>year ~= 2050</code> in <code>"CODrecovery$1_20"</code>.
+<code>time ~= 180</code> in <code>"simTransComms$community1"</code> and
+<code>year ~= 2050</code> in <code>"CODrecovery$scenario2"</code>.
 <code>EWSmethods</code> helpfully provides this information in each
 dataset under the <code>inflection_pt</code> column.</p>
 <table class="table">
@@ -160,7 +160,7 @@ dataset under the <code>inflection_pt</code> column.</p>
 <th align="right">CODrecovery</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="right">184.5</td>
+<td align="right">191.5</td>
 <td align="right">2055</td>
 </tr></tbody>
 </table>
@@ -169,9 +169,9 @@ prior to a transition. As <code>EWsmethods</code> provides the time
 point of transition for both datasets, we can truncate our time series
 to pre-transition data only.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_5_1`</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">community1</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pre_CODrecovery</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">CODrecovery</span><span class="op">$</span><span class="va">`1_20`</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pre_CODrecovery</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">CODrecovery</span><span class="op">$</span><span class="va">scenario2</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></code></pre></div>
 <p>In reality, EWSs will be assessed in real-time with the presence of
 past/present tipping points often unknown. If past transitions are known
 to have occurred, it may be prudent to follow the suggestions of O’Brien
@@ -293,9 +293,9 @@ plotting characteristics.</p>
 <code class="sourceCode R"><span><span class="va">rolling_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"skew"</span><span class="op">)</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"rolling"</span>,</span>
-<span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
-<span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
-<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>                         winsize <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rolling_ews_eg</span>,  y_lab <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/rolling_ews_fig-1.png" width="1050"></p>
 <p>Note how all EWS indicators begin to trend upwards at
 <code>time ~= 170</code> which results in the positive Kendall Tau
@@ -315,16 +315,17 @@ window, <code>burn_in =</code> dictates the number of datapoints
 the high number of false-positive signals resulting from the short time
 series length and high variability when few data points are supplied at
 the beginning of assessment (O’Brien &amp; Clements, 2021).</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">expanding_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"skew"</span><span class="op">)</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
 <span>                         burn_in <span class="op">=</span> <span class="fl">50</span>,</span>
-<span>                         threshold <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
-<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                         threshold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">expanding_ews_eg</span>, y_lab <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/expanding_ews_fig-1.png" width="1050"></p>
 <p>Similar to the rolling window approach, EWS indicators calculated by
 expanding windows have exceeded the 2σ threshold for more than two
@@ -350,19 +351,18 @@ argument where an additional trait time series can be combined with the
 other abundance-based EWSs as a composite metric. This capability is
 only available if <code>method = "expanding"</code> and
 <code>metrics =</code> contains <code>"trait"</code></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trait_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_CODrecovery</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ar1"</span>,<span class="st">"SD"</span>,<span class="st">"trait"</span><span class="op">)</span>, <span class="co">#note "trait" is provided here</span></span>
 <span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
 <span>                         trait <span class="op">=</span> <span class="va">pre_CODrecovery</span><span class="op">$</span><span class="va">mean.size</span>, <span class="co">#and here</span></span>
 <span>                         burn_in <span class="op">=</span> <span class="fl">15</span>, <span class="co">#small burn_in due to shorter time series</span></span>
-<span>                         threshold <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                         y_lab <span class="op">=</span> <span class="st">"Density"</span>,</span>
-<span>                         trait_lab <span class="op">=</span> <span class="st">"Mean size (g)"</span>,</span>
-<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 217 rows containing missing values (`geom_line()`).</span></span>
+<span>                         threshold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">trait_ews_eg</span>, y_lab <span class="op">=</span> <span class="st">"Density"</span>, trait_lab <span class="op">=</span> <span class="st">"Mean size (g)"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/trait_ews_fig-1.png" width="1050"></p>
 <p><br></p>
 </div>
@@ -495,12 +495,13 @@ specifying the <code>method =</code>, <code>winsize =</code> and/or
 all representative time series. The first column must again be an
 equally spaced time sequence.</p>
 <p>A rolling window assessment would therefore be coded as such:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_ews_eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
 <span>                         metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meanAR"</span>,<span class="st">"maxAR"</span>,<span class="st">"meanSD"</span>,<span class="st">"maxSD"</span>,<span class="st">"eigenMAF"</span>,<span class="st">"mafAR"</span>,<span class="st">"mafSD"</span>,<span class="st">"pcaAR"</span>,<span class="st">"pcaSD"</span>,<span class="st">"eigenCOV"</span>,<span class="st">"maxCOV"</span>,<span class="st">"mutINFO"</span><span class="op">)</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"rolling"</span>,</span>
-<span>                         winsize <span class="op">=</span> <span class="fl">50</span>,</span>
-<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>                         winsize <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">multi_ews_eg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/multi_ews_fig-1.png" width="1050"></p>
 <p>Many of these indicators are postively correlated with time and
 therefore are ‘warnings’.</p>
@@ -508,14 +509,16 @@ therefore are ‘warnings’.</p>
 <strong>Note</strong> - no composite metric is computed in
 <code><a href="../reference/multiEWS.html">multiEWS()</a></code> as it is currently unknown how combining
 multivariate EWS indicators influences prediction reliability.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_ews_eg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
 <span>                         method <span class="op">=</span> <span class="st">"expanding"</span>,</span>
 <span>                         burn_in <span class="op">=</span> <span class="fl">50</span>,</span>
-<span>                         threshold <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                         ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                         threshold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">multi_ews_eg2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_line()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="ews_assessments_files/figure-html/multi_ews2_fig-1.png" width="1050"></p>
 <p>In this circumstance, many of the indicators are warning at different
 times (e.g. <code>"eigenMAF"</code> at <code>time ~= 65</code> or
@@ -605,7 +608,7 @@ unlagged time series</td>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">detrend_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detrend_ts.html">detrend_ts</a></span><span class="op">(</span>data <span class="op">=</span>  <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,  method <span class="op">=</span> <span class="st">"loess"</span>, span <span class="op">=</span> <span class="fl">0.75</span>, degree <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">detrend_dat</span><span class="op">$</span><span class="va">time</span>, y <span class="op">=</span> <span class="va">detrend_dat</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Date"</span>, ylab <span class="op">=</span> <span class="st">"Density"</span>,  main <span class="op">=</span> <span class="st">"LOESS detrended five species community"</span><span class="op">)</span></span></code></pre></div>
@@ -635,7 +638,7 @@ the data resolution (year, month, day) and the order of the date vector
 (ymd/dmy/ydm). The form of deseasoning can then be selected using the
 <code>method =</code> argument.</p>
 <p>Lets create some dummy monthly data that we can deseason.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">5</span><span class="op">*</span><span class="fl">12</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">seasonal_cycle</span> <span class="op">&lt;-</span>  <span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">*</span><span class="fl">12</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span></span>
@@ -653,7 +656,7 @@ the data resolution (year, month, day) and the order of the date vector
 <p>As <code>multi_spp_data</code> is random, there are few pronounced
 cycles but for the sake of this tutorial, <code><a href="../reference/deseason_ts.html">deseason_ts()</a></code>
 would be applied to it as such:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deseas_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deseason_ts.html">deseason_ts</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">multi_spp_data</span>, increment <span class="op">=</span> <span class="st">"month"</span>, method <span class="op">=</span> <span class="st">"average"</span>, order <span class="op">=</span> <span class="st">"ymd"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; data successfully aggregated into monthly time steps</span></span>
 <span></span>
@@ -732,7 +735,7 @@ resilience loss. <em>Scientific Reports</em>, 11, 9148. <a href="https://www.nat
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Partha Dutta, Christopher Clements.</p>
+<p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Narayanan Krishnan, Partha Dutta, Christopher Clements.</p>
 </div>
 
 <div class="pkgdown-footer-right">

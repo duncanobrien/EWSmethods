@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Rolling and expanding window approaches to assessing abundance based early warning signals. ggplot based presentation of the outputs are also provided for clear and publishable figures.">
-<title>Simple Early Warning Signals for Univariate and Multivariate Time Series • EWSmethods</title>
+<meta name="description" content="Rolling and expanding window approaches to assessing abundance based early warning signals, non-equilibrium resilience measures, and machine learning. Graphical presentation of the outputs are also provided for clear and publishable figures.">
+<title>Forecasting Tipping Points at the Community Level using Early Warning Signals and Machine Learning Models • EWSmethods</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,8 +17,8 @@
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Simple Early Warning Signals for Univariate and Multivariate Time Series">
-<meta property="og:description" content="Rolling and expanding window approaches to assessing abundance based early warning signals. ggplot based presentation of the outputs are also provided for clear and publishable figures.">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Forecasting Tipping Points at the Community Level using Early Warning Signals and Machine Learning Models">
+<meta property="og:description" content="Rolling and expanding window approaches to assessing abundance based early warning signals, non-equilibrium resilience measures, and machine learning. Graphical presentation of the outputs are also provided for clear and publishable figures.">
 <meta property="og:image" content="https://duncanobrien.github.io/EWSmethods/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -96,8 +96,10 @@
 <p>You can install the development version of <code>EWSmethods</code> from <a href="https://github.com/duncanobrien/EWSmethods" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"duncanobrien/EWSmethods"</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Be aware, due to the large file sizes of the EWSNet model weights (~230MB), <code>EWSmethods</code> does not come bundled with them. Users must download weights using <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> or <code><a href="reference/ewsnet_reset.html">ewsnet_reset()</a></code> because interfacing with EWSNet.</strong></p>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"duncanobrien/EWSmethods"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>⚠️ <strong>Warning!</strong> - <em>Due to the large file size of the EWSNet model weights (~230MB), <code>EWSmethods</code> does not come bundled with them. Users must download weights using <code><a href="reference/ewsnet_reset.html">ewsnet_reset()</a></code> before interfacing with EWSNet.</em>.</p>
+</blockquote>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -125,18 +127,18 @@
 <span></span>
 <span><span class="va">ews_metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SD"</span>,<span class="st">"ar1"</span>,<span class="st">"skew"</span><span class="op">)</span> <span class="co">#the early warning signal metrics we wish to compute</span></span>
 <span></span>
-<span><span class="va">roll_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">ews_metrics</span>, method <span class="op">=</span> <span class="st">"rolling"</span>, winsize <span class="op">=</span> <span class="fl">50</span>, ggplotIt <span class="op">=</span><span class="cn">TRUE</span>,  y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span><span class="op">)</span> <span class="co">#lets use a rolling window approach</span></span>
+<span><span class="va">roll_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">ews_metrics</span>, method <span class="op">=</span> <span class="st">"rolling"</span>, winsize <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="co">#lets use a rolling window approach</span></span>
 <span></span>
 <span><span class="va">roll_ews</span><span class="op">$</span><span class="va">EWS</span><span class="op">$</span><span class="va">cor</span> <span class="co">#return the Kendall Tau correlations for each EWS metric</span></span>
 <span><span class="co">#&gt;            SD        ar1       skew</span></span>
 <span><span class="co">#&gt; tau 0.5446154 -0.3907692 -0.7046154</span></span></code></pre></div>
 <p>We can then use the resulting figures to identify oncoming transitions. In this case, we expect no transition as the data is randomly sampled from a normal distribution and this is evident in the Kendall Tau values, with no strong positive correlation with time:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">roll_ews</span>,  y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-rolling_plot-1.png" width="100%"></p>
 <p>Alternatively, we may be more interested in expanding windows as that approach standardises the changing EWS metrics over time and therefore allows the strength of multiple signals to be combined. We could achieve this using the following code:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">ews_metrics</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>,  tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span><span class="cn">TRUE</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span><span class="op">)</span> <span class="co">#lets use a rolling window approach</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">ews_metrics</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>,  tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span><span class="op">)</span> <span class="co">#lets use a rolling window approach</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">exp_ews</span><span class="op">$</span><span class="va">EWS</span><span class="op">)</span> <span class="co">#return the head of the EWS dataframe</span></span>
 <span><span class="co">#&gt;   time metric.score metric.code rolling.mean rolling.sd threshold.crossed</span></span>
@@ -154,15 +156,23 @@
 <span><span class="co">#&gt; 5  114.29655  1.4915428</span></span>
 <span><span class="co">#&gt; 6   80.79726 -1.5164845</span></span></code></pre></div>
 <p>And again, we can then use the resulting figures to identify oncoming transitions. Whilst we have some trangressions of the 2σ threshold, we only consider these signals “warnings” if two or more consecutive signals are identified (Clements <em>et al.</em> 2019).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exp_ews</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-expanding_plot-1.png" width="100%"></p>
 <p>A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah <em>et al.</em> 2019) and therefore should be considered if possible.</p>
 <p>For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the <code>univariate_EWS_wrapper()</code> function in <code>EWSmethods</code>, using the <code>trait</code> argument.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trait_metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SD"</span>, <span class="st">"ar1"</span>, <span class="st">"trait"</span><span class="op">)</span></span>
-<span><span class="va">exp_ews_trait</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">trait_metrics</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span><span class="cn">TRUE</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span>,</span>
-<span>trait <span class="op">=</span> <span class="va">skylark_data</span><span class="op">$</span><span class="va">trait</span>, trait_lab <span class="op">=</span> <span class="st">"Body mass (g)"</span>, trait_scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span></span>
+<span><span class="va">exp_ews_trait</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/uniEWS.html">uniEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">skylark_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, metrics <span class="op">=</span>  <span class="va">trait_metrics</span>, trait <span class="op">=</span> <span class="va">skylark_data</span><span class="op">$</span><span class="va">trait</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, burn_in <span class="op">=</span> <span class="fl">10</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exp_ews_trait</span>, y_lab <span class="op">=</span> <span class="st">"Skylark abundance"</span>, trait_lab <span class="op">=</span> <span class="st">"Body mass (g)"</span>, trait_scale <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 7 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-expanding_plot_trait-1.png" width="100%"></p>
 <p><br></p>
 </div>
@@ -171,16 +181,19 @@
 </h3>
 <p>If we had data from multiple timeseries/measurements of the same system, we might be interested in multivariate early warning signals. These indicators exploit either dimension reduction techniques (such as Principal Component Analysis) or community average estimates to give an overall measure of system resilience (see Weinans <em>et al.</em> 2021 for an overview of each indicator).</p>
 <p>Here we’ve constructed another hypothetical dataset representing five related populations of Caribbean reef octopus (<em>Octopus briareus</em>) in Bahamian salt water lakes (O’Brien <em>et al.</em> 2020) and are interested in assessing the resilience of this metapopulation. The following code shows how we would achieve this using the <code>EWSmethods</code> function <code><a href="reference/multiEWS.html">multiEWS()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">octopus_spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">50</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">octopus_spp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="st">"time"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">octopus_spp_data</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">octopus_spp_data</span><span class="op">[</span>,<span class="va">x</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>,mean<span class="op">=</span><span class="fl">500</span>,sd<span class="op">=</span><span class="fl">200</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#create our hypothetical, uncollapsing ecosystem</span></span>
 <span></span>
-<span><span class="va">oct_exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">octopus_spp_data</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span>, ggplotIt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co">#lets use an expanding window approach</span></span>
-<span><span class="co">#&gt; Warning: Removed 24 row(s) containing missing values (geom_path).</span></span>
-<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="va">oct_exp_ews</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multiEWS.html">multiEWS</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">octopus_spp_data</span>, method <span class="op">=</span> <span class="st">"expanding"</span>, threshold <span class="op">=</span> <span class="fl">2</span>, tail.direction <span class="op">=</span> <span class="st">"one.tailed"</span><span class="op">)</span> <span class="co">#lets use an expanding window approach</span></span></code></pre></div>
 <p>The figure again shows that one multivariate EWS indicator has expressed a warning, but that overall, no transition is anticipated.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">oct_exp_ews</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_line()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 24 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-expanding_oct_plot-1.png" width="100%"></p>
 <p><br></p>
 </div>
@@ -190,11 +203,11 @@
 </h2>
 <p>The other half of <code>EWSmethods</code> allows you to query the <a href="https://www.python.org" class="external-link">Python-based</a> <strong>EWSNet</strong> via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/" class="external-link">R package</a>) and then calls <strong>EWSNet</strong> to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call <code><a href="reference/EWSNET_init.html">ewsnet_init()</a></code> before b) using <code><a href="reference/ewsnet_predict.html">ewsnet_predict()</a></code>.</p>
 <p>However, because this is the first time using EWSNet via <code>EWSmethods</code>, we must first download the pretrained model weights from <a href="https://ewsnet.github.io" class="external-link uri">https://ewsnet.github.io</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Model weights downloaded</span></span></code></pre></div>
 <p>Now we can setup our R session and interface with EWSNet.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/EWSNET_init.html">ewsnet_init</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co">#prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages</span></span>
 <span><span class="co">#&gt; Attention: may take up to 10 minutes to complete</span></span>
 <span><span class="co">#&gt; EWSNET_env successfully found and activated. Necessary python packages installed</span></span>
@@ -202,30 +215,30 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#confirm that "EWSNET_env" has been loaded</span></span>
-<span><span class="co">#&gt; python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python</span></span>
-<span><span class="co">#&gt; libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.8.dylib</span></span>
-<span><span class="co">#&gt; pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env</span></span>
-<span><span class="co">#&gt; version:        3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 06:05:16)  [Clang 12.0.1 ]</span></span>
-<span><span class="co">#&gt; numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.8/site-packages/numpy</span></span>
-<span><span class="co">#&gt; numpy_version:  1.23.3</span></span>
+<span><span class="co">#&gt; python:         /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/bin/python</span></span>
+<span><span class="co">#&gt; libpython:      /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/libpython3.8.dylib</span></span>
+<span><span class="co">#&gt; pythonhome:     /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env:/Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env</span></span>
+<span><span class="co">#&gt; version:        3.8.16 (default, Mar  1 2023, 21:19:10)  [Clang 14.0.6 ]</span></span>
+<span><span class="co">#&gt; numpy:          /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy</span></span>
+<span><span class="co">#&gt; numpy_version:  1.23.5</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; NOTE: Python version was forced by use_python function</span></span>
 <span></span>
 <span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py_packages</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           package     version                 requirement     channel</span></span>
-<span><span class="co">#&gt; 1         absl-py       1.2.0               absl-py=1.2.0        pypi</span></span>
-<span><span class="co">#&gt; 2       alabaster      0.7.12            alabaster=0.7.12        pypi</span></span>
-<span><span class="co">#&gt; 3      astunparse       1.6.3            astunparse=1.6.3        pypi</span></span>
-<span><span class="co">#&gt; 4           babel      2.10.3                babel=2.10.3        pypi</span></span>
-<span><span class="co">#&gt; 5           bzip2       1.0.8                 bzip2=1.0.8 conda-forge</span></span>
-<span><span class="co">#&gt; 6 ca-certificates 2022.6.15.1 ca-certificates=2022.6.15.1 conda-forge</span></span>
+<span><span class="co">#&gt;           package    version                requirement   channel</span></span>
+<span><span class="co">#&gt; 1         absl-py      1.4.0              absl-py=1.4.0      pypi</span></span>
+<span><span class="co">#&gt; 2       alabaster     0.7.13           alabaster=0.7.13      pypi</span></span>
+<span><span class="co">#&gt; 3      astunparse      1.6.3           astunparse=1.6.3      pypi</span></span>
+<span><span class="co">#&gt; 4           babel     2.12.1               babel=2.12.1      pypi</span></span>
+<span><span class="co">#&gt; 5 ca-certificates 2023.01.10 ca-certificates=2023.01.10 pkgs/main</span></span>
+<span><span class="co">#&gt; 6      cachetools      5.3.0           cachetools=5.3.0      pypi</span></span>
 <span></span>
 <span><span class="va">skylark_ewsnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">skylark_data</span><span class="op">$</span><span class="va">abundance</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()</span></span>
 <span></span>
 <span><span class="va">skylark_ewsnet</span></span>
 <span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Smooth Transition    0.01527405         0.9658694          0.01885661</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Smooth Transition    0.01157713         0.9787119         0.009710852</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -271,6 +284,7 @@
 <li>Duncan O'Brien <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-3420-5210" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Smita Deb <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-7037-7055" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Sahil Sidheekh <br><small class="roles"> Author </small>  </li>
+<li>Narayanan Krishnan <br><small class="roles"> Author </small>  </li>
 <li>Partha Dutta <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6067-1023" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Christopher Clements <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-5677-5401" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
@@ -290,7 +304,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Partha Dutta, Christopher Clements.</p>
+<p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Narayanan Krishnan, Partha Dutta, Christopher Clements.</p>
 </div>
 
 <div class="pkgdown-footer-right">

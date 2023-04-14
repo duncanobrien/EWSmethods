@@ -28,6 +28,9 @@
     <loc>https://duncanobrien.github.io/EWSmethods/index.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/news/index.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/CODrecovery.html</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/mvi.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/plot.EWSmethods.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc>

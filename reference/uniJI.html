@@ -109,12 +109,12 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#Subset the "1_38_1" community prior to the transition</span></span></span>
+<span class="r-in"><span><span class="co">#Subset the second community prior to the transition</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">`1_38_1`</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">community2</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Estimate the univariate stability index for the first species in</span></span></span>
-<span class="r-in"><span><span class="co">#the "1_38_1" community</span></span></span>
+<span class="r-in"><span><span class="co">#the second community</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">egJI</span> <span class="op">&lt;-</span> <span class="fu">uniJI</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>winsize <span class="op">=</span> <span class="fl">25</span>, E <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
@@ -126,7 +126,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Partha Dutta, Christopher Clements.</p>
+  <p></p><p>Developed by Duncan O’Brien, Smita Deb, Sahil Sidheekh, Narayanan Krishnan, Partha Dutta, Christopher Clements.</p>
 </div>
 
 <div class="pkgdown-footer-right">
