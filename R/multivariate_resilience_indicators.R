@@ -167,7 +167,7 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
     results<-do.call("rbind", RES)
 
     output<-data.frame(results) %>%
-      tidyr::pivot_longer(-.data$time, names_to = "metric.code",values_to = "metric.score") %>%
+      tidyr::pivot_longer(-c("time"), names_to = "metric.code",values_to = "metric.score") %>%
       dplyr::group_by(.data$metric.code) %>% dplyr::arrange(.data$time,.by_group = TRUE) %>%
       dplyr::mutate(rolling.mean = rolling_mean(.data$metric.score),
              rolling.sd = rolling_sd(.data$metric.score))
