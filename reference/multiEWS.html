@@ -108,9 +108,9 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list containing up to two objects: EWS outputs through time (<code>EWS</code>), and a plot object (<code>plot</code>) if <code>ggplotIt = TRUE</code>.</p>
+<p>A list containing up to two objects: EWS outputs through time (<code>EWS</code>), and an identifier string (<code>method</code>).</p>
 <dl><dt>EWS$raw</dt>
-<dd><p>Dataframe of EWS measurements through time. If <code>method = "expanding"</code>, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. <code>"threshold.crossed"</code>). If <code>method = "expanding"</code>, then each metric's evolution over time is returned in individual columns.</p></dd>
+<dd><p>Dataframe of EWS measurements through time. If <code>method = "expanding"</code>, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. <code>"threshold.crossed"</code>). If <code>method = "rolling"</code>, then each metric's evolution over time is returned in individual columns.</p></dd>
 
 <dt>EWS$dimred.ts</dt>
 <dd><p>Dataframe containing the dimension reduction time series</p></dd>

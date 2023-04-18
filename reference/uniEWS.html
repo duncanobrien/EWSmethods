@@ -81,7 +81,7 @@
 
 
 <dt>metrics</dt>
-<dd><p>String vector of early warning signal metrics to be assessed.  Options include: <code>"ar1"</code>, <code>"cv"</code>, <code>"SD"</code>, <code>"acf"</code>, <code>"rr"</code>, <code>"dr"</code>, <code>"skew"</code>, <code>"kurt"</code>, and <code>"trait"</code>.</p></dd>
+<dd><p>String vector of early warning signal metrics to be assessed.  Options include: <code>"ar1"</code>, <code>"cv"</code>, <code>"SD"</code>, <code>"acf"</code>, <code>"rr"</code>, <code>"dr"</code>, <code>"skew"</code>, <code>"kurt"</code>, and <code>"trait"</code> (only available if <code>method = "expanding"</code>).</p></dd>
 
 
 <dt>method</dt>
@@ -112,9 +112,9 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list containing up to two objects: EWS outputs through time (<code>EWS</code>), and a plot object (<code>plot</code>) if <code>ggplotIt = TRUE</code>.</p>
+<p>A list containing up to two objects: EWS outputs through time (<code>EWS</code>), and an identifier string (<code>method</code>).</p>
 <dl><dt>EWS$raw</dt>
-<dd><p>Dataframe of EWS measurements through time. If <code>method = "expanding"</code>, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. <code>"threshold.crossed"</code>). If <code>method = "expanding"</code>, then each metric's evolution over time is returned in individual columns.</p></dd>
+<dd><p>Dataframe of EWS measurements through time. If <code>method = "expanding"</code>, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. <code>"threshold.crossed"</code>). If <code>method = "rolling"</code>, then each metric's evolution over time is returned in individual columns.</p></dd>
 
 <dt>EWS$cor</dt>
 <dd><p>Dataframe of Kendall Tau correlations. Only returned if <code>method = "rolling"</code>.</p></dd>
