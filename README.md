@@ -135,9 +135,6 @@ signals are identified (Clements *et al.* 2019).
 
 ``` r
 plot(exp_ews, y_lab = "Skylark abundance")
-#> Warning: Removed 7 rows containing missing values (`geom_line()`).
-#> Warning: Removed 7 rows containing missing values (`geom_point()`).
-#> Warning: Removed 7 rows containing missing values (`geom_line()`).
 ```
 
 <img src="man/figures/README-expanding_plot-1.png" width="100%" />
@@ -162,9 +159,6 @@ exp_ews_trait <- uniEWS(data = skylark_data[,1:2], metrics =  trait_metrics, tra
 
 ``` r
 plot(exp_ews_trait, y_lab = "Skylark abundance", trait_lab = "Body mass (g)", trait_scale = 5)
-#> Warning: Removed 7 rows containing missing values (`geom_line()`).
-#> Warning: Removed 7 rows containing missing values (`geom_point()`).
-#> Warning: Removed 7 rows containing missing values (`geom_line()`).
 ```
 
 <img src="man/figures/README-expanding_plot_trait-1.png" width="100%" />
@@ -201,9 +195,6 @@ a warning, but that overall, no transition is anticipated.
 
 ``` r
 plot(oct_exp_ews)
-#> Warning: Removed 24 rows containing missing values (`geom_line()`).
-#> Warning: Removed 24 rows containing missing values (`geom_point()`).
-#> Warning: Removed 24 rows containing missing values (`geom_line()`).
 ```
 
 <img src="man/figures/README-expanding_oct_plot-1.png" width="100%" />
@@ -263,7 +254,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01084204         0.9570024          0.03215552
+#> 1 Smooth Transition    0.03662591         0.9584206         0.004953526
 ```
 
 <br>

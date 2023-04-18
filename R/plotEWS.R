@@ -104,8 +104,8 @@ plot.EWSmethods <- function(x,...){
       metrics <- colnames(x$EWS$raw)[!(colnames(x$EWS$raw) %in% c("time","count.used"))]
 
       plot.dat <- x$EWS$raw %>%
-        dplyr::mutate(across(-c(.data$time,.data$count.used),~scale(.x)))%>%
-        tidyr::pivot_longer(-c(.data$time,.data$count.used), names_to = "metric.code", values_to = "str")
+        dplyr::mutate(across(-c("time","count.used"),~scale(.x)))%>%
+        tidyr::pivot_longer(-c("time","count.used"), names_to = "metric.code", values_to = "str")
 
       if(length(metrics) == 1){
         cor.dat <- data.frame("metric.code" = metrics,
@@ -170,7 +170,7 @@ plot.EWSmethods <- function(x,...){
         theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
       if(tail.direction == "two.tailed"){
-        p <- p + geom_hline(yintercept = -x$threshold, linetype="solid", color = "grey", size=1)
+        p <- p + geom_hline(yintercept = -x$threshold, linetype="solid", color = "grey", linewidth=1)
       }
 
       if("trait" %in% metrics){
@@ -241,8 +241,8 @@ plot.EWSmethods <- function(x,...){
 
       plot.dat <- x$EWS$raw %>%
         dplyr::mutate(time = as.numeric(.data$time))%>%
-        dplyr::mutate(across(-c(.data$time),~scale(.x)))%>%
-        tidyr::pivot_longer(-c(.data$time), names_to = "metric.code", values_to = "str")
+        dplyr::mutate(across(-c("time"),~scale(.x)))%>%
+        tidyr::pivot_longer(-c("time"), names_to = "metric.code", values_to = "str")
 
       if(length(metrics) == 1){
         cor.dat <- data.frame("metric.code" = metrics,
@@ -289,7 +289,7 @@ plot.EWSmethods <- function(x,...){
       metrics <- unique(x$EWS$raw$metric.code)
 
       p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
-        geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", size=1)+
+        geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", linewidth=1)+
         geom_line()+
         geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
         geom_line(aes(alpha = "0"))+
@@ -307,9 +307,9 @@ plot.EWSmethods <- function(x,...){
         theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
       plot.dat <- x$EWS$dimred.ts %>%
-        dplyr::mutate(across(-.data$time,~scale(.))) %>%
+        dplyr::mutate(across(-"time",~scale(.))) %>%
         dplyr::filter(.data$time %in% tidyr::drop_na(x$EWS$raw,"str")$time)%>%
-        tidyr::pivot_longer(-.data$time,names_to = "dimred",values_to = "count.used")
+        tidyr::pivot_longer(-"time",names_to = "dimred",values_to = "count.used")
 
       p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
         geom_line(aes(col = .data$dimred))+
