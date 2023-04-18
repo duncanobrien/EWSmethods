@@ -26,10 +26,10 @@
 #' #reference period or the entire time
 #' #series
 #'
-#' eg.sost <- apply(simTransComms$community1[,3:7], MARGIN = 2, FUN = sd) |>
-#' t() #transpose required to ensure a 1 x n matrix
+#' eg.sost <- t(apply(simTransComms$community1[,3:7], MARGIN = 2, FUN = sd))
+#'  #transpose required to ensure a 1 x n matrix
 #'
-#' egFI <- FI(data = simTransComms$community1[,2:7],
+#' egFI <- FI(data = simTransComms$community1[1:50,2:7],
 #' sost =  eg.sost,
 #' winsize = 10,
 #' winspace = 1,
@@ -57,6 +57,16 @@ FI <- function(data,sost,winsize,winspace = 1,TL = 90){
   hwin <- round(dim(data)[1] * winsize/100)
   t_win <- matrix(NA,nrow = hwin, ncol = 1)#?
   window <- 0
+
+  if(is.null(dim(data))){
+    stop("data must be a matrix/data.frame")
+  }
+  if(!is.numeric(sost)){
+    stop("sost must be a numeric vector")
+  }
+  if(dim(sost)[1] != 1 | dim(sost)[2] != NCOL(data[,-1])){
+    stop("sost must be a numeric vector of length equal to the number of species")
+  }
 
   timedat <- data[,1]
   data <- data[,-1]

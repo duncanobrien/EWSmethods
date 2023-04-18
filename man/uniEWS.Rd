@@ -18,7 +18,7 @@ uniEWS(
 \arguments{
 \item{data}{A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.}
 
-\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"}.}
+\item{metrics}{String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"} (only available if \code{method = "expanding"}).}
 
 \item{method}{Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.}
 
@@ -33,8 +33,8 @@ uniEWS(
 \item{trait}{A vector of numeric trait values if desired. Can be \code{NULL}}
 }
 \value{
-A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
-\item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
+A list containing up to two objects: EWS outputs through time (\code{EWS}), and an identifier string (\code{method}).
+\item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "rolling"}, then each metric's evolution over time is returned in individual columns.}
 \item{EWS$cor}{Dataframe of Kendall Tau correlations. Only returned if \code{method = "rolling"}.}
 }
 \description{

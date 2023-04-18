@@ -35,8 +35,9 @@ data(simTransComms)
 pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
 
 #Estimate the stability index for the third community
+#(trimmed for speed)
 
-egJI <- multiJI(data = pre_simTransComms[,2:7],
-winsize = 25)
+egJI <- multiJI(data = pre_simTransComms[1:50,2:7],
+winsize = 50)
 
 }

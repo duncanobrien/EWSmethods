@@ -109,14 +109,14 @@ plot.EWSmethods <- function(x,...){
 
       if(length(metrics) == 1){
         cor.dat <- data.frame("metric.code" = metrics,
-                              "cor" = paste(c("Tau:",round(x$EWS$cor, digits = 3)),collapse = " ")) %>%
+                              "cor" = paste(c("tau:",round(x$EWS$cor, digits = 3)),collapse = " ")) %>%
           dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
 
       }else{
-        cor.dat <- x$EWS$cor %>%
+        cor.dat <- x$EWS$cor[1,] %>%
           tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
           dplyr::rowwise()%>%
-          dplyr::mutate(cor = paste(c("Tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
+          dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
           dplyr::mutate(time = quantile(plot.dat$time,0.8), str =  max(plot.dat$str)*0.8)
       }
 
@@ -124,17 +124,12 @@ plot.EWSmethods <- function(x,...){
         geom_line(aes(col= .data$metric.code))+
         geom_text(data = cor.dat,aes(label = .data$cor),size = 3, hjust = 0.75)+
         scale_colour_manual(values = pal[1:length(metrics)],guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
-        ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
+        xlab("Time point") + ylab("Scaled metric value") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='EWS indicator\ntrend') +
         facet_wrap(~.data$metric.code,nrow=4)+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)),
-              legend.key.height = unit(0.3,"cm"),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))+
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)))+
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
@@ -144,14 +139,8 @@ plot.EWSmethods <- function(x,...){
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         ylab(plot_labels$y_lab) +
         xlab("Time point")+
-        ggthemes::theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 0, 10)),
-              legend.key.height = unit(0.3,"cm" ),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))
+        theme_clean() +
+        theme(plot.margin = margin(c(10, 8, 0, 10)))
 
       final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 2), draw = F)
 
@@ -160,35 +149,33 @@ plot.EWSmethods <- function(x,...){
       metrics <- unique(x$EWS$metric.code)
       tail.direction <- x$tail.direction
 
-      p <- ggplot(data = x$EWS, aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+      p <- ggplot(data = tidyr::drop_na(x$EWS,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = unique(x$threshold), linetype="solid", color = "grey", linewidth=1)+
         geom_line()+
         geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
+        geom_point(aes(x=.data$time, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
         geom_line(aes(alpha = "0"))+
         scale_alpha_manual(values = c(0,1),
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
                            guide = guide_legend(order = 1, override.aes =
-                                                  list(linetype = c(1,0),shape = c(NA,16),alpha = c(1,1),col="black"))) +
+                                                  list(linetype = c(1,0),shape = c(NA,16),alpha = c(1,1),col="black")),
+                           drop=FALSE) +
         scale_colour_manual(values = pal[1:length(metrics)],
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,length(metrics)),shape= NA))) +
-        ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
+        xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='EWS indicator\nstrength') +
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)),
-              legend.key.height = unit(0.3,"cm"),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))
+        theme_clean() +
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
       if(tail.direction == "two.tailed"){
         p <- p + geom_hline(yintercept = -x$threshold, linetype="solid", color = "grey", size=1)
       }
 
       if("trait" %in% metrics){
-        plot.dat <- data.frame("time"=x$EWS$time, "count.used"=x$EWS$count.used, "trait" = x$EWS$trait)
+        plot.dat <- tidyr::drop_na(x$EWS,"str") %>%
+          dplyr::select("time", "count.used","trait")
 
         ews.data <- x$EWS %>%
           dplyr::mutate(min = min(.data$count.used)*0.75) %>%
@@ -197,7 +184,7 @@ plot.EWSmethods <- function(x,...){
         p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
           aes(group=NA)+
           geom_line(aes(y=.data$count.used, linetype = "Count")) +
-          geom_line(aes(y=(.data$trait*plot_labels$trait_scale), linetype = "Trait"), size = 0.4, alpha = 0.4,col = "blue") +
+          geom_line(aes(y=(.data$trait*plot_labels$trait_scale), linetype = "Trait"), linewidth = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data = ews.data,
                      aes(x=.data$time, y = .data$min,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
           scale_alpha_manual(values = c(1),
@@ -211,21 +198,16 @@ plot.EWSmethods <- function(x,...){
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           xlab("Time point")+
           ylab(plot_labels$y_lab)+
-          ggthemes::theme_clean()+
           annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust = 0.75)+
           guides(alpha = guide_legend(order = 1))+
-          theme(plot.margin = margin(c(10, 8, 0, 10)),
-                legend.key.height = unit(0.3,"cm" ),
-                legend.key.width = unit(0.5,"cm"),
-                legend.title = ggplot2::element_text(size = 10),
-                legend.text = ggplot2::element_text(size=10),
-                legend.background = ggplot2::element_blank(),
-                legend.box.background = ggplot2::element_rect(colour = "black"))
+          theme_clean()+
+          theme(plot.margin = margin(c(10, 8, 0, 10)))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1), draw = F)
 
       }else if(!("trait" %in% metrics)){
-        plot.dat<-data.frame("time"=as.numeric(x$EWS$time), "count.used"=x$EWS$count.used)
+        plot.dat <- tidyr::drop_na(x$EWS,"str") %>%
+          dplyr::select("time", "count.used")
 
         ews.data <- x$EWS %>%
           dplyr::mutate(min = min(.data$count.used)*0.75) %>%
@@ -243,15 +225,9 @@ plot.EWSmethods <- function(x,...){
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab(plot_labels$y_lab) +
           xlab("Time point")+
-          ggthemes::theme_clean()+
           annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust=0.75)+
-          theme(plot.margin = margin(c(10, 8, 0, 10)),
-                legend.key.height = unit(0.3,"cm" ),
-                legend.key.width = unit(0.5,"cm"),
-                legend.title = ggplot2::element_text(size = 10),
-                legend.text = ggplot2::element_text(size=10),
-                legend.background = ggplot2::element_blank(),
-                legend.box.background = ggplot2::element_rect(colour = "black"))
+          theme_clean()+
+          theme(plot.margin = margin(c(10, 8, 0, 10)))
 
         final.p <- egg::ggarrange(p4,p,nrow = 2,heights = c(1, 1), draw = F)
       }
@@ -268,28 +244,30 @@ plot.EWSmethods <- function(x,...){
         dplyr::mutate(across(-c(.data$time),~scale(.x)))%>%
         tidyr::pivot_longer(-c(.data$time), names_to = "metric.code", values_to = "str")
 
-      cor.dat <- x$EWS$cor %>%
-        tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
-        dplyr::rowwise()%>%
-        dplyr::mutate(cor = paste(c("Tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
-        dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+      if(length(metrics) == 1){
+        cor.dat <- data.frame("metric.code" = metrics,
+                              "cor" = paste(c("tau:",round(x$EWS$cor[1,], digits = 3)),collapse = " ")) %>%
+          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+
+      }else{
+        cor.dat <- x$EWS$cor[1,] %>%
+          tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
+          dplyr::rowwise()%>%
+          dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
+          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+      }
 
       p <- ggplot(data = plot.dat, aes(x=.data$time,y=.data$str,group=.data$metric.code)) +
         geom_line(aes(col= .data$metric.code))+
         geom_text(data = cor.dat,aes(label = .data$cor),size = 3,hjust=0.75)+
         scale_colour_manual(values = pal[1:length(metrics)],
                             guide = guide_legend(override.aes = list(linetype = rep(1,length(metrics)),shape=NA))) +
-        ggthemes::theme_clean() + xlab("Time point") + ylab("Scaled metric value") +
+        xlab("Time point") + ylab("Scaled metric value") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nindicator trend') +
         facet_wrap(~metric.code,nrow=4)+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)),
-              legend.key.height = unit(0.3,"cm"),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))+
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)))+
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
@@ -300,15 +278,9 @@ plot.EWSmethods <- function(x,...){
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         ylab("Scaled component value") +
         xlab("Time point")+
-        ggthemes::theme_clean()+
         scale_colour_manual(values = c("#A1B4FE","#FFE7A1"),name = "Dimension\nreduction")+
-        theme(plot.margin = margin(c(10, 8, 0, 10)),
-              legend.key.height = unit(0.3,"cm" ),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 0, 10)))
 
       final.p <- egg::ggarrange(p3,p,nrow = 2,heights = c(1, 2), draw = F)
 
@@ -316,7 +288,7 @@ plot.EWSmethods <- function(x,...){
 
       metrics <- unique(x$EWS$raw$metric.code)
 
-      p<- ggplot(data = x$EWS$raw, aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+      p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", size=1)+
         geom_line()+
         geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
@@ -328,20 +300,15 @@ plot.EWSmethods <- function(x,...){
         scale_colour_manual(values = pal[1:length(metrics)],
                             guide = guide_legend(order = 2, override.aes =
                                                    list(linetype = rep(1,length(metrics)),shape= NA))) +
-        ggthemes::theme_clean() + xlab("Time point") + ylab("Strength of EWS") +
+        xlab("Time point") + ylab("Strength of EWS") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nindicator strength') +
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)),
-              legend.key.height = unit(0.3,"cm"),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
       plot.dat <- x$EWS$dimred.ts %>%
         dplyr::mutate(across(-.data$time,~scale(.))) %>%
-        dplyr::filter(.data$time %in% x$EWS$raw$time)%>%
+        dplyr::filter(.data$time %in% tidyr::drop_na(x$EWS$raw,"str")$time)%>%
         tidyr::pivot_longer(-.data$time,names_to = "dimred",values_to = "count.used")
 
       p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
@@ -349,15 +316,9 @@ plot.EWSmethods <- function(x,...){
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         ylab("Scaled component value") +
         xlab("Time point")+
-        ggthemes::theme_clean()+
         scale_colour_manual(values = c("#A1B4FE","#FFE7A1"),name = "Dimension\nreduction")+
-        theme(plot.margin = margin(c(10, 8, 0, 10)),
-              legend.key.height = unit(0.3,"cm" ),
-              legend.key.width = unit(0.5,"cm"),
-              legend.title = ggplot2::element_text(size = 10),
-              legend.text = ggplot2::element_text(size=10),
-              legend.background = ggplot2::element_blank(),
-              legend.box.background = ggplot2::element_rect(colour = "black"))
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 0, 10)))
 
       final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1),draw = F)
     }
@@ -379,4 +340,48 @@ plot.EWSmethods <- function(x,...){
 prepare_plot_labs <- function(y_lab = "Generic indicator name", trait_lab = "Generic trait name", trait_scale = 1000){
 
   return(list("y_lab" = y_lab, "trait_lab" = trait_lab, "trait_scale" = trait_scale))
+}
+
+#' Theme Clean for ggplot2
+#'
+#' Custom plot theme
+#'
+#' @param ... Additional arguments to pass to ggplot2 theme function.
+#' @param base_size Base size of plot text.
+#' @keywords internal
+#' @noRd
+
+theme_clean <- function(..., base_size = 12){
+  ggplot2::theme(
+    axis.line.x = ggplot2::element_line(
+      colour = "black",
+      linewidth = 0.5,
+      linetype = "solid"),
+    axis.line.y = ggplot2::element_line(
+      colour = "black",
+      linewidth = 0.5,
+      linetype = "solid"),
+    axis.text = ggplot2::element_text(size = ceiling(base_size * 0.7), colour = "black"),
+    axis.title = ggplot2::element_text(size = ceiling(base_size * 0.8)),
+    panel.grid.minor = ggplot2::element_blank(),
+    panel.grid.major.y = ggplot2::element_line(colour = "gray", linetype = "dotted"),
+    panel.grid.major.x = ggplot2::element_blank(),
+    panel.background = ggplot2::element_blank(),
+    panel.border = ggplot2::element_blank(),
+   # strip.background = ggplot2::element_rect(linetype = 0),
+    strip.background =  ggplot2::element_blank(),
+    strip.text = ggplot2::element_text(),
+    strip.text.x = ggplot2::element_text(vjust = 0.5),
+    strip.text.y = ggplot2::element_text(angle = -90),
+    plot.background = ggplot2::element_rect(colour = "black"),
+    plot.title = ggplot2::element_text(size = ceiling(base_size * 1.1), face = "bold"),
+    plot.subtitle = ggplot2::element_text(size = ceiling(base_size * 1.05)),
+    legend.position = "right",
+    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+    legend.key.height = ggplot2::unit(0.3,"cm"),
+    legend.key.width = ggplot2::unit(0.5,"cm"),
+    legend.title = ggplot2::element_text(size = 10,face = "bold",family = "sans"),
+    legend.text = ggplot2::element_text(size=10, family = "sans"),
+    legend.background = ggplot2::element_blank(),
+    legend.box.background = ggplot2::element_rect(colour = "black"))
 }

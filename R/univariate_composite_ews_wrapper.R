@@ -3,7 +3,7 @@
 #' A function for performing early warning signal (EWS) assessment on univariate time series. Both rolling and expanding window methods of EWS assessment can be performed with the assessments returned as a dataframe.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and the second column is the time series to be assessed.
-#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"}.
+#' @param metrics String vector of early warning signal metrics to be assessed.  Options include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"}, \code{"kurt"}, and \code{"trait"} (only available if \code{method = "expanding"}).
 #' @param method Single string of either \code{"expanding"} or \code{"rolling"}. \code{"expanding"} calls composite, expanding window EWS assessment. \code{"rolling"} calls typical, rolling window EWS assessment.
 #' @param winsize Numeric value. If \code{method = "rolling"}, defines the window size of the rolling window as a percentage of the time series length.
 #' @param burn_in Numeric value. If \code{method = "expanding"}, defines the number of data points to 'train' signals prior to EWS assessment.
@@ -11,8 +11,8 @@
 #' @param tail.direction String of either \code{"one.tailed"} or \code{"two.tailed"}. \code{"one.tailed"} only indicates a warning if positive threshold sigma exceeded. \code{"two.tailed"} indicates a warning if positive OR negative threshold*sigma exceeded.
 #' @param trait A vector of numeric trait values if desired. Can be \code{NULL}
 #'
-#' @returns A list containing up to two objects: EWS outputs through time (\code{EWS}), and a plot object (\code{plot}) if \code{ggplotIt = TRUE}.
-#' \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "expanding"}, then each metric's evolution over time is returned in individual columns.}
+#' @returns A list containing up to two objects: EWS outputs through time (\code{EWS}), and an identifier string (\code{method}).
+#' \item{EWS$raw}{Dataframe of EWS measurements through time. If \code{method = "expanding"}, then each metric has been rbound into a single dataframe and extra columns are provided indicating whether the threshold*sigma value has been exceeded (i.e. \code{"threshold.crossed"}). If \code{method = "rolling"}, then each metric's evolution over time is returned in individual columns.}
 #' \item{EWS$cor}{Dataframe of Kendall Tau correlations. Only returned if \code{method = "rolling"}.}
 #'
 #' @examples
@@ -73,9 +73,15 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
     data <- as.data.frame(data)
   } #allows tibbles to be used
 
-
   if(any(is.na(data))){
     stop('Data contains missing values. Interpolation of missing values is recommended')
+  }
+
+  if(is.null(trait) & ("trait" %in% metrics) & method == "expanding"){
+    stop('No trait data provided')
+  }
+  if(!is.null(trait) & ("trait" %in% metrics) & method != "expanding"){
+    stop('Trait-based EWSs are only available to the expanding window method')
   }
 
   if(method == "expanding"){

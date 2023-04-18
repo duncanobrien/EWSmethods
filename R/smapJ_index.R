@@ -20,14 +20,17 @@
 #' pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
 #'
 #' #Estimate the stability index for the third community
+#' #(trimmed for speed)
 #'
-#' egJI <- multiJI(data = pre_simTransComms[,2:7],
-#' winsize = 25)
+#' egJI <- multiJI(data = pre_simTransComms[1:50,2:7],
+#' winsize = 50)
 #'
 #' @export
 #' @source Ushio, M., Hsieh, Ch., Masuda, R. et al. (2018) Fluctuating interaction network and time-varying stability of a natural fish community. Nature 554, 360–363.
 
 multiJI <- function(data, winsize = 50,theta_seq =  NULL,scale = TRUE){
+
+  data <- as.data.frame(data)
 
   window <- round(dim(data)[1] * winsize/100)
 

@@ -39,10 +39,10 @@ data(simTransComms)
 #reference period or the entire time
 #series
 
-eg.sost <- apply(simTransComms$community1[,3:7], MARGIN = 2, FUN = sd) |>
-t() #transpose required to ensure a 1 x n matrix
+eg.sost <- t(apply(simTransComms$community1[,3:7], MARGIN = 2, FUN = sd))
+ #transpose required to ensure a 1 x n matrix
 
-egFI <- FI(data = simTransComms$community1[,2:7],
+egFI <- FI(data = simTransComms$community1[1:50,2:7],
 sost =  eg.sost,
 winsize = 10,
 winspace = 1,

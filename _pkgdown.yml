@@ -28,6 +28,7 @@ reference:
   contents:
   - uniEWS
   - multiEWS
+  - perm_rollEWS
   - plot.EWSmethods
 
 - title: "EWSNet"

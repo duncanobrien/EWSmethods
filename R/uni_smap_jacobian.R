@@ -26,8 +26,9 @@
 #' pre_simTransComms <- subset(simTransComms$community2,time < inflection_pt)
 #' winsize <- round(dim(pre_simTransComms)[1] * 50/100)
 #'
-#' #Estimate the Jacobian for the second species using s-map
-#' est_jac <- uni_smap_jacobian(pre_simTransComms[,2:3])
+#' #Estimate the Jacobian for the first 50 timepoints of the
+#' #second species using s-map
+#' est_jac <- uni_smap_jacobian(pre_simTransComms[1:50,2:3])
 #'
 #' @export
 #' @source Grziwotz, F., Chang, C.-W., Dakos, V., van Nes, E.H., Schwarzländer, M., Kamps, O., et al. (2023). Anticipating the occurrence and type of critical transitions. Science Advances, 9.

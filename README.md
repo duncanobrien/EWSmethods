@@ -34,7 +34,7 @@ devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
 > ⚠️ **Warning!** - *Due to the large file size of the EWSNet model
-> weights (\~230MB), `EWSmethods` does not come bundled with them. Users
+> weights (\~220MB), `EWSmethods` does not come bundled with them. Users
 > must download weights using `ewsnet_reset()` before interfacing with
 > EWSNet.*.
 
@@ -263,7 +263,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01157713         0.9787119         0.009710852
+#> 1 Smooth Transition    0.01084204         0.9570024          0.03215552
 ```
 
 <br>
