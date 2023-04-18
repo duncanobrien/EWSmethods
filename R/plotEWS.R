@@ -272,7 +272,7 @@ plot.EWSmethods <- function(x,...){
                col = guide_legend(order = 2))
 
       p3 <- ggplot(data =  dplyr::filter(x$EWS$dimred.ts,.data$time %in% plot.dat$time)%>%
-                    tidyr::pivot_longer(-.data$time,names_to = "dimred",values_to = "count.used")
+                    tidyr::pivot_longer(-c("time"),names_to = "dimred",values_to = "count.used")
                   , aes(x=.data$time, y=.data$count.used)) +
         geom_line(aes(col = .data$dimred))+
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
