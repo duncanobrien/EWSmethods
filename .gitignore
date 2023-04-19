@@ -5,6 +5,8 @@
 .DS_Store
 docs
 inst/doc
+inst/python/src/__init__.py
 inst/python/weights/**/*.h5
+inst/**/*.pyc
 /doc/
 /Meta/
