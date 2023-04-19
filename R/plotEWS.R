@@ -152,7 +152,7 @@ plot.EWSmethods <- function(x,...){
       p <- ggplot(data = tidyr::drop_na(x$EWS,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = unique(x$threshold), linetype="solid", color = "grey", linewidth=1)+
         geom_line()+
-        geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
+        #geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
         geom_point(aes(x=.data$time, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
         geom_line(aes(alpha = "0"))+
         scale_alpha_manual(values = c(0,1),
@@ -306,9 +306,28 @@ plot.EWSmethods <- function(x,...){
         theme_clean()+
         theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
+      p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+        geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", linewidth=1)+
+        geom_line()+
+        geom_point(aes(x=.data$time, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
+        geom_line(aes(alpha = "0"))+
+        scale_alpha_manual(values = c(0,1),
+                           breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
+                           guide = guide_legend(order = 1, override.aes =
+                                                  list(linetype = c(1,0),shape = c(NA,16),alpha = c(1,1),col="black")),
+                           drop=FALSE)+
+        scale_colour_manual(values = pal[1:length(metrics)],
+                            guide = guide_legend(order = 2, override.aes =
+                                                   list(linetype = rep(1,length(metrics)),shape= NA))) +
+        xlab("Time point") + ylab("Strength of EWS") +
+        scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
+        labs(color='Multivariate EWS\nindicator strength') +
+        theme_clean()+
+        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
+
       plot.dat <- x$EWS$dimred.ts %>%
         dplyr::mutate(across(-"time",~scale(.))) %>%
-        dplyr::filter(.data$time %in% tidyr::drop_na(x$EWS$raw,"str")$time)%>%
+        dplyr::filter(.data$time %in% unique(tidyr::drop_na(x$EWS$raw,"str")$time))%>%
         tidyr::pivot_longer(-"time",names_to = "dimred",values_to = "count.used")
 
       p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
