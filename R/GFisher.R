@@ -38,7 +38,7 @@
 #' @export
 #'
 #'
-FI <- function(data,sost,winsize,winspace = 1,TL = 90){
+FI <- function(data,sost,winsize = 50,winspace = 1,TL = 90){
   # calculates the FI from time series data.
   # Important parameters include:
   # FI: fisher information

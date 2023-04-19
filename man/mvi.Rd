@@ -7,7 +7,7 @@
 Brock, W.A. & Carpenter, S.R. (2006) Variance as a leading indicator of regime shift in ecosystem services. Ecology and Society 11(2): 9.
 }
 \usage{
-mvi(data, winsize)
+mvi(data, winsize = 50)
 }
 \arguments{
 \item{data}{A numeric matrix of species abundances, names across columns, time across rows. The first column is a time vector, the remainder are species values.}

@@ -8,7 +8,7 @@ perm_rollEWS(
   data,
   metrics,
   winsize = 50,
-  variate = "uni",
+  variate = c("uni", "multi"),
   perm.meth = "arima",
   iter = 500
 )
@@ -33,7 +33,7 @@ A list containing up to two objects: EWS outputs through time (\code{EWS}), and 
 \item{EWS$dimred.ts}{Dataframe containing the dimension reduction time series. Only returned if \code{variate = "multi"}.}
 }
 \description{
-A function for identifying whether a warning has been generated from rolling early warning signal data using permutation tests.
+A function for identifying whether a warning has been generated from rolling early warning signal data using permutation tests. If a parallel connection is setup via \code{parallel} or \code{future} prior to usage of \code{perm_rollEWS()}, then the function is parallelised.
 }
 \examples{
 

@@ -1,6 +1,6 @@
 #' Significance Testing of Rolling Window Early Warning Signals
 #'
-#' A function for identifying whether a warning has been generated from rolling early warning signal data using permutation tests.
+#' A function for identifying whether a warning has been generated from rolling early warning signal data using permutation tests. If a parallel connection is setup via \code{parallel} or \code{future} prior to usage of \code{perm_rollEWS()}, then the function is parallelised.
 #'
 #' @param data A dataframe where the first column is an equally spaced time vector and the remainder column are the time series to be assessed. If a two column dataframe is provided, and \code{variate = "uni"}, \code{uniEWS()} is called, whereas if number of columns exceeds two & \code{variate = "multi"}, then \code{multiEWS()} is called.
 #' @param metrics String vector of early warning signal metrics to be assessed. For \code{variate = "uni"} these include: \code{"ar1"}, \code{"cv"}, \code{"SD"}, \code{"acf"}, \code{"rr"}, \code{"dr"}, \code{"skew"} and \code{"kurt"}. For \code{variate = "multi"}, pptions include: \code{"meanSD"}, \code{"maxSD"}, \code{"meanAR"}, \code{"maxAR"}, \code{"eigenMAF"}, \code{"mafAR"}, \code{"mafSD"}, \code{"pcaAR"}, \code{"pcaSD"}, \code{"eigenCOV"}, \code{"maxCOV"} and \code{"mutINFO"}.
@@ -59,7 +59,7 @@
 #' @export
 #' @importFrom foreach %dopar%
 
-perm_rollEWS <- function(data, metrics, winsize = 50, variate = "uni", perm.meth = "arima", iter = 500){
+perm_rollEWS <- function(data, metrics, winsize = 50, variate = c("uni","multi"), perm.meth = "arima", iter = 500){
 
   data <- as.data.frame(data)
 
@@ -67,7 +67,6 @@ perm_rollEWS <- function(data, metrics, winsize = 50, variate = "uni", perm.meth
   variate <- match.arg(variate,choices=c("uni","multi"), several.ok = FALSE)
 
   if(variate == "uni"){
-
     metrics <- match.arg(metrics, choices = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","mean.size", "sd.size", "size.95","SD","trait"), several.ok=T)
 
     if(perm.meth == "arima"){
@@ -122,6 +121,10 @@ perm_rollEWS <- function(data, metrics, winsize = 50, variate = "uni", perm.meth
         }
 
   }else if(variate == "multi"){
+
+    if(NCOL(data) <= 2){
+      stop("Data only contains two columns. Multivariate EWS require 2+ timeseries")
+    }
 
     metrics <- match.arg(metrics, choices =  c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"), several.ok=T)
 

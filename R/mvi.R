@@ -22,7 +22,7 @@
 #' @source Brock, W.A. & Carpenter, S.R. (2006) Variance as a leading indicator of regime shift in ecosystem services. Ecology and Society 11(2): 9.
 
 
-mvi <- function(data,winsize){
+mvi <- function(data,winsize = 50){
 
   window <- round(dim(data)[1] * winsize/100)
 

@@ -4,7 +4,7 @@
 \alias{FI}
 \title{Calculate Fisher Information}
 \usage{
-FI(data, sost, winsize, winspace = 1, TL = 90)
+FI(data, sost, winsize = 50, winspace = 1, TL = 90)
 }
 \arguments{
 \item{data}{A numeric matrix of individual time series across the columns. These could be different species, populations or measurements. The first column must be an equally spaced time vector.}

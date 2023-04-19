@@ -39,7 +39,7 @@ devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
 > ⚠️ **Warning!** - 
-> *Due to the large file size of the EWSNet model weights (\~220MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_reset()` before interfacing with EWSNet.*.
+> *Due to the large file size of the EWSNet model weights (\~220MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_reset()` before interfacing with EWSNet.*
 
 <br>
 
