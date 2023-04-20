@@ -30,8 +30,13 @@ knitr::opts_chunk$set(
 <br>
 
 ## Installation
+You can install the stable version of `EWSmethods` from [CRAN](https://cran.r-project.org) with:
 
-You can install the development version of `EWSmethods` from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
+```{r, eval=F}
+install.packages("EWSmethods")
+```
+
+Alternatively, you can install the development version  from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ```{r, eval=F}
 install.packages("devtools")

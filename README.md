@@ -25,7 +25,14 @@ framework for predicting critical transitions (Deb *et al.* 2022).
 
 ## Installation
 
-You can install the development version of `EWSmethods` from
+You can install the stable version of `EWSmethods` from
+[CRAN](https://cran.r-project.org) with:
+
+``` r
+install.packages("EWSmethods")
+```
+
+Alternatively, you can install the development version from
 [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` r
@@ -254,7 +261,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01862567         0.9785367         0.002837666
+#> 1 Smooth Transition    0.01628667           0.97767         0.006043317
 ```
 
 <br>
