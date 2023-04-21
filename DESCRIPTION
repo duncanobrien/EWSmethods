@@ -1,7 +1,7 @@
 Type: Package
 Package: EWSmethods
 Title: Forecasting Tipping Points at the Community Level using Early Warning Signals and Machine Learning Models
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(given   = "Duncan",
            family  = "O'Brien",

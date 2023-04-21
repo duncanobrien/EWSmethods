@@ -20,11 +20,11 @@
 #' #Subset the third community prior to the transition
 #'
 #' pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
-#' winsize <- round(dim(pre_simTransComms)[1] * 50/100)
+#'
 #'
 #' #Estimate the Jacobian using s-map (typically only
 #' #the final estimate is informative)
-#' est_jac <- multi_smap_jacobian(pre_simTransComms[,2:7])
+#' est_jac <- multi_smap_jacobian(pre_simTransComms[1:10,2:7])
 #'
 #' @export
 #' @source Medeiros, L.P., Allesina, S., Dakos, V., Sugihara, G. & Saavedra, S. (2022) Ranking species based on sensitivity to perturbations under non-equilibrium community dynamics. Ecology Letters, 00, 1– 14.

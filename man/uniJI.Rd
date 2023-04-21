@@ -41,7 +41,7 @@ pre_simTransComms <- subset(simTransComms$community2,time < inflection_pt)
 #Estimate the univariate stability index for the first species in
 #the second community
 
-egJI <- uniJI(data = pre_simTransComms[,2:3],
-winsize = 25, E = 3)
+egJI <- uniJI(data = pre_simTransComms[1:25,2:3],
+winsize = 75, E = 3)
 
 }

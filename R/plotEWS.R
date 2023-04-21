@@ -3,10 +3,10 @@
 #' A function for visualising the output of \code{uniEWS} or \code{multiEWS} using ggplot2 inspired figures.
 #'
 #' @param x An EWSmethods object created by \code{uniEWS} or \code{multiEWS}
-#' @param ... Additional arguments to pass to the plotting functions. Options shared below.
-#' * \code{y_lab} String label. Labels the abundance y axis.
-#' * \code{trait_lab} String label. If \code{trait} argument populated in \code{uniEWS} or \code{multiEWS}, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
-#' * \code{trait_scale} Numeric value. Scales trait y axis relative to abundance y axis.
+#' @param y_lab String label. Labels the abundance y axis.
+#' @param trait_lab String label. If \code{trait} argument populated in \code{uniEWS} or \code{multiEWS}, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
+#' @param trait_scale Numeric value. Scales trait y axis relative to abundance y axis.
+#' @param ... Additional arguments to pass to the plotting functions.
 #'
 #' @returns A ggplot2 object.
 #'
@@ -63,7 +63,7 @@
 #'
 #' abundance_data <- data.frame(time = seq(1:50),
 #'  abundance = rnorm(50,mean = 20),
-#'  trait = rnorm(50,mean=1,sd=0.5))
+#'  trait = rnorm(50,mean=1,sd=0.25))
 #'
 #' trait_ews <- uniEWS(
 #'  data = abundance_data[,1:2],
@@ -81,7 +81,7 @@
 #'
 #' @export
 
-plot.EWSmethods <- function(x,...){
+plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab = "Generic trait name", trait_scale = 1000){
 
   pal <- c("#6886c4",
            "#bfbd3d",
@@ -97,7 +97,7 @@ plot.EWSmethods <- function(x,...){
            "black",
            "grey")
 
-  plot_labels <- prepare_plot_labs(...)
+  plot_labels <- prepare_plot_labs(..., y_lab = y_lab, trait_lab = trait_lab, trait_scale = trait_scale)
 
   if("uniEWS" %in% class(x)){
     if("rollEWS" %in% class(x)){

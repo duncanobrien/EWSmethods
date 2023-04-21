@@ -42,12 +42,12 @@ A function for performing early warning signal (EWS) assessment on univariate ti
 }
 \examples{
 #A dummy dataset of a hedgerow bird population over
-#50 years where both the number of individuals and
+#25 years where both the number of individuals and
 #the average bill length has been measured.
 
-abundance_data <- data.frame(time = seq(1:50),
- abundance = rnorm(50,mean = 20),
- trait = rnorm(50,mean=1,sd=0.5))
+abundance_data <- data.frame(time = seq(1:25),
+ abundance = rnorm(25,mean = 20),
+ trait = rnorm(25,mean=1,sd=0.5))
 
 #The early warning signal metrics to compute.
 
@@ -66,7 +66,7 @@ roll_ews <- uniEWS(
 #the bird abundance (with plotting).
 
 exp_ews <- uniEWS(
- data = abundance_data,
+ data = abundance_data[,1:2],
  metrics = ews_metrics,
  method = "expanding",
  burn_in = 10)
@@ -78,7 +78,7 @@ exp_ews <- uniEWS(
 ews_metrics_trait <- c("SD","ar1","trait")
 
 trait_exp_ews <- uniEWS(
- data = abundance_data,
+ data = abundance_data[,1:2],
  metrics = ews_metrics_trait,
  method = "expanding",
  burn_in = 10,

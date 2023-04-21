@@ -13,6 +13,11 @@
 #'   \item{spp_5}{density of species 1}
 #'   \item{inflection_pt}{the time index where transition occurs}
 #' }
+#' @examples
+#' data("simTransComms", package = "EWSmethods")
+#'
+#' community_data <- simTransComms$community1
+
 "simTransComms"
 
 #' Three Recovering Cod Populations
@@ -28,6 +33,11 @@
 #'   \item{sd.size}{variation in length of cod individuals}
 #'   \item{inflection_pt}{the time index where transition occurs}
 #' }
+#' #' @examples
+#' data("CODrecovery", package = "EWSmethods")
+#'
+#' cod_data <- CODrecovery$scenario2
+#'
 #' @source Clements C., McCarthy M., Blanchard J. (2019) Early warning signals of recovery in complex systems. Nature Communications, 10:1681.
 "CODrecovery"
 

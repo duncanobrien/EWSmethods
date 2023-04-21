@@ -27,24 +27,30 @@ knitr::opts_chunk$set(
 
 `EWSmethods` is a user friendly interface to various methods of performing Early Warning Signal (EWS) assessments. This R package allows the user to input univariate or multivariate data and perform either traditional rolling window (e.g. Dakos *et al.* 2012) or expanding window (Drake and Griffin, 2010) EWS approaches. Publication standard and ggplot inspired figures can also be generated during this process. `EWSmethods` also provides an R interface to [**EWSNet**](https://ewsnet.github.io), a deep learning modelling framework for predicting critical transitions (Deb *et al.* 2022).
 
+This README is a quick-fire introduction to the package, but indepth tutorials are available for the following topics:
+
+-   early warning signal assessments: [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/ews_assessments)
+-   machine learning: [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/using_ewsnet)
+-   resilience indicators: [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/resilience_measures)
+
 <br>
 
 ## Installation
+
 You can install the stable version of `EWSmethods` from [CRAN](https://cran.r-project.org) with:
 
 ```{r, eval=F}
 install.packages("EWSmethods")
 ```
 
-Alternatively, you can install the development version  from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
+Alternatively, you can install the development version from [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ```{r, eval=F}
 install.packages("devtools")
 devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
-> ⚠️ **Warning!** - 
-> *Due to the large file size of the EWSNet model weights (\~220MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_reset()` before interfacing with EWSNet.*
+> ⚠️ **Warning!** - *Due to the large file size of the EWSNet model weights (\~220MB), `EWSmethods` does not come bundled with them. Users must download weights using `ewsnet_reset()` before interfacing with EWSNet.*
 
 <br>
 
@@ -145,7 +151,7 @@ plot(oct_exp_ews)
 
 The other half of `EWSmethods` allows you to query the [Python-based](https://www.python.org) **EWSNet** via an easy to use R workflow. Here is a simple example that details how to first prepare your R session to communicate with Python (using the excellent `reticulate` [R package](https://rstudio.github.io/reticulate/)) and then calls **EWSNet** to assess the probability of a transition occurring in the skylark time series. This is a two step process where we must a) call `ewsnet_init()` before b) using `ewsnet_predict()`.
 
-However, because this is the first time using EWSNet via `EWSmethods`, we must first download the pretrained model weights from [https://ewsnet.github.io](https://ewsnet.github.io).
+However, because this is the first time using EWSNet via `EWSmethods`, we must first download the pretrained model weights from <https://ewsnet.github.io>.
 
 ```{r ewsnet_prep, warning = FALSE}
 ewsnet_reset(remove_weights = FALSE, auto = T)

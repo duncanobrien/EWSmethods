@@ -22,8 +22,8 @@
 #' #Estimate the stability index for the third community
 #' #(trimmed for speed)
 #'
-#' egJI <- multiJI(data = pre_simTransComms[1:50,2:7],
-#' winsize = 50)
+#' egJI <- multiJI(data = pre_simTransComms[1:10,2:7],
+#' winsize = 75)
 #'
 #' @export
 #' @source Ushio, M., Hsieh, Ch., Masuda, R. et al. (2018) Fluctuating interaction network and time-varying stability of a natural fish community. Nature 554, 360–363.

@@ -38,7 +38,7 @@ library(ggplot2)
 library(tidyr)
 ```
 
-As EWSNet has been written and developed in Python, for R to interact with it, we need to exploit the `reticulate` [R package](https://rstudio.github.io/reticulate/). `reticulate` provides the tools to run Python code in R and transfer objects between the two languages but tends to run much smoother in RStudio rather than base R. It is therefore recommended that you use the [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) when using the EWSNet portion of `EWSmethods`.
+As EWSNet has been written and developed in Python, for R to interact with it, we need to exploit the `reticulate` [R package](https://rstudio.github.io/reticulate/). `reticulate` provides the tools to run Python code in R and transfer objects between the two languages but tends to run much smoother in RStudio rather than base R. It is therefore recommended that you use the [RStudio IDE](https://posit.co/download/rstudio-desktop) when using the EWSNet portion of `EWSmethods`.
 
 The following sections will show how to setup and run EWSNet in `EWSmethods` before troubleshooting a few common errors stemming from the Python-`reticulate`-R interface.
 

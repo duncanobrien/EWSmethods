@@ -21,6 +21,16 @@ and ggplot inspired figures can also be generated during this process.
 [**EWSNet**](https://ewsnet.github.io), a deep learning modelling
 framework for predicting critical transitions (Deb *et al.* 2022).
 
+This README is a quick-fire introduction to the package, but indepth
+tutorials are available for the following topics:
+
+- early warning signal assessments:
+  [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/ews_assessments)
+- machine learning:
+  [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/using_ewsnet)
+- resilience indicators:
+  [**tutorial**](https://duncanobrien.github.io/EWSmethods/articles/resilience_measures)
+
 <br>
 
 ## Installation
@@ -261,7 +271,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01628667           0.97767         0.006043317
+#> 1 Smooth Transition    0.01368846         0.9571456          0.02916593
 ```
 
 <br>

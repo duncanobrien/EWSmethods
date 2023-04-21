@@ -23,4 +23,9 @@ simTransComms
 \description{
 A dataset containing three simulated five species communities stressed through a critical transition.
 }
+\examples{
+data("simTransComms", package = "EWSmethods")
+
+community_data <- simTransComms$community1
+}
 \keyword{datasets}

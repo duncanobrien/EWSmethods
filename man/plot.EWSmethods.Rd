@@ -4,15 +4,24 @@
 \alias{plot.EWSmethods}
 \title{Plot an EWSmethods object}
 \usage{
-\method{plot}{EWSmethods}(x, ...)
+\method{plot}{EWSmethods}(
+  x,
+  ...,
+  y_lab = "Generic indicator name",
+  trait_lab = "Generic trait name",
+  trait_scale = 1000
+)
 }
 \arguments{
 \item{x}{An EWSmethods object created by \code{uniEWS} or \code{multiEWS}}
 
-\item{...}{Additional arguments to pass to the plotting functions. Options shared below.
-* \code{y_lab} String label. Labels the abundance y axis.
-* \code{trait_lab} String label. If \code{trait} argument populated in \code{uniEWS} or \code{multiEWS}, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.
-* \code{trait_scale} Numeric value. Scales trait y axis relative to abundance y axis.}
+\item{...}{Additional arguments to pass to the plotting functions.}
+
+\item{y_lab}{String label. Labels the abundance y axis.}
+
+\item{trait_lab}{String label. If \code{trait} argument populated in \code{uniEWS} or \code{multiEWS}, & \code{"trait"} supplied in metrics, labels the right side y axis which represents trait values through time.}
+
+\item{trait_scale}{Numeric value. Scales trait y axis relative to abundance y axis.}
 }
 \value{
 A ggplot2 object.
@@ -43,7 +52,7 @@ roll_ews <- multiEWS(
 
 abundance_data <- data.frame(time = seq(1:50),
  abundance = rnorm(50,mean = 20),
- trait = rnorm(50,mean=1,sd=0.5))
+ trait = rnorm(50,mean=1,sd=0.25))
 
 trait_ews <- uniEWS(
  data = abundance_data[,1:2],

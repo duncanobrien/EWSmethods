@@ -33,12 +33,12 @@
 #'
 #  #(data trimmed for speed)
 #' perm_multi <- perm_rollEWS(
-#' data = simTransComms$community1[1:25,2:7],
-#'  winsize = 50,
+#' data = simTransComms$community1[1:10,2:7],
+#'  winsize = 75,
 #'  variate = "multi",
 #'  metrics = c("meanAR", "maxAR", "meanSD"),
 #'  perm.meth = "red.noise",
-#'  iter = 50)
+#'  iter = 25)
 #'
 #' \dontrun{
 #' parallel::stopCluster(cl)
@@ -48,13 +48,14 @@
 #' #Permute p value for a univariate
 #' #time series using resampling
 #'
+#' #(data trimmed for speed)
 #' perm_uni <- perm_rollEWS(
-#' data = simTransComms$community1[1:25,2:3],
-#'  winsize = 50,
+#' data = simTransComms$community1[1:10,2:3],
+#'  winsize = 75,
 #'  variate = "uni",
 #'  metrics = c("ar1", "SD", "skew"),
 #'  perm.meth = "sample",
-#'  iter = 50)
+#'  iter = 25)
 #'
 #' @export
 #' @importFrom foreach %dopar%

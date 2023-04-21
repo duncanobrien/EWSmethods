@@ -24,8 +24,8 @@
 #' #Estimate the univariate stability index for the first species in
 #' #the second community
 #'
-#' egJI <- uniJI(data = pre_simTransComms[,2:3],
-#' winsize = 25, E = 3)
+#' egJI <- uniJI(data = pre_simTransComms[1:25,2:3],
+#' winsize = 75, E = 3)
 #'
 #' @export
 #' @source Grziwotz, F., Chang, C.-W., Dakos, V., van Nes, E.H., Schwarzländer, M., Kamps, O., et al. (2023). Anticipating the occurrence and type of critical transitions. Science Advances, 9.
