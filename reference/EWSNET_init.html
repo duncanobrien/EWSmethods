@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
     <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
+    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -64,8 +64,8 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewsnet_init</span><span class="op">(</span></span>
 <span>  <span class="va">envname</span>,</span>
+<span>  conda_path <span class="op">=</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/miniconda_path.html" class="external-link">miniconda_path</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  pip_ignore_installed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  conda_refresh <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  auto <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,16 +76,16 @@
 <dd><p>A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.</p></dd>
 
 
+<dt>conda_path</dt>
+<dd><p>The location to install Python. By default, this follows <code>minicondata_path</code> defined by the <code>reticulate</code> package.</p></dd>
+
+
 <dt>pip_ignore_installed</dt>
 <dd><p>Boolean. If <code>FALSE</code>, any packages already installed are loaded and not re-downloaded. However, if <code>TRUE</code>, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).</p></dd>
 
 
-<dt>conda_refresh</dt>
-<dd><p>Boolean. If <code>TRUE</code>, miniconda is uninstalled and then gives the user the opportunity to perform a fresh reinstall.</p></dd>
-
-
 <dt>auto</dt>
-<dd><p>Boolean. If <code>TRUE</code>, no user confirmation is required for activation.</p></dd>
+<dd><p>Boolean. If <code>FALSE</code>, asks permission to install Python and/or packages. If <code>TRUE</code>, no user confirmation is required for activation.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -97,16 +97,17 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="bypass_reticulate_autoinit.html">bypass_reticulate_autoinit</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> RETICULATE_AUTOCONFIGURE set to FALSE</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co">#this function prevents 'reticulate' automatically</span></span></span>
 <span class="r-in"><span><span class="co">#reloading the python environment from the</span></span></span>
 <span class="r-in"><span><span class="co">#previous session. Only needs to be run once</span></span></span>
 <span class="r-in"><span><span class="co">#on first install of 'EWSmethods'.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">ewsnet_init</span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ewsnet_init</span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span>, auto <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="co">#Common errors at this stage result from 'reticulate's</span></span></span>
 <span class="r-in"><span><span class="co">#behaviour. For example, conflicts between 'ewsnet_init'</span></span></span>

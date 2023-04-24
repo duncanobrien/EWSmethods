@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
     <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
+    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -86,7 +86,10 @@
 <dd><p>the time index where transition occurs</p></dd>
 
 
-</dl></div>
+</dl><p>#' @examples
+data("CODrecovery", package = "EWSmethods")</p>
+<p>cod_data &lt;- CODrecovery$scenario2</p>
+    </div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     <p>Clements C., McCarthy M., Blanchard J. (2019) Early warning signals of recovery in complex systems. Nature Communications, 10:1681.</p>

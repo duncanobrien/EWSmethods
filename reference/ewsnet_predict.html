@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
     <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
+    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -62,7 +62,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewsnet_predict</span><span class="op">(</span><span class="va">x</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, <span class="va">envname</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewsnet_predict</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  scaling <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ensemble <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  <span class="va">envname</span>,</span>
+<span>  weights_path <span class="op">=</span> <span class="fu"><a href="default_weights_path.html">default_weights_path</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -81,6 +87,10 @@
 
 <dt>envname</dt>
 <dd><p>A string naming the Python environment prepared by <code><a href="EWSNET_init.html">ewsnet_init()</a></code>.</p></dd>
+
+
+<dt>weights_path</dt>
+<dd><p>A string naming the path to model weights installed by <code><a href="ewsnet_reset.html">ewsnet_reset()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

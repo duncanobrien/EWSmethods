@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
     <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
+    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -62,29 +62,49 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewsnet_reset</span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span>, auto <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ewsnet_reset</span><span class="op">(</span></span>
+<span>  weights_path <span class="op">=</span> <span class="fu"><a href="default_weights_path.html">default_weights_path</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  remove_weights <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  auto <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>remove_weights</dt>
+    <dl><dt>weights_path</dt>
+<dd><p>A string naming the path to install model weights. Can be changed, but by default, attempts to add weights to the same location as the Python scripts bundled with EWSmethods.</p></dd>
+
+
+<dt>remove_weights</dt>
 <dd><p>Boolean. Should all weights be removed (<code>TRUE</code>) or should weights be re/downloaded (<code>FALSE</code>).</p></dd>
 
 
 <dt>auto</dt>
-<dd><p>Boolean. If <code>TRUE</code>, no user confirmation is required for re/download.</p></dd>
+<dd><p>Boolean. If <code>FALSE</code>, asks permission to download model weights from Google Drive. If <code>TRUE</code>, no user confirmation is required for re/download.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>No return value, called for side effects.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">ewsnet_reset</span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span>, auto <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># on first use of EWSNet via `EWSmethods`</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># on first use of EWSNet via `EWSmethods`</span></span></span>
+<span class="r-in"><span><span class="fu">ewsnet_reset</span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span>, auto <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>weights_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Model weights downloaded</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">ewsnet_reset</span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># to remove all downloaded weights</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># to remove all downloaded weights</span></span></span>
+<span class="r-in"><span><span class="fu">ewsnet_reset</span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">TRUE</span>, auto <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>weights_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Model weights removed</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

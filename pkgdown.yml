@@ -2,10 +2,10 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  ews_assessments: ews_assessments.html
   resilience_measures: resilience_measures.html
   using_ewsnet: using_ewsnet.html
-last_built: 2023-04-19T17:00Z
+  ews_assessments: ews_assessments.html
+last_built: 2023-04-24T19:48Z
 urls:
   reference: https://duncanobrien.github.io/EWSmethods/reference
   article: https://duncanobrien.github.io/EWSmethods/articles

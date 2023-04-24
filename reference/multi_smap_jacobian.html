@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
     <a class="dropdown-item" href="../articles/resilience_measures.html">Alternative Resilience Measures</a>
     <a class="dropdown-item" href="../articles/using_ewsnet.html">Using EWSNet</a>
+    <a class="dropdown-item" href="../articles/ews_assessments.html">Performing Early Warning Signal Assessments</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -109,11 +109,11 @@
 <span class="r-in"><span><span class="co">#Subset the third community prior to the transition</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">community3</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">winsize</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="fl">50</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Estimate the Jacobian using s-map (typically only</span></span></span>
 <span class="r-in"><span><span class="co">#the final estimate is informative)</span></span></span>
-<span class="r-in"><span><span class="va">est_jac</span> <span class="op">&lt;-</span> <span class="fu">multi_smap_jacobian</span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">est_jac</span> <span class="op">&lt;-</span> <span class="fu">multi_smap_jacobian</span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
