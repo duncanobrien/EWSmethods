@@ -2,54 +2,49 @@
 #'
 #' Restores EWSNet model weights to the pretrained defaults published at https://ewsnet.github.io. This is vital on first use of EWSNet as no model weights are provided with `EWSmethods`. The use of this function may also be necessary after finetuning to reset the model.
 #'
-#'
+#' @param weights_path A string naming the path to install model weights. Can be changed, but by default, attempts to add weights to the same location as the Python scripts bundled with EWSmethods.
 #' @param remove_weights Boolean. Should all weights be removed (\code{TRUE}) or should weights be re/downloaded (\code{FALSE}).
-#' @param auto Boolean. If \code{TRUE}, no user confirmation is required for re/download.
+#' @param auto Boolean. If \code{FALSE}, asks permission to download model weights from Google Drive. If \code{TRUE}, no user confirmation is required for re/download.
 #'
+#' @returns No return value, called for side effects.
+
 #' @examples
-#' \dontrun{
-#' ewsnet_reset(remove_weights = FALSE, auto = FALSE) # on first use of EWSNet via `EWSmethods`
+#' \donttest{
+#' # on first use of EWSNet via `EWSmethods`
+#' ewsnet_reset(remove_weights = FALSE, auto = TRUE,
+#' weights_path = tempdir())
 #' }
 #'
-#'\dontrun{
-#' ewsnet_reset(remove_weights = TRUE) # to remove all downloaded weights
+#'\donttest{
+#' # to remove all downloaded weights
+#' ewsnet_reset(remove_weights = TRUE, auto = TRUE,
+#' weights_path = tempdir())
 #'}
 #'
 #' @export
 
-# ewsnet_reset <- function(new_weight_location){
-#
-#  target_folder <- system.file("python/weights", package = "EWSmethods")
-#  file.copy(new_weight_location, target_folder, recursive = T)
-#
-#  message("Model weights reset")
-# }
+ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights = FALSE, auto = FALSE){
 
+  #path <- system.file("python/weights", package = "EWSmethods")
 
-ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
-
-  #target_folder <- system.file("python/weights", package = "EWSmethods")
-
-  target_folder <- paste(c(system.file("python", package = "EWSmethods"),"weights"),collapse = "/")
-
-  if(!dir.exists(file.path(target_folder)) & target_folder != ""){
-    dir.create(file.path(target_folder))
+  if(!dir.exists(file.path(weights_path)) & weights_path != ""){
+    dir.create(file.path(weights_path))
     }
 
   if(isTRUE(remove_weights)){
-    unlink(paste(c(target_folder,"Pretrained"),collapse = "/"),recursive = T)
+    unlink(paste(c(weights_path,"Pretrained"),collapse = "/"),recursive = T)
     message("Model weights removed")
 
     }else{
 
       if(isTRUE(auto)){
 
-        zip <- paste(c(target_folder,"temp.zip"),collapse = "/")
+        zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
 
         utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
                       destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
 
-        utils::unzip(zip,exdir = target_folder)
+        utils::unzip(zip,exdir = weights_path)
         unlink(zip)
         message("Model weights downloaded")
 
@@ -60,16 +55,16 @@ ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
         message('Aborting')
 
       }else{
-        message("Attention: weights will be downloaded")
+        message(paste("Attention: weights will be downloaded"))
 
-      zip <- paste(c(target_folder,"temp.zip"),collapse = "/")
+      zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
       # download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=1-aY2MepouLQdMSNkYD6jgSedwFXB8BUP",
       #               destfile  = zip, overwrite = TRUE) #original EWSNet
 
       utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
                 destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
 
-      utils::unzip(zip,exdir = target_folder)
+      utils::unzip(zip,exdir = weights_path)
       unlink(zip)
       message("Model weights downloaded")
       }
@@ -78,3 +73,15 @@ ewsnet_reset <- function(remove_weights = FALSE, auto = FALSE){
 
 }
 
+#' Path to Model Weights
+#'
+#' The default path for EWSNet model weights to use. Is the location of the EWSmethods package. If you'd like to instead set your own path, \code{ewsnet_reset()} contains the argument \code{weights_path} to do so.
+#'
+#' @returns No return value, called for reference.
+#'
+#' @export
+
+default_weights_path <- function(){
+  target_folder <- paste(c(system.file("python", package = "EWSmethods"),"weights"),collapse = "/")
+  file.path(target_folder)
+}

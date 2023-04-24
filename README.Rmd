@@ -154,13 +154,13 @@ The other half of `EWSmethods` allows you to query the [Python-based](https://ww
 However, because this is the first time using EWSNet via `EWSmethods`, we must first download the pretrained model weights from <https://ewsnet.github.io>.
 
 ```{r ewsnet_prep, warning = FALSE}
-ewsnet_reset(remove_weights = FALSE, auto = T)
+ewsnet_reset(remove_weights = FALSE, auto = TRUE)
 ```
 
 Now we can setup our R session and interface with EWSNet.
 
 ```{r ewsnet, warning = FALSE}
-ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+ewsnet_init(envname = "EWSNET_env", auto = TRUE) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 
 library(reticulate)
 

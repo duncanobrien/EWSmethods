@@ -6,6 +6,8 @@
 #' @param scaling Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.
 #' @param ensemble A numeric value stating the number of models to average over. Options range from 1 to 25.
 #' @param envname A string naming the Python environment prepared by \code{ewsnet_init()}.
+#' @param weights_path A string naming the path to model weights installed by \code{ewsnet_reset()}.
+#'
 #' @returns A dataframe of EWSNet predictions. Values represent the estimated probability that the quoted event will occur.
 #'
 #' @examples
@@ -34,9 +36,7 @@
 #'
 #' @export
 #'
-ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
-
-#ewsnet_predict <- function(x, noise_type = "W", ensemble = 25,envname){
+ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname, weights_path = default_weights_path()){
 
   if(!envname %in% (reticulate::conda_list()$name)){
     warning("Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname")
@@ -50,13 +50,12 @@ ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
       stop('Time series is not numeric')
     }
 
-  wd <- getwd() #get working directory so it can be reset when Python alters the directory
+  wd <- getwd() #get working directory so it can be reset when Python/reticulate alters the directory
+  on.exit(setwd(wd),add = TRUE)
+
   EWSNet <- NULL # global variable to be populated by Python
 
-  #noise_type <- match.arg(noise_type, choices = c("W","C"))
   ensemble <- match.arg(paste(ensemble), choices = paste(1:25))
-
-  #noise_string <- paste(c("Dataset-", paste(noise_type)), collapse = "")
 
   if(isTRUE(scaling)){
     scaling_string <- paste("Scaled")
@@ -64,29 +63,19 @@ ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
     scaling_string <- paste("Unscaled")
   }
 
-  target_folder <- paste(c(system.file("python", package = "EWSmethods"),"weights","Pretrained"),collapse = "/")
-
-  if(!dir.exists(file.path(target_folder)) & target_folder != ""){
+  if(!dir.exists(file.path(paste(weights_path,"Pretrained",sep="/"))) & weights_path != ""){
     stop('No model weights found. Call ewsnet_reset(remove_weights = FALSE) to download weights')
   }
 
   directory_string <- paste(c("directory_string = '", system.file(package = "EWSmethods"),"'"),collapse = "")
-  #wd_string = paste(c("wd_string = '", wd,"'"),collapse = "")
   reticulate::py_run_string(directory_string)
-  #reticulate::py_run_string(wd_string)
   reticulate::py_run_string("import os")
   reticulate::py_run_string("os.chdir(directory_string)")
-  #reticulate::py_run_string("print(os.getcwd())")
-
-  #reticulate::source_python(system.file("inst/python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
 
   reticulate::source_python(system.file("python/src/inference/ewsNET_generic.py", package = "EWSmethods"))
 
-  #ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
-  ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
-  #ewsnet_obj <- EWSNet(ensemble = as.integer(ensemble), weight_dir = paste(c(directory_string,"python/weights/Pretrained",noise_string),collapse = "/"), prefix = "", suffix = ".h5")
-
-  #pred <- ewsnet_obj$predict(x)
+ #ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(system.file(package = "EWSmethods"),"python/weights/Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
+  ewsnet_obj <- EWSNet(ensemble = as.integer(25), weight_dir = paste(c(weights_path,"Pretrained",scaling_string),collapse = "/"), prefix = "", suffix = ".h5")
 
   if(isTRUE(scaling)){
     pred <- ewsnet_obj$predict(data_scaling(x),ensemble_subset = as.integer(ensemble))
@@ -100,12 +89,7 @@ ewsnet_predict <- function(x, scaling = TRUE, ensemble = 25, envname){
                     "critical_trans_prob" = pred[[2]]$`Critical Transition`)
 
   setwd(wd) # reset working directory
-  #reticulate::py_run_string("os.chdir(wd_string)")
 
-  # out <- data.frame("pred" = names(which.max(unlist(pred[[2]]))),
-  #                   "no_trans_prob" = pred[[2]]$`No Transition`,
-  #                   "smooth_trans_prob" = pred[[2]]$`Smooth Transition`,
-  #                   "critical_trans_prob" = pred[[2]]$`Critical Transition`)
   return(out)
   }
 

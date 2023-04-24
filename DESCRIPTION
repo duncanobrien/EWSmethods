@@ -1,6 +1,6 @@
 Type: Package
 Package: EWSmethods
-Title: Forecasting Tipping Points at the Community Level using Early Warning Signals and Machine Learning Models
+Title: Forecasting Tipping Points at the Community Level
 Version: 1.1.1
 Authors@R: c(
     person(given   = "Duncan",
@@ -32,7 +32,7 @@ Authors@R: c(
            role    = "aut",
            comment = c(ORCID = "0000-0001-5677-5401")))
 Maintainer: Duncan O'Brien <duncan.a.obrien@gmail.com>
-Description: Rolling and expanding window approaches to assessing abundance based early warning signals, non-equilibrium resilience measures, and machine learning. Graphical presentation of the outputs are also provided for clear and publishable figures.
+Description: Rolling and expanding window approaches to assessing abundance based early warning signals, non-equilibrium resilience measures, and machine learning. See Dakos et al. (2012) <doi:10.1371/journal.pone.0041010>, Deb et al. (2022) <doi:10.1098/rsos.211475>, Drake and Griffen (2010) <doi:10.1038/nature09389>, Ushio et al. (2018) <doi:10.1038/nature25504> and Weinans et al. (2021) <doi:10.1038/s41598-021-87839-y> for methodological details. Graphical presentation of the outputs are also provided for clear and publishable figures. Visit the 'EWSmethods' website for more information, and tutorials.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

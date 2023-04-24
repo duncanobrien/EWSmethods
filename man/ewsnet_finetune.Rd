@@ -4,7 +4,13 @@
 \alias{ewsnet_finetune}
 \title{EWSNet Finetune}
 \usage{
-ewsnet_finetune(x, y, scaling = TRUE, envname)
+ewsnet_finetune(
+  x,
+  y,
+  scaling = TRUE,
+  envname,
+  weights_path = default_weights_path()
+)
 }
 \arguments{
 \item{x}{A numeric matrix to finetune EWSNet on. Each column represents a separate timeseries and each row is a timestep.}
@@ -14,6 +20,11 @@ ewsnet_finetune(x, y, scaling = TRUE, envname)
 \item{scaling}{Boolean.  If \code{TRUE}, the time series will be scaled between 1 and 2 and scaled EWSNet model weights will be used. This is the recommended setting.}
 
 \item{envname}{A string naming the Python environment prepared by \code{ewsnet_init()}.}
+
+\item{weights_path}{A string naming the path to model weights installed by \code{ewsnet_reset()}.}
+}
+\value{
+No return value, called for side effects.
 }
 \description{
 Communicates with EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical systems, and finetunes the model to match the inputted training data. This overwrites the Pretrained weights bundled with \code{EWSmethods}. See \code{reset_ewsnet()} on how to reset these trained weights.

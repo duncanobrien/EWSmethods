@@ -36,12 +36,12 @@ W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2,
       dat$trait <- trait}
 
     #if(length(which(diff(dat$time)>1))>0){
-    if(any(is.na(dat$counts))==T){
-      print("Warning: some missing data. Count data should be interpolated")
+    if(any(is.na(dat$counts))==T & interpolate == F){
+      stop("Warning: some missing data. Count data should be interpolated")
     }
     #if(length(which(diff(dat$time)>1))>0 & interpolate == T){
     if(any(is.na(dat$counts))==T & interpolate == T){
-      print("Warning: some missing data. Count data interpolated where required")
+      warning("Warning: some missing data. Count data interpolated where required")
       dat.long<-interp(dat$time, dat$counts)
       if(!is.null(trait)){
         dat.long$trait <- interp(dat$time, dat$trait)$counts

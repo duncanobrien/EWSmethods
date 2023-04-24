@@ -6,19 +6,19 @@
 \usage{
 ewsnet_init(
   envname,
+  conda_path = reticulate::miniconda_path(),
   pip_ignore_installed = FALSE,
-  conda_refresh = FALSE,
   auto = FALSE
 )
 }
 \arguments{
 \item{envname}{A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.}
 
+\item{conda_path}{The location to install Python. By default, this follows \code{minicondata_path} defined by the \code{reticulate} package.}
+
 \item{pip_ignore_installed}{Boolean. If \code{FALSE}, any packages already installed are loaded and not re-downloaded. However, if \code{TRUE}, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).}
 
-\item{conda_refresh}{Boolean. If \code{TRUE}, miniconda is uninstalled and then gives the user the opportunity to perform a fresh reinstall.}
-
-\item{auto}{Boolean. If \code{TRUE}, no user confirmation is required for activation.}
+\item{auto}{Boolean. If \code{FALSE}, asks permission to install Python and/or packages. If \code{TRUE}, no user confirmation is required for activation.}
 }
 \value{
 Does not return an object as is simply preparing your R session.
@@ -27,7 +27,7 @@ Does not return an object as is simply preparing your R session.
 Prepares your R session for communicating with Python. This function first searches your computer for an appropriate Python environment and activates it, importing the vital Python packages required. If no appropriate Python install or environment is found, after asking permission, miniconda is downloaded and an environment created.
 }
 \examples{
-\dontrun{
+\donttest{
 bypass_reticulate_autoinit()
 }
 #this function prevents 'reticulate' automatically
@@ -36,7 +36,7 @@ bypass_reticulate_autoinit()
 #on first install of 'EWSmethods'.
 
 \dontrun{
-ewsnet_init(envname = "EWSNET_env")
+ewsnet_init(envname = "EWSNET_env", auto = FALSE)
 }
 #Common errors at this stage result from 'reticulate's
 #behaviour. For example, conflicts between 'ewsnet_init'

@@ -33,7 +33,7 @@
 #' @export
 #' @source Grziwotz, F., Chang, C.-W., Dakos, V., van Nes, E.H., Schwarzländer, M., Kamps, O., et al. (2023). Anticipating the occurrence and type of critical transitions. Science Advances, 9.
 
-uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale = T){
+uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale = TRUE){
 
   if(E <= 0){
     stop("E must be positive")

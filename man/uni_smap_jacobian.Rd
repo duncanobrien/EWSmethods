@@ -7,7 +7,7 @@
 Grziwotz, F., Chang, C.-W., Dakos, V., van Nes, E.H., Schwarzländer, M., Kamps, O., et al. (2023). Anticipating the occurrence and type of critical transitions. Science Advances, 9.
 }
 \usage{
-uni_smap_jacobian(data, theta_seq = NULL, E = 1, tau = NULL, scale = T)
+uni_smap_jacobian(data, theta_seq = NULL, E = 1, tau = NULL, scale = TRUE)
 }
 \arguments{
 \item{data}{Numeric matrix with time in first column and species abundance in the second}

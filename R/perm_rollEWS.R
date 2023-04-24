@@ -18,16 +18,29 @@
 #'
 #' data(simTransComms)
 #'
-#' #Permute p value for a multivariate
+#' #Permute p value for a univariate
+#' #time series using resampling
+#'
+#' #(data trimmed for speed)
+#' perm_uni <- perm_rollEWS(
+#' data = simTransComms$community1[1:10,2:3],
+#'  winsize = 75,
+#'  variate = "uni",
+#'  metrics = c("ar1", "SD", "skew"),
+#'  perm.meth = "sample",
+#'  iter = 25)
+#'
+#'  #' #Permute p value for a multivariate
 #' #community using a red.noise process
 #'
-#'
-#' \dontrun{
+#' \donttest{
 #' #if parallelisation desired,
 #' #this can be achieved using the
 #' #below code
-#' cl <- parallel::makeCluster(3)
+#' cl <- parallel::makeCluster(2)
+#' }
 #'
+#' \donttest{
 #' doParallel::registerDoParallel(cl)
 #' }
 #'
@@ -40,22 +53,9 @@
 #'  perm.meth = "red.noise",
 #'  iter = 25)
 #'
-#' \dontrun{
+#' \donttest{
 #' parallel::stopCluster(cl)
 #' }
-#'
-#'
-#' #Permute p value for a univariate
-#' #time series using resampling
-#'
-#' #(data trimmed for speed)
-#' perm_uni <- perm_rollEWS(
-#' data = simTransComms$community1[1:10,2:3],
-#'  winsize = 75,
-#'  variate = "uni",
-#'  metrics = c("ar1", "SD", "skew"),
-#'  perm.meth = "sample",
-#'  iter = 25)
 #'
 #' @export
 #' @importFrom foreach %dopar%

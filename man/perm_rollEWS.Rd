@@ -39,32 +39,6 @@ A function for identifying whether a warning has been generated from rolling ear
 
 data(simTransComms)
 
-#Permute p value for a multivariate
-#community using a red.noise process
-
-
-\dontrun{
-#if parallelisation desired,
-#this can be achieved using the
-#below code
-cl <- parallel::makeCluster(3)
-
-doParallel::registerDoParallel(cl)
-}
-
-perm_multi <- perm_rollEWS(
-data = simTransComms$community1[1:10,2:7],
- winsize = 75,
- variate = "multi",
- metrics = c("meanAR", "maxAR", "meanSD"),
- perm.meth = "red.noise",
- iter = 25)
-
-\dontrun{
-parallel::stopCluster(cl)
-}
-
-
 #Permute p value for a univariate
 #time series using resampling
 
@@ -76,5 +50,31 @@ data = simTransComms$community1[1:10,2:3],
  metrics = c("ar1", "SD", "skew"),
  perm.meth = "sample",
  iter = 25)
+
+ #' #Permute p value for a multivariate
+#community using a red.noise process
+
+\donttest{
+#if parallelisation desired,
+#this can be achieved using the
+#below code
+cl <- parallel::makeCluster(2)
+}
+
+\donttest{
+doParallel::registerDoParallel(cl)
+}
+
+perm_multi <- perm_rollEWS(
+data = simTransComms$community1[1:10,2:7],
+ winsize = 75,
+ variate = "multi",
+ metrics = c("meanAR", "maxAR", "meanSD"),
+ perm.meth = "red.noise",
+ iter = 25)
+
+\donttest{
+parallel::stopCluster(cl)
+}
 
 }

@@ -224,7 +224,7 @@ maf <- function(x){
 
     d = svd.zd$d[p:1]
   } else {
-    print("x is not a matrix or a data.frame, no MAF transform performed.")
+    warning("x is not a matrix or a data.frame, no MAF transform performed.")
     mafs = as.matrix(x)
     aa = as.matrix(1); a.i = as.matrix(1); d = as.matrix(1)
   }

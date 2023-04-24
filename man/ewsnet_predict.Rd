@@ -4,7 +4,13 @@
 \alias{ewsnet_predict}
 \title{EWSNet Predict}
 \usage{
-ewsnet_predict(x, scaling = TRUE, ensemble = 25, envname)
+ewsnet_predict(
+  x,
+  scaling = TRUE,
+  ensemble = 25,
+  envname,
+  weights_path = default_weights_path()
+)
 }
 \arguments{
 \item{x}{A numeric vector of values to be tested.}
@@ -14,6 +20,8 @@ ewsnet_predict(x, scaling = TRUE, ensemble = 25, envname)
 \item{ensemble}{A numeric value stating the number of models to average over. Options range from 1 to 25.}
 
 \item{envname}{A string naming the Python environment prepared by \code{ewsnet_init()}.}
+
+\item{weights_path}{A string naming the path to model weights installed by \code{ewsnet_reset()}.}
 }
 \value{
 A dataframe of EWSNet predictions. Values represent the estimated probability that the quoted event will occur.

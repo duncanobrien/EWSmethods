@@ -36,6 +36,8 @@ reference:
   contents:
   - starts_with("ewsnet")
   - bypass_reticulate_autoinit
+  - conda_clean
+  - default_weights_path
 
 - title: "Other resilience metrics"
   desc: >

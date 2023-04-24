@@ -3,14 +3,14 @@
 #' Prepares your R session for communicating with Python. This function first searches your computer for an appropriate Python environment and activates it, importing the vital Python packages required. If no appropriate Python install or environment is found, after asking permission, miniconda is downloaded and an environment created.
 #'
 #' @param envname A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.
+#' @param conda_path The location to install Python. By default, this follows \code{minicondata_path} defined by the \code{reticulate} package.
 #' @param pip_ignore_installed Boolean. If \code{FALSE}, any packages already installed are loaded and not re-downloaded. However, if \code{TRUE}, packages are downloaded irregardless, overwriting any version already present (is analagous to updating if required).
-#' @param conda_refresh Boolean. If \code{TRUE}, miniconda is uninstalled and then gives the user the opportunity to perform a fresh reinstall.
-#' @param auto Boolean. If \code{TRUE}, no user confirmation is required for activation.
+#' @param auto Boolean. If \code{FALSE}, asks permission to install Python and/or packages. If \code{TRUE}, no user confirmation is required for activation.
 #'
 #' @returns Does not return an object as is simply preparing your R session.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' bypass_reticulate_autoinit()
 #' }
 #' #this function prevents 'reticulate' automatically
@@ -19,7 +19,7 @@
 #' #on first install of 'EWSmethods'.
 #'
 #' \dontrun{
-#' ewsnet_init(envname = "EWSNET_env")
+#' ewsnet_init(envname = "EWSNET_env", auto = FALSE)
 #' }
 #' #Common errors at this stage result from 'reticulate's
 #' #behaviour. For example, conflicts between 'ewsnet_init'
@@ -38,45 +38,56 @@
 #
 #' @export
 
-ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = FALSE, auto = FALSE){
+ewsnet_init <- function(envname, conda_path = reticulate::miniconda_path(), pip_ignore_installed = FALSE, auto = FALSE){
 
-  if(isTRUE(conda_refresh)){
-    reticulate::miniconda_uninstall() # start with a blank slate
-    message("Anaconda successfully removed")
-    #reticulate::conda_remove(envname, packages = NULL, conda = "auto")
-  }
+  # if(isTRUE(conda_refresh)){
+  #   reticulate::conda_remove(envname = envname,packages = NULL, conda=conda_path)
+  #   reticulate::miniconda_uninstall(path=conda_path) # start with a blank slate
+  #   message("Anaconda successfully removed")
+  #   #reticulate::conda_remove(envname, packages = NULL, conda = "auto")
+  # }
 
-  detect.sys <- paste(Sys.info()["sysname"],Sys.info()["machine"],sep = "_") #identify whether
+  detect.sys <- paste(Sys.info()["sysname"],Sys.info()["machine"],sep = "_") #identify specific OS
   wd <- getwd() #get working directory so it can be reset when Python alters the directory
+  on.exit(setwd(wd), add = TRUE)
 
-  conda <- try(reticulate::conda_list()) #extract list of conda Python environments
+  if(identical(.Platform$OS.type, "windows")){ #windows has different file strucutre to Linux/MAC
+    conda_binary <- paste0(conda_path,"/condabin/conda.bat")
+    }else{
+    conda_binary <- paste0(conda_path,"/bin/conda")
+    }
+
+  conda <- try(reticulate::conda_list(conda = conda_binary)) #extract list of conda Python environments
   if(inherits(conda, "try-error")){
 
     if(isTRUE(auto)){
       message("Attention: may take up to 10 minutes to complete")
 
-      reticulate::install_miniconda(force = T)
+      reticulate::install_miniconda(path = conda_path,force = F)
 
       reticulate::conda_create(
+        conda = conda_binary,
         envname = paste0(envname),
-        forge = FALSE,environment = NULL,
-        conda = "auto")
+        forge = FALSE,environment = NULL)
 
       if(detect.sys == "Darwin_arm64"){ # specfic install for MACOSX M1 machines
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                               conda = conda_binary,
+                               required = T)
       #keras::install_keras(envname = paste0(envname))
       # try.attempt <- suppressMessages(try(reticulate::use_condaenv(condaenv = paste0(envname),
       #                          conda = "auto", required = T),silent = T))
@@ -97,28 +108,31 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
     }else{
       message("Attention: may take up to 10 minutes to complete")
 
-      reticulate::install_miniconda(force = F)
+      reticulate::install_miniconda(path = conda_path, force = F)
 
       reticulate::conda_create(
+        conda = conda_binary,
         envname = paste0(envname),
-        forge = FALSE,environment = NULL,
-        conda = "auto")
+        forge = FALSE,environment = NULL)
 
-      if(detect.sys == "Darwin_arm64"){ # specfic install for MACOSX M1 machines
+      if(detect.sys == "Darwin_arm64"){ # specfic install for MACOSX arm machines
       reticulate::conda_install(envname = paste0(envname),
+                                conda = conda_binary,
                                 packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                              "sphinxcontrib-matlabdomain","seaborn"),
                                 pip = T, pip_ignore_installed = pip_ignore_installed,
                                 pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
         }
       reticulate::use_condaenv(condaenv = paste0(envname),
-                        conda = "auto", required = T)
+                               conda = conda_binary,
+                               required = T)
       #keras::install_keras(envname = paste0(envname))
       # try.attempt <- suppressMessages(try(reticulate::use_condaenv(condaenv = paste0(envname),
       #                          conda = "auto", required = T),silent = T))
@@ -138,16 +152,19 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
       message("Attention: may take up to 10 minutes to complete")
 
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                               conda = conda_binary,
+                              required = T)
 
       if(detect.sys == "Darwin_arm64"){
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain", "seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
@@ -167,16 +184,19 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
       message("Attention: may take up to 10 minutes to complete")
 
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                               conda = conda_binary,
+                                required = T)
 
       if(detect.sys == "Darwin_arm64"){
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
@@ -195,24 +215,27 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
 
       reticulate::conda_create(
         envname = paste0(envname),
-        forge = FALSE,environment = NULL,
-        conda = "auto")
+        conda = conda_binary,
+        forge = FALSE,environment = NULL)
 
       if(detect.sys == "Darwin_arm64"){
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                               conda = conda_binary,
+                                required = T)
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")
@@ -228,24 +251,27 @@ ewsnet_init <- function(envname, pip_ignore_installed = FALSE, conda_refresh = F
 
       reticulate::conda_create(
         envname = paste0(envname),
-        forge = FALSE,environment = NULL,
-        conda = "auto")
+        conda = conda_binary,
+        forge = FALSE,environment = NULL)
 
       if(detect.sys == "Darwin_arm64"){
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_binary,
                                   packages = c("tensorflow-macos","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }else{
         reticulate::conda_install(envname = paste0(envname),
+                                  conda = conda_path,
                                   packages = c("tensorflow","scikit-learn","pandas","matplotlib",
                                                "sphinxcontrib-matlabdomain","seaborn"),
                                   pip = T, pip_ignore_installed = pip_ignore_installed,
                                   pip_options = "--timeout=1000")
       }
       reticulate::use_condaenv(condaenv = paste0(envname),
-                               conda = "auto", required = T)
+                               conda = conda_binary,
+                               required = T)
 
       message(paste(envname,"successfully installed and activated. Necessary python packages installed"),
               collapse = " ")

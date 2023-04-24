@@ -100,7 +100,7 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
             call.=F,immediate.=F)
   }
   if(increment=="day") incremently<-"daily" else incremently<-paste(increment,"ly",sep="")
-  cat(paste("data successfully aggregated into",incremently,"time steps\n"))
+  message(paste("data successfully aggregated into",incremently,"time steps\n"))
 
 
   #====================================================================================

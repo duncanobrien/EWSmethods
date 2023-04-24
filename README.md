@@ -35,14 +35,7 @@ tutorials are available for the following topics:
 
 ## Installation
 
-You can install the stable version of `EWSmethods` from
-[CRAN](https://cran.r-project.org) with:
-
-``` r
-install.packages("EWSmethods")
-```
-
-Alternatively, you can install the development version from
+You can install the development version from
 [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` r
@@ -234,14 +227,14 @@ we must first download the pretrained model weights from
 <https://ewsnet.github.io>.
 
 ``` r
-ewsnet_reset(remove_weights = FALSE, auto = T)
+ewsnet_reset(remove_weights = FALSE, auto = TRUE)
 #> Model weights downloaded
 ```
 
 Now we can setup our R session and interface with EWSNet.
 
 ``` r
-ewsnet_init(envname = "EWSNET_env", auto = T) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
+ewsnet_init(envname = "EWSNET_env", auto = TRUE) #prepares your workspace using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 #> Attention: may take up to 10 minutes to complete
 #> EWSNET_env successfully found and activated. Necessary python packages installed
 
@@ -271,7 +264,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01368846         0.9571456          0.02916593
+#> 1 Smooth Transition   0.008681824         0.9592853          0.03203287
 ```
 
 <br>

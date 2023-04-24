@@ -2,6 +2,8 @@
 #'
 #' Adds \code{RETICULATE_AUTOCONFIGURE = "FALSE"} to \code{.Renviron} to prevent \code{reticulate} automatically loading Python environments.
 #'
+#' @returns No return value, called for side effects.
+#'
 #' @export
 bypass_reticulate_autoinit <- function(){
 

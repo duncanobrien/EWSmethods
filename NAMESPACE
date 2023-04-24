@@ -3,6 +3,8 @@
 S3method(plot,EWSmethods)
 export(FI)
 export(bypass_reticulate_autoinit)
+export(conda_clean)
+export(default_weights_path)
 export(deseason_ts)
 export(detrend_ts)
 export(ewsnet_finetune)

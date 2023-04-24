@@ -6,6 +6,9 @@
 \usage{
 bypass_reticulate_autoinit()
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Adds \code{RETICULATE_AUTOCONFIGURE = "FALSE"} to \code{.Renviron} to prevent \code{reticulate} automatically loading Python environments.
 }

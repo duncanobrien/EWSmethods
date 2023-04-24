@@ -14,8 +14,6 @@
 #' @keywords internal
 #' @noRd
 
-
-
 NFisherpdf <- function(data,lmin,lmax,sizeofstates,TL){
 
   # The purpose of this program is to bin the points into states by

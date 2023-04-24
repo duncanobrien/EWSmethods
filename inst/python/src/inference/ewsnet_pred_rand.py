@@ -158,7 +158,7 @@ class EWSNet():
                 for layer in self.model[i].layers:
                     if(layer.name in trainable_layers):
                         layer.trainable = True
-            self.model[i].compile(optimizer=tf.keras.optimizers.Adam(lr=learning_rate),loss=tf.keras.losses.sparse_categorical_crossentropy,metrics=['accuracy'])
+            self.model[i].compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),loss=tf.keras.losses.sparse_categorical_crossentropy,metrics=['accuracy'])
             self.model[i].fit(train_dataset,epochs=tune_epochs,validation_data=val_dataset)
     
     def build_model(self):
