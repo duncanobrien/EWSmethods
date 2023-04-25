@@ -1,3 +1,5 @@
+# EWSmethods 1.1.2
+
 # EWSmethods 1.1.1
 
 # EWSmethods 1.1.0

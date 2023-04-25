@@ -15,7 +15,7 @@
 performing Early Warning Signal (EWS) assessments. This R package allows
 the user to input univariate or multivariate data and perform either
 traditional rolling window (e.g. Dakos *et al.* 2012) or expanding
-window (Drake and Griffin, 2010) EWS approaches. Publication standard
+window (Drake and Griffen, 2010) EWS approaches. Publication standard
 and ggplot inspired figures can also be generated during this process.
 `EWSmethods` also provides an R interface to
 [**EWSNet**](https://ewsnet.github.io), a deep learning modelling
@@ -35,7 +35,14 @@ tutorials are available for the following topics:
 
 ## Installation
 
-You can install the development version from
+You can install the stable version of `EWSmethods` from
+[CRAN](https://cran.r-project.org) with:
+
+``` r
+install.packages("EWSmethods")
+```
+
+Alternatively, you can install the development version from
 [GitHub](https://github.com/duncanobrien/EWSmethods) with:
 
 ``` r
@@ -264,7 +271,7 @@ skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensembl
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition   0.008681824         0.9592853          0.03203287
+#> 1 Smooth Transition    0.02270605         0.9592073          0.01808658
 ```
 
 <br>
