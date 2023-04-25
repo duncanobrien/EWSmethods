@@ -33,7 +33,7 @@
 #'   \item{sd.size}{variation in length of cod individuals}
 #'   \item{inflection_pt}{the time index where transition occurs}
 #' }
-#' #' @examples
+#' @examples
 #' data("CODrecovery", package = "EWSmethods")
 #'
 #' cod_data <- CODrecovery$scenario2
