@@ -24,6 +24,12 @@
 
 mvi <- function(data,winsize = 50){
 
+  data <- as.data.frame(data)
+
+  if(NCOL(data) <= 2){
+    stop("Data only contains two columns. mvi require 2+ timeseries")
+  }
+
   window <- round(dim(data)[1] * winsize/100)
 
   out <- matrix(ncol = 2,nrow=dim(data)[1]-window+1)

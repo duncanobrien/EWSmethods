@@ -178,7 +178,46 @@ Additionally, the two approaches require time series with no extended period of 
 
 <br>  
 
-# 3) Fisher Information
+# 3) Autocorrelation Jacobians
+
+An alternative method of estimating the Jacobian has been suggested by Williamson and Lenton (2015) which uses multivariate lag-1 autoregressive models rather than S-map reconstruction. In this approach, multivariate models estimate an autocorrelation matrix between all time series, the real eigenvalues of which are related to the real eigenvalues of the Jacobian:
+
+\begin{equation}
+\lambda_{j}= \frac{1}{\Delta t}log \left| a_{j} \right|
+\end{equation}
+
+where $\lambda$ is the Jacobian eigenvalues, $a_{j}$ is the eigenvalues of the autocorrelation matrix and $\Delta t$ is the time step of the data generating process. As $\Delta t$ is typically unknown for empirical data, we have assumed it is equal to 1, but this is an argument that can be altered.
+
+<br>  
+
+### _Interpretation_
+As with `multiJI`, `multiAR` estimates local Lyapunov stability but with a threshold of `0` rather than `1`. Consequently, we expect instability when `multiAR > 0`, stability when `multiAR < 0`, and for the value to trend positively with stress.
+
+<br>  
+
+### _Usage_
+Lets estimate the index:
+
+```{r multiAR,message=FALSE, warning=FALSE,results='hide'}
+eg_multiAR <- multiAR(data = simTransComms$community1[,2:7], winsize = 25)
+```
+
+Plotting the index for this species, we observe very similar behaviour to `multiJI()`. This is encouraging as both indices estimate equivalent Jacobian matrices.
+
+```{r multiAR2,dpi=144}
+multiAR_plot_data <- merge(simTransComms$community1,eg_multiAR,by="time") # combine the mvi data with the raw time series
+
+ggplot(multiAR_plot_data,aes(x = time, y = multiAR)) + geom_line() + geom_vline(xintercept = multiAR_plot_data$inflection_pt,col = "grey60", linetype = "dashed") + theme_bw() + xlab("Time") + ylab("Mulivariate stability index value")
+```
+
+<br>  
+
+### *Caveats* 
+`multiAR` suffers similar caveats to the S-map indices with a sensitivity to time series length and choice of time series contributing to the estimate. Anecdotally, the multivariate autoregressive models also require a minimum of 16 time points to function though the index estimation is ~25x faster than `multiJI`.
+
+<br>  
+
+# 4) Fisher Information
 
 Fisher Information (FI) attempts to estimate the amount of information data can provide on an unmeasured parameter (Fisher and Russell 1922). It consequently has been applied as an indicator of system dynamics and stability (Ahmad et al. 2016). `EWSmethods` provides a simplified discrete time form of Fisher and Russel (1922)’s mathematic proof following Karunanithi *et al.* (2008):
 
@@ -241,3 +280,5 @@ Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M., & Munch, S. (2
 Takens, F. (1981). Detecting strange attractors in turbulence. *Dynamical Systems and Turbulence*, Warwick 1980. Ed. by D. Rand and L.-S. Young. Berlin, Heidelberg: Springer Berlin Heidelberg, pp. 366–381 
 
 Ushio, M., Hsieh, Ch., Masuda, R. et al. (2018) Fluctuating interaction network and time-varying stability of a natural fish community. *Nature*, 554, 360–363. [doi:10.1038/nature25504](https://www.nature.com/articles/nature25504)
+
+Williamson and Lenton (2015). Detection of bifurcations in noisy coupled systems from multiple time series. Chaos, 25, 036407. [doi:10.1063/1.4908603](https://doi.org/10.1063/1.4908603)

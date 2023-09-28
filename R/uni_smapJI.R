@@ -32,6 +32,10 @@
 
 uniJI <- function(data, winsize = 50,theta_seq =  NULL, E = 1, tau = NULL, scale = TRUE){
 
+  if(NCOL(data) != 2){
+    stop("Data must only contain two columns")
+  }
+
   window <- round(dim(data)[1] * winsize/100)
 
   out <- lapply(1:(dim(data)[1]-window+1), function(i){

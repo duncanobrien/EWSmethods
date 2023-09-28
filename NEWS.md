@@ -1,4 +1,7 @@
-# EWSmethods (development version)
+# EWSmethods 1.2.0
+
+# EWSmethods 1.2.0
+Introduce `multiAR` as an alternative to `multiJI` for estimating Jacobians. Additional bug fixes and warning messages for resilience metrics. Removed unnecessary and problematic `bypass_reticulate_autoinit()`.
 
 # EWSmethods 1.1.2
 First CRAN release following CRAN maintainer comments. `ewsnet_*()` functions no longer download files without asking permission.

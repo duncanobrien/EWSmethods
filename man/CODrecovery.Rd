@@ -14,10 +14,6 @@ A list of three dataframes with 191 rows and 6 variables each:
   \item{sd.size}{variation in length of cod individuals}
   \item{inflection_pt}{the time index where transition occurs}
 }
-#' @examples
-data("CODrecovery", package = "EWSmethods")
-
-cod_data <- CODrecovery$scenario2
 }
 \source{
 Clements C., McCarthy M., Blanchard J. (2019) Early warning signals of recovery in complex systems. Nature Communications, 10:1681.
@@ -27,5 +23,11 @@ CODrecovery
 }
 \description{
 A dataset containing three simulated cod populations. Community 1 does not recovery whereas Community 100 and 200 do.
+}
+\examples{
+data("CODrecovery", package = "EWSmethods")
+
+cod_data <- CODrecovery$scenario2
+
 }
 \keyword{datasets}

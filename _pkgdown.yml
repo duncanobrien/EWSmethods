@@ -35,7 +35,6 @@ reference:
   desc: "Functions for interfacing with EWSNet."
   contents:
   - starts_with("ewsnet")
-  - bypass_reticulate_autoinit
   - conda_clean
   - default_weights_path
 
@@ -50,6 +49,7 @@ reference:
   - multiJI
   - multi_smap_jacobian
   - mvi
+  - multiAR
 
 - title: "Data preparation"
   desc: >

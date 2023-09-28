@@ -32,6 +32,10 @@ multiJI <- function(data, winsize = 50,theta_seq =  NULL,scale = TRUE){
 
   data <- as.data.frame(data)
 
+  if(NCOL(data) <= 2){
+    stop("Data only contains two columns. multiJI require 2+ timeseries")
+  }
+
   window <- round(dim(data)[1] * winsize/100)
 
   out <- lapply(1:(dim(data)[1]-window+1), function(i){

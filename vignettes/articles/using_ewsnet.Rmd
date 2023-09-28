@@ -56,8 +56,6 @@ ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE)
 ```
 
 ```{r ewsnet_init_true, echo=FALSE,warning = FALSE,message=FALSE}
-bypass_reticulate_autoinit()
-
 #set auto = T so no user input required
 ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE, auto = TRUE)
 

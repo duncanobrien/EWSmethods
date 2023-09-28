@@ -14,7 +14,7 @@ test_that("EWSNet can be correctly initialised", {
 
   skip_if_no_miniconda()
 
-  bypass_reticulate_autoinit()
+  #bypass_reticulate_autoinit()
   ewsnet_init(envname = "test_env", auto = TRUE)
   expect_match(reticulate::py_config()$python,"test_env")
 

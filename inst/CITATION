@@ -2,22 +2,15 @@ citHeader("To cite EWSmethods in publications use:")
 
 bibentry(
   bibtype    =  "manual",
- title = "{EWSmethods}: an R package to forecast tipping points at the community level using early warning signals and machine learning models",
+ title = "{EWSmethods}: an R package to forecast tipping points at the community level using early warning signals, resilience measures, and machine learning models",
     author = c(person("Duncan A. O'Brien"),
     person("Smita Deb"),
     person("Sahil Sidheekh"),
     person("Narayanan Krishnan"),
     person("Partha S Dutta"),
     person("Christopher F Clements")),
-    journal = "Authorea Preprints",
-    year = "2022",
+    journal = "Ecography",
+    year = "2023",
     note = "R package version 1.1.2",
-    url = "https://www.authorea.com/doi/full/10.22541/au.166801190.00303336",
-    doi = "10.22541/au.166801190.00303336/v3",
-
-    textVersion  = paste("O'Brien D.A., Deb S., Sidheekh S., Krishnan N.C., Dutta P.S. & Clements C.F. (2022).",
-        "EWSmethods: an R package to forecast tipping points at the community level using early warning signals and machine learning models.",
-        "Authorea Preprints",
-        "R package version 1.1.2",
-        "https://www.authorea.com/doi/full/10.22541/au.166801190.00303336.")
+    doi = "10.1111/ecog.06674",
 )

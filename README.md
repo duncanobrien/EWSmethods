@@ -51,7 +51,7 @@ devtools::install_github("duncanobrien/EWSmethods", dependencies = TRUE)
 ```
 
 > ⚠️ **Warning!** - *Due to the large file size of the EWSNet model
-> weights (\~220MB), `EWSmethods` does not come bundled with them. Users
+> weights (~220MB), `EWSmethods` does not come bundled with them. Users
 > must download weights using `ewsnet_reset()` before interfacing with
 > EWSNet.*
 
@@ -248,30 +248,30 @@ ewsnet_init(envname = "EWSNET_env", auto = TRUE) #prepares your workspace using 
 library(reticulate)
 
 reticulate::py_config() #confirm that "EWSNET_env" has been loaded
-#> python:         /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/bin/python
-#> libpython:      /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/libpython3.8.dylib
-#> pythonhome:     /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env:/Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env
-#> version:        3.8.16 (default, Mar  1 2023, 21:19:10)  [Clang 14.0.6 ]
-#> numpy:          /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy
-#> numpy_version:  1.23.5
+#> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
+#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.9.dylib
+#> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
+#> version:        3.9.18 | packaged by conda-forge | (main, Aug 30 2023, 03:53:08)  [Clang 15.0.7 ]
+#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.9/site-packages/numpy
+#> numpy_version:  1.24.3
 #> 
-#> NOTE: Python version was forced by use_python function
+#> NOTE: Python version was forced by use_python() function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package    version                requirement   channel
-#> 1         absl-py      1.4.0              absl-py=1.4.0      pypi
-#> 2       alabaster     0.7.13           alabaster=0.7.13      pypi
-#> 3      astunparse      1.6.3           astunparse=1.6.3      pypi
-#> 4           babel     2.12.1               babel=2.12.1      pypi
-#> 5 ca-certificates 2023.01.10 ca-certificates=2023.01.10 pkgs/main
-#> 6      cachetools      5.3.0           cachetools=5.3.0      pypi
+#>           package   version               requirement     channel
+#> 1         absl-py     1.4.0             absl-py=1.4.0        pypi
+#> 2       alabaster    0.7.13          alabaster=0.7.13        pypi
+#> 3      astunparse     1.6.3          astunparse=1.6.3        pypi
+#> 4           babel    2.12.1              babel=2.12.1        pypi
+#> 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge
+#> 6 ca-certificates 2023.7.22 ca-certificates=2023.7.22 conda-forge
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.02270605         0.9592073          0.01808658
+#> 1 Smooth Transition   0.009883184          0.967422          0.02269474
 ```
 
 <br>
@@ -281,7 +281,7 @@ skylark_ewsnet
 Baruah, G., Clements, C.F., Guillaume, F. & Ozgul, A. (2019) When do
 shifts in trait dynamics precede population declines? *The American
 Naturalist*, 193, 633–644.
-[doi:10.1086/702849](https://www.journals.uchicago.edu/doi/10.1086/702849)
+[doi:10.1086/702849](https://doi.org/10.1086/702849)
 
 Clements, C.F. & Ozgul, A. (2016) Including trait-based early warning
 signals helps predict population collapse. *Nature Communications*, 7,
@@ -302,8 +302,7 @@ time series illustrated using simulated ecological data. *PLOS ONE*, 7,
 Deb S., Sidheekh S., Clements C.F., Krishnan N.C. & Dutta P.S. (2022)
 Machine learning methods trained on simple models can predict critical
 transitions in complex natural systems. *Royal Society Open Science*, 9,
-211475.
-[doi:10.1098/rsos.211475](https://royalsocietypublishing.org/doi/10.1098/rsos.211475)
+211475. [doi:10.1098/rsos.211475](https://doi.org/10.1098/rsos.211475)
 
 Drake, J. & Griffen, B. (2010) Early warning signals of extinction in
 deteriorating environments. *Nature*, 467, 456–459.

@@ -27,14 +27,6 @@ Does not return an object as is simply preparing your R session.
 Prepares your R session for communicating with Python. This function first searches your computer for an appropriate Python environment and activates it, importing the vital Python packages required. If no appropriate Python install or environment is found, after asking permission, miniconda is downloaded and an environment created.
 }
 \examples{
-\donttest{
-bypass_reticulate_autoinit()
-}
-#this function prevents 'reticulate' automatically
-#reloading the python environment from the
-#previous session. Only needs to be run once
-#on first install of 'EWSmethods'.
-
 \dontrun{
 ewsnet_init(envname = "EWSNET_env", auto = FALSE)
 }

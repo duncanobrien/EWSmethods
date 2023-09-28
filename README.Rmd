@@ -178,7 +178,7 @@ skylark_ewsnet
 
 ## References
 
-Baruah, G., Clements, C.F., Guillaume, F. & Ozgul, A. (2019) When do shifts in trait dynamics precede population declines? *The American Naturalist*, 193, 633--644. [doi:10.1086/702849](https://www.journals.uchicago.edu/doi/10.1086/702849)
+Baruah, G., Clements, C.F., Guillaume, F. & Ozgul, A. (2019) When do shifts in trait dynamics precede population declines? *The American Naturalist*, 193, 633--644. [doi:10.1086/702849](https://doi.org/10.1086/702849)
 
 Clements, C.F. & Ozgul, A. (2016) Including trait-based early warning signals helps predict population collapse. *Nature Communications*, 7, 10984. [doi:10.1038/ncomms10984](https://www.nature.com/articles/ncomms10984)
 
@@ -186,7 +186,7 @@ Clements, C.F., McCarthy, M.A. & Blanchard, J.L. (2019) Early warning signals of
 
 Dakos V., Carpenter S.R., Brock W.A., Ellison A.M., Guttal V., *et al.* (2012) Methods for detecting early warnings of critical transitions in time series illustrated using simulated ecological data. *PLOS ONE*, 7, 7:e41010. [doi:10.1371/journal.pone.0041010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0041010)
 
-Deb S., Sidheekh S., Clements C.F., Krishnan N.C. & Dutta P.S. (2022) Machine learning methods trained on simple models can predict critical transitions in complex natural systems. *Royal Society Open Science*, 9, 211475. [doi:10.1098/rsos.211475](https://royalsocietypublishing.org/doi/10.1098/rsos.211475)
+Deb S., Sidheekh S., Clements C.F., Krishnan N.C. & Dutta P.S. (2022) Machine learning methods trained on simple models can predict critical transitions in complex natural systems. *Royal Society Open Science*, 9, 211475. [doi:10.1098/rsos.211475](https://doi.org/10.1098/rsos.211475)
 
 Drake, J. & Griffen, B. (2010) Early warning signals of extinction in deteriorating environments. *Nature*, 467, 456--459. [doi:10.1038/nature09389](https://www.nature.com/articles/nature09389)
 

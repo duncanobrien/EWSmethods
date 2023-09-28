@@ -61,6 +61,9 @@ FI <- function(data,sost,winsize = 50,winspace = 1,TL = 90){
   if(is.null(dim(data))){
     stop("data must be a matrix/data.frame")
   }
+  if(NCOL(data) <= 2){
+    stop("Data only contains two columns. FI require 2+ timeseries")
+  }
   if(!is.numeric(sost)){
     stop("sost must be a numeric vector")
   }

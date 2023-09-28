@@ -7,7 +7,7 @@
 conda_clean(envname, conda_path = reticulate::miniconda_path(), auto = FALSE)
 }
 \arguments{
-\item{envname}{A string naming the desired Python environment to create/activate. If no Python or environment found, the functions prompts to install miniconda and the required python packages.}
+\item{envname}{A string naming the desired Python environment to remove.}
 
 \item{conda_path}{The location of Python install. By default, this follows \code{minicondata_path} defined by the \code{reticulate} package.}
 
@@ -17,7 +17,7 @@ conda_clean(envname, conda_path = reticulate::miniconda_path(), auto = FALSE)
 Does not return an object as is cleaning Python and its environments.
 }
 \description{
-Removes \code{ewsnet_init()} downloaded Anaconda binaries and environmnets.
+Removes \code{ewsnet_init()} downloaded Anaconda binaries and environments.
 }
 \examples{
 #Prior to running `conda_clean()`, you must restart
