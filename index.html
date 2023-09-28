@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">EWSmethods</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -218,40 +218,40 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#confirm that "EWSNET_env" has been loaded</span></span>
-<span><span class="co">#&gt; python:         /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/bin/python</span></span>
-<span><span class="co">#&gt; libpython:      /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/libpython3.8.dylib</span></span>
-<span><span class="co">#&gt; pythonhome:     /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env:/Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env</span></span>
-<span><span class="co">#&gt; version:        3.8.16 (default, Mar  1 2023, 21:19:10)  [Clang 14.0.6 ]</span></span>
-<span><span class="co">#&gt; numpy:          /Users/duncanobrien/Library/r-miniconda/envs/EWSNET_env/lib/python3.8/site-packages/numpy</span></span>
-<span><span class="co">#&gt; numpy_version:  1.23.5</span></span>
+<span><span class="co">#&gt; python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python</span></span>
+<span><span class="co">#&gt; libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.9.dylib</span></span>
+<span><span class="co">#&gt; pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env</span></span>
+<span><span class="co">#&gt; version:        3.9.18 | packaged by conda-forge | (main, Aug 30 2023, 03:53:08)  [Clang 15.0.7 ]</span></span>
+<span><span class="co">#&gt; numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.9/site-packages/numpy</span></span>
+<span><span class="co">#&gt; numpy_version:  1.24.3</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; NOTE: Python version was forced by use_python function</span></span>
+<span><span class="co">#&gt; NOTE: Python version was forced by use_python() function</span></span>
 <span></span>
 <span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py_packages</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           package    version                requirement   channel</span></span>
-<span><span class="co">#&gt; 1         absl-py      1.4.0              absl-py=1.4.0      pypi</span></span>
-<span><span class="co">#&gt; 2       alabaster     0.7.13           alabaster=0.7.13      pypi</span></span>
-<span><span class="co">#&gt; 3      astunparse      1.6.3           astunparse=1.6.3      pypi</span></span>
-<span><span class="co">#&gt; 4           babel     2.12.1               babel=2.12.1      pypi</span></span>
-<span><span class="co">#&gt; 5 ca-certificates 2023.01.10 ca-certificates=2023.01.10 pkgs/main</span></span>
-<span><span class="co">#&gt; 6      cachetools      5.3.0           cachetools=5.3.0      pypi</span></span>
+<span><span class="co">#&gt;           package   version               requirement     channel</span></span>
+<span><span class="co">#&gt; 1         absl-py     1.4.0             absl-py=1.4.0        pypi</span></span>
+<span><span class="co">#&gt; 2       alabaster    0.7.13          alabaster=0.7.13        pypi</span></span>
+<span><span class="co">#&gt; 3      astunparse     1.6.3          astunparse=1.6.3        pypi</span></span>
+<span><span class="co">#&gt; 4           babel    2.12.1              babel=2.12.1        pypi</span></span>
+<span><span class="co">#&gt; 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge</span></span>
+<span><span class="co">#&gt; 6 ca-certificates 2023.7.22 ca-certificates=2023.7.22 conda-forge</span></span>
 <span></span>
 <span><span class="va">skylark_ewsnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">skylark_data</span><span class="op">$</span><span class="va">abundance</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co">#perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()</span></span>
 <span></span>
 <span><span class="va">skylark_ewsnet</span></span>
 <span><span class="co">#&gt;                pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Smooth Transition    0.02270605         0.9592073          0.01808658</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Smooth Transition   0.009883184          0.967422          0.02269474</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Baruah, G., Clements, C.F., Guillaume, F. &amp; Ozgul, A. (2019) When do shifts in trait dynamics precede population declines? <em>The American Naturalist</em>, 193, 633–644. <a href="https://www.journals.uchicago.edu/doi/10.1086/702849" class="external-link">doi:10.1086/702849</a></p>
+<p>Baruah, G., Clements, C.F., Guillaume, F. &amp; Ozgul, A. (2019) When do shifts in trait dynamics precede population declines? <em>The American Naturalist</em>, 193, 633–644. <a href="https://doi.org/10.1086/702849" class="external-link">doi:10.1086/702849</a></p>
 <p>Clements, C.F. &amp; Ozgul, A. (2016) Including trait-based early warning signals helps predict population collapse. <em>Nature Communications</em>, 7, 10984. <a href="https://www.nature.com/articles/ncomms10984" class="external-link">doi:10.1038/ncomms10984</a></p>
 <p>Clements, C.F., McCarthy, M.A. &amp; Blanchard, J.L. (2019) Early warning signals of recovery in complex systems. <em>Nature Communications</em>, 10, 1681. <a href="https://www.nature.com/articles/s41467-019-09684-y" class="external-link">doi:10.1038/s41467-019-09684-y</a></p>
 <p>Dakos V., Carpenter S.R., Brock W.A., Ellison A.M., Guttal V., <em>et al.</em> (2012) Methods for detecting early warnings of critical transitions in time series illustrated using simulated ecological data. <em>PLOS ONE</em>, 7, 7:e41010. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0041010" class="external-link">doi:10.1371/journal.pone.0041010</a></p>
-<p>Deb S., Sidheekh S., Clements C.F., Krishnan N.C. &amp; Dutta P.S. (2022) Machine learning methods trained on simple models can predict critical transitions in complex natural systems. <em>Royal Society Open Science</em>, 9, 211475. <a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211475" class="external-link">doi:10.1098/rsos.211475</a></p>
+<p>Deb S., Sidheekh S., Clements C.F., Krishnan N.C. &amp; Dutta P.S. (2022) Machine learning methods trained on simple models can predict critical transitions in complex natural systems. <em>Royal Society Open Science</em>, 9, 211475. <a href="https://doi.org/10.1098/rsos.211475" class="external-link">doi:10.1098/rsos.211475</a></p>
 <p>Drake, J. &amp; Griffen, B. (2010) Early warning signals of extinction in deteriorating environments. <em>Nature</em>, 467, 456–459. <a href="https://www.nature.com/articles/nature09389" class="external-link">doi:10.1038/nature09389</a></p>
 <p>O’Brien, D.A., Taylor, M.L., Masonjones, H.D., Boersch-Supan P.H. &amp; O’Shea, O.R. (2020) Drivers of octopus abundance and density in an anchialine lake: a 30 year comparison. <em>Journal of Experimental Marine Biology and Ecology</em>, 528, 151377. <a href="https://www.sciencedirect.com/science/article/pii/S0022098120300356" class="external-link">doi:10.1016/j.jembe.2020.151377</a></p>
 <p>Weinans, E., Quax, R., van Nes, E.H. &amp; van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. <em>Scientific Reports</em>, 11, 9148. <a href="https://www.nature.com/articles/s41598-021-87839-y" class="external-link">10.1038/s41598-021-87839-y</a></p>
@@ -260,6 +260,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=EWSmethods" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/duncanobrien/EWSmethods/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/duncanobrien/EWSmethods/issues" class="external-link">Report a bug</a></li>
 </ul>

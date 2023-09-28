@@ -40,9 +40,6 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/FI.html</loc>
   </url>
   <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/bypass_reticulate_autoinit.html</loc>
-  </url>
-  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/conda_clean.html</loc>
   </url>
   <url>
@@ -65,6 +62,9 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/multiAR.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/multiEWS.html</loc>
