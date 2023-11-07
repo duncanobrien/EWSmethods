@@ -1,3 +1,5 @@
+# EWSmethods (development version)
+
 # EWSmethods 1.2.1
 Due to API changes in the dependency `rEDM`, all Jacobian index functions were non-longer functional. Hot fix to convert functions to new `rEDM` API.
 
