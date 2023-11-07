@@ -39,17 +39,6 @@
 #'
 #'
 FI <- function(data,sost,winsize = 50,winspace = 1,TL = 90){
-  # calculates the FI from time series data.
-  # Important parameters include:
-  # FI: fisher information
-  # midt_win: mid point of each time window
-  # t_win: time points within each window
-  # t: time data
-  # data: Input data (matrix) size (#time steps, #variables)
-  # sost:size of states
-  # hwin: window size(number of points in each calculation)
-  # winspace: number of time steps we move the window (<hwin)
-  # TL: tightening Level
 
   # pre-define variables
   midt_win <- matrix()
@@ -62,7 +51,10 @@ FI <- function(data,sost,winsize = 50,winspace = 1,TL = 90){
     stop("data must be a matrix/data.frame")
   }
   if(NCOL(data) <= 2){
-    stop("Data only contains two columns. FI require 2+ timeseries")
+    stop("data only contains two or less columns. FI require 2+ timeseries")
+  }
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all time series are numeric")
   }
   if(!is.numeric(sost)){
     stop("sost must be a numeric vector")

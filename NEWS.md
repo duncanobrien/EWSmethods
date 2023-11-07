@@ -1,4 +1,5 @@
-# EWSmethods 1.2.0
+# EWSmethods 1.2.1
+Due to API changes in the dependency `rEDM`, all Jacobian index functions were non-longer functional. Hot fix to convert functions to new `rEDM` API.
 
 # EWSmethods 1.2.0
 Introduce `multiAR` as an alternative to `multiJI` for estimating Jacobians. Additional bug fixes and warning messages for resilience metrics. Removed unnecessary and problematic `bypass_reticulate_autoinit()`.

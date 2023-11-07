@@ -54,7 +54,10 @@ multiEWS <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenM
     stop('Data contains missing values. Interpolation of missing values is recommended')
   }
   if(NCOL(data) <= 2){
-    stop("Data only contains two columns. Multivariate EWS require 2+ timeseries")
+    stop("Data only contains two columns. Multivariate EWS require 2+ time series")
+  }
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all time series are numeric")
   }
 
   if(method == "expanding"){

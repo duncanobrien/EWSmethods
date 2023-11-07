@@ -22,7 +22,7 @@
 #' #Estimate the stability index for the third community
 #' #(trimmed for speed)
 #'
-#' egJI <- multiJI(data = pre_simTransComms[1:10,2:7],
+#' egJI <- multiJI(data = pre_simTransComms[1:10,2:5],
 #' winsize = 75)
 #'
 #' @export
@@ -34,6 +34,9 @@ multiJI <- function(data, winsize = 50,theta_seq =  NULL,scale = TRUE){
 
   if(NCOL(data) <= 2){
     stop("Data only contains two columns. multiJI require 2+ timeseries")
+  }
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all timeseries are numeric")
   }
 
   window <- round(dim(data)[1] * winsize/100)

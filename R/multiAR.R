@@ -31,9 +31,11 @@
 multiAR <- function(data, scale = TRUE, winsize = 50, dt = 1){
 
   if(NCOL(data) <= 2){
-    stop("Data only contains two columns. multiAR require 2+ timeseries")
+    stop("Data only contains two columns. multiAR require 2+ time series")
   }
-
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all time series are numeric")
+  }
   data <- as.data.frame(data)
 
   window <- round(dim(data)[1] * winsize/100)

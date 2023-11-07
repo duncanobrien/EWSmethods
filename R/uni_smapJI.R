@@ -32,6 +32,8 @@
 
 uniJI <- function(data, winsize = 50,theta_seq =  NULL, E = 1, tau = NULL, scale = TRUE){
 
+  data <- as.data.frame(data)
+
   if(NCOL(data) != 2){
     stop("Data must only contain two columns")
   }

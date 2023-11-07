@@ -47,6 +47,10 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
   method<-method[1]
   #data1<- data
 
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all timeseries are numeric")
+  }
+
   # remove any columns that contain only zeros
   if(any(apply(as.data.frame(data[,-1]),2,mean,na.rm=T)==0)){
     data1<-data[,-(which(apply(data[,-1],2,mean,na.rm=T)==0)+1)]

@@ -9,11 +9,10 @@
 #' @param scale Boolean. Should data be scaled prior to estimating the Jacobian.
 #'
 #' @returns A list containing three objects:
-#' \itemize{\item{smap_J}{Jacobian matrices across taus. It is recommended to average across these matrices.}
+#' \item{smap_J}{Jacobian matrices across taus. It is recommended to average across these matrices.}
 #' \item{eigenJ}{Absolute maximum eigenvalue.}
 #' \item{reJ}{Real component of dominant eigenvalue}
 #' \item{imJ}{Imaginary component of dominant eigenvalue.}
-#' }
 #'
 #' @examples
 #' #Load the multivariate simulated
@@ -40,10 +39,14 @@ uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale =
   }
 
   if(is.null(theta_seq)){
-    theta_seq <- seq(0,2.5,by=0.5)
+    theta_seq <- c(0, 1e-04, 3e-04, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 0.5,
+      0.75, 1, 1.5, 2, 3, 4, 6, 8)
   }
   if(is.null(tau)){
-    tau <- floor(dim(data)[1]*0.1)
+    tau <- 1*floor(dim(data)[1]*0.1)
+  }
+  if(tau == 0 ){
+    tau <- 1
   }
 
   if(length(unique(data[,2])) == 1 |  (sum(as.numeric(base::table(data[,2]) == 1)) == 1 & length(unique(data[,2])) == 2)){ #if the entire ts is equal, or a only a single additional value is present, smap crashes. Therefore we preempt this and set to 0 before occurs
@@ -55,23 +58,26 @@ uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale =
       data[,2] <- c(scale(data[,2]))
     }
     # calculate best theta
-    smap_int <- tryCatch(rEDM::s_map(c(data[,2]), E=E, tau=tau, theta=theta_seq, silent=TRUE),
-                         error = function(err){warning("Long period of unchanging values. uniJI not calculated for node")})
 
-    #invisible(capture.output(smap_int <- rEDM::s_map(c(data[,2]), E=E, tau=tau, theta=theta_seq, silent=TRUE), type = "output"))
+    best_smap <- tryCatch(rEDM::PredictNonlinear(dataFrame = data, lib = c(1, NROW(data)), pred = c(1, NROW(data)),
+                           columns = names(data)[2], target = names(data)[2],
+                           E=E, tau=-tau, theta=theta_seq,  knn = 0,
+                           verbose=FALSE, showPlot = FALSE),
+                          error = function(err){warning("Long period of unchanging values. uniJI not calculated for node")})
 
-    #smap_int <- rEDM::s_map(c(data[,2]), E=E, tau=tau, theta=theta_seq, silent=TRUE)
-
-    if(inherits(smap_int,"character")){
-      smap_results <- rep(list(NA),10)
-      lambda <- rep(list(NA),10)
+    # if(inherits(smap_int,"character")){
+    #   smap_results <- rep(list(NA),10)
+    #   lambda <- rep(list(NA),10)
+    if(inherits(best_smap,"character")){
+        smap_results <- rep(list(NA),10)
+        lambda <- rep(list(NA),10)
 
     }else{
     #smap_int <- rEDM::s_map(c(data[,2]), E=E, tau=tau, theta=theta_seq, silent=TRUE)
-    best <- order(-unlist(smap_int$rho))[1]
-  theta <- smap_int[best,]$theta
+    best <- order(-best_smap$rho)[1]
+    theta <- theta_seq[best]
 
-  smap_results <- uni_smap_jacobian_est(ts=c(data[,2]), theta = 0, E = E, tau = tau)
+  smap_results <- uni_smap_jacobian_est(ts=data, theta = theta, E = E, tau = tau)
 
   lambda <- lapply(smap_results,function(j){
     eig <- eigen(j)$values
@@ -102,9 +108,15 @@ uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale =
 uni_smap_jacobian_est <- function(ts, E, tau, theta){
 
   # calculate eigenvalues for best theta
-  smap_best <- rEDM::s_map(ts, E=E, tau=tau, theta=theta, silent=TRUE, save_smap_coefficients=TRUE)
+  #smap_best <- rEDM::s_map(ts, E=E, tau=tau, theta=theta, silent=TRUE, save_smap_coefficients=TRUE)
 
-  smap_coef <- smap_best$smap_coefficients[[1]]
+  smap_best <- rEDM::SMap(dataFrame = ts, E=E, tau=tau, theta=theta,
+             lib = c(1, NROW(ts)), pred = c(1, NROW(ts)),
+             knn = 0, columns = names(ts)[2], target = names(ts)[2],
+             verbose=FALSE)
+
+  #smap_coef <- smap_best$smap_coefficients[[1]]
+  smap_coef <- smap_best$coefficients
 
   jac <- lapply(2:NROW(smap_coef),function(k){
     if(!is.na(smap_coef[k,2])){

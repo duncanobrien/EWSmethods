@@ -22,11 +22,10 @@ uni_smap_jacobian(data, theta_seq = NULL, E = 1, tau = NULL, scale = TRUE)
 }
 \value{
 A list containing three objects:
-\itemize{\item{smap_J}{Jacobian matrices across taus. It is recommended to average across these matrices.}
+\item{smap_J}{Jacobian matrices across taus. It is recommended to average across these matrices.}
 \item{eigenJ}{Absolute maximum eigenvalue.}
 \item{reJ}{Real component of dominant eigenvalue}
 \item{imJ}{Imaginary component of dominant eigenvalue.}
-}
 }
 \description{
 Performs the S-map on a univariate time series to infer the Jacobian matrix at different points in time across thetas.

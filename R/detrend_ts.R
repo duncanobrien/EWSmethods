@@ -31,12 +31,15 @@
 detrend_ts <- function(data, method = "linear", bandwidth = NULL, span = 0.25, degree = 2){
 
   if(length(dim(data)) == 1){
-    stop("not right format of data input")
+    stop("Incorrect format of data input")
   }
 
   meth <- match.arg(method, choices = c("linear","loess","gaussian","first.difference"))
 
-  detrend_dat <- data
+  detrend_dat <- as.data.frame(data)
+  if(!all(apply(detrend_dat[,-1],2,is.numeric))){
+    stop("Not all timeseries are numeric")
+  }
   timevec <- as.numeric(data[,1])
 
   if(meth == "linear"){

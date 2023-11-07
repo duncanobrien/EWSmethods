@@ -29,6 +29,9 @@ mvi <- function(data,winsize = 50){
   if(NCOL(data) <= 2){
     stop("Data only contains two columns. mvi require 2+ timeseries")
   }
+  if(!all(apply(data[,-1],2,is.numeric))){
+    stop("Not all timeseries are numeric")
+  }
 
   window <- round(dim(data)[1] * winsize/100)
 
