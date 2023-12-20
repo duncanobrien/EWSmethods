@@ -8,7 +8,7 @@
 #'
 #' @returns A list containing three objects:
 #' \item{smap_J}{Jacobian matrices for each point in time. It is recommended to just use the last estimate.}
-#' \item{rmse}{Average root mean squared error for each species.}
+#' \item{rho}{Pearson correlation between observed and predicted for each species.}
 #' \item{smap_intercept.r}{Intercepts of the regression fit.}
 #'
 #' @examples
@@ -80,7 +80,9 @@ smap_jacobian_est <- function(ts, theta){
   # data points to use
   lib <- NROW(ts)
   # species to use
-  cols <- paste("x", 1:n_sp, sep = "")
+  #cols <- paste("x", 1:n_sp, sep = "")
+  cols <- sample(paste("x", 1:n_sp, sep = ""))
+
   names(ts) <- c("time",cols)
   # perform s-map for each target species (effect of all species on target species)
   smap_J <- lapply(rep(NA, lib), matrix, nrow = n_sp, ncol = n_sp)
@@ -95,11 +97,35 @@ smap_jacobian_est <- function(ts, theta){
     #                           stats_only = FALSE, first_column_time = TRUE,
     #                           save_smap_coefficients = TRUE, silent = TRUE)
     #
-    # params <- expand.grid("embedding" = seq_along(cols),
-    #                       "tp" = 1,
-    #                       "nn" = 0,
+    # params <- expand.grid("embedding" = (length(cols)-1),
+    #                       "Tp" = 1,
+    #                       #"nn" = 0,
     #                       "theta" = theta)
-
+    # smap_output <- lapply(seq_len(NROW(params)), function(i) {
+    #
+    #   smap <- rEDM::SMap(dataFrame = ts, E = params$embedding[i],
+    #                      tau = -1, theta = params$theta[i],
+    #                      lib = c(1, NROW(ts)), pred = c(1, NROW(ts)),
+    #                      knn = 0, columns = cols,
+    #                      target = target, Tp = params$Tp[i],
+    #                      embedded  = TRUE, verbose=FALSE, noTime = FALSE)$coefficients
+    #   rho <- rEDM::PredictNonlinear(dataFrame = ts, E = params$embedding[i],
+    #                                    tau = -1, theta = params$theta[i],
+    #                                    lib = c(1, NROW(ts)), pred = c(1, NROW(ts)),
+    #                                    knn = 0, columns = cols,
+    #                                    target = target, Tp = params$Tp[i],
+    #                                    embedded  = TRUE, verbose=FALSE, noTime = FALSE,
+    #                                    showPlot = FALSE)[[2]]
+    #
+    #   return(list("coefficients" = smap,"rho" = rho))
+    #
+    #   })
+    #
+    # smap_coeffs <- smap_output[[1]]$coefficients
+    # smap_intercept[,i] <- smap_output[[1]]$coefficients$C0[-1]
+    # for (j in 1:lib) {
+    #   smap_J[[j]][i, ] <- as.numeric(smap_coeffs[j+1, 3:(n_sp+2)])
+    # }
       smap_output <- rEDM::SMap(dataFrame = ts, E = (length(cols)-1),
                                 tau = -1, theta = theta,
                                 lib = c(1, NROW(ts)), pred = c(1, NROW(ts)),
@@ -125,4 +151,6 @@ smap_jacobian_est <- function(ts, theta){
     }
   }
   return(list("smapJ" = smap_J, "rho" = rho, "smap_intercept" = smap_intercept))
+  #return(list("smapJ" = smap_J, "rho" = smap_output[[1]]$rho, "smap_intercept" = smap_intercept))
+
 }

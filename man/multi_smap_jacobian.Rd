@@ -19,7 +19,7 @@ multi_smap_jacobian(data, theta_seq = NULL, scale = TRUE)
 \value{
 A list containing three objects:
 \item{smap_J}{Jacobian matrices for each point in time. It is recommended to just use the last estimate.}
-\item{rmse}{Average root mean squared error for each species.}
+\item{rho}{Pearson correlation between observed and predicted for each species.}
 \item{smap_intercept.r}{Intercepts of the regression fit.}
 }
 \description{

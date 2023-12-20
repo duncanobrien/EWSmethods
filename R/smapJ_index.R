@@ -4,7 +4,7 @@
 #'
 #' @param data Numeric matrix with time in first column and species abundances in other columns
 #' @param winsize Numeric. Defines the window size of the rolling window as a percentage of the time series length.
-#' @param theta_seq Numeric vector of thetas (nonlinear tuning parameters) to estimate the Jacobian over. If `NULL`, a default sequence is provided.
+#' @param theta_seq Numeric vector of thetas (nonlinear tuning parameters) to estimate the Jacobian over. If `NULL`, a default sequence covering `0:8` is provided.
 #' @param scale Boolean. Should data be scaled within each window prior to estimating the Jacobian.
 #'
 #' @returns A dataframe where the first column is last time index of the window and the second column is the estimated index value. A value <1.0 indicates stability, a value >1.0 indicates instability.
@@ -45,7 +45,10 @@ multiJI <- function(data, winsize = 50,theta_seq =  NULL,scale = TRUE){
 
     jac <- multi_smap_jacobian(data = data[i:(i+window-1),], theta_seq = theta_seq, scale = scale)
 
-    j_dom_eig <- max(abs(Re(eigen(jac$smapJ[[length(jac$smapJ)]])$values)))
+    jac_out <- Reduce("+",jac$smapJ)/length(jac$smapJ) #elementwise mean of time varying Jacobians
+
+    #j_dom_eig <- max(abs(Re(eigen(jac$smapJ[[length(jac$smapJ)]])$values))) #extract last Jacobian only
+    j_dom_eig <- max(abs(Re(eigen(jac_out)$values))) #average across timevarying Jacobians
 
     return(data.frame("time" = data[i+window-1,1],
                       "smap_J" = j_dom_eig))

@@ -79,10 +79,13 @@ uni_smap_jacobian <- function(data, theta_seq =  NULL, E = 1,tau = NULL, scale =
 
   smap_results <- uni_smap_jacobian_est(ts=data, theta = theta, E = E, tau = tau)
 
-  lambda <- lapply(smap_results,function(j){
-    eig <- eigen(j)$values
-    eig[order(abs(eig))[E]]})
-  }
+  # lambda <- lapply(smap_results,function(j){
+  #   eig <- eigen(j)$values
+  #   eig[order(abs(eig))[E]]}) #extract time varying Jacobian with lowest stability
+  smap_avg <- Reduce("+",smap_results)/length(smap_results) #average Jacobian across time varying Jacobians
+  eig <- eigen(smap_avg)$values
+  lambda <- eig[order(abs(eig))[E]]
+    }
     }
 
   return(list("smapJ" = smap_results,"eigenJ" =  mean(abs(unlist(lambda))),"reJ" = mean(Re(unlist(lambda))),"imJ" =  mean(Im(unlist(lambda)))))

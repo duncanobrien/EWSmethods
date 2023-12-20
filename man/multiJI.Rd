@@ -14,7 +14,7 @@ multiJI(data, winsize = 50, theta_seq = NULL, scale = TRUE)
 
 \item{winsize}{Numeric. Defines the window size of the rolling window as a percentage of the time series length.}
 
-\item{theta_seq}{Numeric vector of thetas (nonlinear tuning parameters) to estimate the Jacobian over. If `NULL`, a default sequence is provided.}
+\item{theta_seq}{Numeric vector of thetas (nonlinear tuning parameters) to estimate the Jacobian over. If `NULL`, a default sequence covering `0:8` is provided.}
 
 \item{scale}{Boolean. Should data be scaled within each window prior to estimating the Jacobian.}
 }
@@ -37,7 +37,7 @@ pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
 #Estimate the stability index for the third community
 #(trimmed for speed)
 
-egJI <- multiJI(data = pre_simTransComms[1:10,2:7],
+egJI <- multiJI(data = pre_simTransComms[1:10,2:5],
 winsize = 75)
 
 }
