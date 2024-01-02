@@ -1,4 +1,5 @@
-# EWSmethods (development version)
+# EWSmethods 1.2.3
+Hot fix to `multiJI` and `uniJI` following discussions with `rEDM` maintainers. These functions now average over time-varying Jacobians in a window rather than simply returning the final time-varying Jacobian.
 
 # EWSmethods 1.2.1
 Due to API changes in the dependency `rEDM`, all Jacobian index functions were non-longer functional. Hot fix to convert functions to new `rEDM` API.
