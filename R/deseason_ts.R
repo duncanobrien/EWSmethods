@@ -35,13 +35,11 @@
 #' method = "stl",
 #' order = "ymd")
 #'
-#' @importFrom forecast seasadj
 #' @importFrom zoo na.approx
-#' @importFrom seasonal seas
 #' @export
 
 deseason_ts <- function(data, increment=c("month","year","week","day"),
-                        method=c("average","decompose","stl","x11"),order=NULL) {
+                        method=c("average","decompose","stl"),order=NULL) {
 
   increment<-increment[1]
   method<-method[1]
@@ -143,14 +141,13 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
 
     zscores <- data.frame(byinc[,1:2],zscores)
 
-    #cat("data successfully z-scored with deseasoning\n")
   }
 
   if (method=="decompose"){
     byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)],FUN = function(x){
       tmp.decomp <- stats::decompose(stats::ts(x,frequency = 12),type="additive")
       #x - c(tmp.decomp$seasonal)
-      pmax(tmp.decomp$trend+tmp.decomp$random,0)
+      tmp.decomp$trend+tmp.decomp$random
     })
     zscores<-byinc
   }
@@ -162,33 +159,10 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
 
       #c(tmp.decomp$time.series[,1])
 
-      pmax(tmp.decomp$time.series[,2]+tmp.decomp$time.series[,3],0)
+      tmp.decomp$time.series[,2]+tmp.decomp$time.series[,3]
 
       })
     zscores<-byinc
-  }
-
-  if(method=="x11"){
-    byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)],FUN = function(x){
-      tmp.ts <- stats::ts(x,start = c(as.numeric(substr(byinc$date[1],1,4)), as.numeric(substr(byinc$date[1],6,7))),frequency = 12)
-
-      if(any(tmp.ts == 0)){
-        tmp.ts <- tmp.ts+1
-        out <- tryCatch(forecast::seasadj(seasonal::seas(tmp.ts,estimate.maxiter = 9999,x11="")), error=function(e){
-          return(rep(NA,length = length(tmp.ts)))
-        })
-        if(!all(is.na(out))){
-          out <- out-1
-        }
-      }else{
-        out <- tryCatch(forecast::seasadj(seasonal::seas(tmp.ts,estimate.maxiter = 9999,x11="")), error=function(e){
-          return(rep(NA,length = length(tmp.ts)))
-        })
-      }
-      out
-    })
-    zscores<-byinc
-
   }
 
   #zscores<-zscores[,-1]

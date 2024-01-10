@@ -1,4 +1,7 @@
-# EWSmethods 1.2.3
+# EWSmethods 1.2.5
+Patch to `ewsnet_reset` to ensure it gracefully fails when users' internet connection fails.
+
+# EWSmethods 1.2.4
 Hot fix to `multiJI` and `uniJI` following discussions with `rEDM` maintainers. These functions now average over time-varying Jacobians in a window rather than simply returning the final time-varying Jacobian.
 
 # EWSmethods 1.2.1

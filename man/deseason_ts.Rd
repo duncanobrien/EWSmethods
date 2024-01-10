@@ -7,7 +7,7 @@
 deseason_ts(
   data,
   increment = c("month", "year", "week", "day"),
-  method = c("average", "decompose", "stl", "x11"),
+  method = c("average", "decompose", "stl"),
   order = NULL
 )
 }

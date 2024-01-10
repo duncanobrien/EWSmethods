@@ -37,15 +37,34 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
 
     }else{
 
+      if (!curl::has_internet()) {
+        message("No internet connection to download weights.")
+        return(invisible(NULL))
+      }
+
       if(isTRUE(auto)){
 
         zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
+        warn_dwn <- tryCatch(utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
+                      destfile  = zip, overwrite = TRUE,mode = "wb"),
+                      error = function(e) conditionMessage(e),
+                      warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 
-        utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                      destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
+         if(inherits(warn_dwn,"character")){
+          message(warn_dwn)
+          return(invisible(NULL))
+           }
 
-        utils::unzip(zip,exdir = weights_path)
-        unlink(zip)
+        warn_unzip <-tryCatch(utils::unzip(zip,exdir = weights_path),
+                              error = function(e) conditionMessage(e),
+                              warning = function(w) conditionMessage(w))
+        unlink(zip,recursive = T)
+
+        if(all(warn_unzip == "error 1 in extracting from zip file") | (length(fs::dir_ls(path = weights_path, regexp = "*\\.h5$",recurse = T)) != 50)){
+          message("Corrupted download. Please check your internet connection and retry.")
+          return(invisible(NULL))
+        }
+
         message("Model weights downloaded")
 
       }else if(isFALSE(auto)){
@@ -57,15 +76,26 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
       }else{
         message(paste("Attention: weights will be downloaded"))
 
-      zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
-      # download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=1-aY2MepouLQdMSNkYD6jgSedwFXB8BUP",
-      #               destfile  = zip, overwrite = TRUE) #original EWSNet
+        warn_dwn <- tryCatch(utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
+                                                  destfile  = zip, overwrite = TRUE,mode = "wb"),
+                             error = function(e) conditionMessage(e),
+                             warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 
-      utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                destfile  = zip, overwrite = TRUE,mode = "wb") #VariableLenModel EWSNet
+        if(inherits(warn_dwn,"character")){
+          message(warn_dwn)
+          return(invisible(NULL))
+        }
 
-      utils::unzip(zip,exdir = weights_path)
-      unlink(zip)
+        warn_unzip <-tryCatch(utils::unzip(zip,exdir = weights_path),
+                              error = function(e) conditionMessage(e),
+                              warning = function(w) conditionMessage(w))
+        unlink(zip,recursive = T)
+
+        if(all(warn_unzip == "error 1 in extracting from zip file") | (length(fs::dir_ls(path = weights_path, regexp = "*\\.h5$",recurse = T)) != 50)){
+          message("Corrupted download. Please check your internet connection and retry.")
+          return(invisible(NULL))
+        }
+
       message("Model weights downloaded")
       }
       }
