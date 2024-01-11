@@ -1,3 +1,5 @@
+# EWSmethods (development version)
+
 # EWSmethods 1.2.5
 Patch to `ewsnet_reset` to ensure it gracefully fails when users' internet connection fails.
 
