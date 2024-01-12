@@ -1,10 +1,10 @@
 ---
-title: "Alternative Resilience Measures"
+title: "Alternative Stability Measures"
 author: "Duncan O'Brien"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Alternative Resilience Measures}
+  %\VignetteIndexEntry{Alternative Stability Measures}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 # About this tutorial
 
-This tutorial introduces resilience metrics distinct from critical slowing down based/Early Warning Signal indicators. The primary benefit of this collection of techniques is that they are both model and equilibrium free; they don't assume a system is a equilibrium.
+This tutorial introduces stability metrics distinct from critical slowing down based/Early Warning Signal indicators. The primary benefit of this collection of techniques is that they are both model and equilibrium free; they don't assume a system is a equilibrium.
 
-`EWSmethods` provides three distinct approaches to quantifying system resilience. The tutorial will go through each in turn and give examples of their usage.
+`EWSmethods` provides three distinct approaches to quantifying system stability. The tutorial will go through each in turn and give examples of their usage.
 
 Greater detail on each function can be found at the [Reference](https://duncanobrien.github.io/EWSmethods/reference/index.html) page.
 
@@ -51,7 +51,7 @@ matplot(simTransComms$community1[,3:7], type = "l", xlab = "Time", ylab = "Densi
 abline(v=simTransComms$community1$inflection_pt,col = "grey60", lty = "dashed")
 ```
 
-Now we have a system/community that is experiencing some form of stress and we can apply univariate or multivariate resilience measures to give us an idea of how the system is responding to that stress.
+Now we have a system/community that is experiencing some form of stress and we can apply univariate or multivariate stability measures to give us an idea of how the system is responding to that stress.
 
 <br>  
 
@@ -92,7 +92,7 @@ The MVI only quantifies the variability of the community rather than changing re
 
 # 2) S-map Jacobians
 
-The cutting edge of resilience metrics belong to approaches which exploit empirical dynamic modelling (EDM - Sugihara *et al.* 2012). EDM exploits Takens’ embedding theorem (Takens 1981) which suggests that an underlying latent system/attractor manifold can be reconstructed from one or more related time series. By lag embedding two or more time series, their interaction strength (or causal strength) can be estimated. 
+The cutting edge of stability metrics belong to approaches which exploit empirical dynamic modelling (EDM - Sugihara *et al.* 2012). EDM exploits Takens’ embedding theorem (Takens 1981) which suggests that an underlying latent system/attractor manifold can be reconstructed from one or more related time series. By lag embedding two or more time series, their interaction strength (or causal strength) can be estimated. 
 
 This approach consequently requires no knowledge of the underlying equations nor numerical estimates of the system's equilibrium state as the local Jacobians are directly estimated from the time series. The local Lyapunov stability is calculated as the dominant eigenvalue of the estimated Jacobian matrix.
 
@@ -103,7 +103,7 @@ Jacobians consist of the first-order partial derivatives for a multivariate func
 <br>  
 
 ### _Interpretation_
-A local Lyapunov stability value (the returned index value) of less than `1` indicates that the community tends to recover faster from perturbations, assuming the interspecific interaction strengths and self-regulation effects are constant. Therefore, `1` represents a threshold above which the system is unstable and below which the system is stable. However, any persistent increase in Jacobian index is of concern for resilience loss. 
+A local Lyapunov stability value (the returned index value) of less than `1` indicates that the community tends to recover faster from perturbations, assuming the interspecific interaction strengths and self-regulation effects are constant. Therefore, `1` represents a threshold above which the system is unstable and below which the system is stable. However, any persistent increase in Jacobian index is of concern for stability loss. 
 
 <br>  
 
@@ -172,7 +172,7 @@ ggplot(multiJI_plot_data,aes(x = time, y = smap_J)) + geom_line() + geom_vline(x
 <br>  
 
 ### *Caveats* 
-Both s-map methods are sensitive to the choice of `E` and `tau`. Additionally, in seasonal/cyclical data, the shared cycles or seasons across species can artificially inflate estimates of causality and relatedness. In these circumstances, it is recommended to detrend data prior to estimating these resilience metrics (Ushio *et al.* 2018). `EWSmethods` provides the capability to detrend and deaseason data via the functions `detrend_ts()` and `deseason_ts()` respectively. Similarly, it is sensible to scale/normalise all time series to be of equivalent magnitude to aid model fitting. A `scale = TRUE` argument is present in both `uniJI()` and `multiJI()` to achieve this.
+Both s-map methods are sensitive to the choice of `E` and `tau`. Additionally, in seasonal/cyclical data, the shared cycles or seasons across species can artificially inflate estimates of causality and relatedness. In these circumstances, it is recommended to detrend data prior to estimating these stability metrics (Ushio *et al.* 2018). `EWSmethods` provides the capability to detrend and deaseason data via the functions `detrend_ts()` and `deseason_ts()` respectively. Similarly, it is sensible to scale/normalise all time series to be of equivalent magnitude to aid model fitting. A `scale = TRUE` argument is present in both `uniJI()` and `multiJI()` to achieve this.
 
 Additionally, the two approaches require time series with no extended period of unchanging values (specifically a period equal to or longer than the window size). If `uniJI()` or `multiJI()` detect such a circumstance, the current iteration returns `NA` and the time series is removed respectively. For `multiJI()` if there are more species than data points in the window, then the index will fail. This is due to a multivariate index calculated across `n` species time delays up to lag `n-1`, which may not be possible if the time series are short. In this circumstance, we recommend sampling a subset of species, either randomly or the most abundance species (those less likely to have a period of unchanging values).
 

@@ -37,7 +37,7 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
 
     }else{
 
-      if (!curl::has_internet()) {
+      if(!curl::has_internet()) {
         message("No internet connection to download weights.")
         return(invisible(NULL))
       }
@@ -45,8 +45,8 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
       if(isTRUE(auto)){
 
         zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
-        warn_dwn <- tryCatch(utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                      destfile  = zip, overwrite = TRUE,mode = "wb"),
+        warn_dwn <- tryCatch(utils::download.file("https://drive.usercontent.google.com/download?id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e&export=download&confirm=EoIm",
+                                                  destfile  = zip, mode = "wb"),
                       error = function(e) conditionMessage(e),
                       warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 
@@ -76,8 +76,10 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
       }else{
         message(paste("Attention: weights will be downloaded"))
 
-        warn_dwn <- tryCatch(utils::download.file("https://drive.google.com/u/0/uc?export=download&confirm=EoIm&id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e",
-                                                  destfile  = zip, overwrite = TRUE,mode = "wb"),
+        zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
+
+        warn_dwn <- tryCatch(utils::download.file("https://drive.usercontent.google.com/download?id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e&export=download&confirm=EoIm",
+                                                 destfile  = zip, mode = "wb"),
                              error = function(e) conditionMessage(e),
                              warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 
