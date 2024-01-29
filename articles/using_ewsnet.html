@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Duncan
 O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2024-01-12</h4>
+            <h4 data-toc-skip class="date">2024-01-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/articles/using_ewsnet.Rmd" class="external-link"><code>vignettes/articles/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -121,7 +121,9 @@ that the minimum length to be tested should be 15 data points.</p>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/duncanobrien/EWSmethods" class="external-link">EWSmethods</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"timeout"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#due to possible internet issues, increase the timeout options from 60 seconds to 300</span></span></code></pre></div>
 <p>As EWSNet has been written and developed in Python, for R to interact
 with it, we need to exploit the <code>reticulate</code> <a href="https://rstudio.github.io/reticulate/" class="external-link">R package</a>.
 <code>reticulate</code> provides the tools to run Python code in R and
@@ -182,7 +184,7 @@ active and second what Python packages have been loaded:</p>
 <span><span class="co">#&gt;         package version       requirement   channel</span></span>
 <span><span class="co">#&gt; 1 _libgcc_mutex     0.1 _libgcc_mutex=0.1 pkgs/main</span></span>
 <span><span class="co">#&gt; 2 _openmp_mutex     5.1 _openmp_mutex=5.1 pkgs/main</span></span>
-<span><span class="co">#&gt; 3       absl-py   2.0.0     absl-py=2.0.0      pypi</span></span>
+<span><span class="co">#&gt; 3       absl-py   2.1.0     absl-py=2.1.0      pypi</span></span>
 <span><span class="co">#&gt; 4     alabaster  0.7.16  alabaster=0.7.16      pypi</span></span>
 <span><span class="co">#&gt; 5    astunparse   1.6.3  astunparse=1.6.3      pypi</span></span>
 <span><span class="co">#&gt; 6         babel  2.14.0      babel=2.14.0      pypi</span></span></code></pre></div>
@@ -221,7 +223,7 @@ over).</p>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
 <span><span class="co">#&gt;                  pred no_trans_prob smooth_trans_prob critical_trans_prob</span></span>
-<span><span class="co">#&gt; 1 Critical Transition     0.2569879        0.05358142           0.6894307</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Critical Transition     0.2616403        0.06401298           0.6743467</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interpreting-ewsnet">Interpreting EWSNet<a class="anchor" aria-label="anchor" href="#interpreting-ewsnet"></a>
 </h4>
