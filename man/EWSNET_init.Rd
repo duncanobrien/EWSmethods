@@ -38,6 +38,13 @@ ewsnet_init(envname = "EWSNET_env", auto = FALSE)
 #activate project-local Python environments'
 #and restart R.
 
+#if this fails due to timeout, you may need to
+#increase the timeout length using something
+#like below:
+\donttest{
+options(timeout = max(300, getOption("timeout")))
+}
+
 \dontrun{
 reticulate::py_config()
 }

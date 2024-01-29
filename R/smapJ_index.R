@@ -1,6 +1,6 @@
-#' S-map Jacobian index function
+#' Multivariate S-map Jacobian index function
 #'
-#' Calculate a stability metric from the s-map estimated Jacobian
+#' Calculate a stability metric from the multivariate s-map estimated Jacobian
 #'
 #' @param data Numeric matrix with time in first column and species abundances in other columns
 #' @param winsize Numeric. Defines the window size of the rolling window as a percentage of the time series length.

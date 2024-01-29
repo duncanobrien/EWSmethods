@@ -165,8 +165,7 @@ possible.
 
 For example, in our hypothetical skylark dataset, we have measured
 average population body mass. This data can then be delivered to the
-`univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait`
-argument.
+`uniEWS()` function in `EWSmethods`, using the `trait` argument.
 
 ``` r
 trait_metrics <- c("SD", "ar1", "trait")
@@ -251,27 +250,27 @@ reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 #> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
 #> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.9.dylib
 #> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
-#> version:        3.9.18 | packaged by conda-forge | (main, Aug 30 2023, 03:53:08)  [Clang 15.0.7 ]
+#> version:        3.9.18 | packaged by conda-forge | (main, Dec 23 2023, 16:35:41)  [Clang 16.0.6 ]
 #> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.9/site-packages/numpy
-#> numpy_version:  1.24.3
+#> numpy_version:  1.26.3
 #> 
 #> NOTE: Python version was forced by use_python() function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package   version               requirement     channel
-#> 1         absl-py     1.4.0             absl-py=1.4.0        pypi
-#> 2       alabaster    0.7.13          alabaster=0.7.13        pypi
-#> 3      astunparse     1.6.3          astunparse=1.6.3        pypi
-#> 4           babel    2.12.1              babel=2.12.1        pypi
-#> 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge
-#> 6 ca-certificates 2023.7.22 ca-certificates=2023.7.22 conda-forge
+#>           package    version                requirement     channel
+#> 1         absl-py      2.1.0              absl-py=2.1.0        pypi
+#> 2       alabaster     0.7.16           alabaster=0.7.16        pypi
+#> 3      astunparse      1.6.3           astunparse=1.6.3        pypi
+#> 4           babel     2.14.0               babel=2.14.0        pypi
+#> 5           bzip2      1.0.8                bzip2=1.0.8 conda-forge
+#> 6 ca-certificates 2023.11.17 ca-certificates=2023.11.17 conda-forge
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition   0.009883184          0.967422          0.02269474
+#> 1 Smooth Transition   0.008750516         0.9621667          0.02908297
 ```
 
 <br>

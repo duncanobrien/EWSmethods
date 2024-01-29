@@ -2,7 +2,7 @@
 % Please edit documentation in R/smapJ_index.R
 \name{multiJI}
 \alias{multiJI}
-\title{S-map Jacobian index function}
+\title{Multivariate S-map Jacobian index function}
 \source{
 Ushio, M., Hsieh, Ch., Masuda, R. et al. (2018) Fluctuating interaction network and time-varying stability of a natural fish community. Nature 554, 360–363.
 }
@@ -22,7 +22,7 @@ multiJI(data, winsize = 50, theta_seq = NULL, scale = TRUE)
 A dataframe where the first column is last time index of the window and the second column is the estimated index value. A value <1.0 indicates stability, a value >1.0 indicates instability.
 }
 \description{
-Calculate a stability metric from the s-map estimated Jacobian
+Calculate a stability metric from the multivariate s-map estimated Jacobian
 }
 \examples{
 #Load the multivariate simulated

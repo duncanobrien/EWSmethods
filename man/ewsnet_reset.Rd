@@ -30,6 +30,13 @@ ewsnet_reset(remove_weights = FALSE, auto = TRUE,
 weights_path = tempdir())
 }
 
+# if this fails due to timeout, you may need to
+# increase the timeout length using something
+# like below:
+\donttest{
+options(timeout = max(300, getOption("timeout")))
+}
+
 \donttest{
 # to remove all downloaded weights
 ewsnet_reset(remove_weights = TRUE, auto = TRUE,

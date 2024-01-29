@@ -17,7 +17,7 @@
 #'
 #' data(simTransComms)
 #'
-#'#Subset the second community prior to the transition
+#' #Subset the second community prior to the transition
 #'
 #' pre_simTransComms <- subset(simTransComms$community2,time < inflection_pt)
 #'

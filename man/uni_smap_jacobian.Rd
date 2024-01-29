@@ -2,7 +2,7 @@
 % Please edit documentation in R/uni_smap_jacobian.R
 \name{uni_smap_jacobian}
 \alias{uni_smap_jacobian}
-\title{S-map Inferred Jacobian}
+\title{Univariate S-map Inferred Jacobian}
 \source{
 Grziwotz, F., Chang, C.-W., Dakos, V., van Nes, E.H., Schwarzländer, M., Kamps, O., et al. (2023). Anticipating the occurrence and type of critical transitions. Science Advances, 9.
 }

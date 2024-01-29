@@ -1,4 +1,4 @@
-#' S-map Inferred Jacobian
+#' Univariate S-map Inferred Jacobian
 #'
 #' Performs the S-map on a univariate time series to infer the Jacobian matrix at different points in time across thetas.
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/smap_jacobian.R
 \name{multi_smap_jacobian}
 \alias{multi_smap_jacobian}
-\title{S-map Inferred Jacobian}
+\title{Multivariate S-map Inferred Jacobian}
 \source{
 Medeiros, L.P., Allesina, S., Dakos, V., Sugihara, G. & Saavedra, S. (2022) Ranking species based on sensitivity to perturbations under non-equilibrium community dynamics. Ecology Letters, 00, 1– 14.
 }

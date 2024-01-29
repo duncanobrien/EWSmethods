@@ -36,6 +36,8 @@ set.seed(123) #to ensure reproducible data
 library(EWSmethods)
 library(ggplot2)
 library(tidyr)
+
+options(timeout = max(300, getOption("timeout"))) #due to possible internet issues, increase the timeout options from 60 seconds to 300
 ```
 
 As EWSNet has been written and developed in Python, for R to interact with it, we need to exploit the `reticulate` [R package](https://rstudio.github.io/reticulate/). `reticulate` provides the tools to run Python code in R and transfer objects between the two languages but tends to run much smoother in RStudio rather than base R. It is therefore recommended that you use the [RStudio IDE](https://posit.co/download/rstudio-desktop) when using the EWSNet portion of `EWSmethods`.

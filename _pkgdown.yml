@@ -38,7 +38,7 @@ reference:
   - conda_clean
   - default_weights_path
 
-- title: "Other resilience metrics"
+- title: "Other stability metrics"
   desc: >
     Additional functions estimating alternative
     measures of system stability/resilience.
@@ -49,6 +49,7 @@ reference:
   - multiJI
   - multi_smap_jacobian
   - mvi
+  - uniAR
   - multiAR
 
 - title: "Data preparation"
@@ -59,7 +60,7 @@ reference:
   - detrend_ts
   - deseason_ts
 
-- title: Datasets
+- title: "Datasets"
   desc: >
    The exemplary datasets used in `EWSmethods` tutorials and testing.
   contents:

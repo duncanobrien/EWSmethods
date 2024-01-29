@@ -110,7 +110,7 @@ plot(exp_ews, y_lab = "Skylark abundance")
 
 A second benefit of the expanding window approach is that additional information can be used to improve the reliability of the assessment. Including trait information has been shown to decrease the likelihood of both false positive and false negative signals (Clements and Ozgul, 2016; Baruah *et al.* 2019) and therefore should be considered if possible.
 
-For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `univariate_EWS_wrapper()` function in `EWSmethods`, using the `trait` argument.
+For example, in our hypothetical skylark dataset, we have measured average population body mass. This data can then be delivered to the `uniEWS()` function in `EWSmethods`, using the `trait` argument.
 
 ```{r expand_trait_example, fig.keep = "none"}
 trait_metrics <- c("SD", "ar1", "trait")

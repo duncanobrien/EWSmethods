@@ -1,8 +1,8 @@
-#' Multivariate Jacobian Index Estimated From Multivariate Autocorrelation Matrix
+#' Univariate Jacobian Index Estimated From Univariate Autocorrelation Matrix
 #'
-#' Estimate the dominant Jacobian eigenvalue of a multivariate time series using autocorrelated stochastic differential equations
+#' Estimate the dominant Jacobian eigenvalue of a univariate time series using autocorrelated stochastic differential equations
 #'
-#' @param data Numeric matrix with time in first column and species abundance in the remainder.
+#' @param data Numeric matrix with time in first column and species abundance in the second
 #' @param winsize Numeric. Defines the window size of the rolling window as a percentage of the time series length.
 #' @param scale Boolean. Should data be scaled prior to estimating the Jacobian.
 #' @param p Numeric. Defines the model order. Defaults to `1`.
@@ -16,25 +16,24 @@
 #'
 #' data(simTransComms)
 #'
-#'#Subset the second community prior to the transition
+#' #Subset the second community prior to the transition
 #'
 #' pre_simTransComms <- subset(simTransComms$community2,time < inflection_pt)
 #'
 #' #Estimate the univariate stability index for the first species in
 #' #the second community
 #'
-#' egarJ <- multiAR(data = pre_simTransComms[,2:7],
+#' egarJ <- uniAR(data = pre_simTransComms[,2:3],
 #' winsize = 25, dt = 1)
 #'
 #' @export
-#' @source Williamson and Lenton (2015). Detection of bifurcations in noisy coupled systems from multiple time series. Chaos, 25, 036407
 
-multiAR <- function(data, scale = TRUE, winsize = 50, p = 1, dt = 1){
+uniAR <- function(data, scale = TRUE, winsize = 50, p = 1, dt = 1){
 
-  if(NCOL(data) <= 2){
-    stop("Data only contains two columns. multiAR require 2+ time series")
+  if(NCOL(data) != 2){
+    stop("Data requires only a time column and a timeseries")
   }
-  if(!all(apply(data[,-1],2,is.numeric))){
+  if(!all(is.numeric(data[,-1]))){
     stop("Not all time series are numeric")
   }
   data <- as.data.frame(data)
@@ -45,16 +44,19 @@ multiAR <- function(data, scale = TRUE, winsize = 50, p = 1, dt = 1){
 
     sub_data <- data[i:(i+window-1),]
     if(isTRUE(scale)){
-    sub_data <- sapply(sub_data[,-1],FUN = function(x){return(c(scale(x)))} )
+      sub_data[,2] <- c(scale(sub_data[,2]))
     }
-    mAr_mod <- mAr::mAr.est(as.matrix(sub_data[,-1]), p = p)
-    yy <- eigen(mAr_mod$AHat)
+    Ar_mod <- stats::ar.ols(as.matrix(sub_data[,-1]), aic = FALSE, order.max = p, dmean = FALSE,intercept = FALSE)$ar
+
+    jac <- rbind(as.numeric(Ar_mod),
+                 cbind(diag(p - 1), rep(0, p - 1)))
+
+    yy <- eigen(jac)
     jac_eig <- (1/dt)*(log(abs(yy$values)))
     return(cbind("time" = data[(i+window-1),1],
                  "multiAR" = max(jac_eig)))
-    })
+  })
   out <- as.data.frame(do.call("rbind", out))
 
   return(out)
-  }
-
+}
