@@ -51,7 +51,7 @@ conda_clean <- function(envname, conda_path = reticulate::miniconda_path(), auto
           }else{
             reticulate::conda_remove(envname = envname,packages = NULL, conda=conda_binary)
             reticulate::miniconda_uninstall(path=conda_path) # start with a blank slate
-            message("Anaconda and environmrnt successfully removed")
+            message("Anaconda and environment successfully removed")
           }
       }
     }
