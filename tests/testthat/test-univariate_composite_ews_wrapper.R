@@ -4,7 +4,7 @@ test_that("uniEWS works", {
   test.data <- simTransComms$community3[1:50,2:3]
   test.data[,"trait"] <- rnorm(50,5,1)
 
-  eg.uniEWS1 <- uniEWS(test.data, method = "rolling",
+  eg.uniEWS1 <- uniEWS(test.data[,1:2], method = "rolling",
                            winsize = 50,
                            metrics = sample(c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","SD"),size = 3,replace = F))
   eg.uniEWS2 <- uniEWS(test.data, method = "expanding",

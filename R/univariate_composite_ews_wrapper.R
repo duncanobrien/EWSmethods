@@ -65,13 +65,19 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
                    winsize = 50, burn_in = 5, threshold = 2,
                    tail.direction = "one.tailed", trait = NULL){
 
-  method <- match.arg(method,choices = c("expanding","rolling"))
+  method <- match.arg(method,choices = c("rolling","expanding"))
   tail.direction <- match.arg(tail.direction,choices = c("one.tailed","two.tailed"))
-  metrics <- match.arg(metrics,choices = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","SD","trait"), several.ok=T)
+  metrics <- match.arg(metrics,choices = c("cv", "acf", "ar1", "dr", "rr", "skew","kurt","SD","trait"), several.ok=TRUE)
 
   if(length(class(data)) > 1 & isTRUE(is.data.frame(data))){
     data <- as.data.frame(data)
   } #allows tibbles to be used
+
+  if(NCOL(data)>2 & is.null(trait)){
+    stop('Data contains more than two columns. The first column should be a time vector and the second a time series')
+  }else if(NCOL(data)>3 & !is.null(trait)){
+    stop('Data contains more than three columns. The first column should be a time vector, the second an abundance time series, and third a trait time series')
+  }
 
   if(any(is.na(data))){
     stop('Data contains missing values. Interpolation of missing values is recommended')

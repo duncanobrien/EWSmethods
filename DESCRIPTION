@@ -52,7 +52,7 @@ Imports:
     scales,
     tidyr,
     zoo
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 URL: https://github.com/duncanobrien/EWSmethods,
     https://duncanobrien.github.io/EWSmethods/
 BugReports: https://github.com/duncanobrien/EWSmethods/issues

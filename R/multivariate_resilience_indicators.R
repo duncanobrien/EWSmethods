@@ -72,19 +72,19 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
   }
     output<-do.call("rbind", RES)
 
-    out.cor <- data.frame("meanAR" = cor.test(as.numeric(output$time), output$meanAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "maxAR" = cor.test(as.numeric(output$time), output$maxAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "meanSD" = cor.test(as.numeric(output$time), output$meanSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "maxSD" = cor.test(as.numeric(output$time), output$maxSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "eigenMAF" = cor.test(as.numeric(output$time), output$eigenMAF, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "mafAR" = cor.test(as.numeric(output$time), output$mafAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "mafSD" = cor.test(as.numeric(output$time), output$mafSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "pcaAR" = cor.test(as.numeric(output$time), output$pcaAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "pcaSD" = cor.test(as.numeric(output$time), output$pcaSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          #"explSD" = cor.test(as.numeric(output$time), output$explSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "eigenCOV" = cor.test(as.numeric(output$time), output$eigenCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "maxCOV" = cor.test(as.numeric(output$time), output$maxCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate,
-                          "mutINFO" = cor.test(as.numeric(output$time), output$mutINFO, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate)
+    out.cor <-data.frame("meanAR" = tryCatch({cor.test(as.numeric(output$time), output$meanAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){ warning("Correlation coefficents not returned as too few observations"); return(NA)}),
+                          "maxAR" = tryCatch({cor.test(as.numeric(output$time), output$maxAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "meanSD" = tryCatch({cor.test(as.numeric(output$time), output$meanSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "maxSD" = tryCatch({cor.test(as.numeric(output$time), output$maxSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "eigenMAF" = tryCatch({cor.test(as.numeric(output$time), output$eigenMAF, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "mafAR" = tryCatch({cor.test(as.numeric(output$time), output$mafAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "mafSD" = tryCatch({cor.test(as.numeric(output$time), output$mafSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "pcaAR" = tryCatch({cor.test(as.numeric(output$time), output$pcaAR, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "pcaSD" = tryCatch({cor.test(as.numeric(output$time), output$pcaSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          #"explSD" = tryCatch({cor.test(as.numeric(output$time), output$explSD, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "eigenCOV" = tryCatch({cor.test(as.numeric(output$time), output$eigenCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "maxCOV" = tryCatch({cor.test(as.numeric(output$time), output$maxCOV, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}),
+                          "mutINFO" = tryCatch({cor.test(as.numeric(output$time), output$mutINFO, alternative = c("two.sided"), method = c("kendall"), conf.level = 0.95,na.action = na.omit)$estimate}, error = function(e){return(NA)}))
 
   }
 

@@ -55,11 +55,12 @@ for(i in 1:(dim(data)[1]-winsize_true+1)){
   nACF <- acf(data[i:(i+winsize_true-1),2], lag.max = 1, type = c("correlation"),
               plot = FALSE)$acf[2]
 
-  spectfft <- spec.ar(data[i:(i+winsize_true-1),2], n.freq =  dim(data)[1] - winsize_true + 1,
-                      plot = FALSE,
-                      order = 1)
+  # spectfft <- spec.ar(data[i:(i+winsize_true-1),2], n.freq =  dim(data)[1] - winsize_true + 1,
+  #                     plot = FALSE,
+  #                     order = 1)
+  spectfft <- spec.ar(data[i:(i+winsize_true-1),2], n.freq = winsize_true, plot = FALSE, order = 1)
 
-  nDENSITYRATIO <- spectfft$spec[6]/spectfft$spec[winsize_true]
+  nDENSITYRATIO <- spectfft$spec[1]/spectfft$spec[winsize_true]
 
   nRETURNRATE = 1/nARR
 
