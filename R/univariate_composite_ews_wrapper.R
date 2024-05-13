@@ -115,8 +115,14 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
     bind.res$str<-(bind.res$metric.score-bind.res$rolling.mean)/bind.res$rolling.sd
 
     if(!is.null(trait)){
-      bind.res<-as.data.frame(bind.res) %>%
-        dplyr::left_join(data.frame("time" = data[,1],"trait" = trait),by = "time")
+      # bind.res<-as.data.frame(bind.res) %>%
+      #   dplyr::left_join(data.frame("time" = data[,1],"trait" = trait),by = "time")
+
+      bind.res<-as.data.frame(bind.res) |>
+        merge(data.frame("time" = data[,1],"trait" = trait),by = "time") |>
+        sort_by(~list(metric.code,time),decreasing = FALSE) |>
+        `rownames<-`(NULL)
+
     }
     out <- list("EWS" = bind.res, "method" = method,"threshold" = threshold, "tail.direction" = tail.direction)
     class(out) <- c("EWSmethods","expEWS","uniEWS")
@@ -127,9 +133,15 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
     bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = F)
 
     bind.res$raw <- bind.res$raw[,c("timeindex",metrics)]
-    bind.res$raw<-as.data.frame(bind.res$raw) %>%
-      dplyr::left_join(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex") %>%
-      dplyr::rename("time" = "timeindex")
+    # bind.res$raw<-as.data.frame(bind.res$raw) %>%
+    #   dplyr::left_join(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex") %>%
+    #   dplyr::rename("time" = "timeindex")
+
+    bind.res$raw<-as.data.frame(bind.res$raw) |>
+      merge(data.frame("timeindex" = data[,1],"count.used" = data[,2]),by = "timeindex") |>
+      sort_by(~list(timeindex),decreasing = FALSE)
+    colnames(bind.res$raw)[1] <- "time"
+
     bind.res$cor <- bind.res$cor[,metrics]
     out <- list("EWS" = bind.res, "method" = method)
     class(out) <- c("EWSmethods","rollEWS","uniEWS")

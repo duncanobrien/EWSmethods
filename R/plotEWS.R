@@ -34,11 +34,7 @@
 #' @importFrom ggplot2 guides
 #' @importFrom ggplot2 geom_text
 #' @importFrom ggplot2 scale_linetype_manual
-#' @importFrom dplyr across
-#' @importFrom dplyr everything
-#' @importFrom dplyr filter
-#' @importFrom dplyr mutate
-#' @importFrom dplyr .data
+#' @importFrom ggplot2 .data
 #'
 #' @examples
 #' data(simTransComms)
@@ -83,6 +79,7 @@
 
 plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab = "Generic trait name", trait_scale = 1000){
 
+  corr <- count.used <- metric.code <- threshold.crossed <- timestep <- NULL
   pal <- c("#6886c4",
            "#bfbd3d",
            "#5d3099",
@@ -103,26 +100,60 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
     if("rollEWS" %in% class(x)){
       metrics <- colnames(x$EWS$raw)[!(colnames(x$EWS$raw) %in% c("time","count.used"))]
 
-      plot.dat <- x$EWS$raw %>%
-        dplyr::mutate(across(-c("time","count.used"),~scale(.x)))%>%
-        tidyr::pivot_longer(-c("time","count.used"), names_to = "metric.code", values_to = "str")
+      # plot.dat <- x$EWS$raw %>%
+      #   dplyr::mutate(across(-c("time","count.used"),~scale(.x)))%>%
+      #   tidyr::pivot_longer(-c("time","count.used"), names_to = "metric.code", values_to = "str")
+
+      plot.dat <- sapply(metrics,function(col){
+        scale(x$EWS$raw[[col]])
+      })
+
+      plot.dat <- data.frame(timestep =  x$EWS$raw$time,
+                             count.used = x$EWS$raw$count.used,
+                             plot.dat)
+
+      plot.dat <- stats::reshape(data = plot.dat,
+                       direction = "long",
+                       varying = colnames(plot.dat)[-c(1,2)],
+                       v.names = "str",
+                       times = colnames(plot.dat)[-c(1,2)],
+                       timevar = "metric.code")  |>
+        transform(id = NULL) |>
+        sort_by(~list(metric.code,timestep),decreasing = FALSE) |>
+        `rownames<-`(NULL)
 
       if(length(metrics) == 1){
+        # cor.dat <- data.frame("metric.code" = metrics,
+        #                       "cor" = paste(c("tau:",round(x$EWS$cor, digits = 3)),collapse = " ")) %>%
+        #   dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+
         cor.dat <- data.frame("metric.code" = metrics,
-                              "cor" = paste(c("tau:",round(x$EWS$cor, digits = 3)),collapse = " ")) %>%
-          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+                              "corr" = paste(c("tau:",round(x$EWS$cor[1,], digits = 3)),collapse = " ")) |>
+          transform(timestep = quantile(plot.dat$timestep,0.85,names = FALSE), str =  max(plot.dat$str)*0.8)
 
       }else{
-        cor.dat <- x$EWS$cor[1,] %>%
-          tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
-          dplyr::rowwise()%>%
-          dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
-          dplyr::mutate(time = quantile(plot.dat$time,0.8), str =  max(plot.dat$str)*0.8)
+        # cor.dat <- x$EWS$cor[1,] %>%
+        #   tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
+        #   dplyr::rowwise()%>%
+        #   dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
+        #   dplyr::mutate(time = quantile(plot.dat$time,0.8), str =  max(plot.dat$str)*0.8)
+
+        cor.dat <- stats::reshape(data = x$EWS$cor[1,],
+                                  direction = "long",
+                                  varying = colnames(x$EWS$cor),
+                                  v.names = "corr",
+                                  times = colnames(x$EWS$cor),
+                                  timevar = "metric.code")  |>
+          transform(id = NULL) |>
+          `rownames<-`(NULL) |>
+          transform(corr = paste("tau:", round(corr, digits = 3))) |>
+          transform(timestep = quantile(plot.dat$timestep,0.85, names = FALSE), str = max(plot.dat$str)*0.8)
+
       }
 
-      p <- ggplot(data = plot.dat, aes(x=.data$time,y=.data$str,group=.data$metric.code)) +
+      p <- ggplot(data = plot.dat, aes(x=.data$timestep,y=.data$str,group=.data$metric.code)) +
         geom_line(aes(col= .data$metric.code))+
-        geom_text(data = cor.dat,aes(label = .data$cor),size = 3, hjust = 0.75)+
+        geom_text(data = cor.dat,aes(label = .data$corr),size = 3, hjust = 0.75)+
         scale_colour_manual(values = pal[1:length(metrics)],guide = guide_legend(override.aes = list(linetype = rep(1,7),shape=NA))) +
         xlab("Time point") + ylab("Scaled metric value") +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
@@ -133,7 +164,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
-      p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
+      p2 <- ggplot(data = plot.dat, aes(x=.data$timestep, y=.data$count.used)) +
         aes(group=NA)+
         geom_line(col = "black")+
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
@@ -149,11 +180,13 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
       metrics <- unique(x$EWS$metric.code)
       tail.direction <- x$tail.direction
 
-      p <- ggplot(data = tidyr::drop_na(x$EWS,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+      drop_na_data <- x$EWS[!is.na(x$EWS$str),]
+      colnames(drop_na_data)[1] <- "timestep"
+
+      p <- ggplot(data = drop_na_data, aes(x=.data$timestep,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = unique(x$threshold), linetype="solid", color = "grey", linewidth=1)+
         geom_line()+
-        #geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
-        geom_point(aes(x=.data$time, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
+        geom_point(aes(x=.data$timestep, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
         geom_line(aes(alpha = "0"))+
         scale_alpha_manual(values = c(0,1),
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
@@ -174,19 +207,23 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
       }
 
       if("trait" %in% metrics){
-        plot.dat <- tidyr::drop_na(x$EWS,"str") %>%
-          dplyr::select("time", "count.used","trait")
+        plot.dat <- drop_na_data[,c("timestep", "count.used","trait")]
 
-        ews.data <- x$EWS %>%
-          dplyr::mutate(min = min(.data$count.used)*0.75) %>%
-          dplyr::filter(.data$metric.code == .data$metric.code[length(.data$metric.code)] & .data$threshold.crossed == 1)
+        # ews.data <- x$EWS %>%
+        #   dplyr::mutate(min = min(.data$count.used)*0.75) %>%
+        #   dplyr::filter(.data$metric.code == .data$metric.code[length(.data$metric.code)] & .data$threshold.crossed == 1)
+        #
+        ews.data <- x$EWS |>
+          transform(min = min(count.used)*0.75) |>
+          subset(metric.code == metric.code[length(metric.code)] & threshold.crossed == 1)
+        colnames(ews.data)[1] <- "timestep"
 
-        p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
+        p2 <- ggplot(data = plot.dat, aes(x=.data$timestep, y=.data$count.used)) +
           aes(group=NA)+
           geom_line(aes(y=.data$count.used, linetype = "Count")) +
           geom_line(aes(y=(.data$trait*plot_labels$trait_scale), linetype = "Trait"), linewidth = 0.4, alpha = 0.4,col = "blue") +
           geom_point(data = ews.data,
-                     aes(x=.data$time, y = .data$min,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
+                     aes(x=.data$timestep, y = .data$min,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
           scale_alpha_manual(values = c(1),
                              breaks = c(0,"1"),labels = c(NA,"Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -198,7 +235,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           xlab("Time point")+
           ylab(plot_labels$y_lab)+
-          annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust = 0.75)+
+          annotate("label", size = 2, x = quantile(plot.dat$timestep,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust = 0.75)+
           guides(alpha = guide_legend(order = 1))+
           theme_clean()+
           theme(plot.margin = margin(c(10, 8, 0, 10)))
@@ -206,18 +243,23 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1), draw = F)
 
       }else if(!("trait" %in% metrics)){
-        plot.dat <- tidyr::drop_na(x$EWS,"str") %>%
-          dplyr::select("time", "count.used")
 
-        ews.data <- x$EWS %>%
-          dplyr::mutate(min = min(.data$count.used)*0.75) %>%
-          dplyr::filter(.data$metric.code == .data$metric.code[length(.data$metric.code)] & .data$threshold.crossed == 1)
+        plot.dat <- drop_na_data[,c("timestep", "count.used")]
 
-        p4 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
+        # ews.data <- x$EWS %>%
+        #   dplyr::mutate(min = min(.data$count.used)*0.75) %>%
+        #   dplyr::filter(.data$metric.code == .data$metric.code[length(.data$metric.code)] & .data$threshold.crossed == 1)
+
+        ews.data <- x$EWS |>
+          transform(min = min(count.used)*0.75) |>
+          subset(metric.code == metric.code[length(metric.code)] & threshold.crossed == 1)
+        colnames(ews.data)[1] <- "timestep"
+
+        p4 <- ggplot(data = plot.dat, aes(x=.data$timestep, y=.data$count.used)) +
           aes(group=NA)+
           geom_line(col = "black")+
           geom_point(data = ews.data,
-                     aes(x=.data$time, y = .data$min,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
+                     aes(x=.data$timestep, y = .data$min,col=.data$metric.code,alpha = as.factor(.data$threshold.crossed)),size = 3,pch= "|",col = "#5d3099") +
           scale_alpha_manual(values = c(1),
                              breaks = c(0,"1"),labels = c(NA,"Detected"), name = "EWS",
                              guide = guide_legend(override.aes =
@@ -225,7 +267,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
           scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
           ylab(plot_labels$y_lab) +
           xlab("Time point")+
-          annotate("label", size = 2, x = quantile(plot.dat$time,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust=0.75)+
+          annotate("label", size = 2, x = quantile(plot.dat$timestep,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust=0.75)+
           theme_clean()+
           theme(plot.margin = margin(c(10, 8, 0, 10)))
 
@@ -239,27 +281,59 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
 
       metrics <- colnames(x$EWS$raw)[!(colnames(x$EWS$raw) %in% c("time"))]
 
-      plot.dat <- x$EWS$raw %>%
-        dplyr::mutate(time = as.numeric(.data$time))%>%
-        dplyr::mutate(across(-c("time"),~scale(.x)))%>%
-        tidyr::pivot_longer(-c("time"), names_to = "metric.code", values_to = "str")
+      # plot.dat <- x$EWS$raw %>%
+      #   dplyr::mutate(time = as.numeric(.data$time))%>%
+      #   dplyr::mutate(across(-c("time"),~scale(.x)))%>%
+      #   tidyr::pivot_longer(-c("time"), names_to = "metric.code", values_to = "str")
+
+      plot.dat <- sapply(metrics,function(col){
+        scale(x$EWS$raw[[col]])
+      })
+
+      plot.dat <- data.frame(timestep =  x$EWS$raw$time,
+                             plot.dat)
+
+      plot.dat <- stats::reshape(data = plot.dat,
+                       direction = "long",
+                       varying = colnames(plot.dat)[-1],
+                       v.names = "str",
+                       times = colnames(plot.dat)[-1],
+                       timevar = "metric.code")  |>
+        transform(id = NULL) |>
+        sort_by(~list(metric.code,timestep),decreasing = FALSE) |>
+        `rownames<-`(NULL)
 
       if(length(metrics) == 1){
+        # cor.dat <- data.frame("metric.code" = metrics,
+        #                       "cor" = paste(c("tau:",round(x$EWS$cor[1,], digits = 3)),collapse = " ")) %>%
+        #   dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+        #
         cor.dat <- data.frame("metric.code" = metrics,
-                              "cor" = paste(c("tau:",round(x$EWS$cor[1,], digits = 3)),collapse = " ")) %>%
-          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+                              "corr" = paste(c("tau:",round(x$EWS$cor[1,], digits = 3)),collapse = " ")) |>
+          transform(timestep = quantile(plot.dat$timestep,0.85,names = FALSE), str =  max(plot.dat$str)*0.8)
 
       }else{
-        cor.dat <- x$EWS$cor[1,] %>%
-          tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
-          dplyr::rowwise()%>%
-          dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
-          dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+        # cor.dat <- x$EWS$cor[1,] %>%
+        #   tidyr::pivot_longer(everything(),names_to = "metric.code", values_to = "cor") %>%
+        #   dplyr::rowwise()%>%
+        #   dplyr::mutate(cor = paste(c("tau:", round(.data$cor, digits = 3)),collapse = " ")) %>%
+        #   dplyr::mutate(time = quantile(plot.dat$time,0.85), str =  max(plot.dat$str)*0.8)
+        cor.dat <- stats::reshape(data = x$EWS$cor[1,],
+                         direction = "long",
+                         varying = colnames(x$EWS$cor),
+                         v.names = "corr",
+                         times = colnames(x$EWS$cor),
+                         timevar = "metric.code")  |>
+          transform(id = NULL) |>
+          `rownames<-`(NULL) |>
+          transform(corr = paste("tau:", round(corr, digits = 3))) |>
+          transform(timestep = quantile(plot.dat$timestep,0.85, names = FALSE), str = max(plot.dat$str)*0.8)
+
       }
 
-      p <- ggplot(data = plot.dat, aes(x=.data$time,y=.data$str,group=.data$metric.code)) +
+      p <- ggplot(data = plot.dat, aes(x=.data$timestep,y=.data$str,group=.data$metric.code)) +
         geom_line(aes(col= .data$metric.code))+
-        geom_text(data = cor.dat,aes(label = .data$cor),size = 3,hjust=0.75)+
+        geom_text(data = cor.dat,aes(label = .data$corr),size = 3,hjust=0.75)+
         scale_colour_manual(values = pal[1:length(metrics)],
                             guide = guide_legend(override.aes = list(linetype = rep(1,length(metrics)),shape=NA))) +
         xlab("Time point") + ylab("Scaled metric value") +
@@ -271,9 +345,19 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
-      p3 <- ggplot(data =  dplyr::filter(x$EWS$dimred.ts,.data$time %in% plot.dat$time)%>%
-                    tidyr::pivot_longer(-c("time"),names_to = "dimred",values_to = "count.used")
-                  , aes(x=.data$time, y=.data$count.used)) +
+      dimred_data <- x$EWS$dimred.ts
+      colnames(dimred_data)[1] <- "timestep"
+      dimred_data <- subset(dimred_data,timestep %in% plot.dat$timestep)
+
+      p3 <- ggplot(data = stats::reshape(data = dimred_data,
+                                         direction = "long",
+                                         varying = colnames(dimred_data)[-1],
+                                         v.names = "count.used",
+                                         times = colnames(dimred_data)[-1],
+                                         timevar = "dimred")  |>
+                     transform(id = NULL) |>
+                     `rownames<-`(NULL),
+                   aes(x=.data$timestep, y=.data$count.used)) +
         geom_line(aes(col = .data$dimred))+
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         ylab("Scaled component value") +
@@ -288,28 +372,32 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
 
       metrics <- unique(x$EWS$raw$metric.code)
 
-      p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
-        geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", linewidth=1)+
-        geom_line()+
-        geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
-        geom_line(aes(alpha = "0"))+
-        scale_alpha_manual(values = c(0,1),
-                           breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
-                           guide = guide_legend(order = 1, override.aes =
-                                                  list(linetype = c(1,0),shape = c(NA,16),alpha = c(1,1),col="black"))) +
-        scale_colour_manual(values = pal[1:length(metrics)],
-                            guide = guide_legend(order = 2, override.aes =
-                                                   list(linetype = rep(1,length(metrics)),shape= NA))) +
-        xlab("Time point") + ylab("Strength of EWS") +
-        scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
-        labs(color='Multivariate EWS\nindicator strength') +
-        theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
+      # p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+      #   geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", linewidth=1)+
+      #   geom_line()+
+      #   geom_point(aes(x=.data$time, y = .data$str,alpha = as.factor(.data$threshold.crossed))) +
+      #   geom_line(aes(alpha = "0"))+
+      #   scale_alpha_manual(values = c(0,1),
+      #                      breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
+      #                      guide = guide_legend(order = 1, override.aes =
+      #                                             list(linetype = c(1,0),shape = c(NA,16),alpha = c(1,1),col="black"))) +
+      #   scale_colour_manual(values = pal[1:length(metrics)],
+      #                       guide = guide_legend(order = 2, override.aes =
+      #                                              list(linetype = rep(1,length(metrics)),shape= NA))) +
+      #   xlab("Time point") + ylab("Strength of EWS") +
+      #   scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
+      #   labs(color='Multivariate EWS\nindicator strength') +
+      #   theme_clean()+
+      #   theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
-      p<- ggplot(data = tidyr::drop_na(x$EWS$raw,"str"), aes(x=.data$time,y=.data$str,col=.data$metric.code)) +
+      drop_na_data <- x$EWS$raw[!is.na(x$EWS$raw$str),]
+      colnames(drop_na_data)[1] <- "timestep"
+
+      p<- ggplot(data = drop_na_data,
+                 aes(x=.data$timestep,y=.data$str,col=.data$metric.code)) +
         geom_hline(yintercept = x$threshold, linetype="solid", color = "grey", linewidth=1)+
         geom_line()+
-        geom_point(aes(x=.data$time, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
+        geom_point(aes(x=.data$timestep, y = .data$str,alpha = factor(.data$threshold.crossed,levels = c(0,1)))) +
         geom_line(aes(alpha = "0"))+
         scale_alpha_manual(values = c(0,1),
                            breaks = c("0","1"),labels = c("Undetected","Detected"), name = "EWS",
@@ -325,12 +413,32 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         theme_clean()+
         theme(plot.margin = margin(c(10, 8, 5.5, 10)))
 
-      plot.dat <- x$EWS$dimred.ts %>%
-        dplyr::mutate(across(-"time",~scale(.))) %>%
-        dplyr::filter(.data$time %in% unique(tidyr::drop_na(x$EWS$raw,"str")$time))%>%
-        tidyr::pivot_longer(-"time",names_to = "dimred",values_to = "count.used")
+      # plot.dat <- x$EWS$dimred.ts %>%
+      #   dplyr::mutate(across(-"time",~scale(.))) %>%
+      #   dplyr::filter(.data$time %in% unique(tidyr::drop_na(x$EWS$raw,"str")$time))%>%
+      #   tidyr::pivot_longer(-"time",names_to = "dimred",values_to = "count.used")
 
-      p2 <- ggplot(data = plot.dat, aes(x=.data$time, y=.data$count.used)) +
+      plot.dat <- x$EWS$dimred.ts
+      colnames(plot.dat)[1] <- "timestep"
+      plot.dat <- plot.dat |>
+        sapply(function(col){
+          scale(col)
+        }) |>
+        as.data.frame() |>
+        transform(timestep = as.numeric(plot.dat$timestep)) |>
+        subset(timestep %in% unique(drop_na_data$timestep))
+
+      plot.dat <- stats::reshape(data = plot.dat,
+                               direction = "long",
+                               varying = colnames(plot.dat)[-1],
+                               v.names = "count.used",
+                               times = colnames(plot.dat)[-1],
+                               timevar = "dimred")  |>
+        transform(id = NULL) |>
+        sort_by(~list(dimred,timestep),decreasing = FALSE) |>
+        `rownames<-`(NULL)
+
+      p2 <- ggplot(data = plot.dat, aes(x=.data$timestep, y=.data$count.used)) +
         geom_line(aes(col = .data$dimred))+
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         ylab("Scaled component value") +

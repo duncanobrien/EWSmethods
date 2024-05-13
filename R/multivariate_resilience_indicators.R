@@ -15,8 +15,6 @@
 #' @importFrom stats cov
 #' @importFrom stats na.omit
 #' @importFrom stats prcomp
-#' @importFrom dplyr %>%
-#' @importFrom dplyr .data
 #'
 #' @keywords internal
 #' @noRd
@@ -24,6 +22,8 @@
 
 wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"),
                  method = c("rolling","expanding"),winsize , burn_in = 5, tail.direction = "one.tailed",threshold =2){
+
+  metric.score <- metric.code <- NULL
 
   meth <- match.arg(method,choices = c("rolling","expanding"))
   metrics <-match.arg(metrics, choices =  c("meanAR","maxAR","meanSD","maxSD","eigenMAF","mafAR","mafSD","pcaAR","pcaSD","eigenCOV","maxCOV","mutINFO"), several.ok=T)
@@ -166,11 +166,26 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
     }
     results<-do.call("rbind", RES)
 
-    output<-data.frame(results) %>%
-      tidyr::pivot_longer(-c("time"), names_to = "metric.code",values_to = "metric.score") %>%
-      dplyr::group_by(.data$metric.code) %>% dplyr::arrange(.data$time,.by_group = TRUE) %>%
-      dplyr::mutate(rolling.mean = rolling_mean(.data$metric.score),
-             rolling.sd = rolling_sd(.data$metric.score))
+    # output<-data.frame(results) %>%
+    #   tidyr::pivot_longer(-c("time"), names_to = "metric.code",values_to = "metric.score") %>%
+    #   dplyr::group_by(.data$metric.code) %>% dplyr::arrange(.data$time,.by_group = TRUE) %>%
+    #   dplyr::mutate(rolling.mean = rolling_mean(.data$metric.score),
+    #          rolling.sd = rolling_sd(.data$metric.score))
+
+    output <- stats::reshape(data = data.frame(results),
+        direction = "long",
+        varying = colnames(results)[-1],
+        v.names = "metric.score",
+        times = colnames(results)[-1],
+        timevar = "metric.code")  |>
+      transform(id = NULL) |>
+      sort_by(~list(metric.code,time),decreasing = FALSE) |>
+      `rownames<-`(NULL)
+
+    output <- transform(output,
+                       rolling.mean =  stats::ave(metric.score, metric.code, FUN = rolling_mean),
+                       rolling.sd = stats::ave(metric.score,metric.code, FUN = rolling_sd))
+
     output$threshold.crossed<-NA
 
     if(tail.direction == "two.tailed"){
