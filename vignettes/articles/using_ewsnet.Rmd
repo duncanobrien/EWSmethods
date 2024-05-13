@@ -54,7 +54,7 @@ Rather than requiring the user to learn `reticulate` and setup the R session the
 
 For example, to create a new Python environment called `"EWSNET_env"` and install Python, the function would be written as below. The environment name (`"EWSNET_env"`) will be critical to running the later functions.
 
-```{r ewsnet_init, warning = FALSE,eval=F}
+```{r ewsnet_init, warning = FALSE,eval=F,message=FALSE}
 #prepares your session using 'reticulate' and asks to install Anaconda (if no appropriate Python found) and/or a Python environment before activating that environment with the necessary Python packages
 ewsnet_init(envname = "EWSNET_env", pip_ignore_installed = FALSE)
 ```
@@ -151,8 +151,17 @@ for(i in seq_along(expanding_range)){
   expanding_ewsnet[i,] <- c(expanding_range[i],ews.tmp$no_trans_prob,ews.tmp$smooth_trans_prob,ews.tmp$critical_trans_prob)
 }
 
+plot_ewsnet <- reshape(expanding_ewsnet,
+                       direction = "long",
+                       varying = colnames(expanding_ewsnet)[-1],
+                       v.names = "prob",
+                       times = colnames(expanding_ewsnet)[-1],
+                       timevar = "Prediction")  |>
+  sort_by(~list(cutoff_ind),decreasing = FALSE) |>
+  `rownames<-`(NULL)
+
 #plot the results
-ggplot(expanding_ewsnet |> pivot_longer(-cutoff_ind,names_to = "Prediction",values_to = "prob"),
+ggplot(plot_ewsnet,
                 aes(x=cutoff_ind,y=prob)) +
     geom_point(aes(col=Prediction)) + theme_bw() +
     xlab("Assessment index") + ylab("Prediction probability")
@@ -219,7 +228,6 @@ ewsnet_reset(remove_weights = TRUE) # removes any downloaded EWSNet weights
 | `ewsnet_predict()`             | Using the Python environment initialised by `ewsnet_init()`, builds the EWSNet model and makes predictions from the user supplied time series |
 | `ewsnet_finetune()`            | Retrains the initial EWSNet model weights based upon new user provided training data                                                          |
 | `ewsnet_reset()`               | Overwrites the model weights with the default weights downloaded from [EWSNet github](https://github.com/sahilsid/ewsnet)                     |
-| `bypass_reticulate_autoinit()` | Optional set up function to get around quirks of`reticulate`                                                                                  |
 | `conda_clean()`                | Removes the Python installation and environment setup by `ewsnet_init()`                                                                      |
 
 Greater detail on each function can be found at the [Reference](https://duncanobrien.github.io/EWSmethods/reference/index.html) page.
