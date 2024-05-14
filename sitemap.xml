@@ -40,6 +40,9 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/FI.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/II.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/conda_clean.html</loc>
   </url>
   <url>
@@ -52,6 +55,9 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/detrend_ts.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/embedTS.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_finetune.html</loc>
   </url>
   <url>
@@ -59,6 +65,9 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_reset.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/imbalance_gain.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/index.html</loc>
@@ -86,6 +95,9 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/tuneII.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/uniAR.html</loc>
