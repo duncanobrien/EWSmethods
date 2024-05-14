@@ -153,6 +153,10 @@ The other half of `EWSmethods` allows you to query the [Python-based](https://ww
 
 However, because this is the first time using EWSNet via `EWSmethods`, we must first download the pretrained model weights from <https://ewsnet.github.io>.
 
+```{r, message=FALSE}
+options(timeout = max(600, getOption("timeout"))) #due to possible internet issues, increase the timeout options from 60 seconds to 600
+```
+
 ```{r ewsnet_prep, warning = FALSE}
 ewsnet_reset(remove_weights = FALSE, auto = TRUE)
 ```

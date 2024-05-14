@@ -233,6 +233,10 @@ we must first download the pretrained model weights from
 <https://ewsnet.github.io>.
 
 ``` r
+options(timeout = max(600, getOption("timeout"))) #due to possible internet issues, increase the timeout options from 60 seconds to 600
+```
+
+``` r
 ewsnet_reset(remove_weights = FALSE, auto = TRUE)
 #> Model weights downloaded
 ```
@@ -248,29 +252,29 @@ library(reticulate)
 
 reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 #> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
-#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.9.dylib
+#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.10.dylib
 #> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
-#> version:        3.9.18 | packaged by conda-forge | (main, Dec 23 2023, 16:35:41)  [Clang 16.0.6 ]
-#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.9/site-packages/numpy
-#> numpy_version:  1.26.3
+#> version:        3.10.14 | packaged by conda-forge | (main, Mar 20 2024, 12:51:49) [Clang 16.0.6 ]
+#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.10/site-packages/numpy
+#> numpy_version:  1.26.4
 #> 
 #> NOTE: Python version was forced by use_python() function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package    version                requirement     channel
-#> 1         absl-py      2.1.0              absl-py=2.1.0        pypi
-#> 2       alabaster     0.7.16           alabaster=0.7.16        pypi
-#> 3      astunparse      1.6.3           astunparse=1.6.3        pypi
-#> 4           babel     2.14.0               babel=2.14.0        pypi
-#> 5           bzip2      1.0.8                bzip2=1.0.8 conda-forge
-#> 6 ca-certificates 2023.11.17 ca-certificates=2023.11.17 conda-forge
+#>           package  version              requirement     channel
+#> 1         absl-py    2.1.0            absl-py=2.1.0        pypi
+#> 2       alabaster   0.7.16         alabaster=0.7.16        pypi
+#> 3      astunparse    1.6.3         astunparse=1.6.3        pypi
+#> 4           babel   2.15.0             babel=2.15.0        pypi
+#> 5           bzip2    1.0.8              bzip2=1.0.8 conda-forge
+#> 6 ca-certificates 2024.2.2 ca-certificates=2024.2.2 conda-forge
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition   0.008750516         0.9621667          0.02908297
+#> 1 Smooth Transition    0.01444911         0.9638591          0.02169183
 ```
 
 <br>

@@ -51,7 +51,7 @@ data = simTransComms$community1[1:10,2:3],
  perm.meth = "sample",
  iter = 25)
 
- #' #Permute p value for a multivariate
+ #Permute p value for a multivariate
 #community using a red.noise process
 
 \donttest{

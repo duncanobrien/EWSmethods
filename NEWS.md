@@ -1,5 +1,8 @@
 # EWSmethods (development version)
 
+# EWSmethods 1.3.0
+Remove `tidyr` and `dplyr` dependencies but now require >= R 4.4.0. Temporary fix for EWSNet as requires full rewrite for tensorflow 12.6.1. Addition of the Granger causality method - Information Imbalance.
+
 # EWSmethods 1.2.5
 Patch to `ewsnet_reset` to ensure it gracefully fails when users' internet connection fails.
 

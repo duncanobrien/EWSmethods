@@ -38,6 +38,16 @@ reference:
   - conda_clean
   - default_weights_path
 
+- title: "Information imbalance "
+  desc: >
+    "Functions for estimating Granger causality
+    via information imbalance.".
+  contents:
+  - embedTS
+  - II
+  - tuneII
+  - imbalance_gain
+
 - title: "Other stability metrics"
   desc: >
     Additional functions estimating alternative

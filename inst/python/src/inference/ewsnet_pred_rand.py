@@ -2,7 +2,7 @@ import os
 import tensorflow as tf 
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Conv1D, BatchNormalization, GlobalAveragePooling1D, Permute, Dropout, Flatten
-from tensorflow.keras.layers import Input, Dense, LSTM, concatenate, Activation, GRU, SimpleRNN
+from tensorflow.keras.layers import Input, Dense, LSTM, Concatenate, Activation
 from tensorflow.keras.models import Model
 from tensorflow.keras import regularizers
 import numpy as np 
@@ -182,7 +182,8 @@ class EWSNet():
         y = BatchNormalization()(y)
         y = Activation('relu')(y)
         y = GlobalAveragePooling1D()(y)
-        x = concatenate([x, y])
+        #x = concatenate([x, y])
+        x = Concatenate()([x, y])
         x = Dense(256, activation='relu',kernel_regularizer=regularizers.l2(0.01))(x)
         out = Dense(3, activation='softmax',kernel_regularizer=regularizers.l2(0.001))(x)
         #model = VariableLenModel(ip, out)

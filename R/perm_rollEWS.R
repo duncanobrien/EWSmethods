@@ -30,7 +30,7 @@
 #'  perm.meth = "sample",
 #'  iter = 25)
 #'
-#'  #' #Permute p value for a multivariate
+#'  #Permute p value for a multivariate
 #' #community using a red.noise process
 #'
 #' \donttest{
