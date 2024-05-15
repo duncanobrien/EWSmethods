@@ -3,8 +3,8 @@ test_that("embedding and information imbalance works", {
   data(simTransComms)
   E <- 2
   N <- NROW(simTransComms$community1[1:25,])
-  embed_x <- embedTS(simTransComms$community1[1:25,2:3], E = E, tau = 1)
-  embed_y <- embedTS(simTransComms$community1[1:25,c(2,6)], E = E, tau = 1)
+  embed_x <- embed_ts(simTransComms$community1[1:25,2:3], E = E, tau = 1)
+  embed_y <- embed_ts(simTransComms$community1[1:25,c(2,6)], E = E, tau = 1)
   expect_equal(dim(embed_x),dim(embed_y))
   expect_true(NROW(embed_x) + NROW(embed_y) ==  (N*2) - (2*E))
 

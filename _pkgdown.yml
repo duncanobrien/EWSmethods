@@ -43,7 +43,6 @@ reference:
     "Functions for estimating Granger causality
     via information imbalance.".
   contents:
-  - embedTS
   - II
   - tuneII
   - imbalance_gain
@@ -69,6 +68,7 @@ reference:
   contents:
   - detrend_ts
   - deseason_ts
+  - embed_ts
 
 - title: "Datasets"
   desc: >

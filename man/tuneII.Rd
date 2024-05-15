@@ -36,10 +36,10 @@ data(simTransComms)
 
 #Embed the spp_2 and spp_5 of the third community
 
-embedX <- embedTS(X = simTransComms$community3[,c("time","spp_2")],
+embedX <- embed_ts(X = simTransComms$community3[,c("time","spp_2")],
 E = 5, tau = 1)
 
-embedY <- embedTS(X = simTransComms$community3[,c("time","spp_5")],
+embedY <- embed_ts(X = simTransComms$community3[,c("time","spp_5")],
 E = 5, tau = 1)
 
 alphas <- seq(from = 0, to = 1, by = 0.1)

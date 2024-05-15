@@ -17,12 +17,12 @@
 #'
 #' #Embed one timeseries by 5 time points
 #'
-#' eg_embed <- embedTS(X = simTransComms$community2[,2:3],
+#' eg_embed <- embed_ts(X = simTransComms$community2[,2:3],
 #' E = 5, tau = 1)
 #'
 #' @export
 
-embedTS <- function(X,
+embed_ts <- function(X,
                     E,
                     tau = 1,
                     sample_times = NULL) {
