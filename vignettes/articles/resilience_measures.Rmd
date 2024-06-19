@@ -138,7 +138,13 @@ all_spp_uniJI <- sapply(grep("spp_",colnames(simTransComms$community1)),FUN = fu
 all_spp_uniJI <- do.call("cbind",all_spp_uniJI) # merge the list in to a data.frame
 names(all_spp_uniJI) <- c("time",paste("spp",1:5,sep="_")) # and rename missing columns
 
-all_spp_plot_data <- merge(tidyr::pivot_longer(all_spp_uniJI,cols = -time,names_to = "species",values_to = "smap_J"), simTransComms$community1[,c("time","inflection_pt")], by = "time") #pivot_longer for easier plotting and merge with the inflection point data
+all_spp_plot_data <- merge(stats::reshape(data = all_spp_uniJI,
+        direction = "long",
+        varying = colnames(all_spp_uniJI)[-1],
+        v.names = "smap_J",
+        times = colnames(all_spp_uniJI)[-1],
+        timevar = "species"),
+      simTransComms$community1[,c("time","inflection_pt")], by = "time") #pivot_longer for easier plotting and merge with the inflection point data
 
 ggplot(all_spp_plot_data,aes(x = time, y = smap_J)) + geom_line(aes(col=species)) + geom_vline(xintercept = all_spp_plot_data$inflection_pt,col = "grey60", linetype = "dashed") + theme_bw() + xlab("Time") + ylab("Univariate stability index value") + scale_colour_manual(values = c("black","#6886c4","#bfbd3d","#69c756","#e281fe")) + facet_wrap(~species)
 ```
