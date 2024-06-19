@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 set.seed(123) #to ensure reproducible data
 library(EWSmethods)
 library(ggplot2)
-library(tidyr)
 ```
 
 # About this tutorial
@@ -35,7 +34,6 @@ set.seed(123) #to ensure reproducible data
 
 library(EWSmethods)
 library(ggplot2)
-library(tidyr)
 ```
 
 ```{r, message=FALSE}

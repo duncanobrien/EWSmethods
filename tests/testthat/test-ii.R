@@ -16,5 +16,7 @@ test_that("embedding and information imbalance works", {
   eg_ii2 <- tuneII(embed_x,embed_y,alphas = alphas, tau = 1)
   expect_true(NROW(eg_ii2) == length(alphas) & NCOL(eg_ii2) == 2)
 
+  eg_ii3 <- II(embed_x,embed_y,alpha = 0.5, tau = -5)
+  expect_equal(length(eg_ii3),1)
 })
 
