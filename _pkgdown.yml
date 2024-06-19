@@ -32,16 +32,24 @@ reference:
   - plot.EWSmethods
 
 - title: "EWSNet"
-  desc: "Functions for interfacing with EWSNet."
+  desc:  >
+    Functions for interfacing with EWSNet.
   contents:
   - starts_with("ewsnet")
   - conda_clean
   - default_weights_path
 
+- title: "S-EWSNet"
+  desc: >
+    Functions for interfacing with S-EWSNet.
+  contents:
+  - starts_with("sewsnet")
+  - default_sewsnet_path
+
 - title: "Information imbalance "
   desc: >
-    "Functions for estimating Granger causality
-    via information imbalance.".
+    Functions for estimating Granger causality
+    via information imbalance.
   contents:
   - II
   - tuneII

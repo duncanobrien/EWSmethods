@@ -37,13 +37,13 @@ alphas <- seq(from = 0, to = 1, by = 0.1)
 #Estimate the forward information imbalance
 #between spp_4 and spp_3
 
-egII_for <- tuneII(target = embedX[,-1], columns = embedY[,-1],
+egII_for <- tuneII(columns = embedX[,-1], target = embedY[,-1],
 tau = 1, alphas = alphas, k = 5)
 
 #Estimate the reverse information imbalance
 #between spp_4 and spp_3
 
-egII_rev <- tuneII(target = embedY[,-1], columns = embedX[,-1],
+egII_rev <- tuneII(columns = embedY[,-1], target = embedX[,-1],
 tau = 1, alphas = alphas, k = 5)
 
 #Calculate the information gain

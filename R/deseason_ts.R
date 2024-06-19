@@ -35,7 +35,6 @@
 #' method = "stl",
 #' order = "ymd")
 #'
-#' @importFrom zoo na.approx
 #' @export
 
 deseason_ts <- function(data, increment=c("month","year","week","day"),
@@ -95,11 +94,12 @@ deseason_ts <- function(data, increment=c("month","year","week","day"),
   byinc.taxa<-byinc[,-c(1:2)]
 
   if(any(is.na(byinc[,-c(1:2)]))){
-    byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)], function(x){
-      zoo::na.approx(x,na.rm=F,maxgap = 2)
-    })
-    warning(paste("Missing dates have resulting in missing values which have been interpolated"),
-            call.=F,immediate.=F)
+    # byinc[,-c(1:2)] <- sapply(byinc[,-c(1:2)], function(x){
+    #   zoo::na.approx(x,na.rm=F,maxgap = 2)
+    # })
+    # warning(paste("Missing dates have resulting in missing values which have been interpolated"),
+    #         call.=F,immediate.=F)
+    stop(paste("Missing dates have resulting in missing values which should be interpolated"))
   }
   if(increment=="day") incremently<-"daily" else incremently<-paste(increment,"ly",sep="")
   message(paste("data successfully aggregated into",incremently,"time steps\n"))

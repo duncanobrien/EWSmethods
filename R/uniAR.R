@@ -1,4 +1,4 @@
-#' Univariate Jacobian Index Estimated From Univariate Autocorrelation Matrix
+#' Univariate Jacobian Index Estimated From an Univariate Autocorrelation Matrix
 #'
 #' Estimate the dominant Jacobian eigenvalue of a univariate time series using autocorrelated stochastic differential equations
 #'
@@ -54,7 +54,7 @@ uniAR <- function(data, scale = TRUE, winsize = 50, p = 1, dt = 1){
     yy <- eigen(jac)
     jac_eig <- (1/dt)*(log(abs(yy$values)))
     return(cbind("time" = data[(i+window-1),1],
-                 "multiAR" = max(jac_eig)))
+                 "uniAR" = max(jac_eig)))
   })
   out <- as.data.frame(do.call("rbind", out))
 

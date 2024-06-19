@@ -2,7 +2,7 @@
 % Please edit documentation in R/uniAR.R
 \name{uniAR}
 \alias{uniAR}
-\title{Univariate Jacobian Index Estimated From Univariate Autocorrelation Matrix}
+\title{Univariate Jacobian Index Estimated From an Univariate Autocorrelation Matrix}
 \usage{
 uniAR(data, scale = TRUE, winsize = 50, p = 1, dt = 1)
 }

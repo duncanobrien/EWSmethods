@@ -27,7 +27,7 @@ Restores EWSNet model weights to the pretrained defaults published at https://ew
 \donttest{
 # on first use of EWSNet via `EWSmethods`
 ewsnet_reset(remove_weights = FALSE, auto = TRUE,
-weights_path = tempdir())
+weights_path = tempfile())
 }
 
 # if this fails due to timeout, you may need to
@@ -40,7 +40,7 @@ options(timeout = max(300, getOption("timeout")))
 \donttest{
 # to remove all downloaded weights
 ewsnet_reset(remove_weights = TRUE, auto = TRUE,
-weights_path = tempdir())
+weights_path = tempfile())
 }
 
 }

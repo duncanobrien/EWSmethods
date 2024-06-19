@@ -2,8 +2,8 @@
 #'
 #' Estimates the information imbalance of two hypothesised linked system measurements for a given scalar (`alpha`).
 #'
-#' @param X Numeric matrix of hypothesised driving variable measurements. If univariate, call `embedTS(X)` prior to calling `II()`.
-#' @param Y Numeric matrix of hypothesised response variable measurements. If univariate, call `embedTS(Y)` prior to calling `II()`.
+#' @param X Numeric matrix of hypothesised driving variable measurements. If univariate, call `embed_ts(X)` prior to calling `II()`.
+#' @param Y Numeric matrix of hypothesised response variable measurements. If univariate, call `embed_ts(Y)` prior to calling `II()`.
 #' @param tau Numeric. Time lag of information transfer between X and Y.
 #' @param alpha Numeric. Scaling parameter for X. If information imbalance is minimised at an `alpha` > 0, this may be indicative of Granger causality.
 #' @param k Numeric. Number of nearest neighbours when estimating ranks.
@@ -56,15 +56,27 @@ II <- function(X,
     stop("Dimensions of X and Y should be identical")
   }
 
-  rank_matrix_A <- rnk_matrix(data = cbind(alpha * X[1:(N-tau),], Y[1:(N-tau),]), method = method)
+  # rank_matrix_A <- rnk_matrix(data = cbind(alpha * X[1:(N-tau),], Y[1:(N-tau),]), method = method)
+  #
+  # # Find indices of nearest neighbors in space A ((alpha*X0, Y0))
+  # nns_A <- nns_index_array(rank_matrix_A, k = k)
+  #
+  # rank_matrix_Y <- rnk_matrix(data = Y[(1+tau):N,], method = method)
+
+  if(tau<0){
+    rank_matrix_A <- rnk_matrix(data = cbind(alpha * X[(abs(tau)+1):N,], Y[(abs(tau)+1):N,]), method = method)
+    rank_matrix_Y <- rnk_matrix(data = Y[1:(N-abs(tau)),], method = method)
+
+  }else{
+    rank_matrix_A <- rnk_matrix(data = cbind(alpha * X[1:(N-tau),], Y[1:(N-tau),]), method = method)
+    rank_matrix_Y <- rnk_matrix(data = Y[(1+tau):N,], method = method)
+  }
 
   # Find indices of nearest neighbors in space A ((alpha*X0, Y0))
   nns_A <- nns_index_array(rank_matrix_A, k = k)
 
-  rank_matrix_Y <- rnk_matrix(data = Y[(1+tau):N,], method = method)
-
   conditional_ranks_B <- sapply(
-    1:(N-tau),
+    1:(N-abs(tau)),
     FUN = function(row)
       mean(rank_matrix_Y[row, ][nns_A[row, ]])
   )

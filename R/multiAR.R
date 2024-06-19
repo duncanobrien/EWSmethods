@@ -1,4 +1,4 @@
-#' Multivariate Jacobian Index Estimated From Multivariate Autocorrelation Matrix
+#' Multivariate Jacobian Index Estimated From a Multivariate Autocorrelation Matrix
 #'
 #' Estimate the dominant Jacobian eigenvalue of a multivariate time series using autocorrelated stochastic differential equations
 #'

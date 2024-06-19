@@ -8,5 +8,6 @@ inst/doc
 inst/python/src/__init__.py
 inst/python/weights/**/*.h5
 inst/**/*.pyc
+inst/bin/spatial/**
 /doc/
 /Meta/

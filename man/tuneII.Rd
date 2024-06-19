@@ -58,13 +58,13 @@ doParallel::registerDoParallel(cl)
 #Estimate the forward information imbalance
 #between spp_2 and spp_5
 
-egII_for <- tuneII(target = embedX[,-1], columns = embedY[,-1],
+egII_for <- tuneII(columns = embedX[,-1], target = embedY[,-1],
 tau = 1, alphas = alphas, k = 5)
 
 #Estimate the reverse information imbalance
 #between spp_2 and spp_5
 
-egII_rev <- tuneII(target = embedY[,-1], columns = embedX[,-1],
+egII_rev <- tuneII(columns = embedX[,-1], target = embedY[,-1],
 tau = 1, alphas = alphas, k = 5)
 
 \donttest{

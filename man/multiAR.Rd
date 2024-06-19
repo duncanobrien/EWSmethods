@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiAR.R
 \name{multiAR}
 \alias{multiAR}
-\title{Multivariate Jacobian Index Estimated From Multivariate Autocorrelation Matrix}
+\title{Multivariate Jacobian Index Estimated From a Multivariate Autocorrelation Matrix}
 \source{
 Williamson and Lenton (2015). Detection of bifurcations in noisy coupled systems from multiple time series. Chaos, 25, 036407
 }
