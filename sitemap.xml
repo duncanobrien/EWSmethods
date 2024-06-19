@@ -46,6 +46,9 @@
     <loc>https://duncanobrien.github.io/EWSmethods/reference/conda_clean.html</loc>
   </url>
   <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/default_sewsnet_path.html</loc>
+  </url>
+  <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/default_weights_path.html</loc>
   </url>
   <url>
@@ -92,6 +95,12 @@
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/plot.EWSmethods.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_predict.html</loc>
+  </url>
+  <url>
+    <loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_reset.html</loc>
   </url>
   <url>
     <loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc>

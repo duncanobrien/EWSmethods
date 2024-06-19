@@ -133,13 +133,13 @@
 <span class="r-in"><span><span class="co">#Estimate the forward information imbalance</span></span></span>
 <span class="r-in"><span><span class="co">#between spp_2 and spp_5</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egII_for</span> <span class="op">&lt;-</span> <span class="fu">tuneII</span><span class="op">(</span>target <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, columns <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egII_for</span> <span class="op">&lt;-</span> <span class="fu">tuneII</span><span class="op">(</span>columns <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, target <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>tau <span class="op">=</span> <span class="fl">1</span>, alphas <span class="op">=</span> <span class="va">alphas</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Estimate the reverse information imbalance</span></span></span>
 <span class="r-in"><span><span class="co">#between spp_2 and spp_5</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egII_rev</span> <span class="op">&lt;-</span> <span class="fu">tuneII</span><span class="op">(</span>target <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, columns <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egII_rev</span> <span class="op">&lt;-</span> <span class="fu">tuneII</span><span class="op">(</span>columns <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, target <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>tau <span class="op">=</span> <span class="fl">1</span>, alphas <span class="op">=</span> <span class="va">alphas</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>

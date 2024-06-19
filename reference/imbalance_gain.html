@@ -102,14 +102,14 @@
 <span class="r-in"><span><span class="co">#Estimate the forward information imbalance</span></span></span>
 <span class="r-in"><span><span class="co">#between spp_4 and spp_3</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egII_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="tuneII.html">tuneII</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, columns <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egII_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="tuneII.html">tuneII</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, target <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>tau <span class="op">=</span> <span class="fl">1</span>, alphas <span class="op">=</span> <span class="va">alphas</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>executing %dopar% sequentially: no parallel backend registered</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Estimate the reverse information imbalance</span></span></span>
 <span class="r-in"><span><span class="co">#between spp_4 and spp_3</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">egII_rev</span> <span class="op">&lt;-</span> <span class="fu"><a href="tuneII.html">tuneII</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, columns <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span><span class="va">egII_rev</span> <span class="op">&lt;-</span> <span class="fu"><a href="tuneII.html">tuneII</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">embedY</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, target <span class="op">=</span> <span class="va">embedX</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>tau <span class="op">=</span> <span class="fl">1</span>, alphas <span class="op">=</span> <span class="va">alphas</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#Calculate the information gain</span></span></span>

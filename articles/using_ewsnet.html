@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Duncan
 O’Brien</h4>
             
-            <h4 data-toc-skip class="date">2024-05-15</h4>
+            <h4 data-toc-skip class="date">2024-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/duncanobrien/EWSmethods/blob/HEAD/vignettes/articles/using_ewsnet.Rmd" class="external-link"><code>vignettes/articles/using_ewsnet.Rmd</code></a></small>
       <div class="d-none name"><code>using_ewsnet.Rmd</code></div>
@@ -120,8 +120,7 @@ that the minimum length to be tested should be 15 data points.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co">#to ensure reproducible data</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/duncanobrien/EWSmethods" class="external-link">EWSmethods</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">600</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"timeout"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#due to possible internet issues, increase the timeout options from 60 seconds to 600</span></span></code></pre></div>
 <p>As EWSNet has been written and developed in Python, for R to interact
@@ -176,8 +175,9 @@ active and second what Python packages have been loaded:</p>
 <span><span class="co">#&gt; numpy:          /home/runner/.local/share/r-miniconda/envs/test/lib/python3.10/site-packages/numpy</span></span>
 <span><span class="co">#&gt; numpy_version:  1.24.3</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; NOTE: Python version was forced by use_python() function</span></span>
-<span></span>
+<span><span class="co">#&gt; NOTE: Python version was forced by use_python() function</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co">#list all packages currently loaded in to "EWSNET_env"</span></span>
 <span><span class="va">py_packages</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_list_packages.html" class="external-link">py_list_packages</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py_packages</span><span class="op">)</span></span>
@@ -194,7 +194,7 @@ files being ~220 MB which is not appropriate for all users of the
 package. To download these weights, we can use the
 <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code> function which can either remove
 no-longer-needed weights or re/download from <a href="https://ewsnet.github.io" class="external-link uri">https://ewsnet.github.io</a>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>If successful, you will have had to input <code>"y"</code> to allow
 <code>EWSmethods</code> to download the pretrained weights.</p>
@@ -207,7 +207,7 @@ no-longer-needed weights or re/download from <a href="https://ewsnet.github.io" 
 need some test data. Here, we will use some random noise around a mean
 of 0 which we expect to be predicted as
 <code>"No Transition"</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"simTransComms"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pre_simTransComms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">simTransComms</span><span class="op">$</span><span class="va">community1</span>,<span class="va">time</span> <span class="op">&lt;</span> <span class="va">inflection_pt</span><span class="op">)</span></span>
@@ -218,7 +218,7 @@ of 0 which we expect to be predicted as
 while also specifying the Python environment, the scaling of the data
 and ensemble number (how many models to average the prediction
 over).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ewsnet_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ewsnet_predict.html">ewsnet_predict</a></span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span>, scaling <span class="op">=</span> <span class="cn">TRUE</span>, ensemble <span class="op">=</span> <span class="fl">25</span>, envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">ewsnet_prediction</span></span>
@@ -261,7 +261,7 @@ through time. By iteratively adding in new data, we can see how those
 predictions evolve.</p>
 <p>For example, using our test data, we could use this code to identify
 transitions that may have happened in the past:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#define the range of indexes to test over</span></span>
 <span><span class="va">expanding_range</span> <span class="op">&lt;-</span> <span class="fl">50</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span> </span>
@@ -309,7 +309,7 @@ time series of the same length as their test data. EWSNet would then be
 tuned to identify features specific to the time series of interest.</p>
 <p>An example is given below using a mock data set matched to the same
 length of <code>pre_simTransComms</code> - 191 data points.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pre_simTransComms</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">{</span></span>
@@ -338,16 +338,16 @@ user can direct <code>EWSmethods</code> to the path of the default
 weights (these can be redownloaded from the <a href="https://github.com/sahilsid/ewsnet" class="external-link">EWSNet github</a>) which will
 overwrite the current model weights stored by
 <code>EWSmethods</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
 <p>You may want to remove Python downloads and environment setup by
 <code>EWSmethods</code> and/or any downloaded EWSNet weights. You can
 achieve this using <code><a href="../reference/EWSNET_init.html">ewsnet_init()</a></code> and the
 <code>conda_refresh =</code> argument, and <code><a href="../reference/ewsnet_reset.html">ewsnet_reset()</a></code>
 respectively.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/conda_clean.html">conda_clean</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co"># removes Python, its packages and the "EWSNET_env" environment</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/conda_clean.html">conda_clean</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"EWSNET_env"</span><span class="op">)</span> <span class="co"># removes Python, its packages and the "EWSNET_env" environment</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ewsnet_reset.html">ewsnet_reset</a></span><span class="op">(</span>remove_weights <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># removes any downloaded EWSNet weights</span></span></code></pre></div>
 <p><br></p>
 </div>
