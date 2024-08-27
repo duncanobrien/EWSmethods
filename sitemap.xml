@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/404.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/articles/ews_assessments.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/articles/resilience_measures.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/articles/using_ewsnet.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/index.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/CODrecovery.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/EWSNET_init.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/FI.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/II.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/conda_clean.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/default_sewsnet_path.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/default_weights_path.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/deseason_ts.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/detrend_ts.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/embed_ts.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_finetune.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_reset.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/imbalance_gain.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/multiAR.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/multiEWS.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/multiJI.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/multi_smap_jacobian.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/mvi.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/perm_rollEWS.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/plot.EWSmethods.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_reset.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/tuneII.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/uniAR.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/uniEWS.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/uniJI.html</loc>
-  </url>
-  <url>
-    <loc>https://duncanobrien.github.io/EWSmethods/reference/uni_smap_jacobian.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://duncanobrien.github.io/EWSmethods/404.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/LICENSE-text.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/LICENSE.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/articles/ews_assessments.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/articles/index.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/articles/resilience_measures.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/articles/using_ewsnet.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/authors.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/index.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/news/index.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/CODrecovery.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/EWSNET_init.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/FI.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/II.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/conda_clean.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/default_sewsnet_path.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/default_weights_path.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/deseason_ts.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/detrend_ts.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/embed_ts.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_finetune.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_predict.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/ewsnet_reset.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/imbalance_gain.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/index.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/multiAR.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/multiEWS.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/multiJI.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/multi_smap_jacobian.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/mvi.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/perm_rollEWS.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/plot.EWSmethods.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_predict.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/sewsnet_reset.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/simTransComms.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/tuneII.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/uniAR.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/uniEWS.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/uniJI.html</loc></url>
+<url><loc>https://duncanobrien.github.io/EWSmethods/reference/uni_smap_jacobian.html</loc></url>
 </urlset>
+
