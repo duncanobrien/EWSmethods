@@ -15,6 +15,18 @@ rnk_matrix <- function(data,method = "euclidean"){
   pairwise_dist <- as.matrix(stats::dist(data, method = method), labels = FALSE)
   diag(pairwise_dist) <- NA
 
+  if("data.table" %in% rownames(utils::installed.packages())){
+    out <- t(apply(
+      pairwise_dist,
+      MARGIN = 1,
+      FUN = function(row)
+        data.table::frank(
+          base::xtfrm(row),
+          na.last = TRUE,
+          ties.method = "average"
+        )
+    ))
+  }else{
   out <- t(apply(
     pairwise_dist,
     MARGIN = 1,
@@ -25,6 +37,7 @@ rnk_matrix <- function(data,method = "euclidean"){
         ties.method = "average"
       )
   ))
+  }
 
   diag(out) <- Inf
 

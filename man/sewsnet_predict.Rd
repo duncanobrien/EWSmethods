@@ -33,7 +33,7 @@ sewsnet_predict(
 A dataframe of S-EWSNet predictions. Values represent the estimated probability that the quoted event will occur.
 }
 \description{
-Communicates with S-EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical spatial systems, and returns the model's prediction for the inputted spatial time series.
+Communicates with S-EWSNet (https://doi.org/10.1098/rsos.231767), a deep learning framework for modelling and anticipating regime shifts in dynamical spatial systems, and returns the model's prediction for the inputted spatial time series.
 }
 \examples{
 #A dummy dataset of a patchy savanna

@@ -2,8 +2,8 @@
 #'
 #' Estimates the information imbalance of two hypothesised linked system measurements using distance ranks.
 #'
-#' @param columns Numeric matrix of hypothesised driving variable measurements. If univariate, call `embedTS(X)` prior to calling `II()`.
-#' @param target Numeric matrix of hypothesised response variable measurements. If univariate, call `embedTS(Y)` prior to calling `II()`.
+#' @param columns Numeric matrix of hypothesised driving variable measurements. If univariate, call `embed_ts(X)` prior to calling `II()`.
+#' @param target Numeric matrix of hypothesised response variable measurements. If univariate, call `embed_ts(Y)` prior to calling `II()`.
 #' @param tau Numeric. Time lag of information transfer between X and Y.
 #' @param alphas Numeric vector. Range of X scaling parameters bewtween `0` & `1` inclusive. If information imbalance is minimised at an `alpha` > 0, this may be indicative of Granger causality.
 #' @param k Numeric. Number of nearest neighbours when estimating ranks.

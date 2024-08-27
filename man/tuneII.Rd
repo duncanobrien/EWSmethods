@@ -10,9 +10,9 @@ Del Tatto, V., Bueti, D. & Laio, A. (2024) Robust inference of causality in high
 tuneII(columns, target, tau, alphas, k = 1, method = "euclidean")
 }
 \arguments{
-\item{columns}{Numeric matrix of hypothesised driving variable measurements. If univariate, call `embedTS(X)` prior to calling `II()`.}
+\item{columns}{Numeric matrix of hypothesised driving variable measurements. If univariate, call `embed_ts(X)` prior to calling `II()`.}
 
-\item{target}{Numeric matrix of hypothesised response variable measurements. If univariate, call `embedTS(Y)` prior to calling `II()`.}
+\item{target}{Numeric matrix of hypothesised response variable measurements. If univariate, call `embed_ts(Y)` prior to calling `II()`.}
 
 \item{tau}{Numeric. Time lag of information transfer between X and Y.}
 

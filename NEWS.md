@@ -1,5 +1,8 @@
 # EWSmethods (development version)
 
+# EWSmethods 1.3.2
+Added support for spatial EWSNet (https://doi.org/10.1098/rsos.231767) and sped up `II` via suggested dependency to `data.table`.
+
 # EWSmethods 1.3.1
 Bug fix for tensorflow installation on Windows - downgraded to tensorflow 2.13.0
 

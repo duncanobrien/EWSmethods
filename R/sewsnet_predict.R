@@ -1,6 +1,6 @@
 #' S-EWSNet Predict
 #'
-#' Communicates with S-EWSNet (https://ewsnet.github.io), a deep learning framework for modelling and anticipating regime shifts in dynamical spatial systems, and returns the model's prediction for the inputted spatial time series.
+#' Communicates with S-EWSNet (https://doi.org/10.1098/rsos.231767), a deep learning framework for modelling and anticipating regime shifts in dynamical spatial systems, and returns the model's prediction for the inputted spatial time series.
 #'
 #' @param x A list of square integer matrices representing presence/absence pixels. Pixels could be vegetation presence. Ensure entires are integers not numeric.
 #' @param id Vector identifying each entry in x. Could be year, plot identity etc.
@@ -43,7 +43,7 @@
 sewsnet_predict <- function(x, id = NULL, envname, delta = 0.1, inp_size = 25, model_path = default_sewsnet_path()) {
   if (!envname %in% (reticulate::conda_list()$name)) {
     warning(
-      "Call 'ewsnet_init()' before attempting to use ewsnet_predict(), or check your spelling of envname"
+      "Call 'ewsnet_init()' before attempting to use sewsnet_predict(), or check your spelling of envname"
     )
   } else{
     if (!is.list(x)) {
