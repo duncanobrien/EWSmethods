@@ -10,7 +10,7 @@
 
 #' @return A list containing \code{"raw"} (the early warning signals through time) and \code{"dimred.ts"} (the dimension reduction time series)
 #'
-#' @importFrom stats ar.ols
+#' @importFrom stats ar
 #' @importFrom stats cor.test
 #' @importFrom stats cov
 #' @importFrom stats na.omit
@@ -41,14 +41,14 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
     tmp.maf <- maf(x=data[i:(i+winsize_true-1),-1])
     tmp.pca <- summary(prcomp(scale(data[i:(i+winsize_true-1),-1]))) #summary required to extract explained variance
 
-    mean.ar <- mean(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
-    max.ar <- max(sapply(2:dim(data)[2],function(x){ar.ols(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
+    mean.ar <- mean(sapply(2:dim(data)[2],function(x){ar(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))
+    max.ar <- max(sapply(2:dim(data)[2],function(x){ar(data[i:(i+winsize_true-1),x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))
     mean.sd <- mean(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize_true-1),x])}))
     max.sd <- max(sapply(2:dim(data)[2],function(x){sd(data[i:(i+winsize_true-1),x])}))
     eigen <- min(tmp.maf$eigen.values/sum(tmp.maf$eigen.values))
-    ar <- ar.ols(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
+    ar <- ar(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
     sd <- sd(tmp.maf$mafs[,1])
-    pca.ar <- ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
+    pca.ar <- ar(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
     pca.sd <- sd(tmp.pca$x[,1])
     eigen.cov <- max(eigen(cov(scale(data[i:(i+winsize_true-1),-1])))$values)
     max.cov <- max(cov(scale(data[i:(i+winsize_true-1),-1]))[lower.tri(cov(data[i:(i+winsize_true-1),-1]),diag = F)])
@@ -109,11 +109,11 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
       tmp.maf <- maf(x=data[1:i,-1])
       tmp.pca <- summary(prcomp(x=scale(data[1:i,-1])))
 
-      roll.mean.ar[[i]]<-mean(sapply(2:dim(data)[2],function(x){ar.ols(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
-      mean.ar<-(mean(sapply(2:dim(data)[2],function(x){ar.ols(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))-mean(unlist(roll.mean.ar), na.rm=TRUE))/sd(unlist(roll.mean.ar), na.rm = TRUE)
+      roll.mean.ar[[i]]<-mean(sapply(2:dim(data)[2],function(x){ar(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))
+      mean.ar<-(mean(sapply(2:dim(data)[2],function(x){ar(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))-mean(unlist(roll.mean.ar), na.rm=TRUE))/sd(unlist(roll.mean.ar), na.rm = TRUE)
 
-      roll.max.ar[[i]]<-max(sapply(2:dim(data)[2],function(x){ar.ols(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))
-      max.ar<-(max(sapply(2:dim(data)[2],function(x){ar.ols(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]}))-mean(unlist(roll.max.ar), na.rm=TRUE))/sd(unlist(roll.max.ar), na.rm = TRUE)
+      roll.max.ar[[i]]<-max(sapply(2:dim(data)[2],function(x){ar(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))
+      max.ar<-(max(sapply(2:dim(data)[2],function(x){ar(data[1:i,x], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]}))-mean(unlist(roll.max.ar), na.rm=TRUE))/sd(unlist(roll.max.ar), na.rm = TRUE)
 
       roll.mean.sd[[i]]<-mean(sapply(2:dim(data)[2],function(x){sd(data[1:i,x])}))
       mean.sd<-(mean(sapply(2:dim(data)[2],function(x){sd(data[1:i,x])}))-mean(unlist(roll.mean.sd), na.rm=TRUE))/sd(unlist(roll.mean.sd), na.rm = TRUE)
@@ -124,14 +124,14 @@ wMAF <- function(data, metrics = c("meanAR","maxAR","meanSD","maxSD","eigenMAF",
       roll.eigen[[i]]<-min(tmp.maf$eigen.values/sum(tmp.maf$eigen.values))
       eigen<-(min(tmp.maf$eigen.values/sum(tmp.maf$eigen.values))-mean(unlist(roll.eigen), na.rm=TRUE))/sd(unlist(roll.eigen), na.rm = TRUE)
 
-      roll.ar[[i]]<-ar.ols(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
-      ar<-(ar.ols(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]-mean(unlist(roll.ar), na.rm=TRUE))/sd(unlist(roll.ar), na.rm = TRUE)
+      roll.ar[[i]]<-ar(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
+      ar<-(ar(tmp.maf$mafs[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]-mean(unlist(roll.ar), na.rm=TRUE))/sd(unlist(roll.ar), na.rm = TRUE)
 
       roll.sd[[i]]<-sd(tmp.maf$mafs[,1])
       sd<-(sd(tmp.maf$mafs[,1])-mean(unlist(roll.sd), na.rm=TRUE))/sd(unlist(roll.sd), na.rm = TRUE)
 
-      roll.pca.ar[[i]] <-  ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
-      pca.ar<-(ar.ols(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]-mean(unlist(roll.pca.ar), na.rm=TRUE))/sd(unlist(roll.pca.ar), na.rm = TRUE)
+      roll.pca.ar[[i]] <-  ar(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
+      pca.ar<-(ar(tmp.pca$x[,1], aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]-mean(unlist(roll.pca.ar), na.rm=TRUE))/sd(unlist(roll.pca.ar), na.rm = TRUE)
 
       roll.pca.sd[[i]]<-sd(tmp.pca$x[,1])
       pca.sd<-(sd(tmp.pca$x[,1])-mean(unlist(roll.pca.sd), na.rm=TRUE))/sd(unlist(roll.pca.sd), na.rm = TRUE)

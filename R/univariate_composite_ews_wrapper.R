@@ -130,7 +130,7 @@ uniEWS <- function(data,metrics,method = c("expanding","rolling"),
 
   if(method == "rolling"){
 
-    bind.res <- no.plot.ews(timeseries = data, winsize = winsize,interpolate = F)
+    bind.res <- no.plot.ews(timeseries = data, winsize = winsize)
 
     bind.res$raw <- bind.res$raw[,c("timeindex",metrics)]
     # bind.res$raw<-as.data.frame(bind.res$raw) %>%

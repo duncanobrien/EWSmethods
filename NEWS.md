@@ -1,4 +1,7 @@
-# EWSmethods (development version)
+# EWSmethods 1.3.3.9500
+
+# EWSmethods 1.3.3
+Hot fix replacement of stats::ar.ols to stats::ar.kw following CRAN errors.
 
 # EWSmethods 1.3.2
 Added support for spatial EWSNet (https://doi.org/10.1098/rsos.231767) and sped up `II` via suggested dependency to `data.table`.

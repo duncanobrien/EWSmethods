@@ -26,6 +26,10 @@
 #' bandwidth = 2)
 #'
 #' @export
+#' @importFrom stats lm
+#' @importFrom stats predict
+#' @importFrom stats resid
+
 
 
 detrend_ts <- function(data, method = "linear", bandwidth = NULL, span = 0.25, degree = 2){

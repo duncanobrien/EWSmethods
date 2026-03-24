@@ -116,8 +116,8 @@ W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2,
         ## for ar1
         if(length(which(inds=="ar1"))==1){
           if(length(which(diff(dat.t$counts)!=0))>0){
-            roll.ar[[i]]<-ar.ols(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
-            ar1<-(ar.ols(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]-mean(unlist(roll.ar), na.rm=T))/sd(unlist(roll.ar), TRUE)
+            roll.ar[[i]]<-ar(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
+            ar1<-(ar(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]-mean(unlist(roll.ar), na.rm=T))/sd(unlist(roll.ar), TRUE)
           }else{ar1<-NA}
         }
 
@@ -133,9 +133,9 @@ W_composite_ews<-function(dat, indicators, weights, trait = NULL, threshold = 2,
         ##for return rate
         if(length(which(inds=="rr"))==1){
           if(length(which(diff(dat.t$counts)!=0))>0){
-            roll.ar.rr[[i]]<-ar.ols(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
-            ar.t.rr<-(ar.ols(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]-mean(unlist(roll.ar.rr), na.rm=T))/sd(unlist(roll.ar.rr), na.rm = TRUE)
-            #ar.t.rr<-ar.ols(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
+            roll.ar.rr[[i]]<-ar(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]
+            ar.t.rr<-(ar(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE, method = "yule-walker")$ar[1]-mean(unlist(roll.ar.rr), na.rm=T))/sd(unlist(roll.ar.rr), na.rm = TRUE)
+            #ar.t.rr<-ar.yw(dat.t$counts, aic = FALSE, order.max = 1, dmean = FALSE, intercept = FALSE)$ar[1]
           }else{ar.t.rr <-NA}
           roll.return.rate[[i]]<-1/ar.t.rr
           rr<-((1/ar.t.rr)-(mean(unlist(roll.return.rate), na.rm=T)))/sd(unlist(roll.return.rate), TRUE)
