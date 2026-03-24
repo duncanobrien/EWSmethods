@@ -1,0 +1,87 @@
+# Plot an EWSmethods object
+
+A function for visualising the output of `uniEWS` or `multiEWS` using
+ggplot2 inspired figures.
+
+## Usage
+
+``` r
+# S3 method for class 'EWSmethods'
+plot(
+  x,
+  ...,
+  y_lab = "Generic indicator name",
+  trait_lab = "Generic trait name",
+  trait_scale = 1000
+)
+```
+
+## Arguments
+
+- x:
+
+  An EWSmethods object created by `uniEWS` or `multiEWS`
+
+- ...:
+
+  Additional arguments to pass to the plotting functions.
+
+- y_lab:
+
+  String label. Labels the abundance y axis.
+
+- trait_lab:
+
+  String label. If `trait` argument populated in `uniEWS` or `multiEWS`,
+  & `"trait"` supplied in metrics, labels the right side y axis which
+  represents trait values through time.
+
+- trait_scale:
+
+  Numeric value. Scales trait y axis relative to abundance y axis.
+
+## Value
+
+A ggplot2 object.
+
+## Examples
+
+``` r
+data(simTransComms)
+
+#Subset the third community prior to the transition
+
+pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
+
+#Perform multivariate EWS assessments
+roll_ews <- multiEWS(
+ data = pre_simTransComms[,2:7],
+ method = "rolling",
+ winsize = 50)
+
+ #Plot outcome
+if (FALSE) { # \dontrun{
+ plot(roll_ews)
+} # }
+
+#Perform univariate EWS assessments on
+#simulated data with traits
+
+abundance_data <- data.frame(time = seq(1:50),
+ abundance = rnorm(50,mean = 20),
+ trait = rnorm(50,mean=1,sd=0.25))
+
+trait_ews <- uniEWS(
+ data = abundance_data[,1:2],
+ metrics = c("ar1","SD","trait"),
+ method = "expanding",
+ trait = abundance_data[,3],
+ burn_in = 10)
+
+#Plot outcome
+if (FALSE) { # \dontrun{
+ plot(trait_ews, y_lab = "Abundance",
+ trait_lab = "Trait value",
+ trait_scale = 10)
+} # }
+```

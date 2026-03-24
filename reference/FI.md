@@ -1,0 +1,86 @@
+# Calculate Fisher Information
+
+Uses a multivariate array of time series to estimate Fisher information
+following the approach of Karunanithi et al. (2010).
+
+## Usage
+
+``` r
+FI(data, sost, winsize = 50, winspace = 1, TL = 90)
+```
+
+## Arguments
+
+- data:
+
+  A numeric matrix of individual time series across the columns. These
+  could be different species, populations or measurements. The first
+  column must be an equally spaced time vector.
+
+- sost:
+
+  A 1 x n matrix where n is a length equal to the number of time series
+  in `data`. Each value is the 'size of state' tolerable for that time
+  series and typically is represented by the standard deviation of the
+  time series during a reference period.
+
+- winsize:
+
+  Numeric value. Defines the window size of the rolling window as a
+  percentage of the time series length.
+
+- winspace:
+
+  Numeric value. The number of data points to roll the window over in
+  each iteration. Must be less than `winsize`.
+
+- TL:
+
+  Numeric value. The 'tightening level' or percentage of points shared
+  between states that allows the algorithm to classify data points as
+  the same state.
+
+## Value
+
+A list containing three objects:
+
+- FI:
+
+  A dataframe of Fisher information estimates and the last time point
+  contributing to each window.
+
+- midt_win:
+
+  A numeric vector of the time index at the centre of the window for
+  that associated value in `FI`.
+
+- t_win:
+
+  A n x m numeric matrix where the length of n is the winspace and
+  length of m is the number of window shifts made. Values are
+  consequently the timepoint indices that contribute to that window.
+
+## Examples
+
+``` r
+#Load the multivariate simulated
+#dataset `simTransComms`
+
+data(simTransComms)
+
+#Estimate the size-of-states for each
+#time series in the first community.
+#This is typically suggested
+#to be the standard deviation of a
+#reference period or the entire time
+#series
+
+eg.sost <- t(apply(simTransComms$community1[,3:7], MARGIN = 2, FUN = sd))
+ #transpose required to ensure a 1 x n matrix
+
+egFI <- FI(data = simTransComms$community1[1:50,2:7],
+sost =  eg.sost,
+winsize = 10,
+winspace = 1,
+TL = 90)
+```

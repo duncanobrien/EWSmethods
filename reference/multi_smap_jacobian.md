@@ -1,0 +1,67 @@
+# Multivariate S-map Inferred Jacobian
+
+Performs the S-map on a multivariate time series to infer the Jacobian
+matrix at different points in time across thetas.
+
+## Usage
+
+``` r
+multi_smap_jacobian(data, theta_seq = NULL, scale = TRUE)
+```
+
+## Source
+
+Medeiros, L.P., Allesina, S., Dakos, V., Sugihara, G. & Saavedra, S.
+(2022) Ranking species based on sensitivity to perturbations under
+non-equilibrium community dynamics. Ecology Letters, 00, 1– 14.
+
+## Arguments
+
+- data:
+
+  Numeric matrix with time in first column and species abundances in
+  other columns
+
+- theta_seq:
+
+  Numeric vector of thetas (nonlinear tuning parameters) to estimate the
+  Jacobian over. If \`NULL\`, a default sequence is provided.
+
+- scale:
+
+  Boolean. Should data be scaled prior to estimating the Jacobian.
+
+## Value
+
+A list containing three objects:
+
+- smap_J:
+
+  Jacobian matrices for each point in time. It is recommended to just
+  use the last estimate.
+
+- rho:
+
+  Pearson correlation between observed and predicted for each species.
+
+- smap_intercept.r:
+
+  Intercepts of the regression fit.
+
+## Examples
+
+``` r
+#Load the multivariate simulated
+#dataset `simTransComms`
+
+data("simTransComms")
+
+#Subset the third community prior to the transition
+
+pre_simTransComms <- subset(simTransComms$community3,time < inflection_pt)
+
+
+#Estimate the Jacobian using s-map (typically only
+#the final estimate is informative)
+est_jac <- multi_smap_jacobian(pre_simTransComms[1:10,2:7])
+```
