@@ -303,7 +303,7 @@ Cleveland, R.B., Cleveland, W.S., McRae, J.E., & Terpenning, I.J. (1990) STL: A 
 
 Dablander, F., Heesterbeek H., Borsboom D. & Drake J.M. (2022) Overlapping timescales obscure early warning signals of the second COVID-19 wave. *Proceedings of the Royal Society B* , 289, 20211809. [doi:10.1098/rspb.2021.1809](https://doi.org/10.1098/rspb.2021.1809)
 
-Dakos, V. (2018) Identifying best-indicator species for abrupt transitions in multispecies communities. *Ecological Indicators*, 94, 494–502. [doi:10.1016/j.ecolind.2017.10.024](https://www.sciencedirect.com/science/article/pii/S1470160X17306611)
+Dakos, V. (2018) Identifying best-indicator species for abrupt transitions in multispecies communities. *Ecological Indicators*, 94, 494–502. [doi:10.1016/j.ecolind.2017.10.024](https://doi.org/10.1016/j.ecolind.2017.10.024)
 
 Dakos, V., Carpenter, S.R., Brock, W.A., Ellison, A.M., Guttal, V., Ives, A.R., et al. (2012) Methods for detecting early warnings of critical transitions in time series illustrated using simulated ecological data. *PLoS One*, 7, e41010. [doi:10.1371/journal.pone.0041010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0041010)
 

@@ -160,7 +160,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         labs(color='EWS indicator\ntrend') +
         facet_wrap(~.data$metric.code,nrow=4)+
         theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)))+
+        theme(plot.margin = margin(t = 10, r = 8, b = 5.5, l = 10))+
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
@@ -171,7 +171,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         ylab(plot_labels$y_lab) +
         xlab("Time point")+
         theme_clean() +
-        theme(plot.margin = margin(c(10, 8, 0, 10)))
+        theme(plot.margin = margin(t = 10, r = 8, b = 0, l = 10))
 
       final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 2), draw = F)
 
@@ -200,7 +200,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='EWS indicator\nstrength') +
         theme_clean() +
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
+        theme(plot.margin = margin(t = 10, r = 8, b = 5.5, l = 10))
 
       if(tail.direction == "two.tailed"){
         p <- p + geom_hline(yintercept = -x$threshold, linetype="solid", color = "grey", linewidth=1)
@@ -238,7 +238,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
           annotate("label", size = 2, x = quantile(plot.dat$timestep,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust = 0.75)+
           guides(alpha = guide_legend(order = 1))+
           theme_clean()+
-          theme(plot.margin = margin(c(10, 8, 0, 10)))
+          theme(plot.margin = margin(t = 10, r = 8, b = 0, l = 10))
 
         final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1), draw = F)
 
@@ -269,7 +269,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
           xlab("Time point")+
           annotate("label", size = 2, x = quantile(plot.dat$timestep,0.90), y =max(plot.dat$count.used)*0.95 , label = paste(c("EWS indicator:",x$EWS$metric.code[length(x$EWS$metric.code)]),collapse = " "),hjust=0.75)+
           theme_clean()+
-          theme(plot.margin = margin(c(10, 8, 0, 10)))
+          theme(plot.margin = margin(t = 10, r = 8, b = 0, l = 10))
 
         final.p <- egg::ggarrange(p4,p,nrow = 2,heights = c(1, 1), draw = F)
       }
@@ -341,7 +341,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         labs(color='Multivariate EWS\nindicator trend') +
         facet_wrap(~metric.code,nrow=4)+
         theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)))+
+        theme(plot.margin = margin(t = 10, r = 8, b = 5.5, l = 10))+
         guides(alpha = guide_legend(order = 1),
                col = guide_legend(order = 2))
 
@@ -411,7 +411,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6)) +
         labs(color='Multivariate EWS\nindicator strength') +
         theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 5.5, 10)))
+        theme(plot.margin = margin(t = 10, r = 8, b = 5.5, l = 10))
 
       # plot.dat <- x$EWS$dimred.ts %>%
       #   dplyr::mutate(across(-"time",~scale(.))) %>%
@@ -445,7 +445,7 @@ plot.EWSmethods <- function(x,..., y_lab = "Generic indicator name", trait_lab =
         xlab("Time point")+
         scale_colour_manual(values = c("#A1B4FE","#FFE7A1"),name = "Dimension\nreduction")+
         theme_clean()+
-        theme(plot.margin = margin(c(10, 8, 0, 10)))
+        theme(plot.margin = margin(t = 10, r = 8, b = 0, l = 10))
 
       final.p <- egg::ggarrange(p2,p,nrow = 2,heights = c(1, 1),draw = F)
     }

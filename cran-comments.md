@@ -1,7 +1,8 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Submission
+In this version I have:
 
-* downgraded tensorflow to 2.13.0 to ensure Windows is able to install `reticulate`.
+* Hotfix - replaced stats::ar.ols with stats::ar to compensate for R-devel changes. Affected functions: uniAR, W_composite_ews, no.plot.ews.
+* Minor patch - added functions sewsnet_reset and sewsnet_predict, fixed depreciated arguments of ggplots::margins, fixed broken URL called by ewsnet_reset
 
 ## R CMD check results
 

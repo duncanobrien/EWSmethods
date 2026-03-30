@@ -1,7 +1,7 @@
 # EWSmethods 1.3.3.9500
 
 # EWSmethods 1.3.3
-Hot fix replacement of stats::ar.ols to stats::ar.kw following CRAN errors.
+Hot fix replacement of stats::ar.ols to stats::ar.kw following CRAN errors, plus fix to depreciated ggplot2::margins arguments, and broken model weight URL for EWSNET.
 
 # EWSmethods 1.3.2
 Added support for spatial EWSNet (https://doi.org/10.1098/rsos.231767) and sped up `II` via suggested dependency to `data.table`.

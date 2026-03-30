@@ -61,10 +61,13 @@ sewsnet_predict <- function(x, id = NULL, envname, delta = 0.1, inp_size = 25, m
       stop('No S-EWSNet model files found. Call sewsnet_reset(remove_model = FALSE) to download model files')
     }
 
-    reticulate::py_run_string("from tensorflow.keras.models import load_model")
+    reticulate::py_run_string("from keras.layers import TFSMLayer")
+
     directory_string <- paste(c("directory_string = '", paste(model_path,"S-EWSNet",sep="/"),"'"),collapse = "")
     reticulate::py_run_string(directory_string)
-    reticulate::py_run_string("sewsnet = load_model(directory_string)")
+
+    reticulate::py_run_string("sewsnet = TFSMLayer(directory_string,call_endpoint='serving_default')")
+
 
     densities <- do.call("c", lapply(x, function(x) {
       mean(as.matrix(x))

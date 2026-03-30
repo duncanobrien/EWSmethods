@@ -194,6 +194,6 @@ Deb S., Sidheekh S., Clements C.F., Krishnan N.C. & Dutta P.S. (2022) Machine le
 
 Drake, J. & Griffen, B. (2010) Early warning signals of extinction in deteriorating environments. *Nature*, 467, 456--459. [doi:10.1038/nature09389](https://www.nature.com/articles/nature09389)
 
-O'Brien, D.A., Taylor, M.L., Masonjones, H.D., Boersch-Supan P.H. & O'Shea, O.R. (2020) Drivers of octopus abundance and density in an anchialine lake: a 30 year comparison. *Journal of Experimental Marine Biology and Ecology*, 528, 151377. [doi:10.1016/j.jembe.2020.151377](https://www.sciencedirect.com/science/article/pii/S0022098120300356)
+O'Brien, D.A., Taylor, M.L., Masonjones, H.D., Boersch-Supan P.H. & O'Shea, O.R. (2020) Drivers of octopus abundance and density in an anchialine lake: a 30 year comparison. *Journal of Experimental Marine Biology and Ecology*, 528, 151377. [doi:10.1016/j.jembe.2020.151377](https://doi.org/10.1016/j.jembe.2020.151377)
 
 Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021) Evaluating the performance of multivariate indicators of resilience loss. *Scientific Reports*, 11, 9148. [10.1038/s41598-021-87839-y](https://www.nature.com/articles/s41598-021-87839-y)

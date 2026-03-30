@@ -32,8 +32,6 @@
 
 ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights = FALSE, auto = FALSE){
 
-  #path <- system.file("python/weights", package = "EWSmethods")
-
   if(!dir.exists(file.path(weights_path)) & weights_path != ""){
     dir.create(file.path(weights_path))
     }
@@ -52,10 +50,11 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
       if(isTRUE(auto)){
 
         zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
-        warn_dwn <- tryCatch(utils::download.file("https://drive.usercontent.google.com/download?id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e&export=download&confirm=EoIm",
+
+        warn_dwn <- tryCatch(utils::download.file("https://zenodo.org/records/19335441/files/Pretrained.zip?download=1",
                                                   destfile  = zip, mode = "wb"),
-                      error = function(e) conditionMessage(e),
-                      warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
+                             error = function(e) conditionMessage(e),
+                             warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 
          if(inherits(warn_dwn,"character")){
           message(warn_dwn)
@@ -85,8 +84,8 @@ ewsnet_reset <- function(weights_path = default_weights_path(), remove_weights =
 
         zip <- paste(c(weights_path,"temp.zip"),collapse = "/")
 
-        warn_dwn <- tryCatch(utils::download.file("https://drive.usercontent.google.com/download?id=19OuqzrY1LQxZusByf4ACPj-yiex4LY2e&export=download&confirm=EoIm",
-                                                 destfile  = zip, mode = "wb"),
+        warn_dwn <- tryCatch(utils::download.file("https://zenodo.org/records/19335441/files/Pretrained.zip?download=1",
+                                                  destfile  = zip, mode = "wb"),
                              error = function(e) conditionMessage(e),
                              warning = function(w) conditionMessage(w)) #VariableLenModel EWSNet
 

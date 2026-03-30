@@ -106,7 +106,7 @@ roll_ews <- uniEWS(data = skylark_data[,1:2], metrics =  ews_metrics, method = "
 
 roll_ews$EWS$cor #return the Kendall Tau correlations for each EWS metric
 #>            SD        ar1       skew
-#> tau 0.5446154 -0.3907692 -0.7046154
+#> tau 0.5446154 -0.4338462 -0.7046154
 ```
 
 We can then use the resulting figures to identify oncoming transitions.
@@ -132,17 +132,17 @@ head(exp_ews$EWS) #return the head of the EWS dataframe
 #>   time metric.score metric.code rolling.mean rolling.sd threshold.crossed
 #> 1   10    0.0000000         ar1    0.0000000         NA                 0
 #> 2   11   -0.7071068         ar1   -0.3535534  0.5000000                 0
-#> 3   12   -0.9223669         ar1   -0.5431579  0.4825449                 0
-#> 4   13   -0.1500572         ar1   -0.4448827  0.4403012                 0
-#> 5   14    0.8428688         ar1   -0.1873324  0.6906950                 0
-#> 6   15   -1.8668306         ar1   -0.4672488  0.9229121                 0
+#> 3   12   -0.8943262         ar1   -0.5338110  0.4716762                 0
+#> 4   13   -0.3086176         ar1   -0.4775126  0.4012443                 0
+#> 5   14    1.0292634         ar1   -0.1761574  0.7581705                 0
+#> 6   15   -1.6813340         ar1   -0.4270202  0.9151234                 0
 #>   count.used        str
 #> 1  108.91249         NA
 #> 2   93.56813 -0.7071068
-#> 3  109.56960 -0.7858522
-#> 4  103.92341  0.6695997
-#> 5  114.29655  1.4915428
-#> 6   80.79726 -1.5164845
+#> 3  109.56960 -0.7643278
+#> 4  103.92341  0.4209282
+#> 5  114.29655  1.5899073
+#> 6   80.79726 -1.3706500
 ```
 
 And again, we can then use the resulting figures to identify oncoming
@@ -252,29 +252,29 @@ library(reticulate)
 
 reticulate::py_config() #confirm that "EWSNET_env" has been loaded
 #> python:         /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/bin/python
-#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.10.dylib
+#> libpython:      /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/libpython3.11.dylib
 #> pythonhome:     /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env:/Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env
-#> version:        3.10.14 | packaged by conda-forge | (main, Mar 20 2024, 12:51:49) [Clang 16.0.6 ]
-#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.10/site-packages/numpy
-#> numpy_version:  1.26.4
+#> version:        3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:59:26) [Clang 19.1.7 ]
+#> numpy:          /Users/ul20791/Library/r-miniconda-arm64/envs/EWSNET_env/lib/python3.11/site-packages/numpy
+#> numpy_version:  1.24.3
 #> 
 #> NOTE: Python version was forced by use_python() function
 
 py_packages <- reticulate::py_list_packages() #list all packages currently loaded in to "EWSNET_env"
 head(py_packages)
-#>           package  version              requirement     channel
-#> 1         absl-py    2.1.0            absl-py=2.1.0        pypi
-#> 2       alabaster   0.7.16         alabaster=0.7.16        pypi
-#> 3      astunparse    1.6.3         astunparse=1.6.3        pypi
-#> 4           babel   2.15.0             babel=2.15.0        pypi
-#> 5           bzip2    1.0.8              bzip2=1.0.8 conda-forge
-#> 6 ca-certificates 2024.2.2 ca-certificates=2024.2.2 conda-forge
+#>           package   version               requirement     channel
+#> 1         absl-py     2.4.0             absl-py=2.4.0        pypi
+#> 2       alabaster     1.0.0           alabaster=1.0.0        pypi
+#> 3      astunparse     1.6.3          astunparse=1.6.3        pypi
+#> 4           babel    2.18.0              babel=2.18.0        pypi
+#> 5           bzip2     1.0.8               bzip2=1.0.8 conda-forge
+#> 6 ca-certificates 2026.2.25 ca-certificates=2026.2.25 conda-forge
 
 skylark_ewsnet <- ewsnet_predict(skylark_data$abundance, scaling = TRUE, ensemble = 25, envname = "EWSNET_env") #perform EWSNet assessment using white noise and all 25 models. The envname should match ewsnet_init()
 
 skylark_ewsnet
 #>                pred no_trans_prob smooth_trans_prob critical_trans_prob
-#> 1 Smooth Transition    0.01444911         0.9638591          0.02169183
+#> 1 Smooth Transition      0.148488         0.8454021         0.006109864
 ```
 
 <br>
@@ -315,7 +315,7 @@ O’Brien, D.A., Taylor, M.L., Masonjones, H.D., Boersch-Supan P.H. &
 O’Shea, O.R. (2020) Drivers of octopus abundance and density in an
 anchialine lake: a 30 year comparison. *Journal of Experimental Marine
 Biology and Ecology*, 528, 151377.
-[doi:10.1016/j.jembe.2020.151377](https://www.sciencedirect.com/science/article/pii/S0022098120300356)
+[doi:10.1016/j.jembe.2020.151377](https://doi.org/10.1016/j.jembe.2020.151377)
 
 Weinans, E., Quax, R., van Nes, E.H. & van de Leemput, I.A. (2021)
 Evaluating the performance of multivariate indicators of resilience
