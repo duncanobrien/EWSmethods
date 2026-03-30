@@ -5,7 +5,8 @@
 ## EWSmethods 1.3.3
 
 Hot fix replacement of stats::ar.ols to stats::ar.kw following CRAN
-errors.
+errors, plus fix to depreciated ggplot2::margins arguments, and broken
+model weight URL for EWSNET.
 
 ## EWSmethods 1.3.2
 

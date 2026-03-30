@@ -86,11 +86,11 @@ library(reticulate)
 #print which Python environment `EWSmethods` is using
 reticulate::py_config()
 #> python:         /home/runner/.local/share/r-miniconda/envs/test/bin/python
-#> libpython:      /home/runner/.local/share/r-miniconda/envs/test/lib/libpython3.12.so
+#> libpython:      /home/runner/.local/share/r-miniconda/envs/test/lib/libpython3.11.so
 #> pythonhome:     /home/runner/.local/share/r-miniconda/envs/test:/home/runner/.local/share/r-miniconda/envs/test
-#> version:        3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:50:00) [GCC 14.3.0]
-#> numpy:          /home/runner/.local/share/r-miniconda/envs/test/lib/python3.12/site-packages/numpy
-#> numpy_version:  2.4.3
+#> version:        3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]
+#> numpy:          /home/runner/.local/share/r-miniconda/envs/test/lib/python3.11/site-packages/numpy
+#> numpy_version:  1.24.3
 #> 
 #> NOTE: Python version was forced by use_python() function
 

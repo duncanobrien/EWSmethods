@@ -174,10 +174,6 @@ rolling_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
 
 ``` r
 plot(rolling_ews_eg,  y_lab = "Density")
-#> Warning: In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
-#> In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
 ```
 
 ![](ews_assessments_files/figure-html/rolling_ews_fig-1.png)
@@ -212,10 +208,6 @@ expanding_ews_eg <- uniEWS(data = pre_simTransComms[,c(2,5)],
 
 ``` r
 plot(expanding_ews_eg, y_lab = "Density")
-#> Warning: In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
-#> In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
 ```
 
 ![](ews_assessments_files/figure-html/expanding_ews_fig-1.png)
@@ -257,10 +249,6 @@ trait_ews_eg <- uniEWS(data = pre_CODrecovery[,c(2,3)],
 
 ``` r
 plot(trait_ews_eg, y_lab = "Density", trait_lab = "Mean size (g)")
-#> Warning: In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
-#> In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
 ```
 
 ![](ews_assessments_files/figure-html/trait_ews_fig-1.png)
@@ -318,8 +306,6 @@ multi_ews_eg <- multiEWS(data = pre_simTransComms[,2:7],
 plot(multi_ews_eg)
 #> Warning: In `margin()`, the argument `t` should have length 1, not length 4.
 #> ℹ Argument get(s) truncated to length 1.
-#> In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
 ```
 
 ![](ews_assessments_files/figure-html/multi_ews_fig-1.png)
@@ -342,10 +328,6 @@ multi_ews_eg2 <- multiEWS(data = pre_simTransComms[,2:7],
 
 ``` r
 plot(multi_ews_eg2)
-#> Warning: In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
-#> In `margin()`, the argument `t` should have length 1, not length 4.
-#> ℹ Argument get(s) truncated to length 1.
 ```
 
 ![](ews_assessments_files/figure-html/multi_ews2_fig-1.png)
@@ -521,7 +503,7 @@ COVID-19 wave. *Proceedings of the Royal Society B* , 289, 20211809.
 Dakos, V. (2018) Identifying best-indicator species for abrupt
 transitions in multispecies communities. *Ecological Indicators*, 94,
 494–502.
-[doi:10.1016/j.ecolind.2017.10.024](https://www.sciencedirect.com/science/article/pii/S1470160X17306611)
+[doi:10.1016/j.ecolind.2017.10.024](https://doi.org/10.1016/j.ecolind.2017.10.024)
 
 Dakos, V., Carpenter, S.R., Brock, W.A., Ellison, A.M., Guttal, V.,
 Ives, A.R., et al. (2012) Methods for detecting early warnings of

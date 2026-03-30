@@ -45,7 +45,7 @@ No return value, called for side effects.
 # on first use of EWSNet via `EWSmethods`
 ewsnet_reset(remove_weights = FALSE, auto = TRUE,
 weights_path = tempfile())
-#> downloaded length 0 != reported length 1652
+#> Model weights downloaded
 # }
 
 # if this fails due to timeout, you may need to
